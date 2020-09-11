@@ -2,7 +2,7 @@
 \usepackage{my_math}
 
 \title{Дискретная математика.}
-\author{А. В. Тискин\\alextiskin@gmail.com}
+\author{\href{mailto:alextiskin@gmail.com}{А. В. Тискин}}
 \date{}
 
 \newcommand{\BB}[1][]{\ensuremath{\mathbb{B}#1}\xspace}
@@ -10,12 +10,7 @@
 \begin{document}
     \maketitle
 
-    Содерждание:
-    \begin{enumerate}
-        \item Булевые функции
-        \item Комбинаторика
-        \item Теория графов
-    \end{enumerate}
+    \tableofcontents
 
     \section{Булевые функции}
 
@@ -109,7 +104,7 @@
         \emph{Двойственная функция} к $f$ --- $f^* := \neg f(\neg x_1, \dots, \neg x_n)$.
     \end{definition}
 
-    Свойтсва:
+    Свойства:
     \begin{itemize}
         \item $f^{**} = f$
     \end{itemize}
@@ -119,7 +114,7 @@
     \end{statement}
 
     \begin{definition}[полином Жегалкина (над $\FF_2$)]
-        Выражение функции в базисе $\{1, \wedge, \oplus\}$.\\
+        Выражение функции в базисе $\{1, \wedge, \oplus\}$.
         \[
             f(x_1, \dots, x_n) = \sum_{\{i_1, \dots, i_s\}\subseteq\{1, \dots, n\}} a_{i_1, \dots, i_n} x_{i_1} \dots x_{i_s}
         \]
@@ -145,4 +140,26 @@
             \item $\vee$, $\wedge$, $\oplus$, $\rightarrow$, $\leftarrow$, $\uparrow$ и $\downarrow$ не самодвойствены.
         \end{itemize}
     \end{example}
+
+    \begin{statement}
+        Класс $S$ самодвойственных функций замкнут.
+    \end{statement}
+
+    \begin{definition}
+        $f$ \emph{линейна}, если $f(x_1, \dots, x_n) = a_0 \oplus (a_1 \wedge x_1) \oplus \dots \oplus (a_n \wedge x_n)$ для некоторых $a_1, \dots, a_n$.
+
+        Они же представляются как полиномы Жегалкина степени не выше первой.
+    \end{definition}
+
+    \begin{statement}
+        Класс $L$ линейных функций замкнут.
+    \end{statement}
+
+    \section{Комбинаторика}
+
+    To be read...
+
+    \section{Теория графов}
+
+    To be read...
 \end{document}
