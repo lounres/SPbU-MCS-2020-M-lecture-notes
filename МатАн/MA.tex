@@ -1,0 +1,141 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{my_math}
+
+\title{Математический анализ --- 1.}
+\author{Юрий Сергеевич Белов\\ВК: @ybelov}
+\date{}
+
+\DeclareMathOperator{\Quot}{Quot}
+
+\begin{document}
+    \maketitle
+
+    Литература:
+    \begin{itemize}
+        \item В. А. Зорич "Математический анализ"
+        \item О. Л. Виноградов "Математический анализ"
+        \item (подходит попозже) Г. М. Фихтенгельц "Курс дифференциального и интегрального исчисления"
+        \item У. Рудин "Основы анализа"
+        \item М. Спивак "Математический анализ на многообразиях"
+    \end{itemize}
+
+    Мы начинаем с теории множеств.
+
+    \begin{definition}\ 
+        \begin{itemize}
+            \item Множества и элемменты --- понятно.
+            \item $a \in B$ --- понятно.
+            \item $A \cup B := \{x \mid x\in A \vee x\in B\}$ --- объединение.
+            \item $A \cap B := \{x \mid x\in A \wedge x\in B\}$ --- пересечение.
+            \item $A \setminus B := \{x \mid x\in A \vee x\notin B\}$ --- разность.
+            \item $A \bigtriangleup B := A \setminus B \cup B \setminus A$ --- симметрическая разница.
+            \item $A^C := X\setminus A$ --- \emph{дополнение}, где $X$ --- некоторое фиксированное рассматриваемое множество.
+            \item $A \subset B$ --- "$A$ --- подмножество $B$", т.е. $\forall x (X\in A \Rightarrow x\in B)$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{corollary*}\ 
+        \begin{itemize}
+            \item (первое правило Моргана) $(A\cup B)^C = A^C \cap B^C$.
+                \begin{align*}
+                    x\in (A\cup B)^C \Leftrightarrow
+                    x \notin A \cup B \Leftrightarrow
+                    \left\{ \begin{aligned}
+                        &x \notin A\\
+                        &x \notin B
+                    \end{aligned}\right. \Leftrightarrow
+                    \left\{ \begin{aligned}
+                        &x \in A^c\\
+                        &x \in B^C
+                    \end{aligned} \right. \Leftrightarrow
+                    x \in A^C \cap B^C
+                \end{align*}
+            \item (второе правило Моргана) $(A\cap B)^C = A^C \cup B^C$. Аналогично.
+        \end{itemize}
+    \end{corollary*}
+
+    \begin{definition}
+        (Аксиома индукции.) Пусть есть функция $A: \NN \to {true;false}$, что:
+        \begin{enumerate}
+            \item $A(1)=true$;
+            \item $\forall n (A(n) \rightarrow A(n+1))$.
+        \end{enumerate}
+        Тогда $\forall n A(n)$.
+    \end{definition}
+
+    Определение натуральных чисел сложно, рассмтривать его не будем. Важно также иметь в виду натуральные числа с операциями сложения и умножения.
+
+    \begin{definition}
+        Пусть есть кольцо без делителей нуля $R$. Рассмотрим отношение эквивалентности $\sim$ на $R \times (R\setminus \{0\})$, что $(a; b) \sim (c; d) \Leftrightarrow ad = bc$. Тогда $\Quot(R)$ --- фактор-множество по $\sim$ и поле.
+    \end{definition}
+
+    \begin{definition}
+        Рациональные числа --- $\QQ := \Quot(\ZZ)$.
+    \end{definition}
+
+    \begin{theorem}
+        $\nexists x\in \QQ, x^2 = 2$.
+    \end{theorem}
+
+    Теперь мы хотим понять, что есть вещественные числа. Тут есть несколько подходов.
+
+    \begin{definition}[аксиоматический подход]
+        Вещественные числа --- это полное упорядоченное поле $\RR$, состоящее не из одного элемента.
+        
+        Здесь "поле" значит, что на множестве (вместе с его операциями и выделенными элементами) верны акиомы $A_1$, $A_2$, $A_3$, $A_4$, $M_1$, $M_2$, $M_3$, $M_4$ и $D$.
+        
+        Упорядоченность значит, что есть рефлексивное транзитивное антисимметричное отношение $\preccurlyeq$, что все элементы сравнимы, согласованное с операциями, т.е.:
+        \begin{itemize}
+            \item[$A$)] $a \preccurlyeq b \Leftarrow a + x \preccurlyeq b + x$.
+            \item[$B$)] $0 \preccurlyeq a \wedge 0 \preccurlyeq b \Rightarrow 0 \preccurlyeq ab$
+        \end{itemize}
+
+        Полнота поля значит любое из следующих утверждений (они равносильны):
+        \begin{itemize}
+            \item любое ограниченное сверху (снизу) подмножество поля имеет точную верхнюю (нижнюю) грань;
+            \item (аксиома Кантора-Дедекинда) для любых двух множеств $A$ и $B$, что $A \preccurlyeq B$, есть разделяющий их элемент.
+        \end{itemize}
+
+        Итого мы имеем 9 аксиом поля, 2 аксиомы упорядоченности и 1 акиома полноты упорядоченности.
+    \end{definition}
+
+    \begin{statement*}
+        Над $\QQ$ нет  элемента разделяющего $A := \{a > 0 \mid a^2 < 2\}$ и $B := \{b > 0 \mid b^2 > 2\}$.
+    \end{statement*}
+
+    \begin{proof}
+        Предположим противное, т.е. есть $c > 0$, что $A < c < B$.
+
+        Если $c^2 < 2$, то найдём $\varepsilon$, что $\varepsilon \in (0; 1)$ и $(c + \varepsilon)^2 < 2$. Заметим, что $(c + \varepsilon)^2 = c^2 + 2c\varepsilon + \varepsilon^2 < c^2 + (2c + 1)\varepsilon$. Пусть $\varepsilon < \frac{2 - c^2}{2c+ 1}$, тогда такое $\varepsilon$ точно подойдёт, ну а посокольку $\frac{2 - c^2}{2c + 1} > 0$, то такое $\varepsilon$ есть. Значит $c^2 \geqslant 2$.
+        
+        Аналогично имеем, что $\varepsilon \leqslant 2$. А значит $c^2 = 2$, что не бывает над $\QQ$.
+    \end{proof}
+
+    \begin{corollary*}
+        $\QQ$ не полно.
+    \end{corollary*}
+
+    \begin{definition}\ 
+        \begin{itemize}
+            \item \emph{Закрытый интервал} или \emph{отрезок} $[a;b]:=\{x\in\RR \mid a \leqslant x \leqslant b\}$.
+            \item \emph{Открытый интервал} или просто \emph{интервал} $(a;b):=\{x\in\RR \mid a < x < b\}$.
+            \item \emph{Полуоткрытый интервал} или \emph{полуинтервал} $(a;b] := \{x\in\RR \mid a < x \leqslant b\}$, $[a;b):=\{x\in\RR \mid a \leqslant x < b\}$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{theorem}[Лемма о вложенных отрезках]\label{th_inter_segments}
+        Пусть имеется $\{I_i\}_{i=1}^\infty$ --- множество вложенных (непустых) отрезков, т.е. $\forall n > 1 I_{n+1} \subset I_n$. Тогда $\bigcap_{i=1}^\infty I_i \neq \varnothing$.
+    \end{theorem}
+
+    \begin{proof}
+        Заметим, что для любых натуральных $n < m$ верно, что $a_n \leqslant a_m \leqslant b_m \leqslant b_n$, где $I_n = [a_n;b_n]$. Тогда для $A:=\{a_i\}_{i=1}^\infty$ и $B:=\{b_i\}_{i=1}^\infty$ верно, что $A \leqslant B$. Значит есть разделяющий их элемент $t$, значит $A \leqslant t \leqslant B$, значит $t\in I_i$ для всех $i$, значит $t \in \bigcap_{i=1}^\infty I_i$.
+    \end{proof}
+
+    \begin{remark}
+        Теорема \ref{th_inter_segments} не верна для не отрезков.
+    \end{remark}
+
+    \begin{remark}
+        Если в теореме \ref{th_inter_segments} $b_i-a_i$ "сходится к 0" , т.е. $\forall \varepsilon > 0\, \exists n\in\NN: \forall i > n\, b_i-a_i < \varepsilon$, то пересечение всех отрезков состоит из ровно одного элемента.
+    \end{remark}
+\end{document}

@@ -1,0 +1,103 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{my_math}
+
+\title{Алгебра.}
+\author{В. А. Петров\\lektorium.tv}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    Зарождение --- Аль Хорезин, "Китхаб Альджебр валь мукабалт". "Альджебр" значит "перенос из одной части уравнения в другую", а "мукабалт" --- "приведение подобных".
+
+    Литература:
+    \begin{itemize}
+        \item Ван дер Варден "Алгебра"
+        \item Лэнг "Алгебра"
+        \item Винберг "Курс Алгебры"
+    \end{itemize}
+
+    \begin{definition}
+        Алгебраическая структура --- это множество $M$ + заданные на нём операции + аксиомы на операциях.
+    \end{definition}
+
+    \begin{definition}
+        Абелева группа --- набор $(M, +: M^2 \to M, 0 \in M)$ с аксиомами:
+        \begin{itemize}
+            \item[$A_1$)] $a + b = b + a$ --- коммутативность сложения
+            \item[$A_2$)] $(a + b) + c = a + (b + c)$ --- ассоциативность сложения
+            \item[$A_3$)] $a + 0 = a = 0 + a$ --- нейтральный элемент
+            \item[$A_4$)] $\exists -a: a + (-a) = 0$ --- существование противоположного
+        \end{itemize}
+    \end{definition}
+
+    \begin{definition}
+        \emph{Кольцо} --- набор $(M, +, \cdot, 0)$, что верны $A_1$, $A_2$, $A_3$, $A_4$ и $D$.\\
+        \emph{Ассоциативное кольцо} --- кольцо с $M_2$.\\
+        \emph{Кольцо с единицей} --- кольцо с $M_3$.\\
+        \emph{Тело} --- кольцо с $M_2$, $M_3$.\\
+        \emph{Поле} --- кольцо с $M_1$, $M_2$, $M_3$, $M_4$.\\
+        \emph{Полукольцо} --- кольцо без $A_4$.
+    \end{definition}
+
+    \begin{example}
+        Если взять $\RR^3$, то векторное произведение в нём неассоциативно и антикоммутативно. Но есть
+        \begin{lemma*}[Тождество Якоби]
+            $u\times (v\times w) + v\times (w\times u) + w\times (u\times v) = 0$
+        \end{lemma*}
+    \end{example}
+
+    \begin{example}
+        Если взять $R^4 = R \times R^3$ и рассмотреть $\cdot: ((a; u); (b; v)) \mapsto (ab-u\cdot v; av + bu + u\times v)$ и $+: ((a; u); (b; v)) \mapsto (a + b, u + v)$, тогда получим $\HH$ --- ассоциативное некоммутативное тело кватернионов. Ассоциативность доказал Гамильтон.
+    \end{example}
+
+    \begin{lemma*}
+        $0 \cdot a = 0$
+    \end{lemma*}
+
+    \begin{definition}
+        Кольцо без делителей нуля называетсся \emph{областью (целостности)}.
+    \end{definition}
+
+    \begin{definition}
+        Пусть $m\in\NN$. Тогда \emph{множество остатков при делении на $m$} или $\ZZ/m\ZZ$ --- это фактор-множество по отношению эквивалентности $a\sim b \Leftrightarrow (a-b) \mid m$.
+    \end{definition}
+
+    \begin{definition}
+        \emph{Подкольцо} --- это подмножество кольца, согласованное с его операциями.
+
+        Как следствие ноль и обратимость соглассуются автоматически.
+    \end{definition}
+
+    \begin{statement}
+        Если $R$ --- подкольцо области целостности $S$, то $R$ --- область целостности.
+    \end{statement}
+
+    \begin{definition}
+        \emph{Целые Гауссовы числа} или $\ZZ{}[i]$ --- это $\{a + bi \mid a, b \in \ZZ\}$.
+    \end{definition}
+
+    \begin{definition}
+        Некоторое подмножество $R$ кольца $S$ \emph{замкнуто относительно сложения (умножения)}, если $\forall a, b \in R: a + b \in R$ ($ab \in R$ соответственно).
+    \end{definition}
+
+    \begin{remark}
+        Замкнутое относительно сложения \textbf{И} умножения подмножество --- подкольцо.
+    \end{remark}
+
+    \begin{example}
+        Пусть $d$ --- целое, не квадрат. Тогда $\ZZ{}[\sqrt{d}]$ --- область целостности.
+    \end{example}
+
+    \section{Теория делимости}
+
+    Пусть $R$ --- область целостности.
+
+    \begin{definition}
+        $a$ делит $b$ или же $a \mid b$ значит, что $\exists c \in R: b = ac$.
+    \end{definition}
+
+    \begin{statement}
+        
+    \end{statement}
+\end{document}

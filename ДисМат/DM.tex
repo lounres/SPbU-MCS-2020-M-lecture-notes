@@ -1,0 +1,148 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{my_math}
+
+\title{Дискретная математика.}
+\author{Тискин А. В.\\alextiskin@gmail.com}
+\date{}
+
+\newcommand{\BB}[1][]{\ensuremath{\mathbb{B}#1}\xspace}
+
+\begin{document}
+    \maketitle
+
+    Содерждание:
+    \begin{enumerate}
+        \item Булевые функции
+        \item Комбинаторика
+        \item Теория графов
+    \end{enumerate}
+
+    \section{Булевые функции}
+
+    \begin{definition}
+        $\BB := \{0; 1\}$. \emph{Булевая функция} --- $f: \BB^n \to \BB$.\\
+        Множество булевых функций --- $P_2$.\\
+        Множество булевых функция --- $P^{(n)}_2$.\\
+        Количестов всех булевых функция --- $\left|P^{(n)}_2\right|=2^{2^n}$.
+    \end{definition}
+
+    \begin{definition}
+        Базовые функции:
+        \begin{itemize}
+            \item $0$, $1$ --- функции-константы.
+            \item $\neg x := 1-x$
+            \item $\wedge$ и $\vee$ --- стандартные AND и OR. 
+        \end{itemize}
+    \end{definition}
+
+    \begin{definition}
+        Булевая функция $f(x_1, \dots, x_i, \dots, x_n)$ \emph{существенно зависит} от $x_i$, если существуют $a_1, \dots, a_{i-1}, a_{i+1}, \dots, a_n$, что $f(a_1, \dots, a_{i-1}, 0, a_{i+1}, \dots, a_n) \neq f(a_1, \dots, a_{i-1}, 1, a_{i+1}, \dots, a_n)$.
+    \end{definition}
+
+    \begin{definition}
+        Пусть $F$ --- множество булевых функций. Тогда \emph{сигнатурой $F$} или \emph{множеством формул над $F$} называется множество итеративно заданных формул по принципу:
+        \begin{itemize}
+            \item формальный символ $x$;
+            \item $f(A_1, \dots, A_n)$, где $f\in F$, а $A_1, \dots, A_n$ --- уже определённые функции.
+        \end{itemize}
+
+        Формула реализует некоторую функцию (не обязательно из $F$). Формулы реализующие одну и ту же функцию называются \emph{эквивалентными}.
+    \end{definition}
+
+    \begin{definition}
+        Функция $f$ \emph{выразима} через $F$, если существует формула над $F$, реализующаая $f$.
+    \end{definition}
+
+    \begin{definition}
+        Замыкание $F$ --- множество $[F]$ функций, выразимых через $F$. 
+    \end{definition}
+
+    \begin{statement}\ 
+        \begin{itemize}
+            \item $F \subseteq [F]$
+            \item $F_1 \subseteq F_2 \Rightarrow [F_1] \subseteq [F_2]$
+            \item $[[F]] = [F]$
+        \end{itemize}
+    \end{statement}
+
+    \begin{definition}
+        Множество $F$ булевых функций называется \emph{замкнутым}, если $F = [F]$.
+    \end{definition}
+
+    \begin{definition}
+        Пусть $R$ замкнуто, а $Q\subseteq R$.
+        \begin{itemize}
+            \item $Q$ \emph{полно для} $R$, если $[Q] = R$.
+            \item $R$ \emph{конечно порождаемо}, если сущесвтует конечное полное для $R$ множество $Q$, подмножество $R$. Минимальное по включение $Q$ --- \emph{базис} $R$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{definition}
+        Функция $f$ называется монотонной, если \[\forall x_1 \leqslant x'_1, \dots, x_n \leqslant x'_n : f(x_1, \dots, x_n) \leqslant f(x'_1, \dots, x'_n).\]
+    \end{definition}
+
+    \begin{statement}
+        Если $F$ --- множество монотонных функций, то $[F]$ --- множество монотонных функций.
+    \end{statement}
+
+    \begin{definition}\ \\
+        \emph{Литерал} --- это $x$ или $\neg x$, где $x$ --- формальный символ (переменная).\\
+        \emph{Элементарная конъюкция} --- $Y_1 \wedge \dots \wedge Y_k$, где $Y_1, \dots, Y_k$ --- литералы (с попарно различными элементами).\\
+        \emph{Дизъюнктивная нормальная форма (ДНФ)} --- $Z_1 \vee \dots \vee Z_m$, где $Z_1, \dots, Z_m$ --- (различные) элементарные конъюнкции.\\
+        \emph{Совершенная ДНФ} --- для любой функции $f$ от $n$ переменных \[f(x_1, \dots, x_n)=\bigvee_{f(\sigma_1, \dots, \sigma_n)=1} x_1^{\sigma_1} \wedge \dots \wedge x_n^{\sigma_n},\]
+        где $x^0 = x$, а $x^1 = \neg x$.
+    \end{definition}
+
+    \begin{statement}
+        Система $\{\neg, \wedge, \vee\}$ полна (в $P_2$).
+    \end{statement}
+
+    \begin{corollary}
+        Системы $\{\neg. \wedge\}$, $\{\neg, \vee\}$, $\{1, \wedge, \oplus\}$, $\{\uparrow\}$ и $\{\downarrow\}$ полны.
+    \end{corollary}
+
+    \begin{definition}
+        Аналогично \emph{(совершенная) конъюктивная нормальная форма (КНФ)}.
+    \end{definition}
+
+    \begin{definition}
+        \emph{Двойственная функция} к $f$ --- $f^* := \neg f(\neg x_1, \dots, \neg x_n)$.
+    \end{definition}
+
+    Свойтсва:
+    \begin{itemize}
+        \item $f^{**} = f$
+    \end{itemize}
+
+    \begin{statement}[принцип двойственности]
+        Если $f$ реализуема формулой $\Phi$, то $f^*$ реализуема формулой $\Phi^*$, где все функции заменяются на двойственные.
+    \end{statement}
+
+    \begin{definition}[полином Жегалкина (над $\FF_2$)]
+        Выражение функции в базисе $\{1, \wedge, \oplus\}$.\\
+        \[
+            f(x_1, \dots, x_n) = \sum_{\{i_1, \dots, i_s\}\subseteq\{1, \dots, n\}} a_{i_1, \dots, i_n} x_{i_1} \dots x_{i_s}
+        \]
+    \end{definition}
+
+    \begin{theorem}[Жегалкин]
+        Любая функция реализуется полиномом Жегалкина единственным образом (с точностью до пропуска членов тождественно равных 0 и перестановок слагаемых и сомножителей). 
+    \end{theorem}
+
+    \begin{proof}
+        Всего коэффициентов $a_{i_1, \dots, i_s}$ --- $2^n$. Тогда многочленов Жегалкина $2^{2^n}$; сколько и булевых функций. Покажем, что для каждой функций найдётся полином Жегалкина, и тогда докажем теорему.
+
+        Построение полинома аналогично рассуждению в формуле включений-исключений. Сначала рассмотрим значение $f$ в точке $(0, \dots, 0)$: оно определяет свободный член полинома. Далее рассмотрим значение $f$ и имеющегося полинома (пока что состоящего только из, может быть, свободного члена) в точках вида $(0, \dots, 0, 1, 0, \dots, 0)$: по ним определяются коэффициенты при мономах первой степени (по аналогии с формулой включений-исключений). Так далее определяются все коэффициенты.
+    \end{proof}
+
+    \begin{definition}
+        Функция $f$ \emph{самодвойствена}, если $f=f^*$.
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{itemize}
+            \item $e_i$ и $\neg e_i$ для любого $n$ и $i$ самодвойственны;
+            \item $\vee$, $\wedge$, $\oplus$, $\rightarrow$, $\leftarrow$, $\uparrow$ и $\downarrow$ не самодвойствены.
+        \end{itemize}
+    \end{example}
+\end{document}
