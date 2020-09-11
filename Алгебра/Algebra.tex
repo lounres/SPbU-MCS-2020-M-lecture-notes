@@ -8,13 +8,13 @@
 \begin{document}
     \maketitle
 
-    Зарождение --- Аль Хорезин, "Китхаб Альджебр валь мукабалт". "Альджебр" значит "перенос из одной части уравнения в другую", а "мукабалт" --- "приведение подобных".
+    Зарождение --- Аль Хорезин, ``Китхаб Альджебр валь мукабалт''. ``Альджебр'' значит ``перенос из одной части уравнения в другую'', а ``мукабалт'' --- ``приведение подобных''.
 
     Литература:
     \begin{itemize}
-        \item Ван дер Варден "Алгебра"
-        \item Лэнг "Алгебра"
-        \item Винберг "Курс Алгебры"
+        \item Ван дер Варден ``Алгебра''
+        \item Лэнг ``Алгебра''
+        \item Винберг ``Курс Алгебры''
     \end{itemize}
 
     \begin{definition}
@@ -24,20 +24,30 @@
     \begin{definition}
         Абелева группа --- набор $(M, +: M^2 \to M, 0 \in M)$ с аксиомами:
         \begin{itemize}
-            \item[$A_1$)] $a + b = b + a$ --- коммутативность сложения
-            \item[$A_2$)] $(a + b) + c = a + (b + c)$ --- ассоциативность сложения
-            \item[$A_3$)] $a + 0 = a = 0 + a$ --- нейтральный элемент
-            \item[$A_4$)] $\exists -a: a + (-a) = 0$ --- существование противоположного
+            \item[$A_1$)] $\forall a, b, c \in M: (a + b) + c = a + (b + c)$ --- ассоциативность сложения
+            \item[$A_2$)] $\forall a \in M: a + 0 = a = 0 + a$ --- нейтральный по сложению элемент
+            \item[$A_3$)] $\forall a, b \in M: a + b = b + a$ --- коммутативность сложения
+            \item[$A_4$)] $\forall a \in M: \exists -a: a + (-a) = 0 = (-a) + a$ --- существование противоположного
         \end{itemize}
     \end{definition}
 
-    \begin{definition}
-        \emph{Кольцо} --- набор $(M, +, \cdot, 0)$, что верны $A_1$, $A_2$, $A_3$, $A_4$ и $D$.\\
-        \emph{Ассоциативное кольцо} --- кольцо с $M_2$.\\
-        \emph{Кольцо с единицей} --- кольцо с $M_3$.\\
-        \emph{Тело} --- кольцо с $M_2$, $M_3$.\\
-        \emph{Поле} --- кольцо с $M_1$, $M_2$, $M_3$, $M_4$.\\
-        \emph{Полукольцо} --- кольцо без $A_4$.
+    \begin{definition} Опишем следующие аксиомы на наборе $(M, +: M^2 \to M, \cdot: M^2 \to M, 0 \in M, 1 \in M)$:
+        \begin{itemize}
+            \item[$D$)] $\forall a, b, k \in M: k(a + b) = ka + kb$, $(a + b)k = ak + bk$ --- дистрибутивность
+            \item[$M_1$)] $\forall a, b, c \in M: (a \cdot b) \cdot c = a \cdot (b \cdot c)$ --- ассоциативность умножения
+            \item[$M_2$)] $\forall a \in M: a \cdot 1 = a = 1 \cdot a$ --- нейтральный по умножению элемент
+            \item[$M_3$)] $\forall a, b \in M: a \cdot b = b \cdot a$ --- коммутативность умножения
+            \item[$M_4$)] $\forall a \in M: \exists a^{-1}: a \cdot a^{-1} = 1 = a^{-1} \cdot a$ --- существование обратного
+        \end{itemize}
+        По этим аксиомам определим следующие понятия:
+        \begin{itemize}
+            \item \emph{Кольцо} --- набор $(M, +, \cdot, 0)$, что верны $A_1$, $A_2$, $A_3$, $A_4$ и $D$.
+            \item \emph{Ассоциативное кольцо} --- кольцо с $M_1$.
+            \item \emph{Кольцо с единицей} --- кольцо с $M_2$.
+            \item \emph{Тело} --- кольцо с $M_1$, $M_2$.
+            \item \emph{Поле} --- кольцо с $M_1$, $M_2$, $M_3$, $M_4$.
+            \item \emph{Полукольцо} --- кольцо без $A_4$.
+        \end{itemize}
     \end{definition}
 
     \begin{example}
@@ -94,10 +104,70 @@
     Пусть $R$ --- область целостности.
 
     \begin{definition}
-        $a$ делит $b$ или же $a \mid b$ значит, что $\exists c \in R: b = ac$.
+        ``$a$ \emph{делит} $b$'' или же $a \mid b$ значит, что $\exists c \in R: b = ac$.
     \end{definition}
 
     \begin{statement}
-        
+        Отношение ``$\mid$'' рефлексивно и транзитивно.
     \end{statement}
+
+    \begin{definition}
+        $a$ и $b$ \emph{ассоциативны}, если $a \mid b$ и $b \mid a$. Обозначение: $a \sim b$.
+    \end{definition}
+
+    \begin{statement}
+        ``$\sim$'' --- отношение эквивалентности.
+    \end{statement}
+
+    \begin{statement}
+        $a \sim b \Leftrightarrow \exists \text{обратимый} \varepsilon: a = \varepsilon b$.
+    \end{statement}
+
+    \begin{proof}
+        Пусть $a \sim b$. Тогда $\exists c, d: ac = b, bd = a$. Тогда $a(1-cd) = a - acd = a - bd = a - a = 0$, значит либо $a = 0$, либо $cd = 1$. В первом случае $b = ac = 0c = 0$, значит можно просто взять $\varepsilon = 1$. Во втором случае, $cd = 1$, значит $c$ и $d$ обратимы, тогда можно взять $\varepsilon = d$. следствие в одну сторону доказано.
+
+        Пусть $a = \varepsilon b$, где $\varepsilon$ обратим. Значит:
+        \begin{enumerate}
+            \item $b\sim a$;
+            \item $\exists \delta: \delta\varepsilon = 1$, значит $\delta a = \delta \varepsilon b = b$, значит $a \sim b$.
+        \end{enumerate}
+        Таким образом $a \sim b$.
+    \end{proof}
+
+    \begin{example}
+        В $\ZZ{}[i]$ есть только следующие обратимые элементы: $1$, $-1$, $i$ и $-i$. Поэтому все ассоциативные элементы получаются друг из друга домножением на один из $1$, $-1$, $i$, $-i$ и вместе образуют квадрат (на \href{https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BC%D0%BF%D0%BB%D0%B5%D0%BA%D1%81%D0%BD%D0%B0%D1%8F_%D0%BF%D0%BB%D0%BE%D1%81%D0%BA%D0%BE%D1%81%D1%82%D1%8C}{комплексной плоскоти}) с центром в нуле.
+    \end{example}
+
+    \begin{definition}
+        \emph{Главным идеалом} элемента $a$ называется множество $M := \{ak \mid k \in R\} = \{b \mid a \text{ делит } b\}$. Обозначение: $(a)$ или $aR$.
+    \end{definition}
+
+    \begin{statement}
+        $a \mid b \Leftrightarrow b \in aR \Leftrightarrow bR \subseteq aR$. 
+    \end{statement}
+
+    \begin{statement}
+        $a \sim b \Leftrightarrow aR = bR$.
+    \end{statement}
+
+    \begin{statement}$\forall a \in R$
+        \begin{enumerate}
+            \item $0 \in aR$
+            \item $x \in aR \Rightarrow -x \in aR$
+            \item $x, y \in aR \Rightarrow x + y \in aR$
+            \item $x \in aR, r \in R \Rightarrow xr \in aR$
+        \end{enumerate}
+    \end{statement}
+
+    \begin{remark}
+        То же верно и в некоммутативном $R$.
+    \end{remark}
+
+    \begin{example}
+        В поле есть только $0R$ и $1R$.
+    \end{example}
+
+    \begin{example}
+        В $\ZZ$ есть только $m\ZZ$ для каждого $m \in \NN \cup \{0\}$.
+    \end{example}
 \end{document}
