@@ -5,6 +5,11 @@
 \author{\href{https://users.math-cs.spbu.ru/~speranski}{Станислав Олегович Сперанский}}
 \date{}
 
+\newcommand{\Pcal}{\ensuremath{\mathcal{P}}\xspace}
+\DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\range}{range}
+
 \begin{document}
     \maketitle
 
@@ -16,5 +21,130 @@
         \item T. Jech. Set Theory. 3rd ed., revised and expanded. Springer, 2002.
     \end{itemize}
 
-    
+    Будем рассматривать как базовые выражения ``$x$ равен (совпадает с) $y$'' (``$x=y$'') ``$x$ лежит в $y$'' (``$x\in y$'').
+
+    \begin{definition}[Наиваная схема аксиом выделения]
+        Пусть $\Phi(x)$ --- произвольное условие на объекты. Тогда существует $X$, что $\forall u (\Phi(u) \leftrightarrow u \in X)$. В этом случае $X$ обозначается как $\{u \mid \Phi(u)\}$.
+    \end{definition}
+
+    \begin{statement}[парадокс Рассела]
+        Пусть $R = \{u \mid u \notin u\}$. Тогда $R$ не может лежать в себе и не может не лежать в себе одновременно.
+    \end{statement}
+
+    Из-за данного парадокса будем рассматривать только условия, образованные переменными и $\in$, $=$, $\neg$, $\wedge$, $\vee$, $\leftarrow$, $\leftrightarrow$, $\forall$, $\exists$.
+
+    \begin{definition}[аксиомы ZFC (= ZF (аксиомы Цермело-Френкеля) + C (аксиома выбора))]\ 
+        \begin{itemize}
+            \item[Ext)] ``Аксиома экстенциональности'':
+                \[\forall X \forall Y (\forall u (u \in X \leftrightarrow u \in Y) \leftrightarrow X=Y)\]
+            \item[Empty)] ``Аксиома пустого множества'':
+                \[\exists \varnothing\; \forall u\, (u \notin \varnothing)\]
+            \item[Pair)] ``Аксиома пары'':
+                \[\forall X\, \forall Y\; \exists Z (\forall u\, (u \in Z \leftrightarrow (u = X \vee u = Y)))\]
+                Обозначение: $Z = \{X, Y\}$.
+            \item[Sep)] ``Схема аксиом выделения'':
+                \[\forall \Phi(x)\quad \forall X\, \exists Y\; \forall u\, (u\in Y \leftrightarrow (u \in X \wedge \Phi(u)))\]
+                Обозначение: $Y = \{u \in X \mid \Phi(u)\}$.
+
+                \begin{corollary*}
+                    Операторы
+                    \begin{align*}
+                        X \cap Y &:= \{u \mid u \in X \wedge u \in Y\}\\
+                        X \setminus Y &:= \{u \in X \mid u \notin Y\}\\
+                        \bigcap X &:= \{u \mid \forall v \in X \quad u \in v\}
+                    \end{align*}
+                    определены корректно.
+                \end{corollary*}
+            \item[Union)] ``Аксиома объединения'':
+                \[\forall X\, \exists Y\; \forall u\, (u \in Y \leftrightarrow \exists v\, (v \in X \wedge u \in v))\]
+                Обозначение: $Y=\bigcap X$.
+
+                \begin{corollary*}
+                    Оператор
+                    \[
+                        X \cup Y := \bigcup \{X, Y\} = \{u \mid u \in X \wedge u \in Y\}
+                    \]
+                    определён корректно.
+                \end{corollary*}
+            \item[Power)] Пусть $x \subseteq y := \forall v\, \{v \in x \rightarrow v \in y\}$. ``Аксиома степени'':
+                \[
+                    \forall X\, \exists Y\; \forall u\, (u \in Y \leftrightarrow u \subseteq X)
+                \]
+                Обозначение: $Y = \Pcal(X) := \{u \mid u \subseteq X\}$.
+                $\Pcal(X)$ --- ``множество-степень X'' или ``булеан X''.
+
+                \begin{definition}
+                    Упорядоченная пара --- это объект от некоторых $X_1$ и $Y_1$, который равен другому такому объекту от $X_2$ и $Y_2$ тогда и только тогда, когда $X_1 = X_2 \wedge Y_1 = Y_2$.
+                \end{definition}
+
+                \begin{definition}
+                    \emph{Декартово произведение} $X$ и $Y$ ($X \times Y$) --- $\{(x; y) \mid x \in X \wedge y \in Y\}$. 
+                \end{definition}
+
+                \begin{remark}
+                    Можно нелсожно показать, что декартово произведение определено корректно.
+                \end{remark}
+            \item[Inf)] Пусть $\Ind(X) := \varnothing \in X \wedge \forall u\, (u \in X \wedge u \cup \{u\} \in X)$. Если $\Ind(X)$, то $X$ называется индуктивным. ``Аксиома бесконечности'': существует индуктивное множество.
+            \item[Repl)] ``Схема аксиом подстановки'':
+                \begin{align*}
+                    \forall \Phi(x, y)\;&\\
+                    &\forall x\, \forall y_1\, \forall y_2\, ((\Phi(x, y_1) \wedge \Phi(x, y_2)) \rightarrow y_1 = y_2) \rightarrow\\
+                    &\forall X\, \exists Y\; \forall y\, (y \in Y \leftrightarrow \exists x (x \in X \wedge \Phi(x, y)))
+                \end{align*}
+            \item[Reg)] ``Аксиома регулярности'':
+                \[
+                    \forall X\, (X\neq \varnothing \rightarrow \exists u\, (u\in X \wedge X \cap u = \varnothing))
+                \]
+        \end{itemize}
+    \end{definition}
+
+    \section{Отношения.}
+
+    \begin{definition}
+        \emph{Бинарное (или двухместное) отношение} $R$ между $X$ и $Y$ --- подмножество $X \times Y$. Если $Y = X$, $R$ называется \emph{бинарным (или двухместным) отношением} на $X$.\\
+        Обозначение: $(x, y) \in R \Leftrightarrow xRy$.
+    \end{definition}
+
+    \begin{definition}
+        \begin{align*}
+            \dom(R) &:= \{u \in X \mid \exists v\quad uRv\}&& \text{``область определения $R$''}\\
+            \range(R) &:= \{v \in Y \mid \exists u\quad uRv\}&& \text{``область значений $R$''}\\
+            R[U] &:= range(R \cap (U \times Y))\\
+            R^{-1} &:= \{(y, x) \mid (x, y) \in R\}
+        \end{align*}
+    \end{definition}
+
+    \begin{remark}
+        \begin{align*}
+            \range&(R) =& \dom&(R^{-1}) =& R&[X]\\
+            \range&(R^{-1}) =& \dom&(R) =& R^{-1}&[Y]
+        \end{align*}
+    \end{remark}
+
+    \begin{definition}
+        Бинарные отношнения можно естественным образом комбинировать: для любых отношений $R$ и $Q$ между $X$ и $Y$, $Y$ и $Z$ соответственно отношение
+        \[
+            S = R \circ Q := \{(x, z) \in X \times Z \mid \exists y: xRy \wedge yQz\}
+        \]
+        называется композицией $R$ и $Q$.
+    \end{definition}
+
+    \begin{definition}
+        \emph{Тождественное отображение} на $X$ --- $id_X := \{(x, x) \mid x \in X\}$.
+    \end{definition}
+
+    \begin{remark}
+        Тождественное отображение при композиции (не важно, правой или левой) с другим отношением не меняет его. 
+    \end{remark}
+
+    \begin{definition}
+        Отношение $R$ между $X$ и $Y$ называется функциональным, если
+        \[
+            \forall x\; \forall y_1\, \forall y_2\, ((xRy_1 \wedge xRy_2) \rightarrow y_1 = y_2).
+        \]
+    \end{definition}
+
+    \begin{definition}
+        \emph{Функция} из $X$ в $Y$ --- функциональное отношение $R$ между $X$ и $Y$, в котором $\dom(R)=X$.
+    \end{definition}
 \end{document}
