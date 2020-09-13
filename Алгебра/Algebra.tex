@@ -37,7 +37,7 @@
             \item[$M_1$)] $\forall a, b, c \in M: (a \cdot b) \cdot c = a \cdot (b \cdot c)$ --- ассоциативность умножения
             \item[$M_2$)] $\forall a \in M: a \cdot 1 = a = 1 \cdot a$ --- нейтральный по умножению элемент
             \item[$M_3$)] $\forall a, b \in M: a \cdot b = b \cdot a$ --- коммутативность умножения
-            \item[$M_4$)] $\forall a \in M: \exists a^{-1}: a \cdot a^{-1} = 1 = a^{-1} \cdot a$ --- существование обратного
+            \item[$M_4$)] $\forall a \in M \setminus \{0\}: \exists\, a^{-1}: a \cdot a^{-1} = 1 = a^{-1} \cdot a$ --- существование обратного
         \end{itemize}
         По этим аксиомам определим следующие понятия:
         \begin{itemize}
@@ -120,7 +120,7 @@
     \end{statement}
 
     \begin{statement}
-        $a \sim b \Leftrightarrow \exists \text{обратимый} \varepsilon: a = \varepsilon b$.
+        $a \sim b \Leftrightarrow \exists \text{ обратимый } \varepsilon: a = \varepsilon b$.
     \end{statement}
 
     \begin{proof}
@@ -128,8 +128,8 @@
 
         Пусть $a = \varepsilon b$, где $\varepsilon$ обратим. Значит:
         \begin{enumerate}
-            \item $b\sim a$;
-            \item $\exists \delta: \delta\varepsilon = 1$, значит $\delta a = \delta \varepsilon b = b$, значит $a \sim b$.
+            \item $b\mid a$;
+            \item $\exists \delta: \delta\varepsilon = 1$, значит $\delta a = \delta \varepsilon b = b$, значит $a \mid b$.
         \end{enumerate}
         Таким образом $a \sim b$.
     \end{proof}
