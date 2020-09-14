@@ -1,0 +1,59 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{my_math}
+
+\title{Алгебра. Практика.}
+\author{А. В. Щеголёв}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    \begin{definition}
+        Кольцо $R$ называется \emph{Евклидовым}, если существует $\phi: R\setminus \{0\} \to \NN \setminus \{0\}$ --- \emph{норма Евклида}, что $\forall a, b \in R\; \exists q, r \in R: a = bq + r, \phi(r) < \phi(b)$.
+    \end{definition}
+
+    \begin{exercise}\ 
+        \begin{enumerate}
+            \item Пусть дана какая-то норма Евклида $\phi$ на кольце $R$. Тогда эту норму можно докрутить так, что для новой нормы $\phi'$ верно, что $\phi'(ab) \geqslant \phi'(a)$.
+            \item Для $\phi'$ верно, что для всех обратимых элементов $\phi'$-значения равны.
+        \end{enumerate}
+    \end{exercise}
+
+    \begin{definition}
+        \emph{Общим делителем} $a$ и $b$ называется $c$, что $c \mid a$ и $c \mid b$. \emph{Наибольшим общим делителем (НОД)} $a$ и $b$ называется общий делитель $a$ и $b$, делящийся на все другие общие делители $a$ и $b$.
+    \end{definition}
+
+    \begin{theorem}[алгоритм Евклида]
+        В Евклидовом кольце у любых двух чисел есть НОД.
+    \end{theorem}
+
+    \begin{proof}
+        Заметим, что $(a, b) = (a + bk, b)$.
+        
+        Пусть даны $a$ и $b$. Предположим, что $\phi(a) \geqslant \phi(b)$, иначе поменяем их местами. Тем самым по аксиоме Евклида найдутся $q$ и $r$, что $a = bq + r$, а $\phi(r) < \phi(b) \leqslant \phi(a)$, значит $\phi(a) + \phi(b) > \phi(r) + \phi(b)$. При этом $(a, b) = (r, b)$. Значит бесконечно $\phi(a) + \phi(b)$ не может бесконечнго уменьшаться, так как натурально, значит за конечное кол-во переходов мы получим, что одно из чисел делит другое, а значит НОД стал определён.
+    \end{proof}
+
+    \begin{exercise}
+        $\sigma \left(\begin{smallmatrix}
+            a & 1 & 0\\ b & 0 & 1
+        \end{smallmatrix}\right) = \left(\begin{smallmatrix}
+            d \\ 0
+        \end{smallmatrix}\,\sigma\,\right)$. Чему может быть равно $\sigma_{2*}$?
+    \end{exercise}
+
+    \begin{exercise}
+        Докажите, что Гауссова норма --- норма Евклида.
+    \end{exercise}
+
+    \begin{exercise}
+        Найти $(17 + 23i, 13 - 21i)$.
+    \end{exercise}
+
+    \begin{exercise}
+        Ждите позже...
+    \end{exercise}
+
+    \begin{exercise}
+        Найти все решения $17 x + 24 y = 3$ над $\ZZ$.
+    \end{exercise}
+\end{document}
