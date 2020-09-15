@@ -9,6 +9,7 @@
 \DeclareMathOperator{\Ind}{Ind}
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\range}{range}
+\DeclareMathOperator{\Min}{Min}
 
 \begin{document}
     \maketitle
@@ -145,6 +146,132 @@
     \end{definition}
 
     \begin{definition}
-        \emph{Функция} из $X$ в $Y$ --- функциональное отношение $R$ между $X$ и $Y$, в котором $\dom(R)=X$.
+        \emph{Функция} из $X$ в $Y$ --- функциональное отношение $R$ между $X$ и $Y$, в котором $\dom(R)=X$. Обозначение: $R: X \to Y$.
     \end{definition}
+
+    \begin{definition}
+        \emph{Ограничение} или \emph{сужение} функции $f: X \to Y$ на $U \subseteq X$ --- функция $f_{\upharpoonright U} := f \cap (U \times Y)$.
+        
+        Если $f: X \to Y$ и $g: U \to Y$, где $U \subseteq X$, таковы, что $f_{\upharpoonright U} = g$, то $f$ называется \emph{расширением} $g$, а $g$ --- \emph{органичением} $f$.
+    \end{definition}
+
+    \begin{definition}
+        $Y^X := \{f: X \to Y\}$.
+    \end{definition}
+
+    \begin{definition}
+        Функция $f: X \to Y$ называется 
+        \begin{itemize}
+            \item \emph{сюръекцией},  если $range(f) = Y$;
+            \item \emph{инъекцией}, если $f^{-1}$ функционально;
+            \item \emph{биекцией}, если $f$ сюръективно и инъективно.
+        \end{itemize}
+    \end{definition}
+
+    \begin{itemize}
+        \item[C)] ``Аксиома выбора'':
+            \[\forall X (\varnothing \notin X \to \exists f (f: X \to \bigcup X \wedge \forall u \in X (f(u) \in u)))\]
+    \end{itemize}
+
+    \section{Натуральные числа и индукция}
+
+    Важным следствием Inf является
+    \begin{align*}
+        \exists X (\Ind(X) \wedge \forall Y (\Ind(Y) \to X \subseteq Y))&& \text{(Nat)}
+    \end{align*}
+
+    Nat описывает минимальное по включению индуктивное множество --- $\NN$, $\aleph_0$ или $\omega$.
+
+    \begin{proof}[Вывод Nat из Inf]
+        Пусть есть какое-то индуктивное $X_0$. Тогда рассмотрим
+        \[\NN := \{x \in X_0 \mid \forall X (\Ind(X) \to x \in X)\}\]
+
+        По построению $\Ind(X) \rightarrow \NN \subseteq X$. Также $\Ind(\NN)$.
+    \end{proof}
+
+    \begin{definition}
+        Определим \emph{функцию последователя} $s: \NN \to NN$ как
+        \[s := \{(n, m) \in \NN \times \NN \mid m = n \cup \{n\}\}\]
+        Вместо $s(n)$ часто пишут $n+1$.
+    \end{definition}
+
+    \begin{definition}
+        \emph{(Естественный) порядок} на $\NN$ --- $< := \{(n, m) \in \NN^2 \mid n \in m\}$.
+    \end{definition}
+
+    \begin{remark}
+        Для всех $n, m \in \NN$ верно:
+        \begin{enumerate}
+            \item $\neg (n < 0)$;
+            \item $n < m + 1 \leftrightarrow (n < m \vee n = m)$.
+        \end{enumerate}
+    \end{remark}
+
+    \begin{theorem}[принцип индукции]
+        Пусть $X$ удовлетворяет условию
+        \[0 \in X \wedge \forall n \in \NN (n \in X \rightarrow n + 1 \in X).\]
+        Тогда $\NN \subseteq X$.
+    \end{theorem}
+
+    \begin{proof}
+        Из условия на $X$ следует, что $\NN \cap X$ индуктивно. Тогда из определения $\NN$ следует, что $\NN \subseteq \NN \cap X$, значит $X = \NN$.
+    \end{proof}
+
+    \begin{remark}
+        В качестве $X$ могут быть $\{n \in \NN \mid \Phi(n)\}$.
+    \end{remark}
+
+    \begin{corollary}
+        $\forall \forall n \in \NN$ верно $n \subseteq \NN$.
+    \end{corollary}
+
+    \begin{theorem}[возвратная индукция]
+        Пусть дан $X$, что $\forall n \in \NN (\forall m < n\; m \in X \rightarrow n \in X)$. Тогда $\NN \subseteq X$.
+    \end{theorem}
+
+    \begin{proof}
+        Докажем, что $\forall n \in \NN n \subseteq X$, по индукции. База для $0$ очевидна. Шаг очевиден, так как $n \subseteq X$, значит $n \in X$, значит $n + 1 \subseteq X$.  
+    \end{proof}
+
+    \begin{definition}
+        $\Min(X) := \{x \in X \mid \neg \exists u \in X u \in x\}$.
+    \end{definition}
+
+    \begin{theorem}[принцип минимального элемента]
+        Если $X \subset \NN$ и $X \neq \varnothing$, то $\Min(X) \neq \varnothing$.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $\Min(X) = \varnothing$. Возьмём $Y := \NN \setminus X$. Заметим, что
+        \[\forall n \in \NN (\forall m < n\; m \in Y \rightarrow n \in Y)\]
+        Тогда по принципу возвратной индукции $Y = \NN$, а тогда $X = \varnothing$ --- противоречие.
+    \end{proof}
+
+    \begin{theorem}[о рекурсии]
+        Пусть есть $y_0 \in Y$ и $h: \NN \times Y \to Y$. Тогда существует и единственная $f: \NN \to Y$ такая, что для любого $n \in \NN$
+        \[f(n) = \left\{\begin{aligned}
+            &y_0&&\text{если }n = 0\\
+            &h(m, f(m))&&\text{если }n = m + 1
+        \end{aligned}\right.\]
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $k \in \NN$. Тогда будем называть функцию $f: k+1 \to Y$ \emph{правильной}, если условие в определении рекурсии верно для всех $n \in k + 1$. Также рассмотрим
+        \[S := \{k \in \NN \mid \text{сущесвтует единственная правильная $f: k + 1 \to Y$}\}\]
+        Будем обозначать для каждого $k \in S$ через $f_k$ соответствующую правильную функцию из $k+1$ в $Y$.
+
+        Докажем по индукции, что $S = \NN$.
+
+        \textbf{База.} Очевидно, $\{(0, y_0)\}$ --- единственная правильная функция из $0+1$ в $Y$. Поэтому $0 \in S$.
+
+        \textbf{Шаг.} Легко заметить, что сужение любой правильной функции на $k+2$ на множество $k+1$ правильно. Поэтому все правильные функции на $k+2$ определены на $k+1$ как $f_k$. Тогда значение в $k+1$ определяется однозначно, значит правильная функция на $k+2$ существует и единственна. 
+    \end{proof}
+
+    \begin{theorem}[о рекурсии, парамметризованная]
+        Пусть $g_0 \in Y^X$ и $h: X \times \NN \times Y \to Y$. Тогда существует и единственна $f: X \times \NN \to Y$, что $\forall x \in X, n \in \NN$
+        \[f(x, n) = \left\{\begin{aligned}
+            &g_0(x)&&\text{если }n=0\\
+            &h(x, m ,f(x, m))&&\text{если }n=m+1
+        \end{aligned}\right.\]
+    \end{theorem}
 \end{document}
