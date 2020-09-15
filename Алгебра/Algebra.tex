@@ -170,4 +170,82 @@
     \begin{example}
         В $\ZZ$ есть только $m\ZZ$ для каждого $m \in \NN \cup \{0\}$.
     \end{example}
+
+    \begin{definition}
+        Пусть $P$ --- кольцо. $I\subseteq P$ называется \emph{правым идеалом}, если
+        \begin{enumerate}
+            \item $0 \in I$;
+            \item $a, b \in I \Rightarrow a + b \in I$;
+            \item $a \in I \Rightarrow -a \in I$;
+            \item $a \in I, r \in R \Rightarrow ar \in I$.
+        \end{enumerate}
+        $I$ называется \emph{левым идеалом}, ессли аксиому 4 заменить на ``$a \in I, r \in R \Rightarrow ra \in I$''. Также $I$ называется \emph{двухсторонним идеалом}, если является левым и правым идеалом.
+    \end{definition}
+
+    \begin{remark}
+        В коммутативном кольце (и в частности в области целостности) все идеалы двухсторонние.
+    \end{remark}
+
+    \begin{example}
+        Пусть дано кольцо $P$ и фиксированы $a_1, \dots, a_n \in P$. Тогда $a_1 P + \dots + a_n P = \{a_1 x_1 + \dots + a_n x_n \mid x_1, \dots, x_n \in P\}$ есть правый (конечнопорождённый) идеал, попрождённый элементами $a_1, \dots, a_n$. Аналогично $P a_1 + \dots + P a_n = \{x_1 a_1 + \dots + x_n a_n \mid x_1, \dots, x_n \in P\}$ --- левый (конечнопорождённый) идеал, попрождённый элементами $a_1, \dots, a_n$.
+    \end{example}
+
+    \begin{definition}
+        \emph{Область главных идеалов} --- область целостности, где все идеалы главные.
+    \end{definition}
+
+    \begin{definition}
+        Элемент $p$ области целостности $R$ назвыается \emph{неприводимым}, если $\forall d \mid p$ либо $d \sim 1$, либо $d \sim p$.
+    \end{definition}
+    
+    \begin{definition}
+        Элемент $p$ области целостности $R$ назвыается \emph{простым}, если из условия $p \mid ab$ следует, что $p \mid a$ или $p \mid b$.
+    \end{definition}
+
+    \begin{statement}
+        Любое простое неприводимо.
+    \end{statement}
+
+    \begin{statement}
+        В области главных идеалов наприводимые просты.
+    \end{statement}
+
+    \begin{definition}
+        Область целостности $R$ называется \emph{Евклидовой}, если существует функция (``Евклидова норма'') $N: R\setminus\{0\} \to \NN$, что
+        \[\forall a, b \neq 0\; \exists q, r: a = bq + r \wedge (r = 0 \vee N(r) < N(b))\]
+    \end{definition}
+
+    \begin{theorem}
+        Евклидово кольцо --- область главных идеалов.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть наше кольцо --- $R$. Если $I = \{0\}$, то $I = 0R$. Иначе возьмём $d \in I \setminus \{0\}$ с минимальной Евклидовой нормой. Тогда $\forall a \in I$ либо $d \mid a$, либо $\exists q, r: a = dq - r$. Во втором случае $dq \in I$, $r = a - dq \in I$, но $N(r) < N(d)$ --- противоречие. Значит $I = dR$.
+    \end{proof}
+
+    \begin{definition}
+        \emph{Общим делителем} $a$ и $b$ называется $c$, что $c \mid a$ и $c \mid b$. \emph{Наибольшим общим делителем (НОД)} $a$ и $b$ называется общий делитель $a$ и $b$, делящийся на все другие общие делители $a$ и $b$.
+    \end{definition}
+
+    \begin{theorem}[алгоритм Евклида]
+        В Евклидовом кольце у любых двух чисел есть НОД.
+    \end{theorem}
+
+    \begin{proof}
+        Заметим, что $(a, b) = (a + bk, b)$.
+        
+        Пусть даны $a$ и $b$. Предположим, что $\phi(a) \geqslant \phi(b)$, иначе поменяем их местами. Тем самым по аксиоме Евклида найдутся $q$ и $r$, что $a = bq + r$, а $\phi(r) < \phi(b) \leqslant \phi(a)$, значит $\phi(a) + \phi(b) > \phi(r) + \phi(b)$. При этом $(a, b) = (r, b)$. Значит бесконечно $\phi(a) + \phi(b)$ не может бесконечнго уменьшаться, так как натурально, значит за конечное кол-во переходов мы получим, что одно из чисел делит другое, а значит НОД стал определён.
+    \end{proof}
+
+    \begin{theorem}[линейное представление НОД]
+        $\forall a, b \in R\; \exists p, q \in R: ap + bq = (a, b)$.
+    \end{theorem}
+
+    \begin{proof}
+        Докажем по индукции по $N(a) + N(b)$.
+
+        \textbf{База.} $N(a) + N(b)=0$. Значит $N(a)=N(b)=0$, а тогда $a$ и $b$ не могут не делиться друг на друга, значит НОД --- любой из них. А в этом случае разложение очевидно.
+        
+        \textbf{Шаг.} WLOG $N(a) \geqslant N(b)$. Если $b \mid a$, то $b$ --- НОД, а тогда разложение очевидно. Иначе по аксиоме Евклида $\exists q, r: a = bq + r$. Заметим, что $(a, b) = (b, r) = d$, но $N(a) + N(b) \geqslant N(b) + N(b) > N(b) + N(r)$. Таким образом по предположению индукции для $b$ и $r$ получаем, что $d = bk + rl$ для некоторых $k$ и $l$, значит $d = bk + (a - bq)l = al + b(k - ql)$.
+    \end{proof}
 \end{document}
