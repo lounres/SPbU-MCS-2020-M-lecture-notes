@@ -19,6 +19,8 @@
         \item М. Спивак ``Математический анализ на многообразиях''
     \end{itemize}
 
+    \section{Множества, аксиоматика и вещественные числа.}
+
     Мы начинаем с теории множеств.
 
     \begin{definition}\ 
@@ -137,5 +139,126 @@
 
     \begin{remark}
         Если в теореме \ref{th_inter_segments} $b_i-a_i$ ``сходится к 0'', т.е. $\forall \varepsilon > 0\, \exists n\in\NN: \forall i > n\, b_i-a_i < \varepsilon$, то пересечение всех отрезков состоит из ровно одного элемента.
+    \end{remark}
+
+    \begin{theorem}[индукция на вещественных числах]
+        Пусть дано множество $X \subseteq [0;1]$, что
+        \begin{enumerate}
+            \item $0 \in X$;
+            \item $\forall x \in X\; \exists \varepsilon > 0: U_\varepsilon(x) \cap [0;1] \subseteq X$;
+            \item $\forall Y \subseteq X\; \sup(Y) \in X$.
+        \end{enumerate}
+        Тогда $X = [0;1]$.
+    \end{theorem}
+
+    \begin{proof}
+        Предположим противное: $X \neq [0;1]$. Рассмотрим $Z := [0;1] \setminus X$ ($Z \neq \varnothing$!) и $Y := \{y \in [0;1] \mid y < Z\}$ ($Y \neq \varnothing$!). Заметим, что $Y \subseteq X$ и $\sup(Y) = \inf(Z) = t$. Тогда $t \in X$ по второму условию. Значит для некоторого $\varepsilon > 0$ верно, что $U_{\varepsilon}(t) \cap [0;1] \in X$, а т.е. $(U_\varepsilon(t) \cap [0;1]) \cap Z = \varnothing$, а тогда $t \neq \inf(Z)$ --- противоречие. Значит $X = [0;1]$.
+    \end{proof}
+
+    \section{Топология прямой, пределы и непрерывность.}
+
+    \begin{definition}
+        \emph{$\varepsilon$-окрестность} точки $x$ (для $\varepsilon > 0$) --- $(x - \varepsilon; x+ \varepsilon)$. Обозначение: $U_\varepsilon(x)$.
+
+        \emph{Проколотая $\varepsilon$-окрестность} точки $x$ --- $(x - \varepsilon; x) \cup (x; x + \varepsilon)$. Обозначение: $V_\varepsilon(x)$.
+    \end{definition}
+
+    \begin{definition}
+        Пусть дано некоторое множество $X \subseteq \RR$. Тогда точка $x \in X$ называется \emph{внутренней точкой множества} $X$, если она содержится в $X$ вместе со своей окрестностью.
+        
+        Само множество $X$ называется \emph{открытым}, если все его точки внутренние.
+    \end{definition}
+
+    \begin{example}
+        Следующие множества открыты:
+        \begin{itemize}
+            \item $(a; b)$;
+            \item $(a; +\infty)$;
+            \item $\RR$;
+            \item $\varnothing$;
+            \item $\bigcup_{i=0}^\infty (a_i; b_i)$ (интервалы не обящательно не должны пересекаться).
+        \end{itemize}
+    \end{example}
+
+    \begin{definition}
+        Пусть дано множесство $X\subseteq \RR$. Точка $x \in \RR$ называется \emph{предельной точкой} множества, если в любой проколотой окрестности $x$ будет какая-либо точка $X$.
+        
+        Множество предельных точек $X$ называется \emph{производным множеством} множества $X$ и обозначается как $X'$.
+
+        Множество $X$ называется замкнутым, если $X \supseteq X'$.
+    \end{definition}
+
+    \begin{definition}
+        Пусть дано множество $X\subseteq \RR$. Если у любой последовательности его точек есть предельная точка из самого множества $X$.
+    \end{definition}
+
+    \begin{definition}
+        \emph{Предел последовательности} $\{x_n\}_{n=0}^\infty$ --- такое число $x$, что для любой окрестности $x$ эта последовательность с некоторого момента будет лежать в этой окрестности:
+        \[\forall \varepsilon > 0\; \exists N \in \NN: \forall n \geqslant N\quad x_n \in U_\varepsilon(x)\]
+        Обозначение: $\lim \{x_n\}_{n=0}^\infty = x$.
+
+        \emph{Предельная точка последовательности} $\{x_n\}_{n=0}^\infty$ --- такое число $x$, что в любой его окрестности после любого момента появится элемент данной последовательности:
+        \[\forall \varepsilon > 0\, \forall N \in \NN\; \exists n > N: \quad x_n \in U_\varepsilon(x)\]
+    \end{definition}
+
+    \begin{definition}
+        \emph{Предел} функции $f: X \to \RR$ при в точке $x$ --- такое значение $y$, что
+        \[\forall \varepsilon > 0\, \exists \delta > 0: f(V_\delta(x) \cap X) = U_\varepsilon(y)\]
+        Обозначение: $\lim\limits_{t \to x} f(t) = y$.
+    \end{definition}
+
+    \begin{definition}
+        Функция $f: X \to \RR$ называется \emph{непрерывной в точке} $x$, если $\lim\limits_{t \to x} f(t) = f(x)$. 
+    \end{definition}
+
+    \begin{statement}
+        Для последовательностей $\{x_n\}_{n=0}^\infty$ и $\{y_n\}_{n=0}^\infty$ верно, что
+        \begin{enumerate}
+            \item $\lim \{x_n\}_{n=0}^\infty + \lim \{y_n\}_{n=0}^\infty = \lim \{x_n + y_n\}_{n=0}^\infty$
+            \item $\lim \{x_n\}_{n=0}^\infty \cdot \lim \{y_n\}_{n=0}^\infty = \lim \{x_n y_n\}_{n=0}^\infty$
+            \item $\frac{1}{\lim \{x_n\}_{n=0}^\infty} = \lim \{\frac{1}{x_n}\}_{n=0}^\infty$ (если $\lim \{x_n\}_{n=0}^\infty \neq 0$)
+        \end{enumerate}
+        и одна из сторон равенства существует тогда и только тогда, когда существует другая (кроме случая во втором пункте, когда один из пределов равен $0$).
+    \end{statement}
+
+    \begin{statement}
+        Для функций $f: \RR \to \RR$ и $g: \RR \to \RR$ верно, что
+        \begin{enumerate}
+            \item $\lim\limits_{x \to a} f(x) + \lim\limits_{x \to a} g(x) = \lim\limits_{x \to a} (f + g)(x)$
+            \item $\lim\limits_{x \to a} f(x) \cdot \lim\limits_{x \to a} g(x) = \lim (fg)(x)$
+            \item $\frac{1}{\lim\limits_{x \to a} f(x)} = \lim\limits_{x \to a} (\frac{1}{f})(x)$ (если $\lim\limits_{x \to a} f(x) \neq 0$)
+            \item $\lim\limits_{y \to \lim\limits_{x \to a} g(x)} f(y) = \lim\limits_{x \to a} (f \circ g)(x)$
+        \end{enumerate}
+        и одна из сторон равенства существует тогда и только тогда, когда существует другая (кроме случая во втором пункте, когда один из пределов равен $0$).
+    \end{statement}
+
+    \begin{definition}
+        Последовательность $\{x_n\}_{n=0}^\infty$ \emph{ассимптотически больше} последовательности $\{y_n\}_{n=0}^\infty$, если $x_n > y_n$ для всех натуральных $n$, начиная с некоторого. Обозначение: $\{x_n\}_{n=0}^\infty \succ \{y_n\}_{n=0}^\infty$.
+
+        Аналогично определяются \emph{ассимптотически меньше} ($\{x_n\}_{n=0}^\infty \prec \{y_n\}_{n=0}^\infty$), \emph{ассимптотически не больше} ($\{x_n\}_{n=0}^\infty \preccurlyeq \{y_n\}_{n=0}^\infty$) и \emph{ассимптотически не меньше} ($\{x_n\}_{n=0}^\infty \succcurlyeq \{y_n\}_{n=0}^\infty$).
+    \end{definition}
+
+    \begin{statement}\label{stupid_seq_statement_1}
+        Если $\{x_n\}_{n=0}^\infty \succcurlyeq \{y_n\}_{n=0}^\infty$, то $\lim \{x_n\}_{n=0}^\infty \geqslant \lim \{y_n\}_{n=0}^\infty$.
+    \end{statement}
+
+    \begin{statement}\label{stupid_seq_statement_2}
+        Если $\lim \{x_n\}_{n=0}^\infty > \lim \{y_n\}_{n=0}^\infty$, то $\{x_n\}_{n=0}^\infty \succ \{y_n\}_{n=0}^\infty$.
+    \end{statement}
+
+    \begin{statement}[леммма о двух полицейских]\label{stupid_seq_statement_3}
+        Если
+        \[\{x_n\}_{n=0}^\infty \succcurlyeq \{y_n\}_{n=0}^\infty \succcurlyeq \{z_n\}_{n=0}^\infty\]
+        и
+        \[\lim \{x_n\}_{n=0}^\infty = \lim \{z_n\}_{n=0}^\infty = A,\]
+        то предел $\{y_n\}_{n=0}^\infty$ определён и равен $A$.
+    \end{statement}
+
+    \begin{statement}
+        Если $\{x_n\}_{n=0}^\infty \succcurlyeq \{y_n\}_{n=0}^\infty$, $\lim \{x_n\}_{n=0}^\infty = A$, а $\{y_n\}_{n=0}^\infty$, неубывает (с некоторого момента), то предел $\{y_n\}_{n=0}^\infty$ существует и не превосходит $A$.
+    \end{statement}
+
+    \begin{remark}
+        Утверждения \ref{stupid_seq_statement_1}, \ref{stupid_seq_statement_2} и \ref{stupid_seq_statement_3} верны, если заменить последовательности на функции, пределы последовательностей на пределы функций в некоторой точке $x$, а асимптотические неравенства на неравенства на окрестности $x$.
     \end{remark}
 \end{document}
