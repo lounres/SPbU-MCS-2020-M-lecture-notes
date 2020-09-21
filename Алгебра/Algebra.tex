@@ -1,9 +1,14 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{math-text}
 
-\title{Алгебра.}
+\title{Алгебра.\footnote{\textcolor{red}{\bfseries Этот текст содержит критические недочёты. Вы можете помочь исправить их, написав мне \href{mailto:minaevgleb@yandex.ru}{по почте} (minaevgleb@yandex.ru) или \href{https://vk.com/lounres}{в ВКонтакте} (@lounres).}}
+}
 \author{В. А. Петров\\lektorium.tv}
 \date{}
+
+\usepackage{todonotes}
+\setlength{\marginparwidth}{2.5cm}
+\setlength{\textwidth}{470 pt}
 
 \begin{document}
     \maketitle
@@ -23,31 +28,31 @@
 
     \begin{definition}
         Абелева группа --- набор $(M, +: M^2 \to M, 0 \in M)$ с аксиомами:
-        \begin{itemize}
+        \begin{description}
             \item[$A_1$)] $\forall a, b, c \in M: (a + b) + c = a + (b + c)$ --- ассоциативность сложения
             \item[$A_2$)] $\forall a \in M: a + 0 = a = 0 + a$ --- нейтральный по сложению элемент
             \item[$A_3$)] $\forall a, b \in M: a + b = b + a$ --- коммутативность сложения
             \item[$A_4$)] $\forall a \in M: \exists -a: a + (-a) = 0 = (-a) + a$ --- существование противоположного
-        \end{itemize}
+        \end{description}
     \end{definition}
 
     \begin{definition} Опишем следующие аксиомы на наборе $(M, +: M^2 \to M, \cdot: M^2 \to M, 0 \in M, 1 \in M)$:
-        \begin{itemize}
+        \begin{description}
             \item[$D$)] $\forall a, b, k \in M: k(a + b) = ka + kb$, $(a + b)k = ak + bk$ --- дистрибутивность
             \item[$M_1$)] $\forall a, b, c \in M: (a \cdot b) \cdot c = a \cdot (b \cdot c)$ --- ассоциативность умножения
             \item[$M_2$)] $\forall a \in M: a \cdot 1 = a = 1 \cdot a$ --- нейтральный по умножению элемент
             \item[$M_3$)] $\forall a, b \in M: a \cdot b = b \cdot a$ --- коммутативность умножения
             \item[$M_4$)] $\forall a \in M \setminus \{0\}: \exists\, a^{-1}: a \cdot a^{-1} = 1 = a^{-1} \cdot a$ --- существование обратного
-        \end{itemize}
+        \end{description}
         По этим аксиомам определим следующие понятия:
-        \begin{itemize}
-            \item \emph{Кольцо} --- набор $(M, +, \cdot, 0)$, что верны $A_1$, $A_2$, $A_3$, $A_4$ и $D$.
-            \item \emph{Ассоциативное кольцо} --- кольцо с $M_1$.
-            \item \emph{Кольцо с единицей} --- кольцо с $M_2$.
-            \item \emph{Тело} --- кольцо с $M_1$, $M_2$.
-            \item \emph{Поле} --- кольцо с $M_1$, $M_2$, $M_3$, $M_4$.
-            \item \emph{Полукольцо} --- кольцо без $A_4$.
-        \end{itemize}
+        \begin{description}
+            \item[\emph{Кольцо}] --- набор $(M, +, \cdot, 0)$, что верны $A_1$, $A_2$, $A_3$, $A_4$ и $D$.
+            \item[\emph{Ассоциативное кольцо}] --- кольцо с $M_1$.
+            \item[\emph{Кольцо с единицей}] --- кольцо с $M_2$.
+            \item[\emph{Тело}] --- кольцо с $M_1$, $M_2$.
+            \item[\emph{Поле}] --- кольцо с $M_1$, $M_2$, $M_3$, $M_4$.
+            \item[\emph{Полукольцо}] --- кольцо без $A_4$.
+        \end{description}
     \end{definition}
 
     \begin{example}
@@ -179,7 +184,7 @@
             \item $a \in I \Rightarrow -a \in I$;
             \item $a \in I, r \in R \Rightarrow ar \in I$.
         \end{enumerate}
-        $I$ называется \emph{левым идеалом}, ессли аксиому 4 заменить на ``$a \in I, r \in R \Rightarrow ra \in I$''. Также $I$ называется \emph{двухсторонним идеалом}, если является левым и правым идеалом.
+        $I$ называется \emph{левым идеалом}, ессли аксиому 4 заменить на ``$a \in I, r \in R \Rightarrow ra \in I$''. Также $I$ называется \emph{двухсторонним идеалом}, если является левым и правым идеалом, и обозначается как $I \triangleleft P$.
     \end{definition}
 
     \begin{remark}
@@ -193,22 +198,6 @@
     \begin{definition}
         \emph{Область главных идеалов} --- область целостности, где все идеалы главные.
     \end{definition}
-
-    \begin{definition}
-        Элемент $p$ области целостности $R$ назвыается \emph{неприводимым}, если $\forall d \mid p$ либо $d \sim 1$, либо $d \sim p$.
-    \end{definition}
-    
-    \begin{definition}
-        Элемент $p$ области целостности $R$ назвыается \emph{простым}, если из условия $p \mid ab$ следует, что $p \mid a$ или $p \mid b$.
-    \end{definition}
-
-    \begin{statement}
-        Любое простое неприводимо.
-    \end{statement}
-
-    \begin{statement}
-        В области главных идеалов наприводимые просты.
-    \end{statement}
 
     \begin{definition}
         Область целостности $R$ называется \emph{Евклидовой}, если существует функция (``Евклидова норма'') $N: R\setminus\{0\} \to \NN$, что
@@ -247,5 +236,132 @@
         \textbf{База.} $N(a) + N(b)=0$. Значит $N(a)=N(b)=0$, а тогда $a$ и $b$ не могут не делиться друг на друга, значит НОД --- любой из них. А в этом случае разложение очевидно.
         
         \textbf{Шаг.} WLOG $N(a) \geqslant N(b)$. Если $b \mid a$, то $b$ --- НОД, а тогда разложение очевидно. Иначе по аксиоме Евклида $\exists q, r: a = bq + r$. Заметим, что $(a, b) = (b, r) = d$, но $N(a) + N(b) \geqslant N(b) + N(b) > N(b) + N(r)$. Таким образом по предположению индукции для $b$ и $r$ получаем, что $d = bk + rl$ для некоторых $k$ и $l$, значит $d = bk + (a - bq)l = al + b(k - ql)$.
+    \end{proof}
+
+    \begin{definition}
+        Элемент $p$ области целостности $R$ назвыается \emph{неприводимым}, если $\forall d \mid p$ либо $d \sim 1$, либо $d \sim p$.
+    \end{definition}
+    
+    \begin{definition}
+        Элемент $p$ области целостности $R$ назвыается \emph{простым}, если из условия $p \mid ab$ следует, что $p \mid a$ или $p \mid b$.
+    \end{definition}
+
+    \begin{statement}
+        Любое простое неприводимо.
+    \end{statement}
+
+    \begin{proof}
+        Предположим противное, т.е. некоторое простое $p$ представляется в виде произведения неделителей единицы $a$ и $b$. Тогда WLOG $p \mid a$. Значит $p\sim a$, а $b \sim 1$ --- противоречие.
+    \end{proof}
+
+    \begin{statement}
+        В области главных идеалов неприводимые просты.
+    \end{statement}
+
+    \begin{proof}
+        Пусть неприводимое $p$ делит $ab$. Пусть тогда $pR + aR = dR$. В таком случае $d \sim p$, значит либо $d \sim p$, либо $d \sim 1$. Если $d \sim p$, то $p \mid a$. Иначе $px + ay = 1$, значит $pxb + aby = b$. Но $p \mid pxb$ и $p \mid aby$, значит $p \mid b$. Поскольку рассуждение не зависит от $a$ и $b$, то $p$ просто.  
+    \end{proof}
+
+    \begin{definition}\todo{Проверить начиная с этого момента до конца раздела формальные моменты и довести доказательства.}
+        Назовём разложением числа $a$ на неприводимые множители предстваление его в виде произведения $\alpha \prod_{i=1}^n p_i$ с точностью до перестановки членов произведения и домножения их на делители $1$ (т.е. их ассоциативности), где все $p_i$ просты.
+
+        Область целостности называется \emph{факториальным кольцом}, если в нём все ненулевые элементы разложимы на неприводимые множители единственным образом (также говорят, что в области целостности верна \emph{основная теорема арифметики}).
+    \end{definition}
+
+    \begin{statement}
+        В факториальном кольце неприводимые просты.
+    \end{statement}
+
+    \begin{theorem}
+        Область главныых идеалов удовлетворяет условию обрыва цепи главныых идеалов.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть наша область --- $R$. Сначала докажем существование разложения.
+
+        Предположим противное, т.е. существует последовательность $\{a_n\}_{n=0}^\infty$, что $a_{n+1}$ --- собственный делитель $a_n$ (т.е. $a_{n+1} \mid a_n \wedge a_n \nsim a_{n+1}$). Тогда $a_0 R \subsetneq a_1 R \subsetneq a_2 R \subsetneq \dots$. Тогда $\exists x: xR = \bigcup_{n=0}^\infty a_n R$, так как  это объединение --- идеал. Но тогда $x \in a_j R$ для некоторого $j$, а значит $x R \subseteq a_j R$, а тогда $a_{j+1} R \subseteq a_j R$ --- противоречие.
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $R$ --- область целостности. Тогда следующие утверждения равносильны.
+        \begin{enumerate}
+            \item $R$ факториально.
+            \item $R$ удовлетворяет условию обрыва возрастающей цепи главных идеалов.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        Сначала докажем в одну сторону. Пусть $R$ факториально.
+
+        \begin{lemma}
+            Любой неприводимый в $R$ прост.
+        \end{lemma}
+
+        \begin{proof}
+            Пусть $p \mid ab$ для любого неприводимого $p$ и каких-то $a$ и $b$. Тогда имеем $px=ab$ для некоторых $x$, а значит по факториальности, что $a = p_1 \dots p_k$, $b = q_1 \dots q_l$, $x = r_1 \dots r_m$. Тогда имеем два разложения $px=ab$ на простые: $p \cdot r_1 \cdot \dots \cdot r_m$ и $p_1 \cdot \dots \cdot p_k \cdot q_1 \cdot \dots \cdot q_l$. Значит по факториальности оба разложения совпадают, а значит $p$ равно какому-то неприводимому из разложений $a$ и $b$. А значит $p \mid a$ или $p \mid b$, что и означает простоту $p$.
+        \end{proof}
+
+        \begin{lemma}
+            Если $a \mid b$, то разложение на неприводимые в $a$ есть подмножество разложения на неприводимые в $b$.
+        \end{lemma}
+
+        \begin{proof}
+            Пусть $p$ --- неприводимый из разложения $a$. Тогда $p \mid b$, а значит $p$ делит какой-то неприводимый $q$ из разложения $b$, значит $p \sim q$, значит $a' \mid b'$, где $a' p = a$, $b' q = b$. Тогда спуском по кол-ву неприводимых в разложении $a$ получаем требуемое утверждение.
+        \end{proof}
+
+        Пусть нашлась возрастающая последовательность главных иделаов $\{a_n R\}_{n=0}^\infty$, тогда $a_{n+1}$ --- собственный делитель $a_n$ для всех $n$. Тогда разложение на неприводимые $a_0$ является собственным подмножеством разложением $a_n$, а поскольку разложение по определению конечно, то такой последовательности быть не может.
+
+        Теперь докажем в обратную сторону. Пусть $R$ удовлетворяет условию обрыва возрастающей цепи главных идеалов.
+
+        \begin{lemma}
+            $ab \sim cd$, $b\sim d$, значит $a \sim c$.
+        \end{lemma}
+
+        \begin{proof}
+            $b = \varepsilon d$, $ab = \delta cd$, где $\varepsilon \sim \delta \sim 1$. тогда $(a\varepsilon - \delta c)d = a \varepsilon d - \delta cd = ab - \delta cd = 0$, значит $a = \varepsilon^{-1}\delta c$, значит $a \sim c$.
+        \end{proof}
+
+        Теперь предположим имеется $R$, удовлетворяющее условию обрыва возрастающей цепи главных идеалов. Тогда у каждого числа есть неприводимый делитель, так как иначе есть подъём идеалов: $a_0 = a_1 b_1$, $a_1 = a_2 b_2$ и т.д., значит $a_0 R \subsetneq a_1 R \subsetneq a_2 R \subsetneq \dots$ --- противоречие. Тогда и каждое число 
+    \end{proof}
+
+    \section{Идеалы}
+
+    \begin{theorem}
+        Пусть даны $I \triangleleft R$ и $a \sim b \Leftrightarrow a-b \in I$. Тогда $\sim$ --- отношение эквивалентности, а $R/I:=R/\sim$ --- кольцо. 
+    \end{theorem}
+
+    \begin{proof}
+        Проверим, что $\sim$ --- отношение эквивалентности:
+        \begin{itemize}
+            \item $a - a = 0 \in I$, значит $a \sim a$;
+            \item $a\sim b$, значит $a - b \in I$, значит $b-a = -(a - b) \in I$, значит $a \sim a$;
+            \item $a\sim b$, $b\sim c$, значит $a-b \in I$, $b - c \in I$, значит $a-c = (a-b) + (b-c) \in I$, значит $a \sim c$.
+        \end{itemize}
+
+        Определим на $R/I$ операции сложения и умножения, нуля, противоположного, единицы и обратного:
+        \begin{itemize}
+            \item $[a] + [b] := [a + b]$;
+            \item $[a] \cdot [b] := [a \cdot b]$;
+            \item $0 := [0] = I$;
+            \item $-[a] := [-a]$;
+            \item $1 := [1]$;
+            \item $[a]^{-1} := [a^{-1}]$.
+        \end{itemize}
+        Покажем, что $R/I$ --- кольцо:
+        \begin{description}
+            \item[$A_1$)] $\forall a, b, c \in R: ([a] + [b]) + [c] = [a + b] + [c] = [(a + b) + c] = [a + (b + c)] = [a] + [b + c] = [a] + ([b] + [c])$
+            \item[$A_2$)] $\forall a \in R: [a] + [0] = [a + 0] = a = [0 + a] = [0] + [a]$
+            \item[$A_3$)] $\forall a, b \in R: [a] + [b] = [a + b] = [b + a] = [b] + [a]$
+            \item[$A_4$)] $\forall a \in R: [a] + -[a] = [a] + [-a] = [a + (-a)] = [0] = [(-a) + a] = [-a] + [a] = -[a] + [a]$
+            \item[$D$)] $\forall a, b, k \in R: [k]([a] + [b]) = [k][a + b] = [k(a + b)] = [ka + kb] = [ka] + [kb] = [k][a] + [k][b]$, $([a] + [b])[k] = [a + b][k] = [(a + b)k] = [ak + bk] = [ak] + [bk] = [a][k] + [b][k]$
+            \item[$M_1$)] $\forall a, b, c \in R: ([a] \cdot [b]) \cdot [c] = [a \cdot b] \cdot [c] = [(a \cdot b) \cdot c] = [a \cdot (b \cdot c)] = [a] \cdot [b \cdot c] = [a] \cdot ([b] \cdot [c])$
+            \item[$M_2$)] $\forall a \in R: [a] \cdot [1] = [a \cdot 1] = [a] = [1 \cdot a] = [1] \cdot [a]$
+            \item[$M_3$)] $\forall a, b \in R: [a] \cdot [b] = [a \cdot b] = [b \cdot a] = [b] \cdot [a]$
+            \item[$M_4$)] $\forall a \in R \setminus \{0\}: [a] \cdot [a]^{-1} = [a] \cdot [a^{-1}] = [a \cdot a^{-1}] = [1] = [a^{-1} \cdot a] = [a^{-1}] \cdot [a] = [a]^{-1} \cdot [a]$
+        \end{description}
+
+        \begin{remark}
+            Доказательство для классов эквивалентности каждой аксиомы основывалось только на соответсвующей аксиоме и определениях ранее.
+        \end{remark}
     \end{proof}
 \end{document}
