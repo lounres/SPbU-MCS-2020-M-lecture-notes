@@ -274,4 +274,20 @@
             &h(x, m ,f(x, m))&&\text{если }n=m+1
         \end{aligned}\right.\]
     \end{theorem}
+
+    \begin{proof}
+        Рассмотрим для каждого $x \in X$ функцию $h_x: \NN \times Y \to Y, (n, y) \mapsto h(x, n, y)$. Тогда по теореме о рекурсии есть $f_x: \NN \to Y$, что
+        \[f_x(n) = \left\{\begin{aligned}
+            &g_0(x)&&\text{если $n=0$}\\
+            &h_x(m, f_x(m))&&\text{если $n=m+1$}
+        \end{aligned}\right.\]
+        Тогда определим $f: X \times \NN \to Y, (x, n) \mapsto f_x(n)$. В этом случае
+        \[f(x, n) = f_x(n) = \left\{\begin{aligned}
+            &g_0(x)&&\text{если $n=0$}\\
+            &h_x(m, f_x(m))&&\text{если $n=m+1$}
+        \end{aligned}\right.=\left\{\begin{aligned}
+            &g_0(x)&&\text{если $n=0$}\\
+            &h(x, m, f(x, m))&&\text{если $n=m+1$}
+        \end{aligned}\right.\]
+    \end{proof}
 \end{document}
