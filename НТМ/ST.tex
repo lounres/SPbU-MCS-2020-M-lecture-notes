@@ -150,9 +150,9 @@
     \end{definition}
 
     \begin{definition}
-        \emph{Ограничение} или \emph{сужение} функции $f: X \to Y$ на $U \subseteq X$ --- функция $f_{\upharpoonright U} := f \cap (U \times Y)$.
+        \emph{Ограничение} или \emph{сужение} функции $f: X \to Y$ на $U \subseteq X$ --- функция $f\upharpoonright_U := f \cap (U \times Y)$.
         
-        Если $f: X \to Y$ и $g: U \to Y$, где $U \subseteq X$, таковы, что $f_{\upharpoonright U} = g$, то $f$ называется \emph{расширением} $g$, а $g$ --- \emph{органичением} $f$.
+        Если $f: X \to Y$ и $g: U \to Y$, где $U \subseteq X$, таковы, что $f\upharpoonright_U = g$, то $f$ называется \emph{расширением} $g$, а $g$ --- \emph{органичением} $f$.
     \end{definition}
 
     \begin{definition}
@@ -289,5 +289,158 @@
             &g_0(x)&&\text{если $n=0$}\\
             &h(x, m, f(x, m))&&\text{если $n=m+1$}
         \end{aligned}\right.\]
+    \end{proof}
+
+
+    \begin{remark}
+        Заметим, что с помощью ткоремы о параметризованной рекурсии можно определить сложение, умножение и возведение в степень на натуральных числах.
+    \end{remark}
+
+    \begin{definition}
+        Несложно заметить, что функциональные отношения $R \subseteq X \times Y$ --- функции из подмножества $X$ в $Y$. Поэтому будем называть их \emph{частичными функциями} и обозначать как $R: \subseteq X \to Y$.
+    \end{definition}
+
+    \begin{theorem}[о рекурсии, частичной]
+        Пусть $y_0 \in Y$ и $h: \subseteq \NN \times Y \to Y$. Тогда существует и единственна $f: \subseteq \NN \to Y$, что
+        \begin{itemize}
+            \item для любого $n \in \dom(f)$,
+                \[f(n) = \left\{\begin{aligned}
+                    &y_0 && \text{если $n = 0$}\\
+                    &h(m, f(m)) && \text{если $n = m + 1$}
+                \end{aligned}\right.\]
+            \item либо $\dom(f) = \NN$, либо $\dom(f) = k + 1$ для некоторого $k \in \NN$, что $(k, f(k)) \notin \dom(h)$.
+        \end{itemize}
+    \end{theorem}
+
+    \begin{proof}
+        Зафиксируем некоторое $\text{ы} \notin Y$ и положим $Y' := Y \cup \{\text{ы}\}$. Теперь расширим $h$ до $h': \NN \times Y' \to Y'$ следующим образом:
+        \[h'(n, y') := \left\{\begin{aligned}
+            &h(n, y') && \text{если $(n, y') \in \dom(h)$}\\
+            &\text{ы} && \text{иначе}
+        \end{aligned}\right.\]
+        В силу теоремы о рекурсии существует и единственна $f': \NN \to Y'$ такая, что для любого $n \in \NN$,
+        \[f'(n) = \left\{\begin{aligned}
+            &y_0 && \text{если $n=0$}\\
+            &h'(m, f'(m)) && \text{если $n=m+1$}
+        \end{aligned}\right.\]
+        Возьмём $f := f' \cup (\NN \times Y)$. Несложно убедиться, что $f$ будет искомой.
+    \end{proof}
+
+    \begin{definition}
+        \emph{Конечными последовательностями элементов} $X$ называются элементы множества $X^* := \{f \mid \exists n \in \NN (f: n \to X)\}$.
+    \end{definition}
+
+    \begin{theorem}[о возвратной индукции]
+        Пусть $h: \NN \times Y^* \to Y$. Тогда существует единственная $f: \NN \to Y$ такая, что для любого $n \in \NN$, $f(n) = h(n, f\upharpoonright_n)$.
+    \end{theorem}
+
+    \begin{proof}
+        По аналогии с доказательством теоремы о рекурсии, однако вместообычной индукции тут используется возвратная. [\dots]
+    \end{proof}
+
+    \section{Мощности}
+
+    \begin{definition}
+        $X$ и $Y$ \emph{равномощны}, если существует биекция $f: X \to Y$. Обозначение: $X \sim Y$.
+    \end{definition}
+
+    \begin{theorem}
+        Для всех $X$, $Y$ и $Z$ верно следующее:
+        \begin{enumerate}
+            \item $X \sim X$;
+            \item $X \sim Y \Leftrightarrow Y \sim X$;
+            \item $X \sim Y \sim Z \Rightarrow X \sim Z$.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{example}
+        $\Pcal(X) \sim 2^X$. Действительно, рассмотрим для каждого $Y \subseteq X$ функцию $\chi_Y: X \to 2$, что
+        \[\chi_Y(x) := \left\{\begin{aligned}
+            &1 && \text{если $x\in Y$}\\
+            &0 && \text{если $x \in X \setminus Y$}
+        \end{aligned}\right.\]
+        Несложно заметить, что отображение, сопоставляющее $Y$ функцию $\chi_Y$ есть биекция из $\Pcal(x)$ в $2^X$.
+    \end{example}
+
+    \begin{definition}
+        Множество $X$ \emph{по мощности менее или равно} $Y$ ($X \preccurlyeq Y$), если существует инъекция из $X$ в $Y$.
+
+        Множество $X$ \emph{по мощности (строго) менее} $Y$ ($X \prec Y$), если $X \preccurlyeq Y \wedge X \nsim Y$.
+    \end{definition}
+
+    \begin{remark}
+        Тогда очевидно, что $X \preccurlyeq Y$ тогда и только тогда, когда $X$ равномощно некоторому подмножеству $Y$.
+    \end{remark}
+
+    \begin{theorem}\ 
+        \begin{enumerate}
+            \item $X \preccurlyeq X$.
+            \item $X \sim Y \Rightarrow X \preccurlyeq Y$.
+            \item $X \preccurlyeq Y \sim Z \Rightarrow X \preccurlyeq Z$.
+            \item $X \sim Y \preccurlyeq Z \Rightarrow X \preccurlyeq Z$.
+            \item $X \preccurlyeq Y \preccurlyeq Z \Rightarrow X \preccurlyeq Z$.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{theorem}[Кантора, обобщённая]
+        $X \prec \Pcal(X)$.
+    \end{theorem}
+
+    \begin{proof}
+        Очевидно, что $f: X \to \Pcal(X, x \mapsto \{x\}$ есть инъекция, поэтому $X \preccurlyeq \Pcal(X)$. Покажем, что между ними нет биекции.
+
+        Предположим противное, т.е. есть биекция $f: X \to \Pcal(X)$. Рассмотрим $Y := \{x \in X \mid x \notin f(x)\}$. Поскольку $f$ --- биекция, то $f(y) = Y$ для некоторого $Y$. В итоге мы получаем
+        \[
+            y \in Y \qquad
+            \Longleftrightarrow \qquad
+            y \notin f(Y) \qquad
+            \Longleftrightarrow \qquad
+            y \notin Y
+        \]
+        Получаем противоречие.
+    \end{proof}
+
+    \begin{theorem}[Кантора-Шрёдера-Бернштейна]
+        Если $X \preccurlyeq Y$ и $Y \preccurlyeq X$, то $X \sim Y$.
+    \end{theorem}
+
+    \begin{proof}
+        \begin{lemma}\label{CSB-th-lemma}
+            Если $X \supseteq Y \supseteq X'$ и $X \sim X'$, то $X \sim Y \sim X'$.
+        \end{lemma}
+
+        \begin{proof}
+            Пусть $f: X \to X'$ --- биекция. Определимм по рекурсии $\{X_i\}_{i=0}^\infty$ и $\{Y_i\}_{i=0}^\infty$:
+            \begin{align*}
+                X_n &:= \left\{\begin{aligned}
+                    &X && \text{если $n = 0$}\\
+                    &f[X_m] && \text{если $n=m+1$}
+                \end{aligned}\right.&
+                Y_n &:= \left\{\begin{aligned}
+                    &Y && \text{если $n = 0$}\\
+                    &f[Y_m] && \text{если $n=m+1$}
+                \end{aligned}\right.
+            \end{align*}
+
+            По условию $X_0 = X \supseteq Y = Y_0$ и $Y_0 = Y \supseteq X' = f(X) = X_1$. Тогда несложно убедиться по индукции по $n$, что $X_n \supseteq Y_n \supseteq X_{n+1}$, так как $X_{n-1} \supseteq Y_{n-1} \supseteq X_n$, значит $f(X_{n-1}) \supseteq f(Y_{n-1}) \supseteq f(X_n)$, что буквально означает, что $X_n \supseteq Y_n \supseteq X_{n+1}$.
+
+            Тогда для каждого $n \in \NN$ определим $U_n := X_n \setminus Y_n$. Пусть также $U := \bigcup_{n=0}^\infty U_n$, $Z := X \setminus U$.
+
+            Несложно видеть, что
+            \begin{align*}
+                X &= \bigcup_{n=0}^\infty U_n \cup Z&
+                Y &= \bigcup_{n=1}^\infty U_n \cup Z
+            \end{align*}
+            Также несложно видеть, что $f[U_n] = f[X_n \setminus Y_n] = f[X_n] \setminus f[Y_n] = X_{n+1} \setminus Y_{n+1} = U_{n+1}$, а потому $f[U] = U\setminus U_0$.
+
+            Тогда определим $g: X \to X$ по правилу
+            \[g(x) := \begin{cases}
+                f(x) & \text{если $x \in U$}\\
+                x & \text{если $x \in Z$}
+            \end{cases}\]
+            Несложно видеть, что это инъекция. Действительно, $g$ на $U$ равна $f$, а значит есть бииекция из $U$ в $U\setminus U_0$, также является биекцией из $Z$ в себя, а поскольку $U$ и $Z$ дизъюнктны, то $g$ является биекцией из $U \cup Z$ в $U\setminus U_0 \cup Z$, т.е. из $X$ в $Y$. Значит $Y \sim X$.
+        \end{proof}
+
+        Пусть $f: X \to Y$ и $g: Y \to X$ --- инъекции. Несложно видеть, что $g[Y] \subseteq X$, а $f[X] \subseteq Y$, значит $g[f[X]] \subseteq g[Y]$. Т.е. $X \supseteq g[Y] \supseteq g[f[X]]$. При этом $X \sim f[X] \sim g[f[X]]$, поэтому применяя лемму \ref{CSB-th-lemma}, имеем, что $X \sim g[Y] \sim Y$, значит $X \sim Y$.
     \end{proof}
 \end{document}
