@@ -6,6 +6,7 @@
 \date{}
 
 \DeclareMathOperator{\Quot}{Quot}
+\DeclareMathOperator{\osc}{osc}
 
 \begin{document}
     \maketitle
@@ -79,17 +80,21 @@
         $\nexists x\in \QQ, x^2 = 2$.
     \end{theorem}
 
+    \begin{proof}
+        Предположим противное, т.е. существуют взаимно простиые $m \in \ZZ$ и $n \in \NN\setminus\{0\}$, что $(\frac{m}{n})^2 = 2$. Тогда $m^2 = n^2$. Очевидно, что тогда $m^2 \vdots 2$, значит $m\vdots 2$, значит $m\vdots 4$, значит $n^2 \vdots 2$, значит $n \vdots 2$, значит $n$ и $m$ не взаимно просты, так как делятся на $2$ --- противоречие.
+    \end{proof}
+
     Теперь мы хотим понять, что есть вещественные числа. Тут есть несколько подходов.
 
     \begin{definition}[аксиоматический подход]
         Вещественные числа --- это полное упорядоченное поле $\RR$, состоящее не из одного элемента.
         
-        Здесь ``поле'' значит, что на множестве (вместе с его операциями и выделенными элементами) верны акиомы $A_1$, $A_2$, $A_3$, $A_4$, $M_1$, $M_2$, $M_3$, $M_4$ и $D$.
+        Здесь ``поле'' значит, что на множестве (вместе с его операциями и выделенными элементами) верны аксиомы поля $A_1$, $A_2$, $A_3$, $A_4$, $M_1$, $M_2$, $M_3$, $M_4$ и $D$ (т.е. сложение и умножение ассоциативны, коммутативны имеют нейтральные элементы и удовлетворяют условию существованию обратных (по умножению --- для всех кроме нуля), а также дистрибутивности).
         
         Упорядоченность значит, что есть рефлексивное транзитивное антисимметричное отношение $\preccurlyeq$, что все элементы сравнимы, согласованное с операциями, т.е.:
         \begin{itemize}
-            \item[$A$)] $a \preccurlyeq b \Leftarrow a + x \preccurlyeq b + x$.
-            \item[$M$)] $0 \preccurlyeq a \wedge 0 \preccurlyeq b \Rightarrow 0 \preccurlyeq ab$
+            \item[$A$)] $a \preccurlyeq b \Rightarrow a + x \preccurlyeq b + x$.
+            \item[$M$)] $0 \preccurlyeq a \wedge 0 \preccurlyeq b \Rightarrow 0 \preccurlyeq ab$.
         \end{itemize}
 
         Полнота поля значит любое из следующих утверждений (они равносильны):
@@ -126,7 +131,7 @@
     \end{definition}
 
     \begin{theorem}[Лемма о вложенных отрезках]\label{th_inter_segments}
-        Пусть имеется $\{I_i\}_{i=1}^\infty$ --- множество вложенных (непустых) отрезков, т.е. $\forall n > 1 I_{n+1} \subset I_n$. Тогда $\bigcap_{i=1}^\infty I_i \neq \varnothing$.
+        Пусть имеется $\{I_i\}_{i=1}^\infty$ --- множество вложенных (непустых) отрезков, т.е. $\forall n > 1\; I_{n+1} \subset I_n$. Тогда $\bigcap_{i=1}^\infty I_i \neq \varnothing$.
     \end{theorem}
 
     \begin{proof}
@@ -176,7 +181,7 @@
             \item $(a; +\infty)$;
             \item $\RR$;
             \item $\varnothing$;
-            \item $\bigcup_{i=0}^\infty (a_i; b_i)$ (интервалы не обящательно не должны пересекаться).
+            \item $\bigcup_{i=0}^\infty (a_i; b_i)$ (интервалы не обязательно не должны пересекаться).
         \end{itemize}
     \end{example}
 
@@ -202,35 +207,72 @@
     \end{definition}
 
     \begin{definition}
-        \emph{Предел} функции $f: X \to \RR$ при в точке $x$ --- такое значение $y$, что
-        \[\forall \varepsilon > 0\, \exists \delta > 0: f(V_\delta(x) \cap X) = U_\varepsilon(y)\]
-        Обозначение: $\lim\limits_{t \to x} f(t) = y$.
+        Последовательность $\{x_n\}_{n=0}^\infty$ называется \emph{фундаментальной}, если
+        \[\forall \varepsilon > 0\; \exists N \in \NN:\; \forall n_1, n_2 > N\quad |x_{n_1} - x_{n_2}| < \varepsilon\]
     \end{definition}
 
-    \begin{definition}
-        Функция $f: X \to \RR$ называется \emph{непрерывной в точке} $x$, если $\lim\limits_{t \to x} f(t) = f(x)$. 
-    \end{definition}
+    \begin{theorem}\label{fundamental_seq_theorem}
+        Последовательность сходится тогда и только тогда, когда фундаментальна.
+    \end{theorem}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Пусть последовательность $\{x_n\}_{n=0}^\infty$ сходится к некоторому значению $X$, тогда
+                \begin{multline*}
+                    \forall \varepsilon > 0\; \exists N \in \NN:\; \forall n > N\quad |x_n - X| < \varepsilon/2 \Rightarrow\\
+                    \forall n_1, n_2 > N\quad |x_{n_1} - x_{n_2}| = |x_{n_1} - X + X - x_{n_2}| \leqslant |x_{n_1} - X| + |X - x_{n_2}| < \varepsilon
+                \end{multline*}
+            \item Пусть последовательность $\{x_n\}_{n=0}^\infty$ фундаментальна. Мы знаем, что для каждого $\varepsilon > 0$ все члены, начиная с некоторого различаются менее чем на $\varepsilon$. Тогда возьмём какой-нибудь такой член $y_0$ для некоторого $\varepsilon$, затем какой-нибудь такой член $y_1$ для $\varepsilon/2$, который идёт после $y_0$ и так далее. Получим последовательность, что все члены, начиная с $n$-ого лежат в $\varepsilon/2^n$-окрестности $y_n$. Тогда рассмотрим последовательность $\{I_n\}_{n=0}^\infty$, где $I_n = [y_n - \varepsilon/2^{n-1}; y_n + \varepsilon/2^{n-1}]$. Несложно понять, что $I_n \supseteq I_{n+1}$, поэтому в пересечении $\{I_n\}_{n=0}^\infty$ лежит некоторый $X$. Несложно понять, что все члены начальной последовательности, начиная с $y_{n+2}$, лежат в $\varepsilon/2^{n+2}$-окрестности $y_{n+2}$. При этом $|y_{n+2} - X| \leqslant \varepsilon/2^{n+1}$, что значит, что все члены главной последовательности, начиная с $y_{n+2}$ лежат в $3\varepsilon/2^{n+2}$-окрестности $X$, а значит и в $\varepsilon/2^n$.
+        \end{enumerate}
+    \end{proof}
 
     \begin{statement}
-        Для последовательностей $\{x_n\}_{n=0}^\infty$ и $\{y_n\}_{n=0}^\infty$ верно, что
+        Для последовательностей $\{x_n\}_{n=0}^\infty$ и $\{y_n\}_{n=0}^\infty$ верно (если определено), что
         \begin{enumerate}
             \item $\lim \{x_n\}_{n=0}^\infty + \lim \{y_n\}_{n=0}^\infty = \lim \{x_n + y_n\}_{n=0}^\infty$
+            \item $-\lim \{x_n\}_{n=0}^\infty = \lim \{-x_n\}_{n=0}^\infty$
             \item $\lim \{x_n\}_{n=0}^\infty \cdot \lim \{y_n\}_{n=0}^\infty = \lim \{x_n y_n\}_{n=0}^\infty$
             \item $\frac{1}{\lim \{x_n\}_{n=0}^\infty} = \lim \{\frac{1}{x_n}\}_{n=0}^\infty$ (если $\lim \{x_n\}_{n=0}^\infty \neq 0$)
         \end{enumerate}
-        и одна из сторон равенства существует тогда и только тогда, когда существует другая (кроме случая во втором пункте, когда один из пределов равен $0$).
+        и всегда, когда определена левая сторона определена, правая тоже определена.
     \end{statement}
 
-    \begin{statement}
-        Для функций $f: \RR \to \RR$ и $g: \RR \to \RR$ верно, что
+    \begin{proof}
         \begin{enumerate}
-            \item $\lim\limits_{x \to a} f(x) + \lim\limits_{x \to a} g(x) = \lim\limits_{x \to a} (f + g)(x)$
-            \item $\lim\limits_{x \to a} f(x) \cdot \lim\limits_{x \to a} g(x) = \lim (fg)(x)$
-            \item $\frac{1}{\lim\limits_{x \to a} f(x)} = \lim\limits_{x \to a} (\frac{1}{f})(x)$ (если $\lim\limits_{x \to a} f(x) \neq 0$)
-            \item $\lim\limits_{y \to \lim\limits_{x \to a} g(x)} f(y) = \lim\limits_{x \to a} (f \circ g)(x)$
+            \item Пусть $\lim \{x_n\}_{n=0}^\infty = X$, $\lim \{y_n\}_{n=0}^\infty = Y$. Тогда
+                \[\forall \varepsilon > 0\; \exists N, M \in \NN:\quad \forall n > N\; |x_n - X| < \varepsilon/2\quad \wedge\quad \forall m > M\; |y_m - Y| < \varepsilon/2,\]
+                тогда
+                \[\forall n > \max(N, M)\quad |(x_n + y_n) - (X + Y)| \leqslant |x_n - X| + |y_n - Y| < \varepsilon,\]
+                что означает, что $\{x_n + y_n\}_{n=0}^\infty$ сходится и сходится к $X + Y$.
+            \item Пусть $\lim \{x_n\}_{n=0}^\infty = X$. Тогда
+                \[\forall \varepsilon > 0\; \exists N \in \NN:\quad \forall n > N\; |x_n - X| < \varepsilon,\]
+                тогда
+                \[\forall n > N\quad |(-x_n) - (-X)| = |X - x_n| = |x_n - X| < \varepsilon,\]
+                что означает, что $\{-x_n\}_{n=0}^\infty$ сходится и сходится к $-X$.
+            \item Пусть $\lim \{x_n\}_{n=0}^\infty = X$, $\lim \{y_n\}_{n=0}^\infty = Y$. Определим также
+                \[\delta: (0; +\infty) \to \RR, \varepsilon \mapsto \frac{\varepsilon}{\sqrt{\left(\frac{|x|+|y|}{2}\right)^2+\varepsilon} + \frac{|x|+|y|}{2}} = \sqrt{\left(\frac{|x|+|y|}{2}\right)^2+\varepsilon} - \frac{|x|+|y|}{2}\]
+                Несложно видеть, что $\delta(\varepsilon)$ всегда определено и всегда положительно. Также несложно видеть, что $\delta(\varepsilon)$ есть корень уравнения $t^2 + t(|X| + |Y|) = \varepsilon$. Тогда
+                \[\forall \varepsilon > 0\; \exists N, M \in \NN:\quad \forall n > N\; |x_n - X| < \delta(\varepsilon)\quad \wedge\quad \forall m > M\; |y_m - Y| < \delta(\varepsilon),\]
+                тогда
+                \begin{align*}
+                    \forall n > \max(N, M)\quad |x_n \cdot y_n - X \cdot Y|
+                    &= |x_n \cdot y_n - x_n \cdot Y + x_n \cdot Y - X \cdot Y|\\
+                    &\leqslant |x_n \cdot (y_n-Y)| + |(x_n - X) \cdot Y|\\
+                    &< |x_n|\cdot \delta(\varepsilon) + \delta(\varepsilon)\cdot |Y|\\
+                    &< (|X|+\delta(\varepsilon)) \cdot \delta(\varepsilon) + |Y| \cdot \delta(\varepsilon)\\
+                    &= \delta(\varepsilon)^2 + (|X| + |Y|)\delta(\varepsilon)\\
+                    &= \varepsilon,
+                \end{align*}
+                что означает, что $\{x_n \cdot y_n\}_{n=0}^\infty$ сходится и сходится к $X \cdot Y$.
+            \item Пусть $\lim \{x_n\}_{n=0}^\infty = X$. Определим также
+                \[\delta: (0; +\infty) \to \RR, \varepsilon \mapsto \frac{\varepsilon |X|}{1 + \varepsilon |X|}\]
+                Несложно видеть, что $\delta(\varepsilon)$ всегда определено и всегда меньше $|X|$. Также несложно видеть, что $\delta(\varepsilon)$ есть корень уравнения $\frac{t}{|X|(|X| - t)} = \varepsilon$. Тогда
+                \[\forall \varepsilon > 0\; \exists N \in \NN:\quad \forall n > N\; |x_n - X| < \delta(\varepsilon),\]
+                тогда
+                \[\forall n > N\quad \left|\frac{1}{x_n} - \frac{1}{X}\right| = \left|\frac{X-x_n}{X\cdot x_n}\right| < \frac{\delta(\varepsilon)}{|X| \cdot |x_n|} < \frac{\delta(\varepsilon)}{|X|(|X|-\delta(\varepsilon))} = \varepsilon,\]
+                что означает, что $\{\frac{1}{x_n}\}_{n=0}^\infty$ сходится и сходится к $1/X$.
         \end{enumerate}
-        и одна из сторон равенства существует тогда и только тогда, когда существует другая (кроме случая во втором пункте, когда один из пределов равен $0$).
-    \end{statement}
+    \end{proof}
 
     \begin{definition}
         Последовательность $\{x_n\}_{n=0}^\infty$ \emph{ассимптотически больше} последовательности $\{y_n\}_{n=0}^\infty$, если $x_n > y_n$ для всех натуральных $n$, начиная с некоторого. Обозначение: $\{x_n\}_{n=0}^\infty \succ \{y_n\}_{n=0}^\infty$.
@@ -242,9 +284,17 @@
         Если $\{x_n\}_{n=0}^\infty \succcurlyeq \{y_n\}_{n=0}^\infty$, то $\lim \{x_n\}_{n=0}^\infty \geqslant \lim \{y_n\}_{n=0}^\infty$.
     \end{statement}
 
+    \begin{proof}
+        Предположим противное, т.е. $Y > X$, где $X := \lim \{x_n\}_{n=0}^\infty$, $Y := \lim \{y_n\}_{n=0}^\infty$. Тогда пусть $\varepsilon = \frac{|X - Y|}{2}$. С каких-то моментов $\{x_n\}_{n=0}^\infty$ и $\{y_n\}_{n=0}^\infty$ находятся в $\varepsilon$-окрестностях $X$ и $Y$ соответственно. Тогда начиная с позднего из этих моментов, $y_n > Y - \varepsilon = X + \varepsilon > x_n$, т.е. $\{x_n\}_{n=0}^\infty \prec \{y_n\}_{n=0}^\infty$ --- противоречие. Значит $X \geqslant Y$.
+    \end{proof}
+
     \begin{statement}\label{stupid_seq_statement_2}
         Если $\lim \{x_n\}_{n=0}^\infty > \lim \{y_n\}_{n=0}^\infty$, то $\{x_n\}_{n=0}^\infty \succ \{y_n\}_{n=0}^\infty$.
     \end{statement}
+
+    \begin{proof}
+        Пусть $X := \lim \{x_n\}_{n=0}^\infty$, $Y := \lim \{y_n\}_{n=0}^\infty$. Тогда пусть $\varepsilon = \frac{|X - Y|}{2}$. С каких-то моментов $\{x_n\}_{n=0}^\infty$ и $\{y_n\}_{n=0}^\infty$ находятся в $\varepsilon$-окрестностях $X$ и $Y$ соответственно. Тогда начиная с позднего из этих моментов, $x_n > X - \varepsilon = Y + \varepsilon > y_n$, т.е. $\{x_n\}_{n=0}^\infty \succ \{y_n\}_{n=0}^\infty$.
+    \end{proof}
 
     \begin{statement}[леммма о двух полицейских]\label{stupid_seq_statement_3}
         Если
@@ -254,11 +304,92 @@
         то предел $\{y_n\}_{n=0}^\infty$ определён и равен $A$.
     \end{statement}
 
+    \begin{proof}
+        Для каждого $\varepsilon > 0$ есть $N, M \in \NN$, что
+        \[\forall n > N\; |x_n - A| < \varepsilon \quad \wedge \quad \forall m > M\; |z_n - A| < \varepsilon,\]
+        значит
+        \[\forall n > \max(N, M)\quad A + \varepsilon > x_n \geqslant y_n \geqslant z_n > A - \varepsilon \quad \text{т.е. } |y_n - A| < \varepsilon,\]
+        что означает, что $\{y_n\}_{n=0}^\infty$ сходится и сходится к $A$.
+    \end{proof}
+
     \begin{statement}
         Если $\{x_n\}_{n=0}^\infty \succcurlyeq \{y_n\}_{n=0}^\infty$, $\lim \{x_n\}_{n=0}^\infty = A$, а $\{y_n\}_{n=0}^\infty$, неубывает (с некоторого момента), то предел $\{y_n\}_{n=0}^\infty$ существует и не превосходит $A$.
+    \end{statement}
+
+    \begin{proof}
+        Если последовательность $\{y_n\}_{n=0}^\infty$ возрастает не с самого начала, то отрежем её начало с до момента начала возрастания. Заметим, что она ограничена сверху (из-за последовательности $\{x_n\}_{n=0}^\infty$), тогда определим $B := \sup(\{y_n\}_{n=0}^\infty)$. Тогда $\forall \varepsilon > 0\; \exists N \in \NN:\quad |B-x_N| < \varepsilon$, тогда $\forall n > N\quad |B-x_n| < \varepsilon$, что означает, что $\{y_n\}_{n=0}^\infty$ сходится и сходится к $B$. По утверждению \ref{stupid_seq_statement_1} $A \geqslant B$.
+    \end{proof}
+
+    \begin{definition}[по Коши]
+        \emph{Предел} функции $f: X \to \RR$ при в точке $x$ --- такое значение $y$, что
+        \[\forall \varepsilon > 0\, \exists \delta > 0: f(V_\delta(x) \cap X) = U_\varepsilon(y)\]
+        Обозначение: $\lim\limits_{t \to x} f(t) = y$.
+    \end{definition}
+
+    \begin{definition}[по Гейне]
+        \emph{Предел} функции $f: X \to \RR$ при в точке $x$ --- такое значение $y$, что для любой последовательность $\{x_n\}_{n=0}^\infty$ элементов $X \setminus \{x\}$ последовательность $\{f(x_n)\}_{n=0}^\infty$ сходится к $y$. Обозначение: $\lim\limits_{t \to x} f(t) = y$.
+    \end{definition}
+
+    \begin{theorem}
+        Определения пределов по Коши и по Гейне равносильны.
+    \end{theorem}
+
+    \begin{proof}
+        Будем доказывать равносильность отрицаний утверждений, ставимых в определениях.
+        \begin{enumerate}
+            \item Пусть функция $f: X \to \RR$ не сходится по Коши в $x$ к значению $y$. Значит есть такое $\varepsilon > 0$, что в любой проколотой окрестности $x$ (в множестве $X$) есть точка, значение $f$ в которой не лежит в $\varepsilon$-окрестности. Рассмотрев любую такую проколотую окрестность $I_0 = V_{\delta_0}(x)$, берём в ней любую такую точку $x_0$. Далее рассмотрев $I_1 = V_{\delta_1}(x)$, где $\delta_1 = \min(\delta_0/2, |x-x_0|)$, берём там любую точку $x_1$, где значение $f$ вылетает вне $\varepsilon$-окрестности $y$. Так далее строим последовательность $\{x_n\}_{n=0}^\infty$, сходящуюся к $x$, значения $f$ в которой не лежат в $\varepsilon$-окрестности $y$, что означает, что $\{f(x_n)\}_{n=0}^\infty$ не сходится к $y$, что означает, что $f$ не сходится по Гейне в $x$ к значению $y$.
+            \item Пусть функция $f: X \to \RR$ не сходится по Гейне в $x$ к значению $y$. Значит есть последовательность $\{x_n\}_{n=0}^\infty$, сходящаяся к $x$, что последовательность её значений не сходится к $y$. Значит есть $\varepsilon > 0$, что после любого момента в последовательности будет член, значение в котором вылезает вне $\varepsilon$-окрестности $y$. Поскольку для любой проколотой окрестности $x$ есть момент, начиная с которого вся последовательность лежит в этой окрестности, то в любой проколотой окрестности $x$ есть член, значение которого вылезает вне $\varepsilon$-окрестности $y$, что означает, что $f$ не сходится по Коши в $x$ к $y$.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{statement}
+        Функция $f: X \to \RR$ имеет в $x$ предел тогда и только тогда, когда
+        \[\forall \varepsilon > 0\; \exists \delta > 0:\; \forall x_1, x_2 \in V_\delta(x)\quad |f(x_1) - f(x_2)| < \varepsilon\]
+    \end{statement}
+
+    \begin{proof}
+        Такое же как для последовательностей: см. теорему \ref{fundamental_seq_theorem}.
+    \end{proof}
+
+    \begin{statement}
+        Для функций $f: \RR \to \RR$ и $g: \RR \to \RR$ верно, что
+        \begin{enumerate}
+            \item $\lim\limits_{x \to a} f(x) + \lim\limits_{x \to a} g(x) = \lim\limits_{x \to a} (f + g)(x)$
+            \item $\lim\limits_{x \to a} (-f)(x) = -\lim\limits_{x \to a} f(x)$
+            \item $\lim\limits_{x \to a} f(x) \cdot \lim\limits_{x \to a} g(x) = \lim (f \cdot g)(x)$
+            \item $\frac{1}{\lim\limits_{x \to a} f(x)} = \lim\limits_{x \to a} (\frac{1}{f})(x)$ (если $\lim\limits_{x \to a} f(x) \neq 0$)
+            \item $\lim\limits_{y \to \lim\limits_{x \to a} g(x)} f(y) = \lim\limits_{x \to a} (f \circ g)(x)$
+        \end{enumerate}
+        и всегда, когда определена левая сторона определена, правая тоже определена.
     \end{statement}
 
     \begin{remark}
         Утверждения \ref{stupid_seq_statement_1}, \ref{stupid_seq_statement_2} и \ref{stupid_seq_statement_3} верны, если заменить последовательности на функции, пределы последовательностей на пределы функций в некоторой точке $x$, а асимптотические неравенства на неравенства на окрестности $x$.
     \end{remark}
+
+    \begin{definition}
+        Сумма ряда $\{a_k\}_{k=0}^\infty$ есть значение $\sum_{k=0}^\infty a_k := \lim \left\{\sum_{i=0}^k\right\}_{k=0}^\infty$. Частичной же суммой $s_k$ этого ряда называется просто $\sum_{i=0}^k a_i$.
+    \end{definition}
+
+    \begin{definition}
+        Последовательность $\{x_i\}_{i=0}^\infty$, удовлетворяет условию 
+        \[\forall \varepsilon > 0\; \exists N:\; \forall n_1, n_2 > N \quad |x_{n_1} - x_{n_2}| < \varepsilon,\]
+        то она называется \emph{фундаментальной}.
+    \end{definition}
+
+    \begin{theorem}
+        Еcли $\sum_{i=0}^\infty |a_i|$ существует, то и $\sum_{i=0}^\infty a_i$ существует.
+    \end{theorem}
+
+    \begin{corollary}
+        Еcли $\{b_i\}_{i=0}^\infty \succcurlyeq \{|a_i|\}_{i=0}^n$ и $\sum_{i=0}^\infty |b_i|$ существует, то и $\sum_{i=0}^\infty a_i$ существует.
+    \end{corollary}
+
+    \begin{definition}
+        \emph{Осцелляцией} называется $\osc_E f = \sup_E f - \inf_E f$.
+    \end{definition}
+
+    \begin{definition}
+        Функция $f: X \to \RR$ называется \emph{непрерывной в точке} $x$, если $\lim\limits_{t \to x} f(t) = f(x)$. 
+    \end{definition}
 \end{document}
