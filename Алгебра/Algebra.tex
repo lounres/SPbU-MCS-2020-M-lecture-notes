@@ -1,14 +1,17 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{math-text}
 
-\title{Алгебра.\footnote{\textcolor{red}{\bfseries Этот текст содержит критические недочёты (см. с. \pageref{TODO-list}). Вы можете помочь исправить их, написав мне \href{mailto:minaevgleb@yandex.ru}{по почте} (minaevgleb@yandex.ru) или \href{https://vk.com/lounres}{в ВКонтакте} (@lounres).}}
+\title{Алгебра. %\footnote{\textcolor{red}{\bfseries Этот текст содержит критические недочёты (см. с. \pageref{TODO-list}). Вы можете помочь исправить их, написав мне \href{mailto:minaevgleb@yandex.ru}{по почте} (minaevgleb@yandex.ru) или \href{https://vk.com/lounres}{в ВКонтакте} (@lounres).}}
 }
 \author{В. А. Петров\\lektorium.tv}
 \date{}
 
-\usepackage{todonotes}
-\setlength{\marginparwidth}{2.5cm}
-\setlength{\textwidth}{470 pt}
+\DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\Ker}{Ker}
+
+% \usepackage{todonotes}
+% \setlength{\marginparwidth}{2.5cm}
+% \setlength{\textwidth}{470 pt}
 
 \begin{document}
     \maketitle
@@ -196,7 +199,7 @@
     \end{example}
 
     \begin{definition}
-        \emph{Область главных идеалов} --- область целостности, где все идеалы главные.
+        \emph{Область главных идеалов (ОГИ)} --- область целостности, где все идеалы главные.
     \end{definition}
 
     \begin{definition}
@@ -262,66 +265,65 @@
         Пусть неприводимое $p$ делит $ab$. Пусть тогда $pR + aR = dR$. В таком случае $d \sim p$, значит либо $d \sim p$, либо $d \sim 1$. Если $d \sim p$, то $p \mid a$. Иначе $px + ay = 1$, значит $pxb + aby = b$. Но $p \mid pxb$ и $p \mid aby$, значит $p \mid b$. Поскольку рассуждение не зависит от $a$ и $b$, то $p$ просто.  
     \end{proof}
 
-    \todo[inline]{Проверить начиная с этого момента до конца раздела формальные моменты и довести доказательства.}
     \begin{definition}
-        Назовём разложением числа $a$ на неприводимые множители предстваление его в виде произведения $\alpha \prod_{i=1}^n p_i$ с точностью до перестановки членов произведения и домножения их на делители $1$ (т.е. их ассоциативности), где все $p_i$ просты.
-
-        Область целостности называется \emph{факториальным кольцом}, если в нём все ненулевые элементы разложимы на неприводимые \todo{Точно ли \emph{неприводимые}? Или всё-таки \emph{простые}?} множители единственным образом (также говорят, что в области целостности верна \emph{основная теорема арифметики}).
+        Область целостности $R$ \emph{удовлетворяет условию обрыва возрастающих цепей главных идеалов (APCC)}, если не существует последовательности $d_0 R \subsetneq d_1 R \subsetneq \dots$. Такое кольцо область целостности называют нётеровой.
     \end{definition}
 
     \begin{theorem}
-        Область главныых идеалов удовлетворяет условию обрыва цепи главныых идеалов.
+        ОГИ нётерова.
     \end{theorem}
 
     \begin{proof}
-        Пусть наша область --- $R$. Сначала докажем существование разложения.
-
-        Предположим противное, т.е. существует последовательность $\{a_n\}_{n=0}^\infty$, что $a_{n+1}$ --- собственный делитель $a_n$ (т.е. $a_{n+1} \mid a_n \wedge a_n \nsim a_{n+1}$). Тогда $a_0 R \subsetneq a_1 R \subsetneq a_2 R \subsetneq \dots$. Тогда $\exists x: xR = \bigcup_{n=0}^\infty a_n R$, так как  это объединение --- идеал. Но тогда $x \in a_j R$ для некоторого $j$, а значит $x R \subseteq a_j R$, а тогда $a_{j+1} R \subseteq a_j R$ --- противоречие.
+        Пусть наша область --- $R$. Предположим противное, т.е. существует последовательность $\{a_n\}_{n=0}^\infty$, что $a_{n+1}$ --- собственный делитель $a_n$ (т.е. $a_{n+1} \mid a_n \wedge a_n \nsim a_{n+1}$). Тогда $a_0 R \subsetneq a_1 R \subsetneq a_2 R \subsetneq \dots$. Тогда $\exists x: xR = \bigcup_{n=0}^\infty a_n R$, так как  это объединение --- идеал. Но тогда $x \in a_j R$ для некоторого $j$, а значит $x R \subseteq a_j R$, а тогда $a_{j+1} R \subseteq a_j R$ --- противоречие.
     \end{proof}
 
-    \begin{theorem}
-        Пусть $R$ --- область целостности. Тогда следующие утверждения равносильны.
-        \begin{enumerate}
-            \item $R$ факториально.
-            \item $R$ удовлетворяет условию обрыва возрастающей цепи главных идеалов.
-        \end{enumerate}
+    \begin{definition}
+        Область целостности называется \emph{факториальной областью}, если в нём все неприводимые просты и оно нётерово.
+    \end{definition}
+
+    \begin{example}
+        ОГИ факториальна.
+    \end{example}
+
+    \begin{theorem}[основная теорема арифметики]
+        Пусть $R$ факториально. Тогда любое число представимо единственным образом в виде произведения простых с точностью до перестановки множителей и ассоциированности.
     \end{theorem}
 
     \begin{proof}
-        Сначала докажем в одну сторону. Пусть $R$ факториально.
-
-        \begin{lemma}\todo{Тонкий момент. Проверить.}
-            Любой неприводимый в $R$ прост.
+        \begin{lemma}
+            У каждого числа есть неприводимый делитель.
         \end{lemma}
 
         \begin{proof}
-            Пусть $p \mid ab$ для любого неприводимого $p$ и каких-то $a$ и $b$. Тогда имеем $px=ab$ для некоторых $x$, а значит по факториальности, что $a = p_1 \dots p_k$, $b = q_1 \dots q_l$, $x = r_1 \dots r_m$. Тогда имеем два разложения $px=ab$ на простые: $p \cdot r_1 \cdot \dots \cdot r_m$ и $p_1 \cdot \dots \cdot p_k \cdot q_1 \cdot \dots \cdot q_l$. Значит по факториальности оба разложения совпадают, а значит $p$ равно какому-то неприводимому из разложений $a$ и $b$. А значит $p \mid a$ или $p \mid b$, что и означает простоту $p$.
+            Пусть это не так. Тогда есть подъём идеалов: $a_0 = a_1 b_1$, $a_1 = a_2 b_2$ и т.д., значит $a_0 R \subsetneq a_1 R \subsetneq a_2 R \subsetneq \dots$ --- противоречие.
         \end{proof}
-
-        \begin{lemma}\todo{Тонкий момент. Проверить.}
-            Если $a \mid b$, то разложение на неприводимые в $a$ есть подмножество разложения на неприводимые в $b$.
-        \end{lemma}
-
-        \begin{proof}
-            Пусть $p$ --- неприводимый из разложения $a$. Тогда $p \mid b$, а значит $p$ делит какой-то неприводимый $q$ из разложения $b$, значит $p \sim q$, значит $a' \mid b'$, где $a' p = a$, $b' q = b$. Тогда спуском по кол-ву неприводимых в разложении $a$ получаем требуемое утверждение.
-        \end{proof}
-
-        Пусть нашлась возрастающая последовательность главных иделаов $\{a_n R\}_{n=0}^\infty$, тогда $a_{n+1}$ --- собственный делитель $a_n$ для всех $n$. Тогда разложение на неприводимые $a_0$ является собственным подмножеством разложением $a_n$, а поскольку разложение по определению конечно, то такой последовательности быть не может.
-
-        Теперь докажем в обратную сторону. Пусть $R$ удовлетворяет условию обрыва возрастающей цепи главных идеалов.
 
         \begin{lemma}
-            $ab \sim cd$, $b\sim d$, значит $a \sim c$.
+            Каждое число представимо в виде произведения простых.
         \end{lemma}
 
         \begin{proof}
-            $b = \varepsilon d$, $ab = \delta cd$, где $\varepsilon \sim \delta \sim 1$. тогда $(a\varepsilon - \delta c)d = a \varepsilon d - \delta cd = ab - \delta cd = 0$, значит $a = \varepsilon^{-1}\delta c$, значит $a \sim c$.
+            Пусть это не так. Тогда есть подъём идеалов: $a_0 = p_1 a_1$, где $p_1$ прост, $a_1 = p_2 a_2$, где $p_2$ прост, и т.д., значит $a_0 R \subsetneq a_1 R \subsetneq a_2 R \subsetneq \dots$ --- противоречие.
         \end{proof}
 
-        Теперь предположим имеется $R$, удовлетворяющее условию обрыва возрастающей цепи главных идеалов. Тогда у каждого числа есть неприводимый делитель, так как иначе есть подъём идеалов: $a_0 = a_1 b_1$, $a_1 = a_2 b_2$ и т.д., значит $a_0 R \subsetneq a_1 R \subsetneq a_2 R \subsetneq \dots$ --- противоречие. Тогда и каждое число \todo{Завершить доказательство.}
+        Это доказывает существование разложения.
+
+        \begin{lemma}
+            Если $p_1 \cdot \dots p_n = q_1 \cdot \dots \cdot q_m$ для простых $p_1$, \dots, $p_n$, $q_1$, \dots, $q_m$, то эти два набора совпадают с точностью до перестановки и ассоциированности.
+        \end{lemma}
+
+        \begin{proof}
+            Докажем индукцией по $n$.
+
+            \textbf{База:} Для $n=0$ утверждение очевидно, так как тогда $1 = q_1 \cdot \dots \cdot q_m$, значит $m=0$.
+
+            \textbf{Шаг:} Несложно видеть, что $p_n \mid q_1 \cdot \dots \cdot q_m$, значит $p_n \mid q_i$ для некоторого $i$, значит $p_n \sim q_i$. Переставим $q_k$, что $q'_m = q_i$. Значит $p_1 \cdot \dots \cdot p_{n-1} = q'_1 \cdot \dots \cdot q'_{m-1}$. По предположению индукции эти два набора совпадают с точностью до перестановки и ассоциированности, значит таковы и начальные наборы.
+        \end{proof}
+
+        Это доказывает единственность разложения.
     \end{proof}
 
-    \section{Идеалы}
+    \section{Идеалы и морфизмы}
 
     \begin{theorem}
         Пусть даны $I \triangleleft R$ и $a \sim b \Leftrightarrow a-b \in I$. Тогда $\sim$ --- отношение эквивалентности, а $R/I:=R/\sim$ --- кольцо. 
@@ -362,7 +364,111 @@
         Доказательство для классов эквивалентности каждой аксиомы основывалось только на соответсвующей аксиоме и определениях ранее.
     \end{remark}
 
+    \begin{definition}
+        \emph{Гомоморфизм} --- такое отображение $\phi: R \to S$ --- это отображение, сохраняющее операции:
+        \begin{itemize}
+            \item $\phi(a + b) = \phi(a) + \phi(b)$;
+            \item $\phi(a \cdot b) = \phi(a) \cdot \phi(b)$;
+            \item $\phi(0) = 0$;
+            \item $\phi(-a) = -\phi(a)$.
+        \end{itemize}
+
+        \emph{Гомоморфизм кольца с 1} --- гомоморфизм, что $\phi(1) = 1$.
+    \end{definition}
+
+    \begin{statement}
+        Композиция гомоморфизмов --- гомоморфизм.
+    \end{statement}
+
+    \begin{definition}
+        Пусть $f: X \to Y$. Несложно видеть, что $f$ расклаадывается в композицию сюръекции $f: X \to f(X)$ и инъекции $id: f(X) \to Y$. Тогда $\Img(f) = \{f(x) \mid x \in X\}$ --- \emph{множество значений} $f$, а классы значений $X$, переходящих в один $y\in Y$ суть \emph{слои} --- $f^{-1}(y) = \{x \mid f(x) = y\}$ для некоторого $y$.
+    \end{definition}
+
+    \begin{definition}
+        Пусть $\phi: R \to S$ --- гомоморфизм. Тогда \emph{ядром} $\phi$ называется $\Ker(\phi) := \{r \in R \mid \phi(r) = 0\}$.
+    \end{definition}
+
+    \begin{statement}
+        Ядро гомоморфизма --- двусторонний идеал.
+    \end{statement}
+
+    \begin{definition}
+        $\phi: S \to R$ --- \emph{изоморфизм}, если это биективный гомоморфизм.
+    \end{definition}
+
+    \begin{definition}
+        Два кольца называются изоморфными, если между ними есть изоморфизм. Обозначение: $R \cong S$.
+    \end{definition}
+
+    \begin{statement}
+        Пусть $R \cong S$. Тогда
+        \begin{itemize}
+            \item Если $R$ коммутативно, то и $S$ коммутативно.
+            \item Если $R$ --- облассть целостности, то и $S$ --- область целостности.
+            \item Если $R$ --- ОГИ, то и $S$ --- ОГИ.
+        \end{itemize}
+    \end{statement}
+
+    \begin{statement}\ 
+        \begin{enumerate}
+            \item $R \cong R$.
+            \item $R \cong S \Leftrightarrow S \cong R$.
+            \item $R \cong S \cong T \Rightarrow R \cong T$.
+        \end{enumerate}
+    \end{statement}
+
+    \begin{theorem}[теорема о гомоморфизме]
+        Пусть $\phi: R \to S$ --- гомоморфизм. (Вспомним, что $\Ker(\phi) \triangleleft R$, а $\Img(\phi) = \phi(R)$.) Тогда $R/\Ker(\phi) \cong \Img(\phi)$, где изоморфизм переводит $[a] \mapsto \phi(a)$.
+    \end{theorem}
+
+    \begin{proof}\ 
+        \begin{enumerate}
+            \item Корректность. $[a] = [a'] \Leftrightarrow a - a' \in \Ker(\phi) \Leftrightarrow \phi(a - a') = 0 \Leftrightarrow \phi(a) = \phi(a')$.
+                \begin{remark}
+                    Классы экввивалентности по $\Ker(\phi)$ как раз слои $\phi$.
+                \end{remark}
+            \item Заметим, что работают следующие операции:
+                \begin{itemize}
+                    \item $[a] + [b] = [a + b] \mapsto \phi(a) + \phi(b) = \phi(a + b)$;
+                    \item $[a] \cdot [b] = [a \cdot b] \mapsto \phi(a) \cdot \phi(b) = \phi(a \cdot b)$. 
+                \end{itemize}
+            \item Сюръективность следует из того, что $\phi(a) = \phi(b) \Leftrightarrow [a] = [b]$.
+            \item Инъективность следует из того, что каждый элемент в $\Img(\phi)$ имеет прообраз.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{theorem}[китайская теорема об остатках (КТО) для двух чисел]
+        Пусть $m$ и $n$ взаимно просты. Тогда $\ZZ/mn\ZZ \cong \ZZ/m\ZZ \times \ZZ/n\ZZ$.
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим $\phi: \ZZ/mn\ZZ \to \ZZ/m\ZZ \times \ZZ/n\ZZ, a \mapsto ([a]_m; [a]_n)$. Несложно заметить, что ядро $\phi$ тривиально, поэтому $\ZZ/mn\ZZ \cong \ZZ/mn\ZZ/\Ker(\phi) \cong \Img(\phi)$. Но в последнем элементов не менее $mn$, так как $\Img(\phi) \cong \ZZ/mn\ZZ$, но и не более, так как $|\ZZ/m\ZZ \times \ZZ/n\ZZ| = mn$, поэтому $\Img(\phi) = \ZZ/m\ZZ \times \ZZ/n\ZZ$, поэтому $\ZZ/mn\ZZ \cong \ZZ/m\ZZ \times \ZZ/n\ZZ$. 
+    \end{proof}
+
+    \begin{theorem}[КТО]
+        Пусть $m_1, \dots, m_k$ --- попарно взаимно простые числа. Тогда
+        \[\ZZ/m_1\dots m_k \cong \ZZ/m_1\ZZ \times \dots \times \ZZ/m_k\ZZ\]
+    \end{theorem}
+
+    \begin{proof}
+        По индукции по $k$ с помощью КТО для двух чисел.
+    \end{proof}
+
+    \begin{theorem}
+        Пусть есть $I \triangleleft R$ и гомоморфизмы $\pi: R \to R/I$ --- нативный гомоморфизм, и $\pi: R \to S$, что $\pi(I) = \{0\}$. Тогда существует и единственен гомоморфизм $\phi': R/I \to S$, что $\phi' \circ \pi = \phi$.
+    \end{theorem}
+
+    \begin{proof}
+        $\phi'([a]) = (\phi' \circ \pi)(a) = \phi(a)$ --- это означает единственность; так функцию и определим. Осталось показать корректность.
+
+        Несложно заметить, что если $[a] = [b]$, то $a - b \in I$, значит $\phi(a - b) = 0$, значит $\phi(a) = \phi(b)$. Теперь проверим операции:
+        \begin{itemize}
+            \item $\phi'([a] + [b]) = \phi'([a + b]) = \phi(a + b) = \phi(a) + \phi(b) = \phi'([a]) + \phi'([b])$.
+            \item $\phi'([a] \cdot [b]) = \phi'([a \cdot b]) = \phi(a \cdot b) = \phi(a) \cdot \phi(b) = \phi'([a]) \cdot \phi'([b])$
+        \end{itemize}
+    \end{proof}
+
     \pagebreak
 
-    \listoftodos\label{TODO-list}
+    % \listoftodos\label{TODO-list}
 \end{document}
