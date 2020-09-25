@@ -69,9 +69,9 @@
         Если взять $R^4 = R \times R^3$ и рассмотреть $\cdot: ((a; u); (b; v)) \mapsto (ab-u\cdot v; av + bu + u\times v)$ и $+: ((a; u); (b; v)) \mapsto (a + b, u + v)$, тогда получим $\HH$ --- ассоциативное некоммутативное тело кватернионов. Ассоциативность доказал Гамильтон.
     \end{example}
 
-    \begin{lemma*}
+    \begin{statement}
         $0 \cdot a = 0$
-    \end{lemma*}
+    \end{statement}
 
     \begin{definition}
         Коммутативное кольцо без делителей нуля называетсся \emph{областью (целостности)}.
@@ -290,17 +290,17 @@
     \end{theorem}
 
     \begin{proof}
-        \begin{lemma}
+        \begin{thlemma}
             У каждого числа есть неприводимый делитель.
-        \end{lemma}
+        \end{thlemma}
 
         \begin{proof}
             Пусть это не так. Тогда есть подъём идеалов: $a_0 = a_1 b_1$, $a_1 = a_2 b_2$ и т.д., значит $a_0 R \subsetneq a_1 R \subsetneq a_2 R \subsetneq \dots$ --- противоречие.
         \end{proof}
 
-        \begin{lemma}
+        \begin{thlemma}
             Каждое число представимо в виде произведения простых.
-        \end{lemma}
+        \end{thlemma}
 
         \begin{proof}
             Пусть это не так. Тогда есть подъём идеалов: $a_0 = p_1 a_1$, где $p_1$ прост, $a_1 = p_2 a_2$, где $p_2$ прост, и т.д., значит $a_0 R \subsetneq a_1 R \subsetneq a_2 R \subsetneq \dots$ --- противоречие.
@@ -308,9 +308,9 @@
 
         Это доказывает существование разложения.
 
-        \begin{lemma}
+        \begin{thlemma}
             Если $p_1 \cdot \dots p_n = q_1 \cdot \dots \cdot q_m$ для простых $p_1$, \dots, $p_n$, $q_1$, \dots, $q_m$, то эти два набора совпадают с точностью до перестановки и ассоциированности.
-        \end{lemma}
+        \end{thlemma}
 
         \begin{proof}
             Докажем индукцией по $n$.
