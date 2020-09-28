@@ -162,6 +162,8 @@
 
     \section{Топология прямой, пределы и непрерывность.}
 
+    \subsection{Топология}
+
     \begin{definition}
         \emph{$\varepsilon$-окрестность} точки $x$ (для $\varepsilon > 0$) --- $(x - \varepsilon; x+ \varepsilon)$. Обозначение: $U_\varepsilon(x)$.
 
@@ -194,8 +196,14 @@
     \end{definition}
 
     \begin{definition}
-        Пусть дано множество $X\subseteq \RR$. Если у любой последовательности его точек есть предельная точка из самого множества $X$.
+        Пусть дано множество $X\subseteq \RR$. Если у любой последовательности его точек есть предельная точка из самого множества $X$, то $X$ называется \emph{компактным}.
     \end{definition}
+
+    \begin{statement}
+        Подмножество $\RR$ компактно тогда и только тогда, когда замкнуто и ограничено.
+    \end{statement}
+
+    \subsection{Последовательности, пределы и ряды}
 
     \begin{definition}
         \emph{Предел последовательности} $\{x_n\}_{n=0}^\infty$ --- такое число $x$, что для любой окрестности $x$ эта последовательность с некоторого момента будет лежать в этой окрестности:
@@ -320,6 +328,90 @@
         Если последовательность $\{y_n\}_{n=0}^\infty$ возрастает не с самого начала, то отрежем её начало с до момента начала возрастания. Заметим, что она ограничена сверху (из-за последовательности $\{x_n\}_{n=0}^\infty$), тогда определим $B := \sup(\{y_n\}_{n=0}^\infty)$. Тогда $\forall \varepsilon > 0\; \exists N \in \NN:\quad |B-x_N| < \varepsilon$, тогда $\forall n > N\quad |B-x_n| < \varepsilon$, что означает, что $\{y_n\}_{n=0}^\infty$ сходится и сходится к $B$. По утверждению \ref{stupid_seq_statement_1} $A \geqslant B$.
     \end{proof}
 
+    \begin{definition}
+        Сумма ряда $\{a_k\}_{k=0}^\infty$ есть значение $\sum_{k=0}^\infty a_k := \lim \left\{\sum_{i=0}^k\right\}_{k=0}^\infty$. Частичной же суммой $s_k$ этого ряда называется просто $\sum_{i=0}^k a_i$.
+    \end{definition}
+
+    \begin{definition}
+        Ряд $\sum_{i=0}^\infty a_i$ \emph{сильно сходится}, если $\sum_{i=0}^\infty |a_i|$ сходится.
+    \end{definition}
+
+    \begin{theorem}
+        Еcли ряд сильно сходится сходится, то он сходится.
+    \end{theorem}
+
+    \begin{proof}
+        \begin{thlemma}\label{lemma_sum_of_suffix}
+            Пусть ряд $\sum_{i=0}^\infty a_i$ сходится, тогда сходится любой его ``хвост'' (суффикс), и для любого $\varepsilon > 0$ есть такой хвост, сумма которого меньше $\varepsilon$.
+        \end{thlemma}
+
+        \begin{proof}
+            Пусть $A = \sum_{i=0}^\infty a_i$. Это значит, что для каждого $\varepsilon > 0$ существует $N \in \NN$, что для всех $n \geqslant N$ верно, что $\sum_{i=0}^n |a_i| \in U_\varepsilon(A)$. Тогда заметим, что
+            \[\sum_{i=N+1}^\infty |a_i| = \lim_{n \to \infty} \sum_{i=N+1}^n |a_i| = \lim_{n \to \infty} \left(\sum_{i=0}^n |a_i| - \sum_{i=0}^N |a_i|\right) = \lim_{n \to \infty} \sum_{i=0}^n |a_i| - \sum_{i=0}^N |a_i| = A - \sum_{i=0}^N |a_i| \in U_\varepsilon(0)\]
+            Это и означает, что любой хвост сходится. И так мы для каждого $\varepsilon$ нашли такой хвост, что его сумма меньше $\varepsilon$.
+        \end{proof}
+
+        Пусть дан сильно сходящийся ряд $\sum_{i=0}^\infty a_i$. Пусть $\varepsilon_n := \sum_{i=n}^\infty |a_i|$. Несложно видеть, что $\{\varepsilon_n\}_{n=0}^\infty$ монотонно уменьшается, сходясь к 0 (последнее следует из леммы \ref{lemma_sum_of_suffix}). Также несложно видеть по рассуждениям леммы \ref{lemma_sum_of_suffix}, что $\varepsilon_n - \varepsilon_{n+1} = |a_n|$. Тогда определим
+        \[S_n := \overline{U}_{\varepsilon_{n+1}}(\sum_{i=0}^n a_i),\]
+        где $\overline{U}_\varepsilon(x)$ --- закрытая $\varepsilon$-окрестность точки $x$. Тогда несложно видеть, что
+        \[\left|\sum_{i=0}^{n+m} a_i - \sum_{i=0}^{n} a_i \right| = \left|\sum_{i=n+1}^{n+m} a_i \right| \leqslant \sum_{i=n+1}^{n+m} |a_i| \leqslant \varepsilon_{n+1}\]
+        Тем самым сумма любого префикса длины хотя бы $n+1$ лежит в $\overline{U}_{\varepsilon_{n+1}}(\sum_{i=0}^{n} a_i) = S_n$. Также несложно видеть, что $S_{n+1} \subseteq S_n$. А также понятно, что $S_i$ замкнуто и ограничено (``компактно'').
+
+        Пусть $A := \bigcap_{i=0}^\infty S_i$ (поскольку диаметры шаров сходятся к нулю, то в пересечении лежит не более одной точки). Тогда мы видим, что $|\sum_{i=0}^n a_i - A| \leqslant \varepsilon_{n+1} \to 0$, поэтому $\sum_{i=0}^n a_i$ сходится и сходится к $A$.
+    \end{proof}
+
+    \begin{corollary}
+        Еcли $\{b_i\}_{i=0}^\infty \succcurlyeq \{|a_i|\}_{i=0}^n$ и $\sum_{i=0}^\infty |b_i|$ существует, то и $\sum_{i=0}^\infty a_i$ существует.
+    \end{corollary}
+
+    \begin{theorem}[признак Лейбница]
+        Пусть дана последовательность $\{a_n\}$, монотонно сверху сходящаяся к $0$. Тогда ряд $\sum_{i=0}^\infty (-1)^i a_i$ сходится.
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим последовательности 
+        \begin{align*}
+            \{P_n\}_{n=0}^\infty &:= \{S_{2n}\}_{n=0}^\infty = \left\{\sum_{i=0}^{2n} (-1)^i a_i\right\}_{n=0}^\infty&
+            \{Q_n\}_{n=0}^\infty &:= \{S_{2n + 1}\}_{n=0}^\infty = \left\{\sum_{i=0}^{2n + 1} (-1)^i a_i\right\}_{n=0}^\infty
+        \end{align*}
+        Несложно видеть, что 
+        \begin{align*}
+            P_{n+1} - P_n &= - a_{2n+1} + a_{2n+2} \leqslant 0&
+            Q_{n+1} - Q_n &= a_{2n+2} - a_{2n-3} \geqslant 0\\
+            Q_{n} - P_{n} &= - a_{2n+1} \leqslant 0&
+            P_{n+1} - Q_{n} &= a_{2n+2} \geqslant 0
+        \end{align*}
+        Тогда имеем, что $\{P_n\}_{n=0}^\infty$ монотонно убывает, $\{Q_n\}_{n=0}^\infty$ монотонно возрастает, а также
+        \[\{P_n\}_{n=0}^\infty \geqslant \{Q_n\}_{n=0}^\infty.\]
+        Тогда последовательности $\{P_n\}_{n=0}^\infty$ и $\{Q_n\}_{n=0}^\infty$ сходятся и сходятся к $P$ и $Q$ соответственно. При этом последовательность
+        \[\{P_n\}_{n=0}^\infty - \{Q_n\}_{n=0}^\infty = \{P_n - Q_n\}_{n=0}^\infty = a_{2n+1}\]
+        тоже сходится по условию и сходится к $0$. Поэтому
+        \[P - Q = \lim \{P_n\}_{n=0}^\infty - \lim \{Q_n\}_{n=0}^\infty = 0\]
+        значит $P=Q$. Значит и последовательность префиксных сумм тоже сходится к $P=Q$.
+    \end{proof}
+
+    \begin{lemma}[преобразование Абеля]
+        \[\sum_{k=0}^n a_k b_k = \sum_{k=0}^{n-1} (a_k - a_{k+1})B_k + a_n B_n\]
+        где $B_n := \sum_{i=0}^n b_i$.
+    \end{lemma}
+
+    \begin{theorem}[признак Дирихле]
+        Если даны $\{a_i\}_{i=0}^\infty$ и $\{b_i\}_{i=0}^\infty$, что $\{a_i\}_{i=0}^\infty \searrow 0$, а $\{B_n\}_{n=0}^\infty = \{\sum_{i=0}^n b_i\}_{i=0}^\infty$ ограничена, то ряд $\sum_{i=0}^\infty a_i b_i$ сходится.
+    \end{theorem}
+
+    \begin{proof}
+        \[S_n = \sum_{i=0}^n a_k b_k = \sum_{i=0}^n (a_k - a_{k+1}) B_k + a_n B_n\]
+        Пусть $|B_n| < C$ для всех $n$. Несложно видеть, что 
+        \[\lim_{n \to \infty} |a_n B_n| \leqslant \lim a_n C = C \lim a_n = 0,\]
+        поэтому $\lim a_n B_n = 0$. Также
+        \[|(a_k-a_{k+1}) B_k| < C |a_k - a_{k+1}| = C(a_k - a_{k+1}),\]
+        поэтому
+        \[|S_n - a_n B_n| \leqslant \sum_{k=0}^{n-1} |(a_k - a_{k+1})B_k| < C \sum_{k=0}^{n-1} (a_k - a_{k+1}) = C(a_1 - a_{n+1}),\]
+        что тоже сходится. Поэтому $\{S_n\}_{n=0}^\infty$ сходится, т.е. и ряд сходится.
+    \end{proof}
+
+    \subsection{Пределы функций, непрерывность}
+
     \begin{definition}[по Коши]
         \emph{Предел} функции $f: X \to \RR$ при в точке $x$ --- такое значение $y$, что
         \[\forall \varepsilon > 0\, \exists \delta > 0: f(V_\delta(x) \cap X) = U_\varepsilon(y)\]
@@ -368,28 +460,34 @@
     \end{remark}
 
     \begin{definition}
-        Сумма ряда $\{a_k\}_{k=0}^\infty$ есть значение $\sum_{k=0}^\infty a_k := \lim \left\{\sum_{i=0}^k\right\}_{k=0}^\infty$. Частичной же суммой $s_k$ этого ряда называется просто $\sum_{i=0}^k a_i$.
-    \end{definition}
-
-    \begin{definition}
-        Последовательность $\{x_i\}_{i=0}^\infty$, удовлетворяет условию 
-        \[\forall \varepsilon > 0\; \exists N:\; \forall n_1, n_2 > N \quad |x_{n_1} - x_{n_2}| < \varepsilon,\]
-        то она называется \emph{фундаментальной}.
-    \end{definition}
-
-    \begin{theorem}
-        Еcли $\sum_{i=0}^\infty |a_i|$ существует, то и $\sum_{i=0}^\infty a_i$ существует.
-    \end{theorem}
-
-    \begin{corollary}
-        Еcли $\{b_i\}_{i=0}^\infty \succcurlyeq \{|a_i|\}_{i=0}^n$ и $\sum_{i=0}^\infty |b_i|$ существует, то и $\sum_{i=0}^\infty a_i$ существует.
-    \end{corollary}
-
-    \begin{definition}
         \emph{Осцелляцией} называется $\osc_E f = \sup_E f - \inf_E f$.
     \end{definition}
 
     \begin{definition}
-        Функция $f: X \to \RR$ называется \emph{непрерывной в точке} $x$, если $\lim\limits_{t \to x} f(t) = f(x)$. 
+        \emph{Верхним пределом} функции $f$ в точке $x_0$ называется
+        \[\varlimsup\limits_{x \to x_0} f(x) = \inf_{\delta > 0} (\sup_{V_\delta(x_0)} f)\]
+        \emph{Нижним пределом} функции $f$ в точке $x_0$ называется
+        \[\varliminf\limits_{x \to x_0} f(x) = \sup_{\delta > 0} (\inf_{V_\delta(x_0)} f)\]
     \end{definition}
+
+    \begin{statement}
+        Функция $f: X \to \RR$ имеет в $x$ предел тогда и только тогда, когда $\varlimsup\limits_{t \to x} f(t) = \varliminf\limits_{t \to x} f(t)$.
+    \end{statement}
+
+    \begin{definition}
+        Функция $f: X \to \RR$ называется \emph{непрерывной в точке} $x$, если $\lim\limits_{t \to x} f(t) = f(x)$. В изолированных точках $f$ всегда непрерывна.
+    \end{definition}
+
+    \begin{definition}
+        Функция $f: X \to \RR$ называется \emph{непрерывной на множестве} $Y \subseteq X$, если она непрерывна во всех точках $Y$.
+    \end{definition}
+
+    \begin{statement}
+        Для непрерывных на $X$ функций $f$ и $g$ верно, что
+        \begin{itemize}
+            \item $f+g$ непрерывна на $X$;
+            \item $fg$ непрерывна на $X$;
+            \item $\frac{1}{f}$ непрерывна на $X$ (если $f \neq 0$).
+        \end{itemize}
+    \end{statement}
 \end{document}

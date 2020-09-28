@@ -1,5 +1,7 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{math-text}
+\usepackage[all]{xy}
+\CompileMatrices
 
 \title{Алгебра. %\footnote{\textcolor{red}{\bfseries Этот текст содержит критические недочёты (см. с. \pageref{TODO-list}). Вы можете помочь исправить их, написав мне \href{mailto:minaevgleb@yandex.ru}{по почте} (minaevgleb@yandex.ru) или \href{https://vk.com/lounres}{в ВКонтакте} (@lounres).}}
 }
@@ -8,6 +10,7 @@
 
 \DeclareMathOperator{\Img}{Im}
 \DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Frac}{Frac}
 
 % \usepackage{todonotes}
 % \setlength{\marginparwidth}{2.5cm}
@@ -381,7 +384,13 @@
     \end{statement}
 
     \begin{definition}
-        Пусть $f: X \to Y$. Несложно видеть, что $f$ расклаадывается в композицию сюръекции $f: X \to f(X)$ и инъекции $id: f(X) \to Y$. Тогда $\Img(f) = \{f(x) \mid x \in X\}$ --- \emph{множество значений} $f$, а классы значений $X$, переходящих в один $y\in Y$ суть \emph{слои} --- $f^{-1}(y) = \{x \mid f(x) = y\}$ для некоторого $y$.
+        Пусть $f: X \to Y$. Несложно видеть, что $f$ раскладывается в композицию сюръекции $f: X \to f(X)$ и инъекции $id: f(X) \to Y$. Тогда $\Img(f) = \{f(x) \mid x \in X\}$ --- \emph{множество значений} $f$, а классы значений $X$, переходящих в один $y\in Y$ суть \emph{слои} --- $f^{-1}(y) = \{x \mid f(x) = y\}$ для некоторого $y$.
+        \[
+            \xymatrix{
+                X \ar@{->>}[rd]^f \ar[rr]^f && Y\\
+                & f(X) = \Img(f) \ar@{^{(}->}[ur]^{id}
+            }
+        \]
     \end{definition}
 
     \begin{definition}
@@ -419,6 +428,12 @@
 
     \begin{theorem}[теорема о гомоморфизме]
         Пусть $\phi: R \to S$ --- гомоморфизм. (Вспомним, что $\Ker(\phi) \triangleleft R$, а $\Img(\phi) = \phi(R)$.) Тогда $R/\Ker(\phi) \cong \Img(\phi)$, где изоморфизм переводит $[a] \mapsto \phi(a)$.
+        \[
+            \xymatrix{
+                R \ar@{->>}[d]_{r \mapsto [r]} \ar[rr]^\phi && S\\
+                R/\Ker(\phi) \ar[rr]^-\sim_-{[r] \mapsto \phi(r)} && \Img(\phi) \ar@{^{(}->}[u]_{id}
+            }
+        \]
     \end{theorem}
 
     \begin{proof}\ 
@@ -442,7 +457,7 @@
     \end{theorem}
 
     \begin{proof}
-        Рассмотрим $\phi: \ZZ/mn\ZZ \to \ZZ/m\ZZ \times \ZZ/n\ZZ, a \mapsto ([a]_m; [a]_n)$. Несложно заметить, что ядро $\phi$ тривиально, поэтому $\ZZ/mn\ZZ \cong \ZZ/mn\ZZ/\Ker(\phi) \cong \Img(\phi)$. Но в последнем элементов не менее $mn$, так как $\Img(\phi) \cong \ZZ/mn\ZZ$, но и не более, так как $|\ZZ/m\ZZ \times \ZZ/n\ZZ| = mn$, поэтому $\Img(\phi) = \ZZ/m\ZZ \times \ZZ/n\ZZ$, поэтому $\ZZ/mn\ZZ \cong \ZZ/m\ZZ \times \ZZ/n\ZZ$. 
+        Рассмотрим $\phi: \ZZ/mn\ZZ \to \ZZ/m\ZZ \times \ZZ/n\ZZ, [a]_{mn} \mapsto ([a]_m; [a]_n)$. Несложно заметить, что ядро $\phi$ тривиально, поэтому $\ZZ/mn\ZZ \cong \ZZ/mn\ZZ/\Ker(\phi) \cong \Img(\phi)$. Но в последнем элементов не менее $mn$, так как $\Img(\phi) \cong \ZZ/mn\ZZ$, но и не более, так как $|\ZZ/m\ZZ \times \ZZ/n\ZZ| = mn$, поэтому $\Img(\phi) = \ZZ/m\ZZ \times \ZZ/n\ZZ$, поэтому $\ZZ/mn\ZZ \cong \ZZ/m\ZZ \times \ZZ/n\ZZ$.
     \end{proof}
 
     \begin{theorem}[КТО]
@@ -454,8 +469,14 @@
         По индукции по $k$ с помощью КТО для двух чисел.
     \end{proof}
 
-    \begin{theorem}
+    \begin{theorem}[Универсальное свойтсво фактор-кольца]
         Пусть есть $I \triangleleft R$ и гомоморфизмы $\pi: R \to R/I$ --- нативный гомоморфизм, и $\pi: R \to S$, что $\pi(I) = \{0\}$. Тогда существует и единственен гомоморфизм $\phi': R/I \to S$, что $\phi' \circ \pi = \phi$.
+        \[
+            \xymatrix{
+                R \ar@{->>}[rd]_{\pi} \ar[rr]^\phi && S\\
+                & R/I \ar[ur]_{\phi'}
+            }
+        \]
     \end{theorem}
 
     \begin{proof}
@@ -468,7 +489,76 @@
         \end{itemize}
     \end{proof}
 
-    \pagebreak
+    \begin{definition}
+        Пусть $R$ --- область целостности. Тогда рассмотрим $Q = R \times (R \setminus \{0\})$ и отношение $\sim$ на $Q$, что $(a; b) \sim (c; d) \Leftrightarrow ad = bc$. Несложно видеть, что $\sim$ --- отношение эквивалентности. Тогда \emph{полем частных} области целостности $R$ называется $\Frac(R) = Q/\sim$, где операции:
+        \begin{itemize}
+            \item $[(a; b)] + [(c; d)] := [(ad + bc; bd)]$;
+            \item $[(a; b)] \cdot [(c; d)] := [(ac; bd)]$;
+            \item $0 := [(0; 1)]$;
+            \item $- [(a; b)] := [(-a; b)]$;
+            \item $1 := [(1; 1)]$;
+            \item $[(a; b)]^{-1} = [(b; a)]$.
+        \end{itemize}
+        Несложно видеть, что все операции корректны, а поле частных --- поле.
+    \end{definition}
+
+    \begin{remark}
+        Есть нативный инъективный гомоморфизм из $R$ в $\Frac(R)$:
+        \[\phi: R \to \Frac(R), r \mapsto [(r; 1)]\]
+    \end{remark}
+
+    \begin{theorem}[Уникальное свойтсво поля частных]
+        Пусть $R$ --- область целостности, $F$ --- поле, $\phi: R \to F$ --- инъективный гомоморфизм, сохраняющий $1$, $\pi: R \to \Frac(R)$ --- нативный гомоморфизм. Тогда существует единственный гомоморфизм $\phi': \Frac(R) \to F$, что $\phi' \circ \pi = \phi$.
+        \[
+            \xymatrix{
+                R \ar@{^{(}->}[rd]_{\pi} \ar@{^{(}->}[rr]^\phi && F\\
+                & \Frac(R) \ar[ur]_{\phi'}
+            }
+        \]
+    \end{theorem}
+
+    \begin{remark}
+        Если $\phi: E \to F$ --- гомоморфизм полей, сохраняющий $1$, то он инъективен. Действительно, $\Ker(\phi)$ --- идеал, значит ${0}$ или $E$, так как $E$ поле, но случай $E$ не подходит, так как не сохраняется $0$, значит $\Ker(\phi) = {0}$, значит $\phi$ инъективно.
+    \end{remark}
+
+    \begin{proof}
+        \begin{thlemma}
+            $\phi'(1/b) = 1/\phi'(b)$
+        \end{thlemma}
+
+        \begin{thlemma}
+            $\phi'(a/b) = \phi'(a)/\phi'(b)$.
+        \end{thlemma}
+
+        Заметим, что $\phi'(a) = \phi'(\pi(a)) = \phi(a)$, поэтому $\phi'(a/b) = \phi(a)/\phi(b)$ --- это означает единственность $\phi'$.
+
+        Теперь рассмотрим соответсвующую $\phi': a/b \mapsto \phi(a)/\phi(b)$. Проверим корректность:
+        \begin{align*}
+            \frac{a}{b} &= \frac{c}{d}&
+            &\Rightarrow&
+            ad &= bc&
+            &\Rightarrow&
+            \phi(ad) &= \phi(bc)&
+            &\Rightarrow\\
+            \phi(a)\phi(d) &= \phi(b)\phi(c)&
+            &\Rightarrow&
+            \frac{\phi(a)}{\phi(b)} &= \frac{\phi(c)}{\phi(d)}&
+            &\Rightarrow&
+            \phi'\left(\frac{a}{b}\right) &= \phi'\left(\frac{c}{d}\right)
+        \end{align*}
+        Теперь проверим согласованность с операциями:
+        \begin{itemize}
+            \item \[\phi'\left(\frac{a}{b}\cdot \frac{c}{d}\right) = \frac{\phi(ac)}{\phi(bd)}=\frac{\phi(a)}{\phi(b)}\cdot\frac{\phi(c)}{\phi(d)}=\phi'\left(\frac{a}{b}\right)\cdot\phi'\left(\frac{c}{d}\right);\]
+            \item
+                \begin{multline*}
+                    \phi'\left(\frac{a}{b} + \frac{c}{d}\right) = \phi'\left(\frac{ad + bc}{bd}\right) = \frac{\phi(ad + bc)}{\phi(bd)} = \\
+                    \frac{\phi(a)\phi(d) + \phi(b)\phi(c)}{\phi(b)\phi(d)} = \frac{\phi(a)}{\phi(b)} + \frac{\phi(c)}{\phi(d)} = \phi'\left(\frac{a}{b}\right) + \phi'\left(\frac{c}{d}\right)
+                \end{multline*}
+        \end{itemize}
+        
+    \end{proof}
+
+    % \pagebreak
 
     % \listoftodos\label{TODO-list}
 \end{document}
