@@ -1,15 +1,20 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{math-text}
+\usepackage{stmaryrd}
 
 \title{Основы наивной теории множеств.}
 \author{\href{https://users.math-cs.spbu.ru/~speranski}{Станислав Олегович Сперанский}}
 \date{}
 
-\newcommand{\Pcal}{\ensuremath{\mathcal{P}}\xspace}
+\newcommand{\subsets}{\ensuremath{\mathcal{P}}\xspace}
+\newcommand{\finsubsets}{\ensuremath{\mathcal{P_{\mathrm{fin}}}}\xspace}
 \DeclareMathOperator{\Ind}{Ind}
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\range}{range}
 \DeclareMathOperator{\Min}{Min}
+\DeclareMathOperator{\Seq}{Seq}
+\DeclareMathOperator{\Left}{left}
+\DeclareMathOperator{\Right}{right}
 
 \begin{document}
     \maketitle
@@ -30,6 +35,10 @@
 
     \begin{statement}[парадокс Рассела]
         Пусть $R = \{u \mid u \notin u\}$. Тогда $R$ не может лежать в себе и не может не лежать в себе одновременно.
+    \end{statement}
+
+    \begin{statement}[парадокс Берри]
+        Пусть $n$ --- наименьшее натуральное число, которое нельзя описать менее чем одиннадцатью словами. Тогда $n$ описывается 10 словами.
     \end{statement}
 
     Из-за данного парадокса будем рассматривать только условия, образованные переменными и $\in$, $=$, $\neg$, $\wedge$, $\vee$, $\leftarrow$, $\leftrightarrow$, $\forall$, $\exists$.
@@ -71,8 +80,8 @@
                 \[
                     \forall X\, \exists Y\; \forall u\, (u \in Y \leftrightarrow u \subseteq X)
                 \]
-                Обозначение: $Y = \Pcal(X) := \{u \mid u \subseteq X\}$.
-                $\Pcal(X)$ --- ``множество-степень X'' или ``булеан X''.
+                Обозначение: $Y = \subsets(X) := \{u \mid u \subseteq X\}$.
+                $\subsets(X)$ --- ``множество-степень X'' или ``булеан X''.
 
                 \begin{definition}
                     Упорядоченная пара --- это объект от некоторых $X_1$ и $Y_1$, который равен другому такому объекту от $X_2$ и $Y_2$ тогда и только тогда, когда $X_1 = X_2 \wedge Y_1 = Y_2$.
@@ -83,7 +92,7 @@
                 \end{definition}
 
                 \begin{remark}
-                    Можно нелсожно показать, что декартово произведение определено корректно.
+                    Можно несложно показать, что декартово произведение определено корректно.
                 \end{remark}
             \item[Inf)] Пусть $\Ind(X) := \varnothing \in X \wedge \forall u\, (u \in X \wedge u \cup \{u\} \in X)$. Если $\Ind(X)$, то $X$ называется индуктивным. ``Аксиома бесконечности'': существует индуктивное множество.
             \item[Repl)] ``Схема аксиом подстановки'':
@@ -110,7 +119,7 @@
         \begin{align*}
             \dom(R) &:= \{u \in X \mid \exists v\quad uRv\}&& \text{``область определения $R$''}\\
             \range(R) &:= \{v \in Y \mid \exists u\quad uRv\}&& \text{``область значений $R$''}\\
-            R[U] &:= range(R \cap (U \times Y))\\
+            R[U] &:= \range(R \cap (U \times Y))\\
             R^{-1} &:= \{(y, x) \mid (x, y) \in R\}
         \end{align*}
     \end{definition}
@@ -123,7 +132,7 @@
     \end{remark}
 
     \begin{definition}
-        Бинарные отношнения можно естественным образом комбинировать: для любых отношений $R$ и $Q$ между $X$ и $Y$, $Y$ и $Z$ соответственно отношение
+        Бинарные отношения можно естественным образом комбинировать: для любых отношений $R$ и $Q$ между $X$ и $Y$, $Y$ и $Z$ соответственно отношение
         \[
             S = R \circ Q := \{(x, z) \in X \times Z \mid \exists y: xRy \wedge yQz\}
         \]
@@ -152,7 +161,7 @@
     \begin{definition}
         \emph{Ограничение} или \emph{сужение} функции $f: X \to Y$ на $U \subseteq X$ --- функция $f\upharpoonright_U := f \cap (U \times Y)$.
         
-        Если $f: X \to Y$ и $g: U \to Y$, где $U \subseteq X$, таковы, что $f\upharpoonright_U = g$, то $f$ называется \emph{расширением} $g$, а $g$ --- \emph{органичением} $f$.
+        Если $f: X \to Y$ и $g: U \to Y$, где $U \subseteq X$, таковы, что $f\upharpoonright_U = g$, то $f$ называется \emph{расширением} $g$, а $g$ --- \emph{ограничением} $f$.
     \end{definition}
 
     \begin{definition}
@@ -257,7 +266,7 @@
 
     \begin{proof}
         Пусть $k \in \NN$. Тогда будем называть функцию $f: k+1 \to Y$ \emph{правильной}, если условие в определении рекурсии верно для всех $n \in k + 1$. Также рассмотрим
-        \[S := \{k \in \NN \mid \text{сущесвтует единственная правильная $f: k + 1 \to Y$}\}\]
+        \[S := \{k \in \NN \mid \text{существует единственная правильная $f: k + 1 \to Y$}\}\]
         Будем обозначать для каждого $k \in S$ через $f_k$ соответствующую правильную функцию из $k+1$ в $Y$.
 
         Докажем по индукции, что $S = \NN$.
@@ -267,7 +276,7 @@
         \textbf{Шаг.} Легко заметить, что сужение любой правильной функции на $k+2$ на множество $k+1$ правильно. Поэтому все правильные функции на $k+2$ определены на $k+1$ как $f_k$. Тогда значение в $k+1$ определяется однозначно, значит правильная функция на $k+2$ существует и единственна. 
     \end{proof}
 
-    \begin{theorem}[о рекурсии, парамметризованная]
+    \begin{theorem}[о рекурсии, параметризованная]
         Пусть $g_0 \in Y^X$ и $h: X \times \NN \times Y \to Y$. Тогда существует и единственна $f: X \times \NN \to Y$, что $\forall x \in X, n \in \NN$
         \[f(x, n) = \left\{\begin{aligned}
             &g_0(x)&&\text{если }n=0\\
@@ -293,7 +302,7 @@
 
 
     \begin{remark}
-        Заметим, что с помощью ткоремы о параметризованной рекурсии можно определить сложение, умножение и возведение в степень на натуральных числах.
+        Заметим, что с помощью теоремы о параметризованной рекурсии можно определить сложение, умножение и возведение в степень на натуральных числах.
     \end{remark}
 
     \begin{definition}
@@ -335,7 +344,24 @@
     \end{theorem}
 
     \begin{proof}
-        По аналогии с доказательством теоремы о рекурсии, однако вместообычной индукции тут используется возвратная. [\dots]
+        По аналогии с доказательством теоремы о рекурсии, однако вместо обычной индукции тут используется возвратная. [\dots]
+    \end{proof}
+
+    \begin{definition}
+        Условие $\Phi(x, y)$ называется \emph{функциональным}, если
+        \[\forall x \forall y_1 \forall y_2\; ((\Phi(x, y_1) \wedge \Phi(x, y_2)) \rightarrow y_1 = y_2)\]
+        Если для некоторого $u$ нашёлся тот самый $y$, что $\Phi(u, y)$, тогда данный $y$ обозначается как $\llbracket \Phi \rrbracket (x)$.
+
+        Функциональное условие $\Phi(x, y)$ называется \emph{тотальным}, если $\forall x \exists y\; \Phi(x, y)$.
+    \end{definition}
+
+    \begin{theorem}[о возвратной ``классовой рекурсии'']
+        Пусть $\Phi(x, y)$ --- тотальное функциональное условие. Тогда существует единственная функция $f$ с $\dom(f) = \NN$, что $\forall n \in \NN$
+        \[f(n) = \llbracket \Phi \rrbracket (f\upharpoonright_n)\]
+    \end{theorem}
+
+    \begin{proof}
+        Идея здесь та же, хотя деталей побольше. В нашем модуле эта теорема не будет играть особой роли, однако именно ``классовая рекурсия'' является базовым инструментом в ТМ. [...]
     \end{proof}
 
     \section{Мощности}
@@ -354,12 +380,12 @@
     \end{theorem}
 
     \begin{example}
-        $\Pcal(X) \sim 2^X$. Действительно, рассмотрим для каждого $Y \subseteq X$ функцию $\chi_Y: X \to 2$, что
+        $\subsets(X) \sim 2^X$. Действительно, рассмотрим для каждого $Y \subseteq X$ функцию $\chi_Y: X \to 2$, что
         \[\chi_Y(x) := \left\{\begin{aligned}
             &1 && \text{если $x\in Y$}\\
             &0 && \text{если $x \in X \setminus Y$}
         \end{aligned}\right.\]
-        Несложно заметить, что отображение, сопоставляющее $Y$ функцию $\chi_Y$ есть биекция из $\Pcal(x)$ в $2^X$.
+        Несложно заметить, что отображение, сопоставляющее $Y$ функцию $\chi_Y$ есть биекция из $\subsets(x)$ в $2^X$.
     \end{example}
 
     \begin{definition}
@@ -383,13 +409,13 @@
     \end{theorem}
 
     \begin{theorem}[Кантора, обобщённая]
-        $X \prec \Pcal(X)$.
+        $X \prec \subsets(X)$.
     \end{theorem}
 
     \begin{proof}
-        Очевидно, что $f: X \to \Pcal(X, x \mapsto \{x\}$ есть инъекция, поэтому $X \preccurlyeq \Pcal(X)$. Покажем, что между ними нет биекции.
+        Очевидно, что $f: X \to \subsets(X), x \mapsto \{x\}$ есть инъекция, поэтому $X \preccurlyeq \subsets(X)$. Покажем, что между ними нет биекции.
 
-        Предположим противное, т.е. есть биекция $f: X \to \Pcal(X)$. Рассмотрим $Y := \{x \in X \mid x \notin f(x)\}$. Поскольку $f$ --- биекция, то $f(y) = Y$ для некоторого $Y$. В итоге мы получаем
+        Предположим противное, т.е. есть биекция $f: X \to \subsets(X)$. Рассмотрим $Y := \{x \in X \mid x \notin f(x)\}$. Поскольку $f$ --- биекция, то $f(y) = Y$ для некоторого $y$. В итоге мы получаем
         \[
             y \in Y \qquad
             \Longleftrightarrow \qquad
@@ -410,7 +436,7 @@
         \end{thlemma}
 
         \begin{proof}
-            Пусть $f: X \to X'$ --- биекция. Определимм по рекурсии $\{X_i\}_{i=0}^\infty$ и $\{Y_i\}_{i=0}^\infty$:
+            Пусть $f: X \to X'$ --- биекция. Определим по рекурсии $\{X_i\}_{i=0}^\infty$ и $\{Y_i\}_{i=0}^\infty$:
             \begin{align*}
                 X_n &:= \left\{\begin{aligned}
                     &X && \text{если $n = 0$}\\
@@ -438,9 +464,331 @@
                 f(x) & \text{если $x \in U$}\\
                 x & \text{если $x \in Z$}
             \end{cases}\]
-            Несложно видеть, что это инъекция. Действительно, $g$ на $U$ равна $f$, а значит есть бииекция из $U$ в $U\setminus U_0$, также является биекцией из $Z$ в себя, а поскольку $U$ и $Z$ дизъюнктны, то $g$ является биекцией из $U \cup Z$ в $U\setminus U_0 \cup Z$, т.е. из $X$ в $Y$. Значит $Y \sim X$.
+            Несложно видеть, что это инъекция. Действительно, $g$ на $U$ равна $f$, а значит есть биекция из $U$ в $U\setminus U_0$, также является биекцией из $Z$ в себя, а поскольку $U$ и $Z$ дизъюнктны, то $g$ является биекцией из $U \cup Z$ в $U\setminus U_0 \cup Z$, т.е. из $X$ в $Y$. Значит $Y \sim X$.
         \end{proof}
 
         Пусть $f: X \to Y$ и $g: Y \to X$ --- инъекции. Несложно видеть, что $g[Y] \subseteq X$, а $f[X] \subseteq Y$, значит $g[f[X]] \subseteq g[Y]$. Т.е. $X \supseteq g[Y] \supseteq g[f[X]]$. При этом $X \sim f[X] \sim g[f[X]]$, поэтому применяя лемму \ref{CSB-th-lemma}, имеем, что $X \sim g[Y] \sim Y$, значит $X \sim Y$.
     \end{proof}
+
+    \begin{definition}
+        Будем говорить, что $X$ \emph{имеет $n$ элементов} (где $n \in \NN$), если $X \sim n$.
+
+        $X$ \emph{конечно}, если для какого-то $n\in \NN$, что $X \sim n$.
+    \end{definition}
+
+    \begin{statement}
+        $X$ бесконечно, значит $\forall n\in\NN\quad |X| \geqslant n$.
+    \end{statement}
+
+    \begin{proof}
+        Докажем по индукции по $n$.
+
+        \textbf{База:} $|X| \geqslant 0$ --- очевидно.
+
+        \textbf{Шаг:} Пусть $|X| > n$, тогда существует инъекция $f: n \to X$. $f(n) \neq X$, поэтому есть $x \in X\setminus f(n)$, значит есть $f' = f \cup \{(n; x)\}$ --- инъекция из $n+1$ в $X$.
+    \end{proof}
+
+    \subsection{Основные свойства конечных множеств}
+
+    \begin{statement}
+        $X$ конечно, а $|Y| \leqslant |X|$, то $|Y|$ конечно.
+    \end{statement}
+
+    \begin{proof}
+        Существует $n \in \NN$, что $|X| = n$. Тогда $Y$ кончено, так как иначе $n = |X| \geqslant |Y| \geqslant n+1$.
+    \end{proof}
+
+    \begin{statement}
+        Пусть есть сюръекция из $X$ в $Y$, и $X$ конечно. Тогда $|Y| \leqslant |X|$.
+    \end{statement}
+
+    \begin{proof}
+        WLOG $X=n$ для некоторого $n \in \NN$. Определим $g: Y \to n$ по правилу
+        \[
+            g(y) := \text{``минимальный элемент в $f^{-1}[\{y\}]$''}
+        \]
+        Легко понять, что $g: Y \to n$ --- инъекция. Стало быть, $|Y| \geqslant |n| = n$.
+    \end{proof}
+
+    \begin{statement}
+        Пусть $X$ и $Y$ конечны, причём $X \cup Y = \varnothing$. Тогда $X \cap Y$ конечно и $|X \cup Y| = |X| + |Y|$.
+    \end{statement}
+
+    \begin{proof}
+        Докажем утверждение индукцией по $|Y|$.
+
+        \textbf{База.} Очевидно, если $|Y| = 0$, то $|Y| = \varnothing$, а потому $|X \cup Y| = |X| = |X| + 0 = |X| + |Y|$.
+
+        \textbf{Шаг.} Пусть $|Y| = n+1$, т.е. существует биекция $f: n+1 \to Y$. Рассмотрим $y = f^{-1}(n)$ и $Z := Y \setminus \{y\}$. Очевидно, что $|Z| = n$. Тогда
+        \begin{align*}
+            |X \cup Y|
+            &= |(X \cup Z) \cup \{y\}|&
+            &= |X \cup Z| + 1&
+            &= (|X| + |Z|) + 1\\
+            &= |X| + (|Z| + 1)&
+            &= |X| + |Y|
+        \end{align*}
+    \end{proof}
+
+    \begin{statement}
+        Пусть $X$ и $Y$ конечны. Тогда $X \times Y$ и $X^Y$ кончены и $|X\times Y| = |X|\cdot |Y|$, $|X^Y|=|X|^{|Y|}$.
+    \end{statement}
+
+    \subsection{Основные свойства (не более чем) счётных множеств}
+
+    \begin{statement}[в ZFC]
+        Пусть $X$ бесконечно, тогда оно содержит счётное подмножество.
+    \end{statement}
+
+    \begin{proof}
+        Пусть $\eta$ --- какая-нибудь функция выбора для $\subsets(X) \setminus \{\varnothing\}$. Используя рекурсию, определим $f: \NN \to X$ по правилу
+        \[f(k) := \eta(X \setminus \range(f \upharpoonright_k))\]
+        Как легко видеть, $f: \NN \to X$ --- инъекция. Поэтому $\range(f)$ будет счётным подмножеством $X$.
+    \end{proof}
+
+    \begin{definition}
+        $\NN$ является кардиналом и обычно обозначается $\aleph_0$.
+    \end{definition}
+
+    \begin{corollary}[в ZFC]
+        $|X| >\aleph_0$ тогда и только тогда, когда $X$ бесконечно и несчётно.
+    \end{corollary}
+
+    \begin{statement}
+        $|X| \leqslant \aleph_0$ тогда и только тогда, когда $X$ конечно или счётно. 
+    \end{statement}
+
+    \begin{proof}
+        Если $X$ конечно или счётно, то, очевидно, $|X| \leqslant \aleph_0$.
+
+        Если $|X| \leqslant \aleph_0$, то WLOG $X \subseteq \NN$. Если $X$ бесконечно, то рекурсивно определим $f: \NN \to X$ по правилу
+        \[f(k) := \text{``минимальный элемент в $X \setminus \range(f \upharpoonright_k)$''}\]
+        Нетрудно проверить, что $f: \NN \to X$ --- биекция.
+    \end{proof}
+
+    \begin{corollary}[в ZFC]
+        $|X| \ngtr \aleph_0$ тогда и только тогда, когда $|X| \leqslant \aleph_0$.
+    \end{corollary}
+
+    \begin{statement}
+        Есть сюръекция из $X$ в $Y$, причём $|X| \leqslant \aleph_0$. Тогда $|Y| \leqslant \aleph_0$.
+    \end{statement}
+
+    \begin{proof}
+        WLOG $X \subseteq \NN$. Определим $g: Y \to X$ по правилу
+        \[g(y) := \text{``минимальный элемент в $f^{-1}[\{y\}]$''}\]
+        Легко понять, что $g: Y \to X$ --- инъекция. Стало быть, $|Y| \leqslant |X| \leqslant \aleph_0$.
+    \end{proof}
+
+    \begin{corollary}
+        Непустое $X$ не более чем счётно тогда и только тогда, когда существует сюръекция из $\NN$ в $X$.
+    \end{corollary}
+
+    \begin{corollary}
+        Пусть $R$ --- отношение эквивалентности на $X$, причём $X$ не более, чем счётно. Тогда $X/R$ не более чем счётно.
+    \end{corollary}
+
+    \begin{statement}
+        Пусть $X$ и $Y$ не более чем счётны, тогда $X \times Y$ не более чем счётно.
+    \end{statement}
+
+    \begin{proof}
+        WLOG $X, Y \subseteq \NN$. Тогда $X \times Y \subseteq \NN \times \NN$, а значит нужно показать, что счётность $\NN \times \NN$. Определим $\nu: \NN \times \NN \to \NN$ по правилу
+        \[\nu(n, m) := \frac{(n+m)(n+m+1)}{2} + n\]
+        Нетрудно проверить, что $\nu$ биективна.
+    \end{proof}
+
+    \begin{corollary} $\forall n \in \NN$
+        \[\underbrace{\NN \times \dots \times \NN}_n\]
+        счётно.
+    \end{corollary}
+
+    \begin{corollary}
+        Пусть $X$ и $Y$ не более чем счётны, тогда $X \cup Y$ не более чем счётно.
+    \end{corollary}
+
+    \begin{proof}
+        Поскольку $X$ и $Y\setminus X$ равномощны некоторым подмножествам $\NN \times \{0\}$ и $\NN \times \{1\}$, то $X \cup Y = X \cup (Y \setminus X)$ равномощно подмножеству $\NN \times \{0, 1\} \subseteq \NN \times \NN$, а потому не более чем счётно.
+    \end{proof}
+
+    \begin{statement}
+        $X$ конечно, а элементы $X$ не более чем счётны. Тогда $\bigcup X$ не более чем счётно.
+    \end{statement}
+
+    \begin{proof}
+        По индукции по $|X|$.
+    \end{proof}
+
+    \begin{definition} Условие ``быть (бесконечной) последовательностью'' ---
+        $\Seq(F) := \exists Y:\quad F: \NN \to Y$.
+        Если $\Seq(F)$, то для любого $n \in \NN$ вместо $F(n)$ нередко пишут $F_n$.
+    \end{definition}
+
+    \begin{statement}
+        Если $F$ --- последовательность последовательностей, то тогда
+        \[\bigcup \{\range(F_n)\mid n \in \NN\}\]
+        не более чем счётно.
+    \end{statement}
+
+    \begin{proof}
+        Определим $g: \NN \times \NN \to \bigcup \{\range(F_n)\mid n \in \NN\}$ по правилу
+        \[g(n,m) := F_n(m) = F(n)(m)\]
+        Легко понять, что $g$ сюръективна.
+    \end{proof}
+
+    \begin{corollary}[в ZFC]
+        Пусть $X$ не более чем счётно, и все его элементы не более чем счётны, тогда $\bigcup X$ не более чем счётно.
+    \end{corollary}
+
+    \begin{proof}
+        WLOG $X \neq \varnothing$ и $\varnothing \notin X$. Пусть $g$ --- сюръекция из $\NN$ на $X$. Для каждого $n \in \NN$ положим
+        \[S_n := \{f \mid f: \NN \to g(n) \text{ --- сюръекция}\}\]
+        Очевидно, $S_n \neq \varnothing$ для всякого $n \in \NN$. Обозначим $\{S_n \mid n \in \NN\}$ через $\mathcal{J}$. Пусть $\eta$ --- какая-нибудь функция выбора для $\mathcal{J}$. Наконец, определим $F: \NN \to \bigcup \mathcal{J}$ по правилу
+        \[F(n) := \eta(S_n)\]
+        Ясно, что $\bigcup \{\range(F_n) \mid n \in \NN\} = \bigcup \{g(n) \mid n \in \NN\} = \bigcup X$.
+    \end{proof}
+
+    \begin{theorem}
+        Пусть непустое $X$ не более чем счётно. Тогда $X^*$ счётно.
+    \end{theorem}
+
+    \begin{proof}
+        Зафиксируем сюръекцию $g: \NN \to X$. Очевидно, $f \circ g \in X^*$ для всякого $f \in \NN^*$. Определим $G: \NN^* \to X^*$ по правилу
+        \[G(f) := f \circ g\]
+        Легко убедиться, что $G$ сюръективна. Поэтому достаточно показать, что $N^*$ не более чем счётно, а $X^*$ бесконечно.
+
+        Пусть $\nu: \NN \times \NN \to \NN$ --- биекция. Разумеется, можно построить функции $\Left: \NN \to \NN$ и $\Right: \NN \to \NN$ такие, что для любых $n, m \in \NN$,
+        \begin{align*}
+            \Left(\nu(n,m)) &= n&
+            &\text{ и }&
+            \Right(\nu(n,m)) &= m
+        \end{align*}
+        Используя рекурсию, можно определить последовательность последовательностей $f$, удовлетворяющую следующим условиям:
+        \begin{align*}
+            f_0(i) &= \varnothing\\
+            f_{n+1}(i) &= f_n(\Left(i)) \cup \{(n, \Right(i))\}
+        \end{align*}
+        Далее несложно доказать по индукции, что для каждого $n \in \NN$
+        \[\range(f_n) = \{g \mid g: n \to \NN\}\]
+        В таком случае $\bigcup \{\range(f_n) \mid n \in \NN\} = \NN^*$. Поэтому $\NN^*$ не более чем счётно.
+
+        Осталось показать, что $X^*$ бесконечно. Для этого выберем какой-нибудь $x_0 \in X$ и определим $h: \NN \to X^*$ по правилу
+        \[h(n) := n \times \{x_0\},\]
+        т.е. $h(n)$ --- последовательность длины $n$ только из элемента $x_0$. Очевидно, что $h$ инъективна, а потому $X^*$ не может быть конечным.
+    \end{proof}
+
+    \begin{definition}
+        Для произвольного множества $X$ обозначим
+        \[\finsubsets(X) := \{Y \mid Y \subseteq X \text{ и $Y$ конечно}\}\]
+        Говоря просто, $\finsubsets(X)$ --- семейство конечных подмножеств $X$.
+    \end{definition}
+
+    \begin{corollary}
+        Пусть $X$ счётно. Тогда $\finsubsets(X)$ счётно.
+    \end{corollary}
+
+    \begin{proof}
+        Рассмотрим $h: X^* \to \finsubsets(X)$, действующую по правилу
+        \[h(f) := \range(f)\]
+        Легко видеть, что $h$ сюръективна, значит $\finsubsets(X)$ не более чем счётно.
+
+        С другой стороны пусть $\nu: \NN \to X$ --- инъекция. Тогда рассмотрим $g: \NN \to \finsubsets(X)$, что
+        \[g(n) := \nu[n]\]
+        Несложно проверить, что $|\nu[n]| = n$, поэтому $g$ инъективна, значит $\finsubsets(X)$ бесконечно, а значит счётно.
+    \end{proof}
+
+    \begin{corollary}
+        В следствие теоремы Кантора $\subsets$ нельзя заменить на $\finsubsets$.
+    \end{corollary}
+
+    \begin{theorem}[в ZFC]
+        Пусть $X$ бесконечно, а $Y$ не более чем счётно. Тогда $|X \cup Y| = |X|$.
+    \end{theorem}
+
+    \begin{proof}
+        Заменяя $Y$ на $Y\setminus X$, имеем, что WLOG $X \cap Y = \varnothing$. При этом у $X$ есть счётное подмножество $Z$. Тогда понятно, что $Z \cup Y$ счётно, а значит есть биекция $f: Z \cup Y \to Z$. Тогда определим $g: X \cup Y \to X$ так, что
+        \[g(x) := \begin{cases}
+            f(x)& \text{если $x \in Z \cup Y$}\\
+            x& \text{если $x \in X \setminus Z$}
+        \end{cases}\]
+        Очевидно, что $g$ биективна.
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $X$ более чем счётно, а $Y$ не более чем счётно. Тогда $|X \setminus Y| = |X|$.
+    \end{corollary}
+
+    \begin{proof}
+        Пусть $U := X \cap Y$, а $V := X \setminus U$. Ясно, что $U$ не более чем счётно, $V$ бесконечно. Значит, $|X| = |V \cup U| = |V| = |X \setminus Y|$. 
+    \end{proof}
+
+    \section{Упорядоченность}
+
+    \begin{definition}
+        \emph{Частично упорядоченное множество (ЧУМ)} --- пара из множества и частичного порядка на нём.
+
+        \emph{Линейно упорядоченное множество (ЛУМ)} --- пара из множества и линейного порядка на нём.
+
+        Обозначение: $\mathfrak{A} = \langle A, \leqslant \rangle$.
+    \end{definition}
+
+    \begin{definition}
+        Пусть даны ЧУМ $\mathfrak{A} = \langle A, \leqslant \rangle$ и непустое $S \subseteq A$. Тогда $a \in A$ является
+        \begin{itemize}
+            \item \emph{максимальным элементом для $S$ в $\mathfrak{A}$}, если $a \in S \wedge \neg(\exists x \in S: a < x)$;
+            \item \emph{минимальным элементом для $S$ в $\mathfrak{A}$}, если $a \in S \wedge \neg(\exists x \in S: x < a)$;
+            \item \emph{наибольшим элементом для $S$ в $\mathfrak{A}$}, если $a \in S \wedge (\forall x \in S\quad x \leqslant a)$;
+            \item \emph{наименьшим элементом для $S$ в $\mathfrak{A}$}, если $a \in S \wedge (\forall x \in S\quad a \leqslant x)$.
+        \end{itemize}
+
+        Если $S = A$, то уточнение ``для $S$'' опускают.
+
+        Также $a$ является
+        \begin{itemize}
+            \item \emph{верхней гранью для $S$ в $\mathfrak{A}$}, если $\forall x \in S\quad x \leqslant a$;
+            \item \emph{нижней гранью для $S$ в $\mathfrak{A}$}, если $\forall x \in S\quad x \geqslant a$;
+            \item \emph{супремумом гранью для $S$ в $\mathfrak{A}$}, если $a$ --- наименьшая верхняя грань для $S$ в $\mathfrak{A}$;
+            \item \emph{инфимумом гранью для $S$ в $\mathfrak{A}$}, если $a$ --- наибольшая нижняя грань для $S$ в $\mathfrak{A}$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{statement}
+        В ЧУМ $\mathfrak{A}$
+        \begin{itemize}
+            \item не более одного наибольшего в $\mathfrak{A}$ элемента;
+            \item всякий наибольший в $\mathfrak{A}$ максимален в $\mathfrak{A}$;
+            \item любые два максимальных в $\mathfrak{A}$ несравнимы.
+        \end{itemize}
+    \end{statement}
+
+    \begin{statement}
+        В ЛУМ все максимальные наибольшие и наоборот.
+    \end{statement}
+
+    \begin{definition}
+        Гомоморфизмом из $\langle A, \leqslant_A \rangle$ в $\langle B, \leqslant_B \rangle$ называется отображение $f: A \to B$, если
+        \[
+            a_1 \leqslant_A a_2 \Rightarrow f(a_1) \leqslant_B f(a_2)
+        \]
+
+        Если $f$ инъективно, а последнее условие является равносильностью, а не следствием, то $f$ называется вложением из $\langle A, \leqslant_A \rangle$ в $\langle B, \leqslant_B \rangle$.
+    \end{definition}
+
+    \begin{statement}
+        Любой инъективный гомоморфизм из ЛУМ в ЧУМ является вложением.
+    \end{statement}
+
+    \begin{definition}
+        Изоморфизм из $\mathfrak{A}$ в $\mathfrak{B}$ --- сюръективное вложение из $\mathfrak{A}$ в $\mathfrak{B}$.
+    \end{definition}
+
+    \begin{statement}
+        ``Изоморфность'' --- ``отношение эквивалентности'' на ЧУМах.
+    \end{statement}
+
+    \begin{definition}
+        Изоморфизм из $\mathfrak{A}$ на себя --- автоморфизм.
+    \end{definition}
+
+    
 \end{document}
