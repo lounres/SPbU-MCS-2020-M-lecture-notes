@@ -1,0 +1,97 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{math-text}
+
+\title{Геометрия и топология.}
+\author{Лектор --- Евгений Анатольевич Фоминых \and
+        Создатель конспекта --- Глеб Минаев
+        \footnote{Оригинал конспекта опубликован расположен \href{https://github.com/lounres/SPbU-MCS-2020-M-lecture-notes}{GitHub}}}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    Литература:
+    \begin{itemize}
+        \item Виро О.Я., Иванов О.А., Нецветаев Н.Ю., Харламов В.М., ``Элементарная топология'', М.:МЦНМО, 2012.
+        \item Коснёвски Чес, ``Начальный курс алгебраической топологии'', М.:Мир, 1983.
+        \item Ю.Г. Борисович, Н.М. Близняков, Я.А. Израилевич, Т.Н. Фоменко, ``Введение в топологию'', М.:Наука. Физматлит, 1995.
+        \item James Munkres, Topology.
+    \end{itemize}
+
+    \section{Метрическое пространство}
+
+    \begin{definition}
+        Функция $d: X \times X \to \RR_+$ называется \emph{метрикой} (или \emph{расстоянием}) в множестве $X$, если:
+        \begin{itemize}
+            \item $d(x, y) = 0 \Leftrightarrow x = y$;
+            \item $d(x, y) = d(y, x)$;
+            \item $d(x, z) \leqslant d(x, y) + d(y, z)$ (``неравенство треугольника'').
+        \end{itemize}
+        Пара $(X, d)$, где $d$ --- метрика в $X$, называется \emph{метрическим пространством}.
+    \end{definition}
+
+    \begin{definition}
+        Пусть $(X, d)$ --- метрическое пространство. Сужение функции $d$ на $Y \times Y$ является метрикой в $Y$. Метрическое пространство $(Y, d|_{Y\times Y})$ называется \emph{подпространством} пространства $(X, d)$.
+    \end{definition}
+
+    \begin{theorem}
+        \emph{Декартово произведение} метрических пространств $(X, d_X)$ и $(Y, d_Y)$ --- метрическое пространство $(X\times Y, d_{X\times Y})$, где
+        \[d_{X \times Y}((x_1, y_1), (x_2, y_2)) = \sqrt{d_X(x_1, x_2)^2 + d(y_1, y_2)^2}\]
+    \end{theorem}
+
+    \begin{definition}
+        Пусть $(X, d)$ --- метрическое пространство, $a \in X$, $r \in \RR$, $r > 0$. Тогда:
+        \begin{itemize}
+            \item $B_r(a) := \{x \in X \mid d(a, x) < r\}$ --- \emph{(открытый) шар пространства $(X, d)$ с центром в точке $a$ и радиусом $r$};
+            \item $\overline{B}_r(a) := \{x \in X \mid d(a, x) \leqslant r\}$ --- \emph{замкнутой шар пространства $(X, d)$ с центром в точке $a$ и радиусом $r$};
+            \item $S_r(a) := \{x \in X \mid d(a, x) = r\}$ --- \emph{сфера пространства $(X, d)$ с центром в точке $a$ и радиусом $r$}.
+        \end{itemize}
+    \end{definition}
+
+    \begin{definition}
+        Пусть $(X, d)$ --- метрическое пространство, $A \subseteq X$. Множество $A$ называется \emph{открытым} в метрическом пространстве, если
+        \[\forall a \in A\ \exists r > 0: B_r(a) \subseteq A\]
+    \end{definition}
+
+    \begin{theorem}\ 
+        \begin{enumerate}
+            \item Объединение любого семейства открытых множеств открыто.
+            \item Пересечение конечного семейства открытых множеств открыто.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}\ 
+        \begin{enumerate}
+            \item Пусть дано семейство открытых множеств $\Sigma$. Пусть также $I = \bigcup \Sigma$. Для любого $x \in I$ верно, что существует $J \in \Sigma$, что $x \in J$, а значит есть $r > 0$, что $B_r(x) \subseteq J \subseteq I$, т.е. $x$ --- внутренняя точка $I$. Таким образом $I$ открыто.
+            \item Пусть $I = \bigcap_{i = 1}^n I_i$. Тогда для любого $x \in I$ верно, что существуют $r_1, \dots, r_n > 0$, что $B_{r_i}(x) \subseteq I_n$, значит $B_{\min r_i} \subseteq I$, значит $x$ --- внутренняя точка $I$. Таким образом $I$ открыто.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{definition}
+        Пусть $X$ --- некоторое множество. Рассмотрим набор $\Omega$ его подмножеств, для которого:
+        \begin{enumerate}
+            \item $\varnothing, X \in \Omega$;
+            \item объединение любого семейства множеств из $\Omega$ лежит в $\Omega$;
+            \item пересечение любого конечного семейства множеств, принадлежащих $\Omega$, также принадлежит $\Omega$.
+        \end{enumerate}
+        В таком случае:
+        \begin{itemize}
+            \item $\Omega$ --- \emph{топологическая структура} или просто \emph{топология} в множестве $X$;
+            \item множество $X$ с выделенной топологической структурой $\Omega$ (т.е.пара $(X, \Omega)$) называется \emph{топологическим пространством};
+            \item элементы множества $\Omega$ называются \emph{открытыми множествами} пространства $(X, \Omega)$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{definition}
+        Множество $F \subseteq X$ \emph{замкнуто} в пространстве $(X, \Sigma)$, если его дополнение $X \setminus F$ открыто (т.е. если $X \setminus F \in \Sigma$).
+    \end{definition}
+
+    \begin{remark*}
+        Свойства:
+        \begin{itemize}
+            \item $\varnothing$ и $X$ --- замкнуты.
+            \item Объединение конечного набора замкнутых множеств замкнуто.
+            \item Пересечение любого набора замкнутых множеств замкнуто.
+        \end{itemize}
+    \end{remark*}
+\end{document}
