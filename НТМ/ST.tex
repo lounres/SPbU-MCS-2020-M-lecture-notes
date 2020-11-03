@@ -3,7 +3,9 @@
 \usepackage{stmaryrd}
 
 \title{Основы наивной теории множеств.}
-\author{\href{https://users.math-cs.spbu.ru/~speranski}{Станислав Олегович Сперанский}}
+\author{Лектор --- \href{https://users.math-cs.spbu.ru/~speranski}{Станислав Олегович Сперанский} \\
+        Создатель конспекта --- Глеб Минаев
+        \footnote{Оригинал конспекта опубликован расположен \href{https://github.com/lounres/SPbU-MCS-2020-M-lecture-notes}{GitHub}}}
 \date{}
 
 \newcommand{\subsets}{\ensuremath{\mathcal{P}}\xspace}
@@ -15,6 +17,7 @@
 \DeclareMathOperator{\Seq}{Seq}
 \DeclareMathOperator{\Left}{left}
 \DeclareMathOperator{\Right}{right}
+\DeclareMathOperator{\IS}{IS}
 
 \begin{document}
     \maketitle
@@ -759,19 +762,22 @@
             \item всякий наибольший в $\mathfrak{A}$ максимален в $\mathfrak{A}$;
             \item любые два максимальных в $\mathfrak{A}$ несравнимы.
         \end{itemize}
+
+        Аналогично для наименьших и минимальных элементов.
     \end{statement}
 
     \begin{statement}
-        В ЛУМ все максимальные наибольшие и наоборот.
+        В ЛУМ все максимальные наибольшие и наоборот. Аналогично для минимальных и наименьших.
     \end{statement}
 
     \begin{definition}
-        Гомоморфизмом из $\langle A, \leqslant_A \rangle$ в $\langle B, \leqslant_B \rangle$ называется отображение $f: A \to B$, если
+        \emph{Гомоморфизм из $\langle A, \leqslant_A \rangle$ в $\langle B, \leqslant_B \rangle$} --- отображение $f: A \to B$, что
         \[
             a_1 \leqslant_A a_2 \Rightarrow f(a_1) \leqslant_B f(a_2)
         \]
+        В таком случае ещё говорят, что $f$ сохраняет порядок.
 
-        Если $f$ инъективно, а последнее условие является равносильностью, а не следствием, то $f$ называется вложением из $\langle A, \leqslant_A \rangle$ в $\langle B, \leqslant_B \rangle$.
+        Если $f$ инъективно, а последнее условие усиливается до равносильности (а не остаётся следствием), то $f$ называется \emph{вложением из $\langle A, \leqslant_A \rangle$ в $\langle B, \leqslant_B \rangle$}.
     \end{definition}
 
     \begin{statement}
@@ -779,16 +785,169 @@
     \end{statement}
 
     \begin{definition}
-        Изоморфизм из $\mathfrak{A}$ в $\mathfrak{B}$ --- сюръективное вложение из $\mathfrak{A}$ в $\mathfrak{B}$.
+        \emph{Изоморфизм из $\mathfrak{A}$ в $\mathfrak{B}$} --- сюръективное вложение из $\mathfrak{A}$ в $\mathfrak{B}$. Обозначение: $\mathfrak{A} \simeq \mathfrak{B}$.
     \end{definition}
 
     \begin{statement}
-        ``Изоморфность'' --- ``отношение эквивалентности'' на ЧУМах.
+        ``Изоморфность'' --- ``отношение эквивалентности'' на ЧУМах. Т.е. для любых $\mathfrak{A}$, $\mathfrak{B}$ и $\mathfrak{C}$ верно:
+        \begin{enumerate}
+            \item $\mathfrak{A} \simeq \mathfrak{A}$;
+            \item $\mathfrak{A} \simeq \mathfrak{B} \Leftrightarrow \mathfrak{B} \simeq \mathfrak{A}$;
+            \item $\mathfrak{A} \simeq \mathfrak{B} \simeq \mathfrak{C} \Rightarrow \mathfrak{A} \simeq \mathfrak{C}$.
+        \end{enumerate}
     \end{statement}
 
     \begin{definition}
-        Изоморфизм из $\mathfrak{A}$ на себя --- автоморфизм.
+        Изоморфизм из $\mathfrak{A}$ на себя --- \emph{автоморфизм}.
     \end{definition}
+
+    С ЧУМами можно делать базовые преобразования:
+    \begin{enumerate}
+        \item Пусть даны ЧУМ $\mathfrak{A} = \langle A, {\leqslant} \rangle$ и $S \subseteq A$. Возьмём
+            \[ {\leqslant}_S := {\leqslant} \cap S \times S\]
+            Тогда $\langle S, {\leqslant}_S \rangle$ --- ЧУМ. Оно называется \emph{индуцированным в $\mathfrak{A}$ по $S$}. При этом из ЛУМ получится ЛУМ.
+        \item Пусть даны ЧУМ $\mathfrak{A} = \langle A, {\leqslant}_A \rangle$ и $\mathfrak{B} = \langle B, {\leqslant}_B \rangle$, причём $A$ и $B$ дизъюнктны. Возьмём
+            \[{\leqslant} := {\leqslant}_A \cup A \times B \cup {\leqslant}_B\]
+            Тогда $\langle A \cup B, {\leqslant} \rangle$ --- ЧУМ, которое обозначается $\mathfrak{A} \oplus \mathfrak{B}$. При этом из двух ЛУМ всегда получится ЛУМ.
+        \item Пусть даны ЧУМ $\mathfrak{A} = \langle A, {\leqslant}_A \rangle$ и $\mathfrak{B} = \langle B, {\leqslant}_B \rangle$. Определим $\leqslant$ на $A \times B$ по правилу
+            \[(a_1, b_1) \leqslant (a_2, b_2) :\Leftrightarrow a_1 \leqslant_A a_2 \wedge b_1 \leqslant \]
+            Тогда $\langle A \times B, {\leqslant} \rangle$ --- ЧУМ, где $\leqslant$ традиционно называют \emph{покоординатным порядком}. Понятно, что $\leqslant$ мало когда бывает линейным.
+        \item Модифицируем предыдущую конструкцию, сделав одну из координат главной. Например, первую:
+            \[(a_1, b_1) \leqslant (a_2, b_2) :\Leftrightarrow a_1 < a_2 \vee (a_1 = a_2 \wedge b_1 \leqslant b_2)\]
+            Тогда $\langle A \times B, {\leqslant} \rangle$ --- ЧУМ, которое обозначается $\mathfrak{A} \otimes \mathfrak{B}$. В таком случае из двух ЛУМ получается ЛУМ.
+    \end{enumerate}
+
+    \subsection{Трансфинитная индукция и фундированность}
+
+    \begin{definition}
+        Для ЧУМ $\mathfrak{A} = \langle A, {\leqslant} \rangle$ верен \emph{принцип трансфинитной индукции}, если для всякого $X \subseteq A$,
+        \[\forall x \in A ((\forall y < x) y \in X \rightarrow x \in X) \rightarrow X = A\]
+    \end{definition}
+
+    \begin{definition}
+        Для ЧУМ $\mathfrak{A} = \langle A, {\leqslant} \rangle$ верен \emph{принцип минимального элемента}, если для всякого $X \subseteq A$,
+        \[X \neq \varnothing \rightarrow \exists x \in X ((\forall y \in X )\ y \nless x)\]
+        Такие ЧУМ называются \emph{фундированными}.
+    \end{definition}
+
+    \begin{theorem}
+        Для ЧУМ верен принцип трансфинитной индукции тогда и только тогда, когда оно фундировано.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $X \subseteq A$. Обозначим $A \setminus X$ через $\overline{X}$. Тогда
+        \begin{align*}
+            \forall x \in A ((\forall y < x) y \in X \rightarrow x \in X) \rightarrow X = A &\Longleftrightarrow\\
+            X \neq A \rightarrow \neg\forall x \in A ((\forall y < x) y \in X \rightarrow x \in X) &\Longleftrightarrow\\
+            X \neq A \rightarrow \exists x \in A \neg((\forall y < x) y \in X \rightarrow x \in X) &\Longleftrightarrow\\
+            X \neq A \rightarrow \exists x \in A ((\forall y < x) y \in X \wedge x \notin X) &\Longleftrightarrow\\
+            X \neq A \rightarrow \exists x \in A ((\forall y \notin X) y \nless x \wedge x \notin X) &\Longleftrightarrow\\
+            \overline{X} \neq \varnothing \rightarrow \exists x \in \overline{X} ((\forall y \in \overline{X}) y \nless x)&
+        \end{align*}
+    \end{proof}
+
+    \begin{statement}\ 
+        \begin{enumerate}
+            \item Пусть даны фундированные ЧУМ $\mathfrak{A}$ и $\mathfrak{B}$, что $A \cap B = \varnothing$. Тогда $\mathfrak{A} \oplus \mathfrak{B}$ будет фундированным.
+            \item Пусть даны фундированные ЧУМ $\mathfrak{A}$ и $\mathfrak{B}$. Тогда $\mathfrak{A} \otimes \mathfrak{B}$ будет фундированным.
+        \end{enumerate}
+    \end{statement}
+
+    \begin{definition}
+        \emph{Вполне упорядоченное множество (ВУМ)} --- фундированное ЛУМ. Порядки ВУМ называются \emph{полными порядками}.
+    \end{definition}
+
+    \begin{definition}
+        Пусть дано ВУМ $\mathfrak{A} = \langle A, {\leqslant} \rangle$. \emph{Начальный сегмент} --- множество $S \subseteq A$, если для $\forall a_1, a_2 \in A$
+        \[(a_1 \leqslant a_2 \wedge a_2 \in S) \Rightarrow a_1 \in S\]
+    \end{definition}
+
+    \begin{definition}
+        Пусть дано ВУМ $\mathfrak{A} = \langle A, {\leqslant} \rangle$. Множество
+        \[[0, a)_{\mathfrak{A}} := \{x \in A \mid x < a\}\]
+        является начальным сегментом $\mathfrak{A}$. Когда ясно, о каком $\mathfrak{A}$ идёт речь, нижний индекс $\cdot_{\mathfrak{A}}$ обычно опускается.
+    \end{definition}
+
+    \begin{statement}
+        Пусть $\mathfrak{A}$ --- ВУМ, а $S$ --- начальный сегмент $\mathfrak{A}$, отличный от $A$. Тогда существует единственный $a \in A$, что $S = [0, a)$.
+    \end{statement}
+
+    \begin{definition}
+        $\IS_\mathfrak{A}$ --- множество всех начальных сегментов $\mathfrak{A}$, отличных от $A$, а
+        \[{\subseteq}_{\IS_\mathfrak{A}} := \{(U, V) \in \IS_\mathfrak{A} \times \IS_\mathfrak{A} \mid U \subseteq V\}\]
+    \end{definition}
+
+    \begin{statement}
+        Для любого ВУМ $\mathfrak{A}$ верно, что $\mathfrak{A} \simeq \langle \IS_\mathfrak{A}, {\subseteq}_{\IS_\mathfrak{A}} \rangle$.
+    \end{statement}
+
+    \begin{proof}
+        Несложно видеть, что
+        \[f: A \to \IS_\mathfrak{A}, a \mapsto [0, a)\]
+        есть изоморфизм из $\mathfrak{A}$ в $\langle \IS_\mathfrak{A}, {\subseteq}_{\IS_\mathfrak{A}} \rangle$.
+    \end{proof}
+
+    \begin{statement}
+        Пусть $\mathfrak{A}$ --- ВУМ, а $f$ --- вложение из $\mathfrak{A}$ в $\mathfrak{A}$. Тогда $f(a) \geqslant a$ для всех $a \in A$.
+    \end{statement}
+
+    \begin{proof}
+        Рассмотрим
+        \[X := \{a \in A \mid f(a) < a\}\]
+        Предположим, что $X$ непусто. Пусть $a'$ --- наименьший элемент для $X$ в $\mathfrak{A}$. Тогда $f(a') < a'$, поэтому $f(f(a')) < f(a')$, что значит $f(a') \in X$. В таком случае $a' \leqslant f(a')$ --- противоречие.
+    \end{proof}
+
+    \begin{corollary}
+        Для каждого ВУМ $\mathfrak{A}$ единственным автоморфизмом $\mathfrak{A}$ является $id_A$.
+    \end{corollary}
+
+    \begin{proof}
+        Пусть $f$ --- автоморфизм $\mathfrak{A}$. Очевидно, что $f^{-1}$ также будет автоморфизмом $\mathfrak{A}$. Тогда для любого $a \in A$ имеем, что $f(a) \geqslant a$ и $f^{-1}(a) \geqslant a$, а значит $a \geqslant f(a) \geqslant a$, т.е. $f(a) = a$. Таким образом $f = id_A$.
+    \end{proof}
+
+    \begin{corollary}
+        Для любых ВУМ $\mathfrak{A}$ и $\mathfrak{B}$ имеется не более одного изоморфизма из $\mathfrak{A}$ в $\mathfrak{B}$.
+    \end{corollary}
+
+    \begin{proof}
+        Пусть $f$ и $g$ --- изоморфизмы из $\mathfrak{A}$ в $\mathfrak{B}$. Тогда несложно понять, что $f \circ g^{-1}$ есть автоморфизм, а значит $f \circ g^{-1} = id_A$. Следовательно $f = f \circ g^{-1} \circ g = id_A \circ g = g$.
+    \end{proof}
+
+    \begin{lemma}
+        Никакой собственный начальный сегмент ВУМ $\mathfrak{A}$ не изоморфен самому $\mathfrak{A}$.
+    \end{lemma}
+
+    \begin{proof}
+        Пусть $f$ --- изоморфизм из $\mathfrak{A}$ на некоторый собственный начальный сегмент $\mathfrak{A}$. Тогда $\range(f) = [0, a)$ для некоторого $a \in A$. Поэтому $f(a) < a$ --- противоречие.
+    \end{proof}
+
+    \begin{theorem}[о сравнении ВУМ]
+        Для любых ВУМ $\mathfrak{A}$ и $\mathfrak{B}$ имеет место ровно один из трёх случаев:
+        \begin{enumerate}
+            \item \label{WOS_comparability_theorem_A=B} $\mathfrak{A}$ и $\mathfrak{B}$ изоморфны;
+            \item \label{WOS_comparability_theorem_AtoB} $\mathfrak{A}$ изоморфно собственному начальному сегменту $\mathfrak{B}$;
+            \item \label{WOS_comparability_theorem_BtoA} $\mathfrak{B}$ изоморфно собственному начальному сегменту $\mathfrak{A}$.
+        \end{enumerate}
+
+        При этом в пунктах (\ref{WOS_comparability_theorem_AtoB}) и (\ref{WOS_comparability_theorem_BtoA}) соответствующие собственные начальные сегменты определяются однозначно.
+    \end{theorem}
+
+    \begin{proof}
+        Единственность сегментов в (\ref{WOS_comparability_theorem_AtoB}) и (\ref{WOS_comparability_theorem_BtoA}) и взаимная исключаемость пунктов (\ref{WOS_comparability_theorem_A=B}), (\ref{WOS_comparability_theorem_AtoB}) и (\ref{WOS_comparability_theorem_BtoA}) следуют из предыдущей леммы. Поэтому осталось показать, что один из трёх случаев точно будет иметь место.
+
+        Рассмотрим
+        \[\xi := \{(a, b) \in A \times B \mid [0, a)_\mathfrak{A} \simeq [0, b)_\mathfrak{B}\}\]
+        По предыдущей лемме $\xi$ и $\xi^{-1}$ являются функциональными.
+
+        Также несложно видеть, что если $f$ --- изоморфизм из $[0, a)_\mathfrak{A}$ на $[0, b)_\mathfrak{B}$, а $a' <_A a$ и $b' <_B b$, то
+        \begin{itemize}
+            \item $f\upharpoonright_{[0, a')_\mathfrak{A}}$ является изоморфизмом из $[0, a')_\mathfrak{A}$ на $[0, f(a'))_\mathfrak{B}$;
+            \item $f^{-1}\upharpoonright_{[0, b')_\mathfrak{B}}$ является изоморфизмом из $[0, b')_\mathfrak{B}$ на $[0, f^{-1}(b'))_\mathfrak{A}$.
+        \end{itemize}
+        Следовательно, если $a \in \dom(\xi)$, то $[0, a)_\mathfrak{A} \subseteq \dom(\xi)$; если $b \in \range(\xi)$, то $[0, b)_\mathfrak{B} \subseteq \range(\xi)$. Поэтому $\xi$ --- биекция между начальными сегментами $\mathfrak{A}$ и $\mathfrak{B}$. Также следует и то, что $a_1 <_A a_2 \Leftrightarrow f(a_1) <_B f(a_2)$, что значит, что $\xi$ --- изоморфизм между начальными сегментами $\mathfrak{A}$ и $\mathfrak{B}$.
+
+        Если $\dom(\xi) \neq A$, а $\range(\xi) \neq B$, то существуют $a \in A$ и $b \in B$, что $\dom(\xi) = [0, a)_\mathfrak{A}$, а $\range(\xi) = [0, b)_\mathfrak{B}$. Это значит, что $(a, b) \in \xi$ --- противоречие. Значит $\dom(\xi) = A$ или $\range(\xi) = B$, откуда следует желаемое.
+    \end{proof}
 
     
 \end{document}
