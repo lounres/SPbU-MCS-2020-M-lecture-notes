@@ -18,6 +18,10 @@
 \DeclareMathOperator{\Left}{left}
 \DeclareMathOperator{\Right}{right}
 \DeclareMathOperator{\IS}{IS}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\Ord}{Ord}
+\DeclareMathOperator{\card}{card}
+\DeclareMathOperator{\Card}{Card}
 
 \begin{document}
     \maketitle
@@ -949,5 +953,174 @@
         Если $\dom(\xi) \neq A$, а $\range(\xi) \neq B$, то существуют $a \in A$ и $b \in B$, что $\dom(\xi) = [0, a)_\mathfrak{A}$, а $\range(\xi) = [0, b)_\mathfrak{B}$. Это значит, что $(a, b) \in \xi$ --- противоречие. Значит $\dom(\xi) = A$ или $\range(\xi) = B$, откуда следует желаемое.
     \end{proof}
 
-    
+    \section{Ординалы, кардиналы и важные теоремы ZFC}
+
+    \subsection{Ординалы}
+
+    \begin{definition}
+        $X$ называется \emph{транзитивным}, если $\bigcup X \subseteq X$ (или, что равносильно, $X \subseteq \subsets(X)$).
+    \end{definition}
+
+    \begin{definition}
+        \[{\in}_X := \{(u, v) \in X \times X \mid u \in v\}\]
+    \end{definition}
+
+    \begin{definition}
+        \emph{Ординал} или \emph{ординальное число} --- трансфинитное множество $X$, что $\in_X$ --- строгий полный порядок на $X$. Обозначение: $\alpha$, $\beta$, $\gamma$, \dots
+
+        Поскольку $\NN$ (и все его элементы) являются ординалами, то когда речь идёт об ординалах, то пишут не $\NN$, а $\omega$.
+
+        Также вместо $\alpha \in \beta$ можно писать $\alpha < \beta$.
+    \end{definition}
+
+    \begin{remark}
+        Важно заметить, что для любого ординала $\alpha$ ЛУМ $\langle \alpha, {\in}_\alpha \rangle$ является ВУМ. Так как иначе есть некоторое $X\subseteq \alpha$, что у него нет минимального элемента, значит для любого $x \in X$ найдётся $x' \in X$, что $x' < x$, значит есть бесконечная убывающая последовательность (элементов $X$), но это противоречит аксиоме регулярности.
+    \end{remark}
+
+    \begin{statement}
+        Пусть $\alpha$ --- ординал, а $X \in \alpha$. Тогда $X$ --- ординал.
+    \end{statement}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Проверим, что $X$ транзитивно. Пусть $E \in X$, тогда нужно показать, что $E \subseteq X$. Пусть $u \in E$. Тогда $E \in \alpha$, значит $u \in \alpha$. При этом $u \in_\alpha E \in_\alpha X$, значит $u \in_\alpha X$. Это и значит, что $E \subseteq X$.
+            \item Заметим, что $X \subseteq \alpha$. Поэтому ${\in}_X = {\in}_\alpha \cap (X \times X)$, поэтому $\in_X$ --- строгий полный порядок.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{statement}
+        Пусть $\alpha$ --- ординал, а $\beta \in \alpha$. Тогда $\beta = [0, \beta)$.
+    \end{statement}
+
+    \begin{proof}
+        Очевидно следует из транзитивности $\in_\alpha$.
+    \end{proof}
+
+    \begin{statement}
+        Для любых ординалов $\alpha$ и $\beta$
+        \[\alpha \in \beta \quad \Longleftrightarrow \quad \alpha \subsetneq \beta\]
+    \end{statement}
+
+    \begin{proof}
+        \begin{itemize}
+            \item Пусть $\alpha \in \beta$. Тогда $\alpha \subseteq \beta$. Если $\alpha = \beta$, то $\beta \in \beta$, значит $\alpha \in_\beta \beta$, значит $\beta \in_\beta \beta$ --- противоречие со строгостью $\in_\beta$. Значит $\alpha \neq \beta$, значит $\alpha \subsetneq \beta$.
+            \item Пусть $\alpha \subsetneq \beta$. Тогда $\beta \setminus \alpha \neq \varnothing$, а значит мы можем определить
+                \[y := \text{``наименьший элемент $\beta \setminus \alpha$ в $\langle \beta, {\in}_\beta \rangle$''}\]
+                Нетрудно убедиться, что $\alpha$ совпадает с $\{x \in \beta \mid x < \gamma\}$:
+                \begin{itemize}
+                    \item если $x \in \alpha$, то $\gamma \nleqslant x$ (так как иначе $\gamma \leqslant x \in \alpha$, а значит $\gamma \in \alpha$), а потому $x < \gamma$;
+                    \item если $x \in \beta$ и $x < \gamma$, то $x \notin \beta \setminus \alpha$, т.е. $x \in \gamma$.
+                \end{itemize}
+                Таким образом $\alpha = [0, \gamma) = \gamma$.
+        \end{itemize}
+    \end{proof}
+
+    \begin{theorem}
+        Для любых ординалов $\alpha$, $\beta$ и $\gamma$:
+        \begin{enumerate}
+            \item $\alpha \nless \alpha$;
+            \item $\alpha < \beta < \gamma \Rightarrow \alpha < \gamma$;
+            \item либо $\alpha < \beta$, либо $\alpha = \beta$, либо $\alpha > \beta$;
+        \end{enumerate}
+        Более того для любого непустого множества ординалов $X$:
+        \begin{enumerate}
+            \setcounter{enumi}{3}
+            \item $\bigcap X \in X$, причём $\bigcap$ --- наименьший элемент $X$ в $\langle X, \in_X \rangle$.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Иначе $\alpha \in \alpha$, значит $\alpha \in_\alpha \alpha$ --- противоречие.
+            \item $\beta \subseteq \gamma$, следовательно $\alpha \in \gamma$.
+            \setcounter{enumi}{3}
+            \item Легко видеть, что $\bigcap X$ --- ординал. При этом для любого $\alpha \in X$ верно, что $\bigcap X \subseteq \alpha$, а значит $\bigcap X \leqslant \alpha$. Заметим, что $\bigcap X \nless \bigcap X$, значит есть $\alpha \in X$, что $\bigcap X \nless \alpha$, т.е. $\bigcap X = \alpha$, следовательно $\bigcap X \in X$.
+            \setcounter{enumi}{2}
+            \item В силу предыдущего пункта, в $\{\alpha, \beta\}$ есть наименьший элемент. Стало быть $\alpha$ и $\beta$ сравнимы по $\leqslant$.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $X$ --- транзитивное множество ординалов. Тогда $X$ --- ординал.
+    \end{corollary}
+
+    \begin{proof}
+        Действительно, $\in_X$ --- полный порядок на $X$ по только доказанной теореме, значит $X$ --- ординал.
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $X$ --- множество ординалов. Тогда $\bigcup X$ --- ординал, причём $\bigcup X$ является ``супремумом $X$'' в классе всех ординалов относительно $\in$.
+    \end{theorem}
+
+    \begin{proof}
+        Очевидно, что $\bigcup X$ --- множество ординалов и что оно транзитивно. Поэтому $\bigcup X$ --- ординал.
+
+        Разумеется, $\bigcup X$ является ``супремумом $X$'' в классе всех ординалов относительно $\subsetneq$, что на ординалах совпадает с $\in$.
+    \end{proof}
+
+    \begin{definition}
+        Пусть $\alpha$ --- ординал. Тогда
+        \[\alpha + 1 := \alpha \cup \{\alpha\}\]
+        является ординалом.
+    \end{definition}
+
+    \begin{remark}
+        Не сложно понять, что $\alpha \subsetneq \alpha + 1$ и нет такого $X$, что $\alpha \subsetneq X \subsetneq \alpha + 1$.
+    \end{remark}
+
+    \begin{definition}
+        Ненулевой ординал $\alpha$ называется \emph{непредельным}, если есть ординал $\beta$, что $\alpha = \beta + 1$, и \emph{предельным иначе}.
+    \end{definition}
+
+    \begin{statement}\ 
+        \begin{enumerate}
+            \item $\alpha = \beta \Leftrightarrow \alpha + 1 = \beta + 1$. (Что значит, что у каждого непредельного ординала $\alpha$ есть единственный ``предшественник'' $\alpha - 1$.)
+            \item \[\bigcup \alpha = \begin{cases}
+                \alpha & \text{если $\alpha$ пределен}\\
+                \alpha - 1 & \text{если $\alpha$ непределен}
+            \end{cases}\]
+        \end{enumerate}
+    \end{statement}
+
+    \begin{theorem}[о связи ординалов и ВУМ]
+        Пусть $\mathfrak{A}$ --- строгий ВУМ. Тогда существует единственный ординал $\alpha$, что $\mathfrak{A} \simeq \langle \alpha, {\in}_\alpha \rangle$.
+    \end{theorem}
+
+    \begin{proof}
+        Единственность очевидна: для любых ординалов $\alpha$ и $\beta$
+        \[\langle \alpha, {\in}_\alpha \rangle \simeq \langle \beta, {\in}_\beta \rangle \quad \Longleftrightarrow \quad \alpha = \beta\]
+        Осталось показать существование $\alpha$.
+
+        Рассмотрим
+        \[S := \{a \in A \mid \text{существует ординал $\alpha_a$, что $[0, a)_\mathfrak{A} \simeq \langle \alpha, {\in}_\alpha \rangle$}\}\]
+        Само собой, для каждого $a \in S$ ординал $\alpha_a$ строго единственен. Поэтому есть
+        \[X := \{\alpha_a \mid a \in S\}\]
+        Поскольку изоморфизмы переводяят начальные сегменты в начальные, то поэтому $X$ транзитивно, да и $\in_X$ является полным строгим порядком. Значит $X$ --- ординал. Рассматривая
+        \[f: S \to X, a \mapsto \alpha_a\]
+        имеем, что $f$ --- изоморфизм. Тогда если $A \setminus S \neq \varnothing$, то $S = [0, a)$, где $a$ --- наименьший элемент $A \setminus S$. Но тогда $[0, a)_\mathfrak{A} \simeq X$, а значит $a \in S$. Значит $S = A$.
+    \end{proof}
+
+    \begin{definition}
+        Если $\mathfrak{A}$ --- ВУМ, то $\ord(\mathfrak{A})$ --- это такой ординал $\alpha$, что $\mathfrak{A} \simeq \langle \alpha, {\in}_\alpha \rangle$.
+    \end{definition}
+
+    \begin{definition}
+        Пусть $\alpha$ и $\beta$ --- ординалы. Тогда определим операции
+        \begin{gather*}
+            \alpha + \beta := \ord(\langle \alpha, {\in}_\alpha \rangle \oplus \langle \beta, {\in}_\beta \rangle)\\
+            \alpha \cdot \beta := \ord(\langle \alpha, {\in}_\alpha \rangle \otimes \langle \beta, {\in}_\beta \rangle)
+        \end{gather*}
+    \end{definition}
+
+    \begin{remark}
+        Важно заметить, что класс $\Ord$ всех ординалов не является множеством. Действительно, если $\Ord$ --- множество, то $\Ord$ --- само ординал, а значит $\Ord \in \Ord$, чего не может быть.
+    \end{remark}
+
+    \begin{definition}
+        Пусть $X$ --- любое множество, а $\alpha$ --- ординал. Тогда определим
+        \[X^{<\alpha} := \{f \mid (\exists \beta < \alpha) f: \beta \to X\} = \bigcup \{X^\beta \mid \beta < \alpha\}\]
+    \end{definition}
+
+    \subsection{Кардиналы}
+
 \end{document}
