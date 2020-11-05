@@ -1,11 +1,12 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{math-text}
 \usepackage{stmaryrd}
+\usepackage{todonotes}
 
 \title{Основы наивной теории множеств.}
 \author{Лектор --- \href{https://users.math-cs.spbu.ru/~speranski}{Станислав Олегович Сперанский} \\
         Создатель конспекта --- Глеб Минаев
-        \footnote{Оригинал конспекта опубликован расположен \href{https://github.com/lounres/SPbU-MCS-2020-M-lecture-notes}{GitHub}}}
+        \footnote{Оригинал конспекта расположен на \href{https://github.com/lounres/SPbU-MCS-2020-M-lecture-notes}{GitHub}}}
 \date{}
 
 \newcommand{\subsets}{\ensuremath{\mathcal{P}}\xspace}
@@ -22,11 +23,15 @@
 \DeclareMathOperator{\Ord}{Ord}
 \DeclareMathOperator{\card}{card}
 \DeclareMathOperator{\Card}{Card}
+\newcommand{\ZF}{\ensuremath{\mathrm{ZF}}\xspace}
+\newcommand{\ZFC}{\ensuremath{\mathrm{ZFC}}\xspace}
+\newcommand{\CH}{\ensuremath{\mathrm{CH}}\xspace}
 
 \begin{document}
     \maketitle
 
     Материалы лекций: \href{https://users.math-cs.spbu.ru/~speranski/courses/sets-2020-autumn/materials.html}{ссылка}
+    \todo[color=green!40, inline]{Добавить конспекты теории из упражнений. Слить аккуратно воедино. Добавить ссылку на упражнения.}
     
     Литература:
     \begin{itemize}
@@ -50,7 +55,7 @@
 
     Из-за данного парадокса будем рассматривать только условия, образованные переменными и $\in$, $=$, $\neg$, $\wedge$, $\vee$, $\leftarrow$, $\leftrightarrow$, $\forall$, $\exists$.
 
-    \begin{definition}[аксиомы ZFC (= ZF (аксиомы Цермело-Френкеля) + C (аксиома выбора))]\ 
+    \begin{definition}[аксиомы \ZFC (= \ZF (аксиомы Цермело-Френкеля) + C (аксиома выбора))]\ 
         \begin{description}
             \item[Ext)] ``Аксиома экстенциональности'':
                 \[\forall X \forall Y (\forall u (u \in X \leftrightarrow u \in Y) \leftrightarrow X=Y)\]
@@ -543,7 +548,7 @@
 
     \subsection{Основные свойства (не более чем) счётных множеств}
 
-    \begin{statement}[в ZFC]
+    \begin{statement}[в \ZFC]
         Пусть $X$ бесконечно, тогда оно содержит счётное подмножество.
     \end{statement}
 
@@ -557,7 +562,7 @@
         $\NN$ является кардиналом и обычно обозначается $\aleph_0$.
     \end{definition}
 
-    \begin{corollary}[в ZFC]
+    \begin{corollary}[в \ZFC]
         $|X| >\aleph_0$ тогда и только тогда, когда $X$ бесконечно и несчётно.
     \end{corollary}
 
@@ -573,7 +578,7 @@
         Нетрудно проверить, что $f: \NN \to X$ --- биекция.
     \end{proof}
 
-    \begin{corollary}[в ZFC]
+    \begin{corollary}[в \ZFC]
         $|X| \ngtr \aleph_0$ тогда и только тогда, когда $|X| \leqslant \aleph_0$.
     \end{corollary}
 
@@ -643,7 +648,7 @@
         Легко понять, что $g$ сюръективна.
     \end{proof}
 
-    \begin{corollary}[в ZFC]
+    \begin{corollary}[в \ZFC]
         Пусть $X$ не более чем счётно, и все его элементы не более чем счётны, тогда $\bigcup X$ не более чем счётно.
     \end{corollary}
 
@@ -708,7 +713,7 @@
         В следствие теоремы Кантора $\subsets$ нельзя заменить на $\finsubsets$.
     \end{corollary}
 
-    \begin{theorem}[в ZFC]
+    \begin{theorem}[в \ZFC]
         Пусть $X$ бесконечно, а $Y$ не более чем счётно. Тогда $|X \cup Y| = |X|$.
     \end{theorem}
 
@@ -953,7 +958,7 @@
         Если $\dom(\xi) \neq A$, а $\range(\xi) \neq B$, то существуют $a \in A$ и $b \in B$, что $\dom(\xi) = [0, a)_\mathfrak{A}$, а $\range(\xi) = [0, b)_\mathfrak{B}$. Это значит, что $(a, b) \in \xi$ --- противоречие. Значит $\dom(\xi) = A$ или $\range(\xi) = B$, откуда следует желаемое.
     \end{proof}
 
-    \section{Ординалы, кардиналы и важные теоремы ZFC}
+    \section{Ординалы, кардиналы и важные теоремы \ZFC}
 
     \subsection{Ординалы}
 
@@ -1121,6 +1126,320 @@
         \[X^{<\alpha} := \{f \mid (\exists \beta < \alpha) f: \beta \to X\} = \bigcup \{X^\beta \mid \beta < \alpha\}\]
     \end{definition}
 
-    \subsection{Кардиналы}
+    \begin{definition}
+        Если $f: \beta \to X$, где $\beta$ --- ординал, то $f$ называют \emph{$\beta$-последовательностью}
+    \end{definition}
 
+    \begin{theorem}[о трансфинитной рекурсии]
+        Фиксируем некоторый ординал $\alpha$. Пусть $h: X^{<\alpha} \to X$. Тогда существует единственная $f: \alpha \to X$, что для всякого $\beta \in \alpha$
+        \[f(\beta) = h(f \upharpoonright_\beta)\]
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $\gamma \in \alpha$. Будем называть $t: \gamma + 1 \to X$ \emph{чудесной}, если для любого $\beta \in \gamma + 1$
+        \[t(\beta) = h(t \upharpoonright_\beta)\]
+        Рассмотрим
+        \[S := \{\gamma \in \alpha \mid \text{существует единственная чудесная $t: \gamma + 1 \to X$}\}\]
+        Тогда для каждого $\gamma \in S$ обозначим соответствующую (единственную) чудесную функцию из $\gamma + 1$ в $X$ как $f_\gamma$.
+
+        Заметим, что если $t: \gamma + 1 \to X$ чудесна, то для каждого $\beta < \gamma$ функция $t \cap ((\beta + 1) \times X)$ тоже чудесна. Таким образом, если $\gamma, \beta \in S$, то $f_\beta = f_\gamma \cap ((\beta + 1) \times X)$ (и т.е. $f_\beta \subseteq f_\gamma$).
+
+        Заметим также, что если для некоторого $\gamma \in \alpha$ все $\beta < \gamma$ лежат в $S$, то и $\gamma$ лежит в $S$. Действительно, можно рассмотреть
+        \[t_0 := \bigcup \{f_\beta \mid \beta < \gamma\}\]
+        Несложно видеть, что $t_0: \gamma \to X$. В таком случае рассмотрим
+        \[t := t_0 \cup \{(\gamma, h(t_0))\}\]
+        Несложно видеть, что ограничение $t$ на $\beta + 1$ для всех $\beta < \gamma$ есть $f_\beta$. Поэтому дял всех $\beta \in \gamma + 1$ либо $\beta = \gamma$, и тогда
+        \[t(\beta) = t(\gamma) = h(t_0) = h(t \upharpoonright_\beta),\]
+        либо $\beta < \gamma$, и тогда
+        \[t(\beta) = t_0(\beta) = f_\beta(\beta) = h(f_\beta \upharpoonright_\beta) = h(t_0 \upharpoonright_\beta) = h(t \upharpoonright_\beta)\]
+        Это значит, что $t$ чудесна. При этом если бы была отличная от $t$ чудесная функция $t': \gamma + 1 \to X$, то у неё должны быть такие же сужения на $\beta + 1$ для каждого $\beta < \gamma$, что и у $t$. Значит она может отличаться только в $\gamma$; но это тоже невозможно, так как
+        \[t(\gamma) = h(t \upharpoonright_\gamma) = h(t' \upharpoonright_\gamma) = t'(\gamma)\]
+        Поэтому $t$ является единственной чудесной функцией для $\gamma + 1$, что и значит, что $\gamma \in S$.
+
+        Тогда по трансфинитной индукции имеем, что $S = \alpha$.
+
+        Рассмотрим
+        \[f := \bigcup \{f_\gamma \mid \gamma \in \alpha\}\]
+        Несложно видеть, что $f: \alpha \to X$ и $f$ тоже окажется чудесной (что и требуется). Также если будет вдруг существовать ещё одна чудесная $f': \alpha \to X$, то у неё будут такие же сужения на $\beta + 1$ для каждого $\beta \in \alpha$, что и у $f$, значит $f'$ не будет ничем отличаться от $f$.
+    \end{proof}
+
+    \begin{remark*}
+        Теорему о трансфинитной рекурсии можно обобщить до параметризованной, используя уже готовую рекурсию.
+    \end{remark*}
+
+    \begin{theorem}[о трансфинитной рекурсии, частичной]
+        Фиксируем некоторый ординал $\alpha$. Пусть $h: \subseteq X^{<\alpha} \to X$. Тогда существует единственная $f: \subseteq \alpha \to X$, что
+        \begin{enumerate}
+            \item для всякого $\beta \in \dom(f)$
+                \[f(\beta) = h(f \upharpoonright_\beta);\]
+            \item либо $\dom(f) = \alpha$, либо $\dom(f) = \gamma$ для некоторого $\gamma < \alpha$, причём $f \notin \dom(h)$.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        Как обычно, рассмотрим $\text{ы} \notin X$ и положим $X' := X \cup \{\text{ы}\}$. Затем расширим $h$ до $h: (X')^{<\alpha} \to X'$ следующим образом:
+        \[h'(g') := \begin{cases}
+            h(g')& \text{если $g' \in \dom(h)$}\\
+            \text{ы}& \text{иначе}
+        \end{cases}\]
+        В силу теоремы о трансфинитной рекурсии, найдётся единственная $f': \alpha \to X$, что для любого $\beta \in \alpha$
+        \[f'(\beta) = h'(f' \upharpoonright_\beta)\]
+        Возьмём
+        \[f := f' \cap (\alpha \times X)\]
+        Нетрудно убедиться, что $f$ является искомой.
+    \end{proof}
+
+    \begin{theorem}[о трансфинитной ``классовой рекурсии'']
+        Фиксируем некоторый ординал $\alpha$. Пусть $\Phi(x, y)$ --- тотальное функциональное условие. Тогда существует единственная функция $f$ с $\dom(f) = \alpha$, что для всякого $\beta \in \alpha$
+        \[f(\beta) = \llbracket \Phi \rrbracket(f \upharpoonright_\beta)\]
+    \end{theorem}
+
+    \begin{proof}
+        Несложная модификация доказательства теоремы о трансфинитной рекурсии.
+    \end{proof}
+
+    \begin{theorem}[Цермело о полном упорядочении; в \ZFC]
+        Для любого $A$ существует $\leqslant$, что $\langle A, \leqslant \rangle$ --- ВУМ.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $\eta$ --- функция выбора на $\subsets(A) \setminus \{\varnothing\}$. Тогда для каждого ординала $\alpha$ существует единственная $f_\alpha: \subseteq \alpha \to A$, что
+        \begin{enumerate}
+            \item для любого $\beta \in \dom(f_\alpha)$
+                \[f_\alpha(\beta) = \eta(A \setminus \range(f_\alpha \upharpoonright_\beta))\]
+            \item либо $\dom(f_\alpha) = \alpha$, либо $\dom(f_\alpha) = \gamma \in \alpha$, причём $\range(f_\alpha) = A$.
+        \end{enumerate}
+
+        Несложно видеть, что $f_\alpha$ --- биекция между $\dom(f_\alpha)$ и $\range(f_\alpha)$, а значит с помощью неё можно построить на $\range(f_\alpha)$ ВУМ, изоморфный $\dom(f_\alpha)$. Поэтому если для некоторого ординала $\alpha$ окажется, что $\dom(f_\alpha) \neq \alpha$, то тогда $\range(\alpha) = A$, а значит мы сможем построить на $A$ ВУМ. Осталось показать, что такое $\alpha$ найдётся.
+
+        Предположим противное: для каждого ординала $\alpha$ верно, что $\dom(f_\alpha) = \alpha$. Рассмотрим
+        \[\Phi(x, y) := \text{``$y$ --- ординал''}\wedge x = f_{y+1}(y)\]
+        Ясно, что если $\alpha < \beta$, то $f_\alpha \subseteq f_\beta$. Поэтому для любых $\alpha$ и $\beta$
+        \[f_{\alpha + 1}(\alpha) = f_{\beta + 1}(\beta) \quad \Longrightarrow \quad \alpha = \beta\]
+        Это значит, что $\Phi$ функционально. Поэтому по аксиоме подстановки можно выделить
+        \[X := \{y \mid (\exists x \in A) \Phi(x, y)\}\]
+        Однако $X$ должно совпадать с $\Ord$ --- противоречие.
+    \end{proof}
+
+    \subsection{Кардиналы}
+    
+    \begin{theorem}[о сравнимости по мощности; в \ZFC]
+        Для любых $X$ и $Y$ верно, что $X \preccurlyeq Y$ или $X \succ Y$.
+    \end{theorem}
+
+    \begin{proof}
+        Прямое следствие из теоремы Цермело и теоремы о сравнении ВУМ.
+    \end{proof}
+
+    \begin{definition}
+        \emph{Кардинал} или \emph{кардинальное число} --- ординал, неравномощный никакому меньшему ординалу. Обозначение: $\kappa$, $\mu$, $\lambda$.
+    \end{definition}
+
+    \begin{statement}
+        Для любых кардиналов $\kappa$ и $\mu$
+        \[\kappa \sim \mu \quad \Longleftrightarrow \quad \kappa = \mu\]
+    \end{statement}
+
+    \begin{statement}
+        Для любых кардиналов $\kappa$ и $\mu$
+        \[\kappa \preccurlyeq \mu \quad \Longleftrightarrow \quad \kappa \leqslant \mu\]
+    \end{statement}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Если $\kappa \leqslant \mu$, то очевидно, что $\kappa \preccurlyeq \mu$.
+            \item Пусть $\kappa \preccurlyeq \mu$. Предположим противное: $\kappa \nleqslant \mu$. Тогда $\kappa > \mu$, значит $\kappa \succcurlyeq \mu$. Ввиду теоремы Кантора-Шрёдера-Бернштейна, мы получаем, что $\kappa \sim \mu$, а значит $\kappa = \mu$ --- противоречие.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{theorem}[в \ZFC]
+        Для любого множества есть единственный кардинал ему равномощный.
+    \end{theorem}
+
+    \begin{proof}
+        По теореме Цермело есть ординал $\alpha$, равномощный $X$. Тогда можно определить
+        \[\kappa := \bigcap \{\beta \in \alpha + 1 \mid \beta \sim X\}\]
+        По уже доказанным утверждениям $\kappa \in \{\beta \in \alpha + 1 \mid \beta \sim X\}$, поэтому $\kappa \sim X$. При этом $\kappa$ является кардиналом, так как иначе есть $\gamma < \kappa$, что $\gamma \sim \kappa$, но тогда $\gamma \in \alpha + 1$ и $\gamma \sim X$, а тогда $\kappa \in \gamma$ --- противоречие. Поэтому у $X$ есть равномощный ему кардинал. А его единственность очевидна.
+    \end{proof}
+
+    \begin{definition}
+        Кардинал, равномощный множеству обозначается как $\card(X)$ или $|X|$.
+    \end{definition}
+
+    \begin{statement}
+        Для любых $X$ и $Y$
+        \begin{enumerate}
+            \item $X \sim Y$ тогда и только тогда, когда $\card(X) = \card(Y)$;
+            \item $X \preccurlyeq Y$ тогда и только тогда, когда $\card(X) \leqslant \card(Y)$.
+        \end{enumerate}
+    \end{statement}
+
+    \begin{definition}
+        Для любых кардиналов $\kappa$ и $\mu$ определим
+        \begin{gather}
+            \kappa + \mu := \card(\kappa \times \{0\} \cup \mu \times \{1\})\\
+            \kappa \cdot \mu := \card(\kappa \times \mu)
+        \end{gather}
+    \end{definition}
+
+    \begin{remark*}
+        Важно заметить, что $+$ и $\cdot$ отличаются между ординалами и кардиналами. Например, ординалы
+        \[\omega, \qquad \omega + 1, \qquad \omega + \omega, \qquad \omega \cdot \omega\]
+        являются попарно различными, а при этом кардиналы
+        \[\aleph_0 = \aleph_0 + 1 = \aleph_0 + \aleph_0 = \aleph_0 \cdot \aleph_0\]
+        совпадают.
+    \end{remark*}
+
+    \begin{statement}
+        Для любого ординала существует больший кардинал.
+    \end{statement}
+
+    \begin{proof}
+        Пусть $\kappa := \card(\subsets(\alpha))$. Если $\alpha \nless \kappa$, то $\kappa \leqslant \alpha$, а значит $\kappa \subseteq \alpha$, $\kappa \preccurlyeq \alpha$, т.е. $\subsets(\alpha) \preccurlyeq \alpha$ --- противоречие с теоремой Кантора. А поэтому $\alpha < \kappa$.
+    \end{proof}
+
+    \begin{remark}
+        Как и $\Ord$, класс всех кардиналов $\Card$ также не является множеством. Действительно, если $\Card$ --- множество, то $\bigcup \Card = \Ord$ тоже является множеством, чего быть не может.
+    \end{remark}
+    
+    \begin{definition}
+        Когда речь идёт о кардиналах, будем говорить, что для всякого кардинала $\kappa$
+        \[2^\kappa := \card(\subsets(\kappa))\]
+    \end{definition}
+
+    \begin{definition}
+        Для каждого кардинала $\kappa$ обозначим
+        \[\kappa^+ := \text{``наименьший кардинал, больший $\kappa$''}\]
+
+        $\aleph_0^+$ обозначают $\aleph_1$, $\aleph_1^+$ --- $\aleph_2$, и т.д. На само деле, можно было бы определить $\aleph_\alpha$ для произвольного ординала $\alpha$.
+    \end{definition}
+
+    \begin{statement}[Континуум-гипотеза, \CH]
+        \[2^{\aleph_0} = \aleph_1\]
+    \end{statement}
+
+    \begin{theorem}[Гёдель, 1940]
+        Можно доказать, что $\neg \CH$ нельзя доказать в \ZFC.
+    \end{theorem}
+
+    \begin{theorem}[Коэн, 1963]
+        Можно доказать, что \CH нельзя доказать в \ZFC.
+    \end{theorem}
+
+    \subsection{Важные теоремы в \ZFC}
+
+    \begin{definition}
+        Пусть $\mathfrak{A}$ --- ЧУМ. \emph{Цепь в $\mathfrak{A}$} --- непустое $S \subseteq A$, индуцирующее ЛУМ.
+    \end{definition}
+
+    \begin{theorem}[лемма Цорна; в \ZFC]
+        Пусть $\mathfrak{A} = \langle A, \leqslant_A \rangle$ --- ЧУМ с непустым носителем, в которой у любой цепи имеется верхняя грань. Тогда в $\mathfrak{A}$ есть максимальный элемент.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $\kappa$ --- какой-нибудь кардинал, больший $|A|$, например, $2^{|A|}$. Пусть также $\eta$ --- функция выбора для $\subsets(A) \setminus \varnothing$. Используя трансфинитную рекурсию, определим $f: \subseteq \kappa \to A$ по правилу
+        \[f(\beta) = \eta(\{a' \in A \mid a' >_A a \quad \forall a \in \range(f \upharpoonright_\beta)\})\]
+        Легко видеть, что для любых $\beta_1, \beta_2 \in \dom(f)$
+        \[\beta_1 < \beta_2 \quad \Longrightarrow \quad f(\beta_1) <_A f(\beta_2)\]
+        Из этого мы получаем, что
+        \begin{enumerate}
+            \item $f$ инъективна. Поэтому $\dom(f) \neq \kappa$, а значит $\dom(f) = \alpha < \kappa$. Причём в $A$ нет элементов, строго больших всех элементов из $\range(f)$.
+            \item $\range(f)$ является цепью в $\mathfrak{A}$, значит у него есть верхняя грань $s$.
+        \end{enumerate}
+        Отсюда выходит, что $s \in \range(f)$, а значит нет элементов как внутри цепи $\range(f)$, так и вне неё больших $s$. Значит $s$ --- максимальный элемент в $\mathfrak{A}$.
+    \end{proof}
+
+    \begin{corollary}[в \ZFC]
+        Пусть $\mathfrak{A} = \langle A, \leqslant_A \rangle$ --- ЧУМ, в котором у любой цепи имеется верхняя грань. Тогда для каждого $a \in A$ в $\mathfrak{A}$ есть максимальный элемент $a' \geqslant_A a$.
+    \end{corollary}
+
+    \begin{proof}
+        Случай $A = \varnothing$ тривиален, поэтому будем считать, что $A \neq \varnothing$. Зафиксируем произвольное $a \in A$. Возьмём
+        \[B := \{b \in A \mid a \leqslant_A b\} \qquad \text{и} \qquad {\leqslant}_B := {\leqslant}_A \cap B \times B\]
+        Очевидно, что $\mathfrak{B} = \langle B, \leqslant_b \rangle$ будет ЧУМ, которое удовлетворяет условию леммы Цорна. Поэтому в $\mathfrak{B}$ есть максимальный элемент $a'$. Тогда несложно понять, что $a'$ будет максимальным и в $\mathfrak{A}$, а также $a' \geqslant_A a$.
+    \end{proof}
+
+    \begin{theorem}[в \ZFC]
+        Пусть $X$ бесконечно. Тогда $|X \times X| = |X|$.
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим
+        \[M := \{f \mid f: U \to U \times U \text{ -- биекция, где $U \subseteq X$ и $U$ бесконечно}\}\]
+        Поскольку $X$ бесконечно, у него есть счётное подмножество, равномощное собственному декартовому квадрату, то $M$ непусто. Определим
+        \[{\leqslant} := \{(f_1, f_2) \in M \times M \mid f_1 \subseteq f_2\}\]
+        Далее будем рассматривать ЧУМ $\mathfrak{M} = \langle M, \leqslant \rangle$.
+
+        Покажем, что условие леммы Цорна для $\mathfrak{M}$ выполнено. Пусть $S$ --- произвольная цепь в $\mathfrak{M}$. Возьмём
+        \[f_S := \bigcup_{f \in S} f\]
+        Понятно, что $f_S$ --- биекция из $\dom(f_S)$ в $\range(f_S)$, и при этом
+        \begin{align*}
+            \dom(f_S) &= \bigcup_{f \in S} \dom(f)&
+            \range(f_S) &= \bigcup_{f \in S} \range(f)
+        \end{align*}
+        Очевидно, что $\range(f_S) \subseteq \dom(f_S) \times \dom(f_S)$. Также заметим, что для любых $a_1, a_2 \in \dom(f_S)$ существуют $f_1, f_2 \in S$, что $a_1 \in \dom(f_1)$ и $a_2 \in \dom(f_2)$, а значит $f = f_1 \cup f_2 \in S$ содержит в области определения $a_1$ и $a_2$, что значит, что $(a_1, a_2) \in \range(f) \subseteq \range(f_S)$. Это значит, что $\range(f_S) = \dom(f_S) \times \dom(f_S)$, а значит $f_S \in M$. Так мы имеем, что $f_S$ --- верхняя грань (и даже супремум) для $S$ в $\mathfrak{M}$.
+
+        Тогда, применяя лемму Цорна, получаем максимальный элемент $f_\star$. Обозначим $\dom(f_\star)$ за $Y$.
+
+        Предположим, что $|Y| < |X \setminus Y|$. Тогда $Y$ равномощно некоторому $Z \subseteq X \setminus Y$. Заметим, что
+        \begin{align*}
+            |Z|
+            &\leqslant |Z \times Z|&
+            &\leqslant 3 \cdot |Z \times Z|\\
+            &= |Y \times Z| + |Z \times Y| + |Z \times Z|&
+            &= |(Y \cup Z) \times (Y \cup Z) \setminus Y \times Y|\\
+            &\leqslant |(2 \times Z) \times (2 \times Z)|&
+            &= |4 \times Z \times Z| \leqslant |Z \times Z \times Z|\\
+            &= |Z|
+        \end{align*}
+        Следовательно по теореме Кантора-Шрёдера-Бернштейна есть биекция $g$ из $Y \times Z \cup Z \times Y \cup Z \times Z$ в $Z$. Рассмотрим $h: (Y \cup Z) \to (Y \cup Z) \times (Y \cup Z)$, определённую по правилу
+        \[h(x) := \begin{cases}
+            f_\star(x)& x \in Y\\
+            g(x)& x \in Z
+        \end{cases}\]
+        Следовательно $h \in M$ и $h > f_\star$ --- противоречие. Поэтому $|Y| \geqslant |X \setminus Y|$.
+
+        В таком случае
+        \[|Y| \leqslant |X| = |Y| + |X \setminus Y| \leqslant |Y| + |Y| = 2 \cdot |Y| \leqslant |Y| \cdot |Y| = |Y|\]
+        а значит по теореме Кантора-Шрёдера-Бернштейна $|Y| = |X|$, а потому $|X| = |X \times X|$.
+    \end{proof}
+
+    \begin{corollary}[в \ZFC]
+        Если $0 < |X| \leqslant |Y|$ и $Y$ бесконечно, то $|X \times Y| = |Y|$.
+    \end{corollary}
+
+    \begin{proof}
+        Ясно, что
+        \[|Y| = |1 \times Y| \leqslant |X \times Y| \leqslant |Y \times Y| = |Y|,\]
+        откуда по теореме Кантора-Шрёдера-Бернштейна $|X \times Y| = |Y|$.
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $|X| \leqslant |Y|$ и $Y$ бесконечно. Тогда $|X \cup Y| = |Y|$.
+    \end{corollary}
+
+    \begin{proof}
+        Легко видеть, что
+        \[|Y| \leqslant |X \cup Y| \leqslant |X| + |Y| \leqslant 2 \cdot |Y| \leqslant |Y|^2 = |Y|,\]
+        откуда по теореме Кантора-Шрёдера-Бернштейна $|X \cup Y| = |Y|$.
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $|X| < |Y|$ и $Y$ бесконечно. Тогда $|Y \setminus X| = |Y|$.
+    \end{corollary}
+
+    \begin{proof}
+        Легко видеть, что
+        \[|Y| = \max\{|X|, |Y|\} = |X \cup Y| = |X \cup (Y \setminus X)| = \max\{|X|, |Y \setminus X|\}\]
+        Поскольку $|X| \neq |Y|$, то $|Y| = |Y \setminus X|$.
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $X$ бесконечно. Тогда $|X^*| = |X|$.
+    \end{corollary}
+
+    \begin{proof}
+        По определению $|X^* = \bigcup_{n \in \NN} X^n|$. При этом очевидно по индукции, что $|X^n| = |X|$ для $n > 0$; $|X^0| = |\{\varnothing\}| = 1$. Поэтому
+        \[|X^*| = |X^0| + \sum_{n \in \NN} |X^{n+1}| = 1 + \sum_{n \in \NN} |X| = 1 + |\NN| \cdot |X| = 1 + |X| = |X|\]
+    \end{proof}
 \end{document}
