@@ -2,10 +2,14 @@
 \usepackage{math-text}
 
 \title{Геометрия и топология.}
-\author{Лектор --- Евгений Анатольевич Фоминых \and
+\author{Лектор --- Евгений Анатольевич Фоминых \\
         Создатель конспекта --- Глеб Минаев
-        \footnote{Оригинал конспекта опубликован расположен \href{https://github.com/lounres/SPbU-MCS-2020-M-lecture-notes}{GitHub}}}
+        \footnote{Оригинал конспекта расположен на \href{https://github.com/lounres/SPbU-MCS-2020-M-lecture-notes/blob/master/\%D0\%93\%D0\%B8\%D0\%A2/GaT.pdf}{GitHub}. Также на GitHub доступен \href{https://github.com/lounres/SPbU-MCS-2020-M-lecture-notes}{репозиторий} с другими конспектами.}}
 \date{}
+
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Fr}{Fr}
 
 \begin{document}
     \maketitle
@@ -18,8 +22,6 @@
         \item James Munkres, Topology.
     \end{itemize}
 
-    \section{Метрическое пространство}
-
     \begin{definition}
         Функция $d: X \times X \to \RR_+$ называется \emph{метрикой} (или \emph{расстоянием}) в множестве $X$, если:
         \begin{itemize}
@@ -30,20 +32,107 @@
         Пара $(X, d)$, где $d$ --- метрика в $X$, называется \emph{метрическим пространством}.
     \end{definition}
 
+    \begin{example}
+        Пусть $X$ --- произвольное множество. Тогда метрика
+        \[
+            d(x, y) := 
+                \begin{cases}
+                    1& \text{если $x \neq y$}\\
+                    0& \text{если $x = y$}
+                \end{cases}
+        \]
+        называется \emph{дискретной} метрикой на множестве $X$.
+    \end{example}
+
+    \begin{example}\ 
+        \begin{itemize}
+            \item $X := \RR$, тогда $d(x, y) := |x-y|$ --- метрика.
+            \item $X := \RR^n$, $x = (x_1, \dots, x_n)$, $y = (y_1, \dots, y_n)$. Тогда
+                \[d(x, y) := \sqrt{(x_1 - y_1)^2 + \dots + (x_n + y_n)^2}\]
+                называется \emph{евклидовой} метрикой.
+            \item $X := \RR^n$, $d(x, y) := \max_{i = 1}^n |x_i - y_i|$
+            \item $X := \RR^n$, $d(x, y) := \sum_{i = 1}^n |x_i - y_i|$
+            \item $X := C[0; 1]$, $d(x(t), y(t)) = \max_{t \in [0; 1]} |x(t) - y(t)|$. $(X, d)$ называют \emph{пространством непрерывных функций}.
+        \end{itemize}
+    \end{example}
+
     \begin{definition}
         Пусть $(X, d)$ --- метрическое пространство. Сужение функции $d$ на $Y \times Y$ является метрикой в $Y$. Метрическое пространство $(Y, d|_{Y\times Y})$ называется \emph{подпространством} пространства $(X, d)$.
     \end{definition}
 
     \begin{theorem}
-        \emph{Декартово произведение} метрических пространств $(X, d_X)$ и $(Y, d_Y)$ --- метрическое пространство $(X\times Y, d_{X\times Y})$, где
-        \[d_{X \times Y}((x_1, y_1), (x_2, y_2)) = \sqrt{d_X(x_1, x_2)^2 + d(y_1, y_2)^2}\]
+        Пусть дана $g: \RR_+ \times \RR_+ \to \RR_+$, что
+        \begin{itemize}
+            \item $\forall x, y \in \RR_+\quad g(x, y) = 0 \leftrightarrow x = y = 0$;
+            \item $\forall x, y, d \in \RR_+\quad g(x + d, y) \geqslant g(x, y) \wedge g(x, y + d) \geqslant g(x, y)$;
+            \item $\forall x_1, y_1, x_2, y_2 \in \RR_+ \quad g(x_1 + x_2, y_1 + y_2) \leqslant g(x_1, y_1) + g(x_2, y_2)$.
+        \end{itemize}
+        Тогда для любых метрических пространств $(X, d_X)$ и $(Y, d_Y)$ функция
+        \[d_{X \times Y}((x_1, y_1), (x_2, y_2)) = g(d_X(x_1, x_2), d_Y(y_1, y_2))\]
+        будет метрикой на $X \times Y$.
     \end{theorem}
+
+    \begin{proof}
+        Проверим, что $d_{X \times Y}$ --- метрика.
+        \begin{itemize}
+            \item $\forall x_1, x_2 \in X, y_1, y_2 \in Y$
+                \begin{align*}
+                    d_{X \times Y}((x_1, y_1), (x_2, y_2)) = 0\quad
+                    &\longleftrightarrow\quad g(d_X(x_1, x_2), d_Y(y_1, y_2)) = 0\\
+                    &\longleftrightarrow\quad d_X(x_1, x_2) = 0 \wedge d_Y(y_1, y_2) = 0\\
+                    &\longleftrightarrow\quad x_1 = x_2 \wedge y_1 = y_2
+                \end{align*}
+            \item $\forall x_1, x_2 \in X, y_1, y_2 \in Y$
+                \begin{multline*}
+                    d_{X \times Y}((x_1, y_1), (x_2, y_2))\\
+                    = g(d_X(x_1, x_2), d_Y(y_1, y_2)) = g(d_X(x_2, x_1), d_Y(y_2, y_1))\\
+                    = d_{X \times Y}((x_2, y_2), (x_1, y_1))
+                \end{multline*}
+            \item $\forall x_1, x_2, x_3 \in X, y_1, y_2, y_3 \in Y$
+                \begin{multline*}
+                    d_{X \times Y}((x_1, y_1), (x_3, y_3))\\
+                    = g(d_X(x_1, x_3), d_Y(y_1, y_3))\\
+                    \leqslant g(d_X(x_1, x_2) + d_X(x_2, x_3), d_Y(y_1, y_2) + d_Y(y_2, y_3))\\
+                    \leqslant g(d_X(x_1, x_2), d_Y(y_1, y_2)) + g(d_X(x_2, x_3), d_Y(y_2, y_3))\\
+                    = d_{X \times Y}((x_1, y_1), (x_2, y_2)) + d_{X \times Y}((x_2, y_2), (x_3, y_3))
+                \end{multline*}
+        \end{itemize}
+    \end{proof}
+
+    \begin{corollary}
+        Для любых метрических пространств $(X, d_X)$ и $(Y, d_Y)$ пара $(X \times Y, d_{X \times Y})$, где
+        \[d_{X \times Y} := \sqrt{d_X(x_1, x_2)^2 + d_Y(y_1, y_2)^2}\]
+        есть метрическое пространство.
+    \end{corollary}
+
+    \begin{proof}
+        Необходимо лишь проверить, что $g(x, y) := \sqrt{x^2 + y^2}$ удовлетворяет условиям теоремы.
+        \begin{itemize}
+            \item $\forall x, y \in \RR_+\quad \sqrt{x^2 + y^2} \leftrightarrow x^2 + y^2 = 0 \leftrightarrow x = 0 = y$.
+            \item $\forall x, y, d \in \RR_+\quad x+d \geqslant x \Rightarrow (x+d)^2 \geqslant x^2 \Rightarrow (x+d)^2 + y^2 \geqslant x^2 + y^2 \Rightarrow \sqrt{(x+d)^2 + y^2} \geqslant \sqrt{x^2 + y^2}$; для $y$ аналогично.
+            \item $\forall x_1, y_1, x_2, y_2 \in \RR_+$ по неравенству Коши-Буняковского-Шварца
+            \begin{gather*}
+                (x_1y_2 - x_2y_1)^2 \geqslant 0\\
+                x_1^2y_2^2 + x_2^2y_1^2 \geqslant 2x_1x_2y_1y_2\\
+                (x_1^2 + y_1^2)(x_2^2 + y_2^2) \geqslant (x_1x_2 + y_1y_2)^2\\
+                (x_1^2 + y_1^2) + 2\sqrt{(x_1^2 + y_1^2)(x_2^2 + y_2^2)} + (x_2^2 + y_2^2) \geqslant (x_1^2 + y_1^2) + 2(x_1x_2 + y_1y_2) + (x_2^2 + y_2^2)\\
+                \left(\sqrt{x_1^2 + y_1^2} + \sqrt{x_2^2 + y_2^2}\right)^2 \geqslant (x_1 + x_2)^2 + (y_1 + y_2)^2\\
+                \sqrt{x_1^2 + y_1^2} + \sqrt{x_2^2 + y_2^2} \geqslant \sqrt{(x_1 + x_2)^2 + (y_1 + y_2)^2}
+            \end{gather*}
+        \end{itemize}
+    \end{proof}
+
+    \begin{remark}
+        Если $g$ ассоциативна (например, $g(x, y) := \sqrt{x^2 + y^2}$; она заодно коммутативна). То аналогично можно определить метрику на $X_1 \times X_2 \times \dots \times X_n = (X_1 \times (X_2 \times (\dots \times X_n)\dots))$.
+
+        Таким образом евклидова метрика есть метрика, так как её можно получить, применяя $g(x, y) := \sqrt{x^2 + y^2}$ к пространствам $(X_i, d_i) = (\RR, d_{\RR})$ (где $d_{\RR}(x, y) = |x-y|$).
+    \end{remark}
 
     \begin{definition}
         Пусть $(X, d)$ --- метрическое пространство, $a \in X$, $r \in \RR$, $r > 0$. Тогда:
         \begin{itemize}
             \item $B_r(a) := \{x \in X \mid d(a, x) < r\}$ --- \emph{(открытый) шар пространства $(X, d)$ с центром в точке $a$ и радиусом $r$};
-            \item $\overline{B}_r(a) := \{x \in X \mid d(a, x) \leqslant r\}$ --- \emph{замкнутой шар пространства $(X, d)$ с центром в точке $a$ и радиусом $r$};
+            \item $\overline{B}_r(a) = D_r(a) := \{x \in X \mid d(a, x) \leqslant r\}$ --- \emph{замкнутой шар пространства $(X, d)$ с центром в точке $a$ и радиусом $r$};
             \item $S_r(a) := \{x \in X \mid d(a, x) = r\}$ --- \emph{сфера пространства $(X, d)$ с центром в точке $a$ и радиусом $r$}.
         \end{itemize}
     \end{definition}
@@ -53,15 +142,19 @@
         \[\forall a \in A\ \exists r > 0: B_r(a) \subseteq A\]
     \end{definition}
 
-    \begin{theorem}\ 
+    \begin{theorem}В любом метрическом пространстве $(X, d)$
         \begin{enumerate}
-            \item Объединение любого семейства открытых множеств открыто.
-            \item Пересечение конечного семейства открытых множеств открыто.
+            \item $\varnothing$ и $X$ открыты;
+            \item для всяких $a \in X$ и $r > 0$ открытый шар $B_r(a)$ открыт; 
+            \item объединение любого семейства открытых множеств открыто;
+            \item пересечение конечного семейства открытых множеств открыто.
         \end{enumerate}
     \end{theorem}
 
     \begin{proof}\ 
         \begin{enumerate}
+            \item Очевидно.
+            \item Для всякого $x \in B_r(a)$ верно, что $B_{r-d(x, a)}(x) \subseteq B_r(a)$, откуда утверждение очевидно следует.
             \item Пусть дано семейство открытых множеств $\Sigma$. Пусть также $I = \bigcup \Sigma$. Для любого $x \in I$ верно, что существует $J \in \Sigma$, что $x \in J$, а значит есть $r > 0$, что $B_r(x) \subseteq J \subseteq I$, т.е. $x$ --- внутренняя точка $I$. Таким образом $I$ открыто.
             \item Пусть $I = \bigcap_{i = 1}^n I_i$. Тогда для любого $x \in I$ верно, что существуют $r_1, \dots, r_n > 0$, что $B_{r_i}(x) \subseteq I_n$, значит $B_{\min r_i} \subseteq I$, значит $x$ --- внутренняя точка $I$. Таким образом $I$ открыто.
         \end{enumerate}
@@ -82,16 +175,475 @@
         \end{itemize}
     \end{definition}
 
+    \begin{example}\ 
+        \begin{itemize}
+            \item Если $\Omega$ --- множество открытых множеств в метрическом пространстве $(X, d)$, то $(X, \Omega)$ --- топологическое пространство. Таким образом любое метрическое пространство можно отождествлять с соответствующим топологическим пространством.
+            \item Топология, индуцированная евклидовой метрикой в $\RR^n$, называется \emph{стандартной}.
+            \item $\Omega := 2^X$ --- \emph{дискретная} топология на произвольном множестве $X$. Именно она порождается дискретной метрикой на $X$.
+            \item $\Omega := \{\varnothing, X\}$ --- \emph{антидискретная} топология на произвольном множестве $X$.
+            \item $X := \RR$, $\Omega := \{(a; +\infty) : a \in \RR\} \cup \{\RR\} \cup \{\varnothing\}$. Такая топология называется \emph{стрелкой}.
+            \item $\Omega = \{\varnothing\} \cup \{A \in X: |X\setminus A| \in \NN\}$ --- топология \emph{конечных дополнений} на произвольном множестве $X$.
+        \end{itemize}
+    \end{example}
+
     \begin{definition}
-        Множество $F \subseteq X$ \emph{замкнуто} в пространстве $(X, \Sigma)$, если его дополнение $X \setminus F$ открыто (т.е. если $X \setminus F \in \Sigma$).
+        Множество $F \subseteq X$ \emph{замкнуто} в топологическом пространстве $(X, \Sigma)$, если его дополнение $X \setminus F$ открыто (т.е. если $X \setminus F \in \Sigma$).
     \end{definition}
 
-    \begin{remark*}
-        Свойства:
+    \begin{theorem}
+        В любом топологическом пространстве $X$
         \begin{itemize}
-            \item $\varnothing$ и $X$ --- замкнуты.
-            \item Объединение конечного набора замкнутых множеств замкнуто.
-            \item Пересечение любого набора замкнутых множеств замкнуто.
+            \item $\varnothing$ и $X$ --- замкнуты;
+            \item объединение конечного набора замкнутых множеств замкнуто;
+            \item пересечение любого набора замкнутых множеств замкнуто.
         \end{itemize}
-    \end{remark*}
+    \end{theorem}
+
+    \begin{theorem}
+        Пусть $U$ --- открыто, а $V$ --- замкнуто в $(X, \Omega)$. Тогда:
+        \begin{itemize}
+            \item $U \setminus V$ открыто;
+            \item $V \setminus U$ замкнуто.
+        \end{itemize}
+    \end{theorem}
+
+    \begin{definition}
+        Пусть $(X, \Omega)$ --- топологическое пространство и $A \subseteq X$. Тогда \emph{внутренностью} множества $A$ называется
+        объединение всех открытых подмножеств $A$:
+        \[\Int(A) := \bigcup_{\substack{U \in \Omega\\U \subseteq A}} U\]
+    \end{definition}
+
+    \begin{theorem}\ 
+        \begin{itemize}
+            \item $\Int(A)$ --- открытое множество.
+            \item $\Int(A) \subseteq A$.
+            \item $B\text{ --- открыто} \wedge B \subseteq A \Rightarrow B \subseteq \Int(A)$.
+            \item $A = \Int(A) \Leftrightarrow A \text{ --- открыто}$.
+            \item $\Int(\Int(A)) = \Int(A)$.
+            \item $A \subseteq B \Rightarrow \Int(A) \subseteq \Int(B)$.
+            \item $\Int(\bigcap_{k=1}^n A_k) = \bigcap_{k=1}^n \Int(A_k)$.
+            \item $\Int(\bigcup_{A \in \Sigma} A) \supseteq \bigcup_{A \in \Sigma} \Int(A)$.
+        \end{itemize}
+    \end{theorem}
+
+    \begin{definition}
+        \emph{Окрестность} точки $a$ в топологическом пространстве $X$ --- открытое множество в $X$, содержащее $a$.
+
+        Точка $a$ топологического пространства $X$ называется \emph{внутренней точкой} множества $A \subseteq X$, если $A$ содержит как подмножество некоторую окрестность $a$.
+    \end{definition}
+
+    \begin{theorem}\ 
+        \begin{itemize}
+            \item Множество открыто тогда и только тогда, когда все его точки внутренние.
+            \item Внутренность множества есть множество всех его внутренних точек.
+        \end{itemize}
+    \end{theorem}
+
+    \begin{proof}\ 
+        \begin{itemize}
+            \item
+                \begin{itemize}
+                    \item[($\Rightarrow$)] Пусть $A$ открыто, а $a \in A$. Тогда $A$ --- та самая окрестность $a$, которая является подмножеством $A$, поэтому $a$ --- внутренняя точка $A$.
+                    \item[($\Leftarrow$)] Пусть каждая точка $A$ внутренняя. Тогда для каждого $a \in A$ определим окрестность $I_a$, лежащую в $A$ как подмножество (такая есть по определению). Тем самым $A = \bigcup_{a \in A} I_a$, т.е. $A$ есть объединение открытых множеств, следовательно открытое множество.
+                \end{itemize}
+            \item
+                \begin{itemize}
+                    \item[($\subseteq$)] Пусть $a \in \Int(A)$. Вспомним, что $\Int(A)$ --- открытое подмножество $A$. Следовательно, $a$ --- внутренняя точка $A$.
+                    \item[($\supseteq$)] Пусть $a$ --- внутренняя точка $A$. Следовательно есть открытое $I$, что $a \in I \subseteq A$, следовательно $I \subseteq \Int(A)$, а значит $a \in \Int(A)$.
+                \end{itemize}
+        \end{itemize}
+    \end{proof}
+
+    \begin{definition}
+        Пусть $(X, \Omega)$ --- топологическое пространство, а $A \subseteq X$. \emph{Замыканием} множества $A$ называется пересечение всех замкнутых пространств, содержащих $A$ как подмножество:
+        \[\Cl(A) := \bigcap_{\substack{X \setminus V \in \Omega\\V\supseteq A}} V\]
+    \end{definition}
+
+    \begin{theorem}\ 
+        \begin{itemize}
+            \item $\Cl(A)$ --- замкнутое множество.
+            \item $\Cl(A) \supseteq A$.
+            \item $B\text{ --- замкнуто} \wedge B \supseteq A \Rightarrow B \supseteq \Cl(A)$.
+            \item $A = \Cl(A) \Leftrightarrow A \text{ --- замкнуто}$.
+            \item $\Cl(\Cl(A)) = \Cl(A)$.
+            \item $A \subseteq B \Rightarrow \Cl(A) \subseteq \Cl(B)$.
+            \item $\Cl(\bigcup_{k=1}^n A_k) = \bigcup_{k=1}^n \Cl(A_k)$.
+            \item $\Cl(\bigcap_{A \in \Sigma} A) \supseteq \bigcap_{A \in \Sigma} \Cl(A)$.
+            \item $\Cl(A) \sqcup \Int(X \setminus A) = X$.
+        \end{itemize}
+    \end{theorem}
+
+    \begin{definition}
+        Пусть $X$ --- топологическое пространство, $A \subseteq X$ и $b \in X$. Точка $b$ называется \emph{точкой прикосновения} множества $A$, если всякая её окрестность пересекается с $A$.
+    \end{definition}
+
+    \begin{theorem}\ 
+        \begin{itemize}
+            \item Множество замкнуто тогда и только тогда, когда оно является множеством своих точек прикосновения.
+            \item Замыкание множества есть множество всех его точек прикосновения.
+        \end{itemize}
+    \end{theorem}
+
+    \begin{definition}
+        Пусть $X$ --- топологическое пространство, $A \subseteq X$ и $a \in X$.
+
+        \emph{Граница} множества $A$ --- разность замыкания и внутренности $A$: $\Fr(A) := \Cl(A) \setminus \Int(A)$.
+
+        Точка $a$ --- \emph{граничная точка} множества $A$, если всякая её окрестность пересекается с $A$ и с $X \setminus A$.
+    \end{definition}
+
+    \begin{theorem}
+        Граница множества совпадает с множеством его граничных точек.
+    \end{theorem}
+
+    \begin{theorem}\ 
+        \begin{itemize}
+            \item $\Fr(A)$ замкнуто.
+            \item $\Fr(A) = \Fr(X \setminus A)$.
+            \item $A\text{ замкнуто} \Leftrightarrow A \supseteq \Fr(A)$.
+            \item $A\text{ открыто} \Leftrightarrow A \cap \Fr(A) = \varnothing$.
+        \end{itemize}
+    \end{theorem}
+
+    \begin{definition}
+        Пусть $X$ --- топологическое пространство, $A \subseteq X$ и $a \in X$.
+
+        $a$ --- \emph{предельная точка} $A$, если в любой окрестности $a$ есть точка $A \setminus \{a\}$.
+
+        $a$ --- \emph{изолированная точка} $A$, если $a \in A$ и есть окрестность $a$ без точка $A \setminus \{a\}$.
+    \end{definition}
+
+    \begin{theorem}\ 
+        \begin{itemize}
+            \item $b\text{ --- предельная} \Rightarrow b\text{ --- точка прикосновения}$.
+            \item $\Cl(A) = \{\text{внутренние точки $A$}\} \sqcup \{\text{граничные точки $A$}\}$.
+            \item $\Cl(A) = \{\text{предельные точки $A$}\} \sqcup \{\text{изолированные точки $A$}\}$.
+        \end{itemize}
+    \end{theorem}
+
+    \begin{definition}
+        Пусть $\Omega_1$ и $\Omega_2$ --- топологии на $X$. Тогда если $\Omega_1 \subseteq \Omega_2$, то говорят, что $\Omega_1$ \emph{слабее (грубее)} $\Omega_2$, а $\Omega_2$ \emph{сильнее (тоньше)} $\Omega_1$.
+    \end{definition}
+
+    \begin{example}
+        Из всех топологий на $X$ антидискретная --- самая грубая, а дискретная --- самая тонкая.
+    \end{example}
+
+    \begin{theorem}
+        Топология метрики $d_1$ грубее топологии метрики $d_2$ тогда и только тогда, когда в любом шаре метрики $d_1$ содержится шар метрики $d_2$ с тем же центром.
+    \end{theorem}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[($\Rightarrow$)] Пусть топология метрики $d_1$ грубее топологии метрики $d_2$. Тогда любой шар $B_r^{d_1}(a)$ открыт в $d_2$, следовательно по определению открытости есть шар $B_q^{d_2}(a) \subseteq B_r^{d_1}(a)$.
+            \item[($\Leftarrow$)] Пусть в любом шаре метрики $d_1$ содержится шар метрики $d_2$ с тем же центром. Возьмём любое открытое в $d_1$ множество $U$. Тогда для всякой точки $a \in U$ есть шар $B_r^{d_1}(a) \subseteq U$. При этом есть шар $B_q^{d_2}(a) \subseteq B_r^{d_1}(a)$, таким образом $a$ --- внутренняя точка $U$ в $d_2$. Следовательно $U$ открыто в $d_2$.
+        \end{itemize}
+    \end{proof}
+
+    \begin{corollary}
+        Если $d_1$ и $d_2$ --- метрики на $X$ и $d_1 \leqslant d_2$, то топология $d_1$ грубее топологии $d_2$. 
+    \end{corollary}
+
+    \begin{definition}
+        Две метрики на одном множестве называются \emph{эквивалентными}, если они порождают одну топологию.
+    \end{definition}
+
+    \begin{lemma}
+        Пусть $(X, d)$ --- метрическое пространство. Тогда для всякого $C > 0$ функция $C \cdot d$ --- метрика на $X$, эквивалентная $d$. 
+    \end{lemma}
+
+    \begin{corollary}
+        Если для метрик $d_1$ и $d_2$ на $X$ есть такое $C > 0$, что $d_1 \leqslant C d_2$, то $d_1$ грубее $d_2$.
+    \end{corollary}
+
+    \begin{definition}
+        Метрики $d_1$ и $d_2$ на одном множестве называются \emph{липшицево эквивалентными}, если существуют $c, C > 0$, что $c \cdot d_1 \leqslant d_2 \leqslant C \cdot d_1$.
+    \end{definition}
+
+    \begin{theorem}
+        Липшицево эквивалентные метрики просто эквивалентны.
+    \end{theorem}
+
+    \begin{definition}
+        Топологическое пространство \emph{метризуемо}, если есть метрика, её порождающая.
+    \end{definition}
+
+    \begin{definition}
+        \emph{База} топологии $\Omega$ --- такое семейство $\Sigma$ открытых множеств, что всякое $U$ открытое представимо в виде объединения множеств из $\Sigma$.
+        \[\Sigma \subseteq \Omega\text{ --- база} \Longleftrightarrow \forall U \in \Omega\; \exists \Lambda \subseteq \Sigma:\quad U = \bigcup_{W \in \Lambda} W\]
+    \end{definition}
+
+    \begin{definition}
+        Множество $\Gamma$ подмножеств множества $X$ называются его \emph{покрытием}, если $X := \bigcup_{A \in \Gamma} A$. Часто покрытие записывают в виде $\Gamma = \{A_i\}_{i \in I}$.
+    \end{definition}
+
+    \begin{theorem}[второе определение базы]
+        Пусть $(X, \Omega)$ --- топологическое пространство и $\Sigma \subseteq \Omega$. Тогда $\Sigma$ --- база топологии $\Omega$ тогда и только тогда, когда для любой точки $a$ любого открытого множества $U$ есть окрестность из $\Sigma$, лежащая в $U$ как подмножество.
+    \end{theorem}
+
+    \begin{definition}
+        Пусть $(X, \Omega)$ --- топологическое пространство, $a \in X$ и $\Lambda \subseteq \Omega$. $\Lambda$ называется \emph{базой топологии (базой окрестности) в точке $a$}, если:
+        \begin{enumerate}
+            \item $\forall U \in \Lambda\; a \in U$;
+            \item $\forall\text{ окрестности }U\text{ точки }a \exists V_a \in \Lambda:\; V_a \subseteq U$.
+        \end{enumerate}
+    \end{definition}
+
+    \begin{theorem}\ 
+        \begin{itemize}
+            \item Если $\Sigma$ --- база топологии, то для всякой точки $a \in X$ множество $\Sigma_a := \{U \in \Sigma \mid a \in U\}$ --- база топологии в точке $a$.
+            \item Пусть для каждой точки $a \in X$ определена база топологии $\Sigma_a$ в ней. Тогда $\bigcup_{a \in X} \Sigma_a$ --- база топологии.
+        \end{itemize}
+    \end{theorem}
+
+    \begin{theorem}[критерий базы]
+        Пусть $X$ --- произвольное множество, а $\Sigma$ --- его покрытие. $\Sigma$ --- база некоторой топологии на $X$ тогда и только тогда, когда для всяких $A, B \in \Sigma$ есть семейство $\Lambda \subseteq \Sigma$, что $A \cap B = \bigcup_{S \in \Lambda} S$.
+    \end{theorem}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[($\Rightarrow$)] Если $\Sigma$ --- база, то для всяких $A, B \in \Sigma$ множество $A \cap B$ открыто, а поэтому представляется как объединение некоторого подсемейства $\Sigma$.
+            
+            \item[($\Leftarrow$)] Рассмотрим топологию $\Omega$, образованную всевозможными объединениями множеств из $\Sigma$, т.е.
+            \[\Omega := \left\{\bigcup_{S \in \Lambda} S \mid \Lambda \subseteq \Sigma\right\}\]
+            Проверим, что это действительно топология.
+            \begin{enumerate}
+                \item $\Sigma$ --- покрытие, поэтому $X = \bigcup_{S \in \Sigma} S \in \Omega$. Также рассматривая $\Lambda = \varnothing$, получаем, что $\bigcup_{S \in \Lambda} S = \varnothing \in \Omega$.
+                \item Пусть $\Phi \subseteq \Omega$. Тогда для каждого $S \in \Phi$ есть семейство $\Lambda_S \subseteq \Sigma$, его образующее, т.е. $S = \bigcup_{T \in \Lambda_S} T$. В таком случае $\Lambda := \bigcup_{S \in \Phi} \Lambda_S$ является подмножеством $\Sigma$, а тогда
+                \[\bigcup_{S \in \Phi} S = \bigcup_{S \in \Phi} \bigcup_{T \in \Lambda_S} T = \bigcup_{T \in \Lambda} T \in \Omega\]
+                \item Пусть $U, V \in \Omega$. Тогда существуют $M, N \subseteq \Sigma$, что $U = \bigcup_{S \in M} S$ и $V = \bigcup_{S \in N} S$. Также для каждой $P = (A, B) \in M \times N$ существует $\Lambda_P \subseteq \Sigma$, что $A \cap B = \bigcup_{S \in \Lambda_P}$. Пусть $\Lambda := \bigcup_{P \in M \times N} \Lambda_S$. Понятно, что $\Lambda \subseteq \Sigma$. Следовательно
+                \[U \cap V = \left(\bigcup_{A \in M} A\right) \cap \left(\bigcup_{B \in N} B\right) = \bigcup_{(A, B) \in M \times N} A \cap B = \bigcup_{P \in M \times N} \bigcup_{S \in \Lambda_P} S = \bigcup_{S \in \Lambda} S \in \Omega\]
+            \end{enumerate}
+        \end{itemize}
+    \end{proof}
+
+    \begin{definition}
+        \emph{Предбаза} --- семейство $\Delta$ открытых множеств в пространстве $(X, \Omega)$, что $\Omega$ --- наименьшая топология по включению топология, содержащая $\Delta$.
+    \end{definition}
+
+    \begin{theorem}
+        Любое семейство $\Delta$ подмножеств множества $X$ является предбазой некоторой топологии.
+    \end{theorem}
+
+    \begin{proof}
+        Определим
+        \[\Sigma := \{X\} \cup \left\{\bigcap_{A \in W} A \mid W \subseteq \Delta \wedge |W| \in \NN\right\}\]
+        Заметим, что $\Delta \subseteq \Sigma$. Действительно, для всякого $A \in \Delta$ семейство $W := \{A\}$ является подмножеством $\Delta$, следовательно $A = \bigcap_{T \in W} T \in \Sigma$.
+
+        Покажем, что любая топология, которая содержит как подмножество $\Delta$, содержит и $\Sigma$ как подмножество. Действительно, пусть $A \in \Sigma$ (будем считать, что $A$ --- не $X$ и не $\varnothing$; иначе утверждение очевидно). Тогда есть конечное семейство $W \subseteq \Delta$, что $A = \bigcap_{T \in W} T$. Пусть $\Omega$ --- любая топология, содержащая $\Delta$ как подмножество. Тогда $W \subseteq \Omega$, а следовательно $A = \bigcap_{T \in W} T \in \Omega$. Таким образом $\Sigma \subseteq \Omega$. Поэтому для топология, для которой $\Sigma$ будет предбазой, $\Delta$ тоже будет предбазой.
+
+        Покажем, что $\Sigma$ удовлетворяет критерию базы.
+        \begin{itemize}
+            \item $X \in \Sigma$, значит $\Sigma$ --- покрытие $X$.
+            \item Пусть $A, B \in \Sigma$. Если $A = X$, то $A \cap B = B = \bigcup_{T \in W} T$, где $W := \{B\} \subseteq \Sigma$. Если $A = \varnothing$, то $A \cap B = \varnothing = \bigcup_{T \in W} T$, где $W := \varnothing \subseteq \Sigma$. Аналогично, если $B$ есть $X$ или $\varnothing$. Иначе есть непустые $V, U \subseteq \Delta$, что $A = \bigcap_{T \in V} T$, а $B = \bigcap_{T \in U} T$. Следовательно $A \cap B = \bigcap_{T \in V \cup U} T$. Но поскольку $V \cup U \subseteq \Delta$, то $A \cap B \in \Sigma$. Таким образом $A \cap B = \bigcup_{T \in W} T$, где $W := \{A \cap B\} \subseteq \Sigma$.
+        \end{itemize}
+
+        Рассмотрим
+        \[\Omega := \left\{\bigcup_{S \in \Lambda} S \mid \Lambda \subseteq \Sigma\right\}\]
+        По теореме о критерии базы $\Omega$ --- топология, где $\Sigma$ --- база. С другой стороны $\Omega$ --- множество, которое содержится как подмножество в любой топологии, которая содержит как подмножество $\Sigma$. Следовательно $\Omega$ --- минимальное топология, содержащая как подмножество $\Sigma$, а значит и $\Delta$. Поэтому $\Delta$ --- предбаза в $\Omega$. 
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $(X, \Omega)$ --- топологическое пространство, а $A \subseteq X$. Тогда множество
+        \[\Omega_A := \{U \cap A \mid U \in \Omega\}\]
+        есть топология на $A$.
+    \end{theorem}
+
+    \begin{definition}
+        Пусть $(X, \Omega)$ топологическое пространство, а $A \subseteq X$. Тогда
+        \[\Omega_A := \{U \cap A \mid U \in \Omega\}\]
+        --- топология, \emph{индуцированная} множеством $A$, а $(A, \Omega_A)$ --- подпространство $(X, \Omega)$.
+    \end{definition}
+
+    \begin{theorem}\ 
+        \begin{itemize}
+            \item Множества, открытые в подпространстве, не обязательно открыты в объемлющем пространстве.
+            \item Открытые множества открытого подпространства открыты и во всём пространстве.
+            \item Если $\Sigma$ --- база топологии $\Omega$, то
+                \[\Sigma_A := \{U \cap A \mid U \in \Sigma\}\]
+                --- база индуцированной топологии.
+            \item Пусть $(X, \Omega)$ --- топологическое пространство и $B \subseteq A \subseteq X$. Тогда $(\Omega_A)_B = \Omega_B$, т.е. топология, которая индуцируется в $B$ топологией, индуцированной в $A$, совпадает с топологией,индуцированной непосредственно из $X$.
+        \end{itemize}
+    \end{theorem}
+
+    \begin{definition}
+        Пусть $X$, $Y$ --- топологические пространства. Отображение $f: X \to Y$ называется \emph{непрерывным}, если прообраз всякого открытого множества из $Y$ открыт в $X$.
+    \end{definition}
+
+    \begin{theorem}\ 
+        \begin{itemize}
+            \item Отображение непрерывно тогда и только тогда, когда прообраз замкнутого замкнут.
+            \item Композиция непрерывных отображений непрерывно.
+            \item Пусть $Z$ --- подпространство $X$, а $f: X \to Y$ непрерывно. Тогда $f{\mid}_Z: Z \to Y$ непрерывно.
+            \item Пусть $Z$ --- подпространство $Y$, $f: X \to Y$ и $f(X) \subseteq Z$. Пусть $\widetilde f: X \to Z, x \mapsto f(x)$. Тогда $f$ непрерывна тогда и только тогда, когда $\widetilde f$ непрерывна.
+        \end{itemize}
+    \end{theorem}
+
+    \begin{definition}
+        Отображение $f: X \to Y$ называется непрерывным в точке $a \in X$, если для любой окрестности $U$ точки $f(a)$ существует такая окрестность $V$ точки $a$, что $f(V) \subseteq U$.
+    \end{definition}
+
+    \begin{theorem}
+        Отображение $f: X \to Y$ непрерывно тогда и только тогда, когда оно непрерывно в каждой точке пространства $X$.
+    \end{theorem}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[($\Rightarrow$)] Очевидно, $V = f^{-1}(U)$.
+            \item[($\Leftarrow$)] Пусть $U \in \Omega_Y$. Тогда для всякого $a \in f^{-1}(U)$ есть окрестность $V_a$ точки $a$, что $V_a \subseteq f^{-1}(U)$. Следовательно любая точка $f^{-1}(U)$ внутренняя, а значит $f^{-1}(U)$ открыто.
+        \end{itemize}
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $X$ и $Y$ --- топологические пространства, $a \in X$, $f: X \to Y$, $\Sigma_a$ --- база окрестностей в точке $a$ и $\Lambda_{f(a)}$ --- база окрестностей в точке $f(a)$. Тогда $f$ непрерывна в точке $a$ тогда и только тогда, когда для всякого $U \in \Lambda_{f(a)}$ есть $V \in \Sigma_a$, что $f(V) \subseteq U$.
+    \end{theorem}
+
+    \begin{proof}\ 
+        \begin{itemize}
+            \item[($\Rightarrow$)] Пусть $f$ непрерывна в $a$. Рассмотрим любое $U \in \Lambda_{f(a)}$. $U$ --- окрестность $f(a)$, соответственно есть $W$ --- окрестность $a$, что $f(W) \subseteq U$. Но тогда есть $V \in \Sigma_a$, что $V \subseteq W$. Тогда $V \in \Sigma_a$ и $f(V) \subseteq U$.
+            \item[($\Leftarrow$)] Пусть для всякого $U \in \Lambda_{f(a)}$ найдётся $V \in \Sigma_a$, что $f(V) \subseteq U$. Рассмотрим любую окрестность $U$ точки $f(a)$. Тогда есть семейство $W \in \Lambda_{f(a)}$, что $W \subseteq U$. Следовательно найдётся $V \in \Sigma_a$, что $f(V) \subseteq W$, а следовательно $V$ --- окрестность $a$, и $f(V) \subseteq U$.
+        \end{itemize}
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $X$, $Y$ --- метрические пространства, $a \in X$, $f: X \to Y$. Тогда
+        \begin{enumerate}
+            \item $f$ непрерывно в точке $a$ тогда и только тогда, когда
+                \[\forall \varepsilon > 0\; \exists \delta > 0:\quad f(B_\delta(a)) \subseteq B_\varepsilon(f(a))\]
+            \item $f$ непрерывно в точке $a$ тогда и только тогда, когда
+                \[\forall \varepsilon > 0\; \exists \delta > 0:\quad d_X(x, a) < \delta \rightarrow d_Y(f(x), f(a)) < \varepsilon\]
+        \end{enumerate}
+    \end{corollary}
+
+    \begin{definition}
+        Пусть $X$, $Y$ --- метрические пространства. Отображение $f: X \to Y$ называется \emph{липшицевым}, если:
+        \[\exists C > 0:\; \forall a, b \in X\quad d_Y(f(a), f(b)) \leqslant C \cdot d_X(a, b)\]
+        Значение $C$ называют \emph{константой Липшица} отображения $f$.
+    \end{definition}
+
+    \begin{theorem}
+        Всякое липшицево отображение непрерывно.
+    \end{theorem}
+
+    \begin{proof}
+        Действительно,
+        \[\forall \varepsilon > 0\qquad \delta := \frac{\varepsilon}{C}\quad \Longrightarrow\quad \Bigl(d_X(x, a) < \delta\quad \longrightarrow\quad d_Y(f(x), f(a)) \leqslant C \cdot d_X(x, a) < C \cdot \delta = \varepsilon \Bigr)\]
+    \end{proof}
+
+    \begin{example}\ 
+        \begin{itemize}
+            \item Пусть фиксирована точка $x_0$ в метрическом пространстве $(X, d)$. Тогда отображение
+                \[f: X \to \RR,\; a \mapsto d(a, x0),\]
+                непрерывно.
+            \item Пусть $A$ --- непустое подмножество метрического пространства $(X, d)$. \emph{Расстоянием от точки $x \in X$ до множества $A$} называется число
+                \[d(x, A) := \inf\{d(x, a): a \in A\}.\]
+                Отображение
+                \[f: X \to \RR,\; x \mapsto d(x, A),\]
+                непрерывно.
+            \item Метрика $d$ на множестве $X$ является непрерывным отображением $X \times X \to \RR$.
+        \end{itemize}
+    \end{example}
+
+    \begin{definition}
+        Покрытие $\Gamma$ топологического пространства $X$ называется \emph{фундаментальным}, если
+        \[\forall U \subseteq X:\quad \Bigl(\forall A \in \Gamma\quad U \cap A \text{ открыто в } A\Bigr) \quad \longrightarrow \quad \Bigl(U \text{ открыто в } X\Bigr)\]
+    \end{definition}
+
+    \begin{lemma}
+        Покрытие $\Gamma$ топологического пространства $X$ фундаментально тогда и только тогда, когда
+        \[\forall V \subseteq X \quad \Bigl(\forall A \in \Gamma\quad V \cap A \text{ замкнуто в } A\Bigr) \quad \longrightarrow \quad \Bigl(U \text{ замкнуто в } X\Bigr)\]
+    \end{lemma}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[($\Rightarrow$)] Пусть $\Gamma$ фундаментально. Рассмотрим $V \subseteq X$, что для всякого $A \in \Gamma$ множество $V \cap A$ замкнуто в $A$. Следовательно $(X \setminus V) \cap A$ открыто в $A$, а тогда по фундаментальности $\Gamma$ множество $X \setminus V$ открыто, а значит всё $V$ замкнуто.
+            \item[($\Leftarrow$)] Аналогично, поменяв местами слова "открыто" и "замкнуто".
+        \end{itemize}
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $X$, $Y$ --- топологические пространства, $\Gamma$ --- фундаментальное покрытие $X$ и $f: X \to Y$. Если сужение $f$ на всякое $A \in \Gamma$ непрерывно, то и само $f$ непрерывно.
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим любое открытое в $Y$ множество $U$. Если $A \in \Gamma$, то $f^{-1}(U) \cap A = (f{\mid}_A)^{-1}(U)$ открыто. А в таком случае из фундаментальности $\Gamma$ следует, что $f^{-1}(U)$ открыто. Таким образом $f$ непрерывно.
+    \end{proof}
+
+    \begin{definition}
+        Покрытие топологического пространства называется
+        \begin{itemize}
+            \item \emph{открытым}, если оно состоит из открытых множеств;
+            \item \emph{замкнутым} --- если из замкнутых;
+            \item \emph{локально конечным} --- если каждая точка пространства обладает окрестностью, пересекающейся лишь с конечным числом элементов покрытия.
+        \end{itemize}
+    \end{definition}
+
+    \begin{theorem}\ 
+        \begin{enumerate}
+            \item Всякое открытое покрытие фундаментально.
+            \item Всякое конечное замкнутое покрытие фундаментально.
+            \item Всякое локально конечное замкнутое покрытие фундаментально.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $\Gamma$ --- данное покрытие.
+        \begin{enumerate}
+            \item Пусть дано $U \subseteq X$, что для всякого $A \in \Gamma$ множество $U \cap A$ открыто в $A$, а значит открыто в $X$. Тогда
+                \[U = U \cap X = \bigcup_{A \in \Gamma} U \cap A\]
+                есть объединение открытых множеств, а значит само открыто. Таким образом $\Gamma$ фундаментально.
+
+            \item Пусть дано $U \subseteq X$, что для всякого $A \in \Gamma$ множество $U \cap A$ замкнуто в $A$, а значит замкнуто в $X$. Тогда
+                \[U = U \cap X = \bigcup_{A \in \Gamma} U \cap A\]
+                есть конечное объединение замкнутых множеств, а значит само замкнуто. Таким образом $\Gamma$ фундаментально.
+
+            \item Пусть дано $U \subseteq X$, что для всякого $A \in \Gamma$ множество $U \cap A$ открыто в $A$. Рассмотрим некоторую точку $u \in U$ и её окрестность $V_u$, которая пересекается с конечным набором $\Gamma_u$ элементов из $\Gamma$. Тогда для всякого $A \in \Gamma_u$ множество
+                \[U \cap A \cap V = (U \cap A) \cap (A \cap V)\]
+                открыто в $V \cap A$. При этом
+                \[\{V \cap A \mid A \in \Gamma_u\}\]
+                --- конечное замкнутое покрытие, а значит $U \cap V$ открыто в $V$, а значит и в $X$. Таким образом $U \cap V$ --- окрестность $u$, а значит $u$ --- внутренняя точка $U$. Значит $U$ открыто.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $(X, \Omega_X)$ и $(Y, \Omega_Y)$ --- топологические пространства. Тогда
+        \[\Sigma := \{U \times V \mid U \in \Omega_X \wedge V \in \Omega_Y\}\]
+        является базой топологии на $X \times Y$.
+    \end{theorem}
+
+    \begin{proof}
+        Проверим критерий базы:
+        \begin{enumerate}
+            \item $X \in \Omega_X$, $Y \in \Omega_Y$, следовательно $X \times Y \in \Sigma$. Таким образом $\Sigma$ --- покрытие $X \times Y$.
+            \item Пусть $U_1 \times V_1, U_2 \times V_2 \in \Sigma$. Тогда $U_1 \cap U_2 \in X$, $V_1 \cap V_2 \in Y$, а значит $(U_1 \times V_1) \cap (U_2 \times V_2) = (U_1 \cap U_2) \times (V_1 \cap V_2) \in \Sigma$.
+        \end{enumerate}
+        Таким образом $\Sigma$ --- база.
+    \end{proof}
+
+    \begin{definition}
+        Пусть $(X, \Omega_X)$ и $(Y, \Omega_Y)$ --- топологические пространства, а $\Omega_{X \times Y}$ --- топология, порождённая базой $\Sigma$ из предыдущей теоремы. Тогда $(X \times Y, \Omega_{X \times Y})$ называется \emph{произведением} топологических пространств, а сама $\Omega_{X \times Y}$ называется \emph{стандартной} топологией.
+    \end{definition}
+
+    \begin{remark}
+        По аналогии если $\Sigma_X$ и $\Sigma_Y$ --- базы топологий $\Omega_X$ и $\Omega_Y$ соответственно, то
+        \[\Lambda := \{U \times V \mid U \in \Sigma_X \wedge V \in \Sigma_Y\}\]
+        также являются базой стандартной топологии на $X \times Y$.
+    \end{remark}
+
+    \begin{definition}
+        Обозначения:
+        \begin{itemize}
+            \item $X = \prod_{i \in I} X_i$– произведение топологических пространств.
+            \item Элементами $X$ являются такие функции $x: I \to \bigcup_{i \in I} X_i$, что $x(i) \in X_i$.
+            \item $p_i: X \to X_i$ --- координатная проекция, где $p_i(x) := x(i)$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{definition}
+        Пусть $\{(X_i, \Omega_i)\}_{i \in I}$ --- семейство топологических пространств. \emph{Тихоновская топология} на $X = \prod_{i \in I} X_i$ задаётся предбазой, состоящей из всевозможных множеств вида $p^{-1}(U)$, где $i \in I$, а $U \subseteq \Omega_i$.
+    \end{definition}
+
+    \begin{remark}
+        В случае конечного произведения тихоновская топология совпадает со стандартной.
+    \end{remark}
 \end{document}
