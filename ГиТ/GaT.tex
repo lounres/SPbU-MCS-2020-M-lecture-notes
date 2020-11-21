@@ -60,7 +60,7 @@
         Пусть $(X, d)$ --- метрическое пространство. Сужение функции $d$ на $Y \times Y$ является метрикой в $Y$. Метрическое пространство $(Y, d|_{Y\times Y})$ называется \emph{подпространством} пространства $(X, d)$.
     \end{definition}
 
-    \begin{theorem}
+    \begin{theorem}\label{generalised_metric_spaces_multiplication_theorem}
         Пусть дана $g: \RR_+ \times \RR_+ \to \RR_+$, что
         \begin{itemize}
             \item $\forall x, y \in \RR_+\quad g(x, y) = 0 \leftrightarrow x = y = 0$;
@@ -68,7 +68,7 @@
             \item $\forall x_1, y_1, x_2, y_2 \in \RR_+ \quad g(x_1 + x_2, y_1 + y_2) \leqslant g(x_1, y_1) + g(x_2, y_2)$.
         \end{itemize}
         Тогда для любых метрических пространств $(X, d_X)$ и $(Y, d_Y)$ функция
-        \[d_{X \times Y}((x_1, y_1), (x_2, y_2)) = g(d_X(x_1, x_2), d_Y(y_1, y_2))\]
+        \[d_{X \times Y}((x_1, y_1), (x_2, y_2)) := g(d_X(x_1, x_2), d_Y(y_1, y_2))\]
         будет метрикой на $X \times Y$.
     \end{theorem}
 
@@ -123,9 +123,28 @@
     \end{proof}
 
     \begin{remark}
-        Если $g$ ассоциативна (например, $g(x, y) := \sqrt{x^2 + y^2}$; она заодно коммутативна). То аналогично можно определить метрику на $X_1 \times X_2 \times \dots \times X_n = (X_1 \times (X_2 \times (\dots \times X_n)\dots))$.
+        Если $g$ ассоциативна (например, $g(x, y) := \sqrt{x^2 + y^2}$; она заодно коммутативна), то аналогично можно определить метрику на $X_1 \times X_2 \times \dots \times X_n = (X_1 \times (X_2 \times (\dots \times X_n)\dots))$.
 
         Таким образом евклидова метрика есть метрика, так как её можно получить, применяя $g(x, y) := \sqrt{x^2 + y^2}$ к пространствам $(X_i, d_i) = (\RR, d_{\RR})$ (где $d_{\RR}(x, y) = |x-y|$).
+    \end{remark}
+
+    \begin{definition}
+        Пусть 
+        Для $g(x, y) := \sqrt{x^2 + y^2}$ из последней теоремы пространство $(X \times Y, d_{X \times Y})$ называется \emph{(декартовым) произведением} метрических пространств $(X, d_X)$ и $(Y, d_Y)$. Аналогично определяется произведение конечного числа пространств.
+    \end{definition}
+
+    \begin{remark}
+        На роль $g(x, y)$ подходят следующие функции:
+        \begin{itemize}
+            \item $(x^\alpha + y^\alpha)^{1/\alpha}$ для всех $\alpha \geqslant 1$;
+            \item $\max(x, y)$.
+        \end{itemize}
+        А следующие функции уже не подходят:
+        \begin{itemize}
+            \item $(x^\alpha + y^\alpha)^{1/\alpha}$ для всех $\alpha < 1$ (даже для отрицательных);
+            \item $\min(x, y)$;
+            \item $x \cdot y$ и $x / y$.
+        \end{itemize}
     \end{remark}
 
     \begin{definition}
@@ -329,7 +348,7 @@
         Из всех топологий на $X$ антидискретная --- самая грубая, а дискретная --- самая тонкая.
     \end{example}
 
-    \begin{theorem}
+    \begin{theorem}\label{metric_generated_topologies_comparation_theorem}
         Топология метрики $d_1$ грубее топологии метрики $d_2$ тогда и только тогда, когда в любом шаре метрики $d_1$ содержится шар метрики $d_2$ с тем же центром.
     \end{theorem}
 
@@ -369,7 +388,7 @@
     \end{definition}
 
     \begin{definition}
-        \emph{База} топологии $\Omega$ --- такое семейство $\Sigma$ открытых множеств, что всякое $U$ открытое представимо в виде объединения множеств из $\Sigma$.
+        \emph{База} топологии $\Omega$ --- такое семейство $\Sigma$ открытых множеств, что всякое открытое $U$ представимо в виде объединения множеств из $\Sigma$.
         \[\Sigma \subseteq \Omega\text{ --- база} \Longleftrightarrow \forall U \in \Omega\; \exists \Lambda \subseteq \Sigma:\quad U = \bigcup_{W \in \Lambda} W\]
     \end{definition}
 
@@ -385,7 +404,7 @@
         Пусть $(X, \Omega)$ --- топологическое пространство, $a \in X$ и $\Lambda \subseteq \Omega$. $\Lambda$ называется \emph{базой топологии (базой окрестности) в точке $a$}, если:
         \begin{enumerate}
             \item $\forall U \in \Lambda\; a \in U$;
-            \item $\forall\text{ окрестности }U\text{ точки }a \exists V_a \in \Lambda:\; V_a \subseteq U$.
+            \item $\forall\text{ окрестности }U\text{ точки }a\; \exists V_a \in \Lambda:\; V_a \subseteq U$.
         \end{enumerate}
     \end{definition}
 
@@ -395,6 +414,20 @@
             \item Пусть для каждой точки $a \in X$ определена база топологии $\Sigma_a$ в ней. Тогда $\bigcup_{a \in X} \Sigma_a$ --- база топологии.
         \end{itemize}
     \end{theorem}
+
+    \begin{theorem}
+        Пусть $\Sigma$ --- семейство подмножеств $X$. Тогда есть не более одной топологии, для которой $\Sigma$ является базой.
+    \end{theorem}
+
+    \begin{proof}
+        Предположим противное: пусть $\Omega_1$ и $\Omega_2$ --- различные топологии на $X$, для которых $\Sigma$ является базой. По определению базы для всякого $U \in \Omega_1$ есть семейство $\Gamma \subseteq \Sigma$, что $U = \bigcup_{A \in \Gamma} A$; но поскольку $\Gamma \subseteq \Sigma \subseteq \Omega_2$, то всякое $A \in \Gamma$ лежит в $\Omega_2$, а значит $U$ тоже лежит в $\Omega_2$. Таким образом $\Omega_1 \subseteq \Omega_2$; аналогично наоборот, следовательно $\Omega_1 = \Omega_2$ --- противоречие.
+
+        Таким образом для всякого $\Sigma$ будет не более одной топологии, где для которой оно будет базой.
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $\Sigma_1$ и $\Sigma_2$ --- базы топологий $\Omega_1$ и $\Omega_2$ на одном и том же множестве. Тогда если $\Sigma_1 = \Sigma_2$, то и $\Omega_1 = \Omega_2$.
+    \end{corollary}
 
     \begin{theorem}[критерий базы]
         Пусть $X$ --- произвольное множество, а $\Sigma$ --- его покрытие. $\Sigma$ --- база некоторой топологии на $X$ тогда и только тогда, когда для всяких $A, B \in \Sigma$ есть семейство $\Lambda \subseteq \Sigma$, что $A \cap B = \bigcup_{S \in \Lambda} S$.
@@ -640,10 +673,210 @@
     \end{definition}
 
     \begin{definition}
-        Пусть $\{(X_i, \Omega_i)\}_{i \in I}$ --- семейство топологических пространств. \emph{Тихоновская топология} на $X = \prod_{i \in I} X_i$ задаётся предбазой, состоящей из всевозможных множеств вида $p^{-1}(U)$, где $i \in I$, а $U \subseteq \Omega_i$.
+        Пусть $\{(X_i, \Omega_i)\}_{i \in I}$ --- семейство топологических пространств. \emph{Тихоновская топология} на $X = \prod_{i \in I} X_i$ задаётся предбазой, состоящей из всевозможных множеств вида $p_i^{-1}(U)$, где $i \in I$, а $U \subseteq \Omega_i$.
     \end{definition}
 
     \begin{remark}
         В случае конечного произведения тихоновская топология совпадает со стандартной.
     \end{remark}
+
+    \begin{theorem}
+        Пусть $(X, d_X)$ и $(Y, d_Y)$ --- метрические пространства, $\Omega_X$ и $\Omega_Y$ --- топологии в данных метрических пространствах. Рассмотрим две топологии:
+        \begin{itemize}
+            \item $\Omega_{X \times Y}$ --- топология-произведение топологий $\Omega_X$ и $\Omega_Y$;
+            \item $\Omega_{\max}$ --- топология, порождённая произведением метрик по функции $g := \max$ (см. теорему \ref{generalised_metric_spaces_multiplication_theorem}).
+        \end{itemize}
+        Тогда эти топологии совпадают.
+    \end{theorem}
+
+    \begin{proof}
+        Определим
+        \[d_{\max}: (X \times Y) \times (X \times Y) \to \RR, ((x_1, y_1), (x_2, y_2)) \mapsto \max(d_X(x_1, x_2), d_Y(y_1, y_2))\]
+        Таким образом $d_{\max}$ --- метрика, порождающая $\Omega_{\max}$.
+
+        \begin{thlemma}
+            \[B_r^{d_{\max}}((x, y)) = B_r^{d_X}(x) \times B_r^{d_Y}(y)\]
+        \end{thlemma}
+
+        \begin{proof}
+            Очевидно.
+        \end{proof}
+
+        Вспомним, что
+        \[
+            \Sigma_X := \{B_r^{d_X}(x) \mid r > 0 \wedge x \in X\}
+            \qquad \text{ и } \qquad
+            \Sigma_Y := \{B_r^{d_Y}(y) \mid r > 0 \wedge y \in Y\}
+        \]
+        являются базами $\Omega_X$ и $\Omega_Y$. Следовательно
+        \[\Sigma_{X \times Y} := \{U_X \times U_Y \mid U_X \in \Sigma_X \wedge U_Y \in \Sigma_Y\}\]
+        является базой $\Omega_{X \times Y}$. Также заметим, что
+        \[\Sigma_{\max} := \{B_r^{d_{\max}}((x, y)) \mid r > 0 \wedge x \in X \wedge y \in Y\} = \{B_r^{d_X}(x) \times B_r^{d_Y}(y) \mid r > 0 \wedge x \in X \wedge y \in Y\}\]
+        является базой $\Omega_{\max}$. При этом несложно видеть, что $\Sigma_{\max} \subseteq \Sigma_{X \times Y}$, следовательно $\Omega_{\max}$ грубее $\Omega_{X \times Y}$. Осталось показать, что $\Sigma_{\max}$ порождает $\Sigma_{X \times Y}$, т.е. всякое $U \in \Sigma_{X \times Y}$ представимо в виде объединения некоторых множеств из $\Sigma_{\max}$.
+
+        Пусть $U$ --- некоторый элемент $\Sigma_{X \times Y}$. Тогда есть некоторые $r_X, r_Y > 0$ и $(x, y) \in X \times Y$, что $U = B_{r_X}^{d_X}(x) \times B_{r_Y}^{d_Y}(y)$. Пусть $(x', y') \in U$, тогда $x' \in B_{r_X}^{d_X}(x)$. Следовательно $q_X := r_X - d_X(x, x') > 0$, а $B_{q_X}^{d_X}(x') \subseteq B_{r_X}^{d_X}(x)$; аналогично для $Y$. Пусть $q := \min(q_X, q_Y) > 0$. Тогда
+        \[V := B_q^{d_X}(x') \times B_q^{d_Y}(y')\]
+        --- окрестность $(x', y')$. При этом $V \subseteq U$. Значит $U$ представляется в виде объединения всех таких окрестностей для каждой точки $(x', y')$ из него. Но $V \in \Sigma_{\max}$, поэтому $\Sigma_{\max}$ порождает $\Sigma_{X \times Y}$. Значит топология, которая порождает $\Sigma_{\max}$, --- $\Omega_{\max}$ --- содержит как подмножество топологию, которую порождает $\Sigma_{X \times Y}$, --- $\Omega_{X \times Y}$.
+
+        Таким образом $\Omega_{\max} = \Omega_{X \times Y}$.
+    \end{proof}
+
+    \begin{theorem}
+        Пусть дана $g: \RR_+ \times \RR_+ \to \RR_+$, что
+        \begin{itemize}
+            \item $\forall x, y \in \RR_+\quad g(x, y) = 0 \leftrightarrow x = y = 0$;
+            \item $\forall x, y, d \in \RR_+\quad g(x + d, y) \geqslant g(x, y) \wedge g(x, y + d) \geqslant g(x, y)$;
+            \item $\forall x_1, y_1, x_2, y_2 \in \RR_+ \quad g(x_1 + x_2, y_1 + y_2) \leqslant g(x_1, y_1) + g(x_2, y_2)$;
+            \item $\forall \alpha > 0\, \exists x, y > 0:\quad 0 < g(x, 0) < \alpha \wedge 0 < g(0, y) < \alpha$. 
+        \end{itemize}
+        Тогда для любых метрических пространств $(X, d_X)$ и $(Y, d_Y)$ функция
+        \[
+            d_g((x_1, y_1), (x_2, y_2)) = g(d_X(x_1, x_2), d_Y(y_1, y_2))
+        \]
+        является метрикой, эквивалентной метрике
+        \[
+            d_{\max}((x_1, y_1), (x_2, y_2)) = \max(d_X(x_1, x_2), d_Y(y_1, y_2))
+        \]
+    \end{theorem}
+
+    \begin{proof}
+        Заметим, что по теореме \ref{generalised_metric_spaces_multiplication_theorem} функция $d_{\max}$ является метрикой. С помощью теоремы \ref{metric_generated_topologies_comparation_theorem} имеем, что нужно показать, что в каждом шаре по одной метрик $d_{\max}$ и $d_g$ есть шар с тем же центром по другой метрики.
+
+        Рассмотрим шар $B_r^{d_g}((x, y))$. Тогда по свойству $g$ есть $q_X > 0$, что $0 < g(q_X, 0) < r/2$; аналогично для $Y$. Следовательно для всех точек $x' \in B_{q_X}^{d_X}(x)$ и $y' \in B_{q_Y}^{d_Y}(y)$ верно, что
+        \begin{multline*}
+            d_g((x', y'), (x, y))\\
+            = g(d_X(x', x), d_Y(y', y))\\
+            \leqslant g(d_X(x', x), 0) + g(0, d_Y(y', y))\\
+            \leqslant g(q_X, 0) + g(0, q_Y)\\
+            < \frac{r}{2} + \frac{r}{2} = r
+        \end{multline*}
+        Пусть $q := \min(q_X, q_Y)$. Тогда
+        \[B_q^{d_{\max}}((x, y)) = B_q^{d_X}(x) \times B_q^{d_Y}(y) \subseteq B_{q_X}^{d_X}(x) \times B_{q_Y}^{d_Y}(y) \subseteq B_r^{d_g}((x, y))\]
+        Т.е. для каждого шара по $d_g$ нашёлся подшар по $d_{\max}$.
+
+        \begin{thlemma}
+            Для всякого $r > 0$ есть такое $q_X > 0$, что
+            \[\forall x \in \RR_+\qquad g(x, 0) < q_X \longrightarrow x < r\]
+            Аналогично для $Y$.
+        \end{thlemma}
+
+        \begin{proof}
+            Рассмотрим $q_X := g(r, 0) > 0$. Тогда если $x \geqslant r$, то $g(x, 0) \geqslant g(r, 0) = q_X$. Следовательно
+            \[\forall x \in \RR_+\qquad g(x, 0) < q_X \longrightarrow x < r\]
+            Аналогично для $Y$.
+        \end{proof}
+
+        Рассмотрим шар $B_r^{d_{\max}}((x, y))$. Тогда определим $q_X$ и $q_Y$ по прошлой лемме для $r$ и координат $X$ и $Y$ соответственно. Пусть также $q := \min(q_X, q_Y)$ Тогда
+        \begin{multline*}
+            \forall (x', y') \in B_q^{d_g}((x, y))\\
+                \left\{
+                    \begin{aligned}
+                        &g(d_X(x', x), 0) \leqslant g(d_X(x', x), d_Y(y', y)) = d_g((x', y'), (x, y)) < q \leqslant q_X\\
+                        &g(0, d_Y(y', y)) \leqslant g(d_X(x', x), d_Y(y', y)) = d_g((x', y'), (x, y)) < q \leqslant q_Y
+                    \end{aligned}
+                \right.\\
+            \Longrightarrow
+            \left\{
+                \begin{aligned}
+                    &d_X(x', x) < r\\
+                    &d_Y(y', y) < r
+                \end{aligned}
+            \right.\\
+            \Longrightarrow d_{\max}((x', y'), (x, y)) = \max(d_X(x', x), d_Y(y', y)) < r\\
+            \Longrightarrow (x', y') \in B_r^{d_{\max}}((x, y))
+        \end{multline*}
+    \end{proof}
+
+    \begin{corollary}
+        Произведения метрических пространств по функции $g(x, y) := (x^\alpha + y^\alpha)^{1/\alpha}$ для всякого $\alpha \geqslant 1$ даёт такую же топологию, что и произведение стандартных топологий на метрических пространствах. В случае $\alpha = 2$ мы имеем стандартное произведение пространств.
+    \end{corollary}
+
+    \begin{theorem}
+        Пусть $X = \prod_{i \in I} X_i$ --- произведение топологических пространств. Тогда координатные проекции $p_i: X \to X_i$ непрерывны.
+    \end{theorem}
+
+    \begin{proof}
+        Для всякого открытого в $X_i$ множества $U$ множество $p_i^{-1}(U)$ --- элемент предбазы тихоновской топологии (по определению), поэтому $p_i^{-1}(U)$ открыто, а значит $p_i$ непрерывно.
+    \end{proof}
+
+    \begin{definition}[отображение в $X \times Y$]
+        Пусть $X$, $Y$, $Z$– топологические пространства. Любое отображение $f: Z \to X \times Y$ имеет вид
+        \[f(z) = (f_1(z), f_1(z)),\qquad \text{для всех $z \in Z$},\]
+        где $f_1: Z \to X$, $f_2: Z \to Y$ --- некоторые отображения, называемые \emph{компонентами} отображениями $f$.
+    \end{definition}
+
+    \begin{definition}[отображение в $\prod_{i \in I} X_i$]
+        Пусть $Z$ и $\{X_i\}_{i \in I}$ --- топологические пространства. \emph{Компонентами} отображения $f: Z \to \prod_{i \in I} X_i$ называются отображения $f_i: Z \to X_i$, задаваемые формулами
+        \[f_i := p_i \circ f_i\]
+    \end{definition}
+
+    \begin{theorem}[о покоординатной непрерывности]
+        Пусть $Z$ и $\{X_i\}_{i \in I}$ --- топологические пространства, $X = \prod_{i \in I} X_i$ --- тихоновское произведение.Тогда отображение $f: Z \to \prod_{i \in I} X_i$ непрерывно тогда и только тогда, когда каждая его компонента $f_i$ непрерывна.
+    \end{theorem}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[($\Rightarrow$)] $f_i = p_i \circ f$, при этом $p_i$ и $f$ непрерывны, следовательно и $f_i$ непрерывно.
+            \item[($\Leftarrow$)] Пусть $U$ --- элемент предбазы тихоновской топологии. Тогда существуют $i \in I$ и $V \in \Omega_i$, что $U = p_i^{-1}(V)$, следовательно
+            \[f^{-1}(U) = f^{-1}(p_i^{-1}(V)) = (p_i \circ f)^{-1}(V) = f_i^{-1}(V)\]
+            --- открытое множество.
+
+            Теперь заметим, что для всякого открытого в $X$ множества $W$ существует семейство $\Sigma$ конечных наборов открытых множеств предбазы, что
+            \[W = \bigcup_{\Lambda \in \Sigma} \bigcap_{T \in \Lambda} T\]
+            Следовательно
+            \[
+                f^{-1}(W)
+                = f^{-1}\left(\bigcup_{\Lambda \in \Sigma} \bigcap_{T \in \Lambda} T\right)
+                = \bigcup_{\Lambda \in \Sigma} f^{-1}\left(\bigcap_{T \in \Lambda} T\right)
+                = \bigcup_{\Lambda \in \Sigma} \bigcap_{T \in \Lambda} f^{-1}(T)
+            \]
+            является открытым, поскольку каждое $f^{-1}(T)$ открыто (т.к. $T$ --- элемент предбазы, для него уже показали), а каждое $\Lambda$ конечно.
+        \end{itemize}
+    \end{proof}
+
+    \begin{remark}
+        Также для проверки на непрерывность $f: X \to Y$ достаточно проверить открытость $f^{-1}(U)$ для всякого $U$ из какой-либо базы или предбазы $Y$.
+    \end{remark}
+
+    \begin{remark}
+        Развёрнутое утверждение неверно: неверно, что если $f: \prod_{i \in I} X_i \to Y$ непрерывно по каждой координате, от непрерывно и в итоге. Для этого несложно проверить, что подходит
+        \[f: \RR^2 \to \RR, (x, y) \mapsto \begin{cases}
+            0& \text{если $(x, y) = (0, 0)$}\\
+            \frac{2xy}{x^2 + y^2}& \text{иначе}
+        \end{cases}\]
+    \end{remark}
+
+    \begin{definition}
+        Пусть $X$, $Y$ --- топологические пространства. Отображение $f: X \to Y$ называется \emph{гомеоморфизмом}, если
+        \begin{enumerate}
+            \item $f$ --- биекция,
+            \item $f$ --- непрерывно,
+            \item $f^{-1}$ --- непрерывно.
+        \end{enumerate}
+    \end{definition}
+
+    \begin{definition}
+        Если существует гомеморфизм между $X$ и $Y$, то $X$ и $Y$ \emph{гомеморфны}. Обозначение: $X \simeq Y$.
+    \end{definition}
+
+    \begin{theorem}
+        Гомеоморфность --- ``отношение эквивалентности'' на топологических пространствах.
+    \end{theorem}
+
+    \begin{proof}\ 
+        \begin{itemize}
+            \item Тождественное отображение (любого топологического пространства) есть гомеоморфизм.
+            \item Отображение, обратное гомеоморфизму, есть гомеоморфизм.
+            \item Композиция гомеоморфизмов есть гомеоморфизм.
+        \end{itemize}
+    \end{proof}
+
+    \begin{remark}\ 
+        \begin{itemize}
+            \item Гомеоморфизм задаёт биекцию между открытыми множествами в $X$ и $Y$.
+            \item Гомеоморфные пространства неотличимы с точки зрения топологии.
+        \end{itemize}
+    \end{remark}
+
+    
 \end{document}
