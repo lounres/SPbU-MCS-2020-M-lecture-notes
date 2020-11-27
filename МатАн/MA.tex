@@ -1,15 +1,18 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{math-text}
 \usepackage{todonotes}
+\usepackage{multicol}
 
 \title{Математический анализ --- 1.}
-\author{Лектор --- \href{https://vk.com/ybelov}{Юрий Сергеевич Белов}\\
+\author{Лектор --- \href{https://vk.com/ybelov}{Юрий Сергеевич Белов} \\
         Создатель конспекта --- Глеб Минаев
-        \footnote{Оригинал конспекта опубликован расположен \href{https://github.com/lounres/SPbU-MCS-2020-M-lecture-notes}{GitHub}}}
+        \footnote{Оригинал конспекта расположен на \href{https://github.com/lounres/SPbU-MCS-2020-M-lecture-notes/blob/master/\%D0\%9C\%D0\%B0\%D1\%82\%D0\%90\%D0\%BD/MA.pdf}{GitHub}. Также на GitHub доступен \href{https://github.com/lounres/SPbU-MCS-2020-M-lecture-notes}{репозиторий} с другими конспектами.}}
 \date{}
 
 \DeclareMathOperator{\Quot}{Quot}
-\DeclareMathOperator{\osc}{osc}
+\DeclareMathOperator*{\osc}{osc}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\const}{const}
 
 \begin{document}
     \maketitle
@@ -916,7 +919,7 @@
         $f$ является \emph{равномерным пределом} $\{f_n\}_{n=0}^\infty$ на $E$, если для любого $\varepsilon > 0$ найдётся $N \in \NN$, что $|f_n(x) - f(x)| < \varepsilon$ для всех $n > N$ и $x \in E$.
     \end{definition}
 
-    \begin{theorem}[Стокс, Зейдель]
+    \begin{theorem}[Стокс, Зейдель]\label{Stokes_Zaidel_theorem}
         Пусть $\{f_n\}_{n=0}^\infty$ --- последовательность непрерывных функций, и $f_n \to f$ равномерно на $E$. Тогда $f$ непрерывна.
     \end{theorem}
 
@@ -933,7 +936,7 @@
         \end{enumerate}
     \end{theorem}
 
-    \begin{theorem}[Вейерштрасс]
+    \begin{theorem}[Вейерштрасс]\label{Weierstrass_uniform_convergence_theorem}
         Пусть $\{u_n\}_{n=0}^\infty$ --- последовательность непрерывных функций, что есть последовательность чисел $\{d_n\}_{n=0}^\infty$, для которой верно, что $|u_n| < d_n$ для всех $n \in \NN$, и $\sum_{n=0}^\infty d_n$ сходится. Тогда $\sum_{n=0}^\infty u_n$ равномерно сходится.
     \end{theorem}
 
@@ -960,4 +963,658 @@
     \begin{corollary}
         Если ряд Тейлора сходится, то функция бесконечно гладкая.
     \end{corollary}
+
+    \section{Примеры и контрпримеры}
+    \todo[inline]{Название раздела?}
+
+    \begin{theorem}
+        Существует непрерывная функция $f$ на отрезке $[a; b]$, которая не имеет производной ни в какой точке на отрезке $[a; b]$
+    \end{theorem}
+
+    \begin{proof}
+        Можно привести примеры данной функции $f$.
+        \begin{enumerate}
+            \item (функция Вейерштрасса) Определим
+                \begin{align*}
+                    f_0(x) &:= \frac{1}{2} - \left|x - \lfloor x \rfloor - \frac{1}{2}\right|&
+                    f_n(x) &:= \frac{f_0(4^n x)}{4^n}&
+                    f(x) &:= \sum_{i = 0}^\infty f_i(x)\\
+                \end{align*}
+                \todo{Картиночки!}
+                Поскольку $|f_n| = 1/4^n$, а $\sum_{i = 0}^\infty 1/4^i$ сходится, то по \hyperref[Weierstrass_uniform_convergence_theorem]{теореме Вейерштрасса} ряд равномерно сходится к $f$, а поскольку каждая $f_n$ непрерывна, то по \hyperref[Stokes_Zaidel_theorem]{теореме Стокса-Зейделя} функция $f$ непрерывна. Теперь осталось показать, что у $f$ нет производных.
+
+                Пусть $a$ --- произвольная точка из $\RR$. Заметим, что для всяких $m$ и $n$, что $m \geqslant n$, период $f_m$ равен $1/4^m$, значит $1/4^m \mid 1/4^n$, а тогда $f_m(a \pm 1/4^n) = f_m(a)$. Значит для всякого $n \in \NN \cup \{0\}$
+                \[f(a \pm 1/4^n) - f(a) = \sum_{i=0}^{n-1} f_i(a \pm 1/4^n) - f_i(a)\]
+                Заметим, что $a$ находится на отрезке монотонности функции $f_{n-1}$ длины $1/(2 \cdot 4^{n-1})=2/4^n$, который также является отрезком монотонности каждой функции из $f_0$, \dots, $f_{n-2}$. Поскольку $1/4^n$ в два раза меньше, то либо $a + 1/4^n$, либо $a - 1/4^n$ лежит на том же отрезке монотонности; пусть это будет точка $b_n$. Тогда имеем, что
+                \[
+                    \left|\frac{f_0(b_n) - f_0(a)}{b_n - a}\right|
+                    = \left|\frac{f_1(b_n) - f_1(a)}{b_n - a}\right|
+                    = \dots
+                    = \left|\frac{f_{n-1}(b_n) - f_{n-1}(a)}{b_n - a}\right|
+                    = 1\]
+                Следовательно
+                \[
+                    \frac{f(b_n) - f(a)}{b_n - a}
+                    = \sum_{i=0}^\infty \frac{f_i(b_n) - f_i(a)}{b_n - a}
+                    = \sum_{i=0}^{n-1} \frac{f_i(b_n) - f_i(a)}{b_n - a}
+                \]
+                --- целое число, совпадающее по чётности с $n$. Если $f'(a)$ определено, то $\lim_{x \to a} \frac{f(x) - f(a)}{x-a}$ сходится, а значит должен сойтись и
+                \[\lim_{n \to \infty} \frac{f(b_n) - f(a)}{b_n - a};\]
+                но это последовательность целых значений, значит с какого-то момента она должна быть тождественно равна $0$, но это не так, так как нечётных членов бесконечно много в этой последовательности.
+            \item (пример Глеба Минаева) Рассмотрим $f_0(x) := x$. Представим её как бесконечную ломанную $\dots \leftrightarrow (-2, -2) \leftrightarrow (-1, -1) \leftrightarrow (0, 0) \leftrightarrow (1, 1) \leftrightarrow (2, 2) \leftrightarrow ...$. Далее будем получать $f_{n+1}$ из $f_n$ следующим образом.
+                \todo{Тем более картиночки!!!}
+
+                $f_n$ будет некоторой бесконечной в обе стороны ломанной, при этом всегда $f_n(x) = f_n(x + 1)$. Следующая функция будет получаться заменой ребра $(a_1, b_1) \leftrightarrow (a_2, b_2)$ на три ребра:
+                \[
+                    (a_1, b_1)
+                    \quad \longleftrightarrow \quad
+                    \left(\frac{a_1 + 2a_2}{3}, \frac{2b_1 + b_2}{3}\right)
+                    \quad \longleftrightarrow \quad
+                    \left(\frac{2a_1 + a_2}{3}, \frac{b_1 + 2b_2}{3}\right)
+                    \quad \longleftrightarrow \quad
+                    (a_2, b_2)
+                \]
+                Так мы получим $f_{n+1}$. Рассматриваемой же функцией будет $f := \lim_{n \to \infty} f_n$.
+
+                Несложно видеть, что звено высоты $h$ каждый раз заменяется на три ребра: два высоты $2h/3$ и одно высоты $h/3$. При этом описанный прямоугольник любого ребра содержит описанные прямоугольники рёбер, на которые он был заменён, а значит, окажись точка на ребре, из его описанного прямоугольника больше не вылезет. Таким образом после функции $f_n$ разброс положений $f_i(x)$ не более $1/3^n$, поэтому поточечный предел определён.
+                
+                При этом значения в точках $k/3^m$ с некоторого момента неподвижны: после функции $f_n$ значения во всех точках $k/3^n$ не меняются. Таким образом мы имеем, что во всякой окрестности будут точки вида $k/3^n$, $(3k+1)/3^{n+1}$, $(3k+2)/3^{n+1}$ и $(k+1)/3^n$, а они ломают монотонность функции на данном интервале. Таким образом $f$ нигде не монотонна.
+
+                Также предположим в точке $a$ есть производная. Рассмотрим для каждого $n \in \NN \cup \{0\}$ пару $(p_n, q_n)$, что $p_n$ и $q_n$ --- абсциссы концов звена на котором лежит $(a, f_n(a))$ в ломаной функции $f_n$ ($q_n > p_n$). Тогда заметим, что $q_n-p_n = 1/3^n$, $f_n(p_n) = f(p_n)$, $f_n(q_n) = f(q_n)$, а тогда
+                \[
+                    \frac{f_n(q_n) - f_n(p_n)}{q_n - p_n}
+                    = \frac{f(q_n) - f(p_n)}{q_n - p_n}
+                    = \frac{f(q_n) - f(a)}{q_n - a} \cdot \frac{q_n - a}{q_n - p_n} + \frac{f(a) - f(p_n)}{a - p_n} \cdot \frac{a - p_n}{q_n - p_n}
+                \]
+                Следовательно значение $\frac{f_n(q_n) - f_n(p_n)}{q_n - p_n}$ лежит на отрезке между $\frac{f(q_n) - f(a)}{q_n - a}$ и $\frac{f(p_n) - f(a)}{p_n - a}$; при этом оно является коэффициентом наклона звена $(p_n, f(p_n)) \leftrightarrow (q_n, f(q_n))$.
+
+                Заметим, что звено $(p_n, f(p_n)) \leftrightarrow (q_n, f(q_n))$ будет заменено на три, среди которых будет и $(p_{n+1}, f(p_{n+1})) \leftrightarrow (q_{n+1}, f(q_{n+1}))$. Значит коэффициент наклона $(p_{n+1}, f(p_{n+1})) \leftrightarrow (q_{n+1}, f(q_{n+1}))$ можно получить из коэффициента наклона $(p_n, f(p_n)) \leftrightarrow (q_n, f(q_n))$ домножением либо на $2$, либо на $-1$.
+
+                Таким образом мы имеем, что последовательность
+                \[\left(\frac{f_n(q_n) - f_n(p_n)}{q_n - p_n}\right)_{n=0}^\infty\]
+                либо расходится по модулю, либо с некоторого момента не меняет модуль, но знакочередуется. При этом если $f'(a)$ определена, то в некоторой окрестности $a$ значение
+                \[\frac{f(x) - f(a)}{x-a}\]
+                несильно отличается от $f'(a)$ (чем меньше окрестность, тем меньше отличается). Но если мы будем рассматривать точки $p_n$ и $q_n$, то для одной из них (обозначим её за $x_n$) верно, что
+                \begin{align*}
+                    \left|\frac{f(x_n) - f(a)}{x_n-a}\right| &\geqslant \left|\frac{f_n(q_n) - f_n(p_n)}{q_n - p_n}\right|&
+                    \sign\left(\frac{f(x_n) - f(a)}{x_n-a}\right) &= \sign\left(\frac{f_n(q_n) - f_n(p_n)}{q_n - p_n}\right)
+                \end{align*}
+                Тогда про последовательность
+                \[\left(\frac{f_n(x_n) - f_n(a)}{x_n - a}\right)_{n=0}^\infty\]
+                с одной стороны можно сказать, что она сходится к $f'(a)$ (т.к. $|p_n - a|$ и $|q_n - a|$ не более $1/3^n$, а следовательно и $|x_n - a|$); с другой же стороны эта последовательность либо неограниченно растёт по модулю, либо с некоторого момента знакочередуется, а значит навряд ли сходится --- противоречие. Значит ни в какой точке $f'$ не определена.
+        \end{enumerate}
+    \end{proof}
+
+    \section{Интегрирование}
+
+    \subsection{Первообразная}
+
+    \begin{definition}
+        $g$ --- \emph{первообразная} функции $f$, если на области определения $f$ верно, что $g' = f$.
+    \end{definition}
+
+    \begin{theorem}
+        Если $g_1$ и $g_2$ --- первообразные $f$ на отрезке $[a; b]$, то $g_1 - g_2 = \const$ на том же отрезке.
+    \end{theorem}
+
+    \begin{proof}
+        Очевидно, что $(g_1 - g_2)' = f' - f' = 0$ на отрезке $[a; b]$. Если $g_1 - g_2$ не константна, то есть две точки на отрезке $[a; b]$, в которых принимаются разные значения, а тогда по теореме Лагранжа будет точка строго между ними (а значит и на отрезке), где производная не равна нулю --- противоречие. Следовательно $g_1 - g_2$ является константой.
+    \end{proof}
+
+    \begin{remark}
+        Для несвязного множества утверждение неверно. Например, если областью определения $f$ будут два отрезка, то $g_1 - g_2$ будет константной на каждом отрезке, но константы могут быть различны.
+    \end{remark}
+
+    \begin{definition}
+        Семейство первообразных функции $f$ обозначается как
+        \[\int f\]
+    \end{definition}
+
+    \begin{definition}
+        \emph{Линейная форма} --- линейная однородная функция ($f(x) = \alpha x$).
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{multicols}{2}
+            \begin{enumerate}
+                \item \[\int 0 = \{f \equiv C \mid C \in \RR\}\]
+                \item \[\int a_0 + \dots + a_n x^n = C + a_0 x + \dots + a_n x^{n+1} \]
+                \item $\forall \alpha \in \RR \setminus \{0\}, x > 0$
+                    \[\int x^\alpha = \frac{x^{\alpha + 1}}{\alpha + 1} + C\]
+                \item $\forall x > 0$
+                    \[\int \frac{1}{x} = \ln(x) + C\]
+                \item \[\int e^x = e^x + C\]
+                \item \[\int \sin(x) = -\cos(x) + C\] \[\int \cos(x) = \sin(x) + C\]
+                \item \[\int \frac{1}{1+x^2} = \arctan(x) + C\]
+                \item \[\frac{1}{\sqrt{1-x^2}} = \arcsin(x) + C\]
+            \end{enumerate}
+        \end{multicols}
+    \end{lemma}
+
+    \begin{theorem}\ 
+        \begin{multicols}{2}
+            \begin{enumerate}
+                \item \[\int \alpha f = \alpha\int f + C\]
+                \item \[\int f + g = \int f + \int g\]
+                \item \[\int f\, dg = fg - \int g\, df\]
+                \item \[\int f(\varphi(x))\varphi'(x)dx = \left(\int f\right) \circ \varphi\]
+            \end{enumerate}
+        \end{multicols}
+    \end{theorem}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Продифференцируем обе части:
+                \[\left(\int \alpha f\right)' = \alpha f = \alpha \left(\int f\right)' = \left(\alpha \int f\right)'\]
+                Таким образом обе стороны отличаются на константу: её корректность гарантирует $+ C$.
+            
+            \item Продифференцируем обе части:
+                \[\left(\int f + g\right)' = f + g = \left(\int f\right)' + \left(\int g'\right) = \left(\int f + \int g\right)\]
+                Таким образом обе стороны отличаются на константу; эта константа поглощается первообразными слева и справа (так как это семейства функций).
+            
+            \item Продифференцируем обе части:
+                \[\left(\int f\, dg\right)' = f\cdot g' = (fg)' - g\cdot f' = \left(fg - \int g\, df\right)'\]
+                Таким образом обе стороны отличаются на константу; эта константа поглощается первообразными слева и справа (так как это семейства функций).
+            
+            \item Продифференцируем обе части:
+                \[\left(\int f(\varphi(x))\varphi'(x)dx\right)' = (f \circ \varphi) \cdot \varphi' = \left(\left(\int f\right) \circ \varphi\right)'\]
+                Таким образом обе стороны отличаются на константу; эта константа поглощается первообразными слева и справа (так как это семейства функций).
+        \end{enumerate}
+    \end{proof}
+
+    \subsection{Суммы Дарбу и интеграл Римана}
+
+    \begin{definition}
+        \emph{Разбиение} отрезка $[a; b]$ --- такое семейство $\Sigma := \{I_k\}_{k=1}^n$ отрезков (ненулевой длины), что $[a; b] = \bigcup_{k=1}^n I_k$, и все отрезки из $\Sigma$ попарно пересекаются не более, чем по одной точке.
+
+        Пусть дана функция $f: E \to \RR$, где $E \supseteq [a; b]$, и некоторое разбиение $\Sigma$ отрезка $[a; b]$. Тогда \emph{верхняя и нижняя суммы Дарбу функции $f$ при разбиении $\Sigma$} есть выражения
+        \begin{align*}
+            S^+(f, \Sigma) &:= \sum_{I \in \Sigma} |I| \cdot \sup_{x \in I} f(x)&
+            S^-(f, \Sigma) &:= \sum_{I \in \Sigma} |I| \cdot \inf_{x \in I} f(x)
+        \end{align*}
+        соответственно. (При этом $\sup$ и $\inf$ могут принимать значения $+\infty$ и $-\infty$ соответственно; и в таких случаях соответствующие суммы Дарбу тоже будут принимать значения $\pm \infty$.)
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{itemize}
+            \item Пусть $f(x) := x^\alpha$, $\alpha > 0$, $[a; b] := [0; 1]$, а $\Sigma := \{[\frac{k-1}{n}; \frac{k}{n}]\}_{k=1}^n$. Тогда
+                \begin{gather*}
+                    S^+(f, \Sigma) = \sum_{I \in \Sigma} |I| \cdot \sup_{x \in I} f(x) = \sum_{k=1}^n \frac{1}{n} \cdot f\left(\frac{k}{n}\right) = \frac{\sum_{k=1}^n k^\alpha}{n^{\alpha + 1}}\\
+                    S^-(f, \Sigma) = \sum_{I \in \Sigma} |I| \cdot \inf_{x \in I} f(x) = \sum_{k=0}^{n-1} \frac{1}{n} \cdot f\left(\frac{k}{n}\right) = \frac{\sum_{k=1}^{n-1} k^\alpha}{n^{\alpha + 1}}
+                \end{gather*}
+
+            \item Пусть $f$ --- функция Дирихле, отрезок $[a; b]$ --- любой, и его разбиение $\Sigma$ --- любое. Тогда
+                \begin{gather*}
+                    S^+(f, \Sigma) = \sum_{I \in \Sigma} |I| \cdot \sup_{x \in I} f(x) = \sum_{I \in \Sigma} |I| \cdot 1 = b - a\\
+                    S^-(f, \Sigma) = \sum_{I \in \Sigma} |I| \cdot \inf_{x \in I} f(x) = \sum_{I \in \Sigma} |I| \cdot 0 = 0
+                \end{gather*}
+        \end{itemize}
+    \end{example}
+
+    \begin{lemma}
+        Пусть даны функция $f$, отрезка $[a; b]$ и его разбиение $\Sigma$. Назовём его \emph{подразбиением} семейство отрезков $\Sigma'$, которое является объединением разбиений отрезков из $\Sigma$ (иначе говоря, множество концов отрезков $\Sigma$ является подмножеством концов отрезков $\Sigma'$). Тогда верны неравенства
+        \begin{align*}
+            S^+(f, \Sigma) &\geqslant S^+(f, \Sigma')&
+            S^-(f, \Sigma) &\leqslant S^-(f, \Sigma')
+        \end{align*}
+    \end{lemma}
+
+    \begin{proof}
+        Покажем это для верхних сумм Дарбу; для нижних доказательство аналогично.
+
+        Пусть $\{\Lambda_I\}_{I \in \Sigma}$ --- набор разбиений каждого отрезка $I$ из $\Sigma$, что $\Sigma' = \bigcup_{I \in \Sigma} \Lambda_I$. Тогда мы имеем, что для всяких $I \in \Sigma$ и $J \in \Lambda_I$ верно, что
+        \[\sup_{x \in I} f(x) \geqslant \sup_{x \in J} f(x)\]
+        Следовательно
+        \[
+            \sum_{J \in \Lambda_I} |J| \cdot \sup_{x \in J} f(x)
+            \leqslant \sum_{J \in \Lambda_I} |J| \cdot \sup_{x \in I} f(x)
+            = \left(\sum_{J \in \Lambda_I} |J|\right) \cdot \sup_{x \in I} f(x)
+            = |I| \cdot \sup_{x \in I} f(x)
+        \]
+        Значит, суммируя обе части по $\Sigma$, получаем, что
+        \[
+            S^+(f, \Sigma')
+            = \sum_{J \in \Sigma'} |J| \cdot \sup_{x \in J} f(x)
+            = \sum_{I \in \Sigma} \sum_{J \in \Lambda_I} |J| \cdot \sup_{x \in J} f(x)
+            \leqslant \sum_{I \in \Sigma} |I| \cdot \sup_{x \in I} f(x)
+            = S^+(f, \Sigma)
+        \]
+    \end{proof}
+
+    \begin{lemma}
+        Пусть даны функция $f$, отрезок $[a; b]$, его разбиения $\Sigma_1$ и $\Sigma_2$. Тогда
+        \[S^+(f, \Sigma_1) \geqslant S^-(f, \Sigma_2)\]
+    \end{lemma}
+
+    \begin{proof}
+        Рассмотрим
+        \[\Sigma := \{I \cap J \mid I \in \Sigma_1 \wedge J \in \Sigma_2 \wedge |I \cap J| > 1\}\]
+        --- (минимальное) подразбиение $\Sigma_1$ и $\Sigma_2$. Тогда верно, что
+        \[S^+(f, \Sigma_1) \geqslant S^+(f, \Sigma) \geqslant S^-(f, \Sigma) \geqslant S^-(f, \Sigma_2)\]
+    \end{proof}
+
+    \begin{corollary}
+        Пусть фиксированы функция $f$ и отрезок $[a; b]$. Рассмотрим множества
+        \begin{align*}
+            D^+ &:= \{S^+(f, \Sigma) \mid \text{$\Sigma$ --- разбиение $[a; b]$}\}&
+            D^- &:= \{S^-(f, \Sigma) \mid \text{$\Sigma$ --- разбиение $[a; b]$}\}
+        \end{align*}
+        Тогда $D^+ \geqslant D^-$.
+    \end{corollary}
+
+    \begin{definition}
+        Пусть фиксированы функция $f$ и отрезок $[a; b]$, разбиения которого рассматриваются. Если
+        \[\sup_{\Sigma} S^-(f, \Sigma) = \inf_{\Sigma} S^+(f, \Sigma) = S,\]
+        то тогда $f$ называется \emph{интегрируемой по Риману}, а $S$ называют \emph{интегралом Римана функции $f$ на отрезке $[a;b]$}. Обозначение:
+        \[\int_a^b f(x) dx := S\]
+    \end{definition}
+
+    \begin{lemma}
+        Пусть даны функция $f$ и отрезок $[a; b]$. Тогда если для всякого $\varepsilon > 0$ есть разбиение $\Sigma$ отрезка $[a; b]$, что
+        \[\forall I \in \Sigma\quad \osc_I f < \varepsilon\]
+        то $f$ интегрируема по Риману на $[a; b]$.
+    \end{lemma}
+
+    \begin{proof}
+        Обозначим для каждого такого $\varepsilon$ разбиение из условия за $\Sigma_\varepsilon$. Тогда мы имеем, что
+        \[
+            S^+(f, \Sigma_\varepsilon) - S^-(f, \Sigma_\varepsilon)
+            = \sum_{I \in \Sigma} |I| \cdot (\sup_I f - \inf_I f)
+            = \sum_{I \in \Sigma} |I| \cdot \osc_I f
+            < \varepsilon \cdot \sum_{I \in \Sigma} |I|
+            = \varepsilon \cdot (b - a)
+        \]
+        Т.е. для всякого $\varepsilon > 0$ верно, что
+        \[
+            \inf_{\Sigma} S^+(f, \Sigma) - \sup_{\Sigma} S^-(f, \Sigma)
+            \leqslant S^+(f, \Sigma_{\varepsilon / (b - a)}) - S^-(f, \Sigma_{\varepsilon / (b - a)})
+            < \frac{\varepsilon}{b - a} \cdot (b - a)
+            = \varepsilon
+        \]
+        Следовательно
+        \[\inf_{\Sigma} S^+(f, \Sigma) = \sup_{\Sigma} S^-(f, \Sigma),\]
+        что значит, что $f$ интегрируема по Риману.
+    \end{proof}
+
+    \begin{lemma}
+        Пусть даны функция $f$ и отрезок $[a; b]$. Тогда $f$ интегрируема по Риману на $[a; b]$ тогда и только тогда, когда для всякого $\varepsilon > 0$ существует $\delta > 0$, что для всякого разбиение $\Sigma$ отрезка $[a; b]$, где $\forall I \in \Sigma\; |I| < \delta$, верно, что
+        \[\sum_{I \in \Sigma} |I| \cdot \osc_I f < \varepsilon\]
+    \end{lemma}
+
+    \begin{proof}\ 
+        \begin{itemize}
+            \item[($\Rightarrow$)] Пусть $f$ интегрируема по Риману на $[a; b]$. Тогда для всякого $\varepsilon > 0$ есть разбиения $\Sigma_1$ и $\Sigma_2$ отрезка $[a; b]$, что
+                \[\{S^+(f, \Sigma_1); S^-(f, \Sigma_2)\} \subseteq U_{\varepsilon/4}\left(\int_a^b f(x) dx\right)\]
+                Пусть $\Sigma$ --- общее подразбиение $\Sigma_1$ и $\Sigma_2$ (например, минимальное). Тогда
+                \[S^+(f, \Sigma_1) \geqslant S^+(f, \Sigma) \geqslant S^-(f, \Sigma) \geqslant S^-(f, \Sigma_2)\]
+                Следовательно,
+                \[\{S^+(f, \Sigma); S^-(f, \Sigma)\} \subseteq U_{\varepsilon/4}\left(\int_a^b f(x) dx\right)\]
+
+                Заметим, что в таком случае $\sup_{[a; b]} f$ и $\inf_{[a; b]} f$ ограничены (равны вещественным значениям, а не $\pm \infty$). Поэтому $A := \osc_{[a; b]} f$ является вещественной величиной. Определим также $L := \min_\Sigma |I|$.
+
+                Пусть $\Lambda$ --- некоторое разбиение $[a; b]$, что длина всякого отрезка не больше $L \cdot \alpha$, где
+                \[\alpha := \min\left(1, \frac{\varepsilon \cdot |\Sigma|}{2 \cdot A \cdot L}\right) \in (0; 1].\]
+                Тогда мы имеем, что всякий отрезок $I$ из $\Lambda$ либо является подотрезком некоторого отрезка $J_I$ из $\Sigma$ (обозначим множество таких $I$ за $\Gamma$), либо является подотрезком объединения двух соседних отрезков $K_1$ и $K_2$ из $\Sigma$ и содержит их общую границу (обозначим множество таких $I$ за $\Theta$). В случае $I$ и $J$ мы имеем, что $\osc_I f \leqslant \osc_J f$; в случае $I$, $K_1$ и $K_2$ мы имеем, что $\osc_I f \leqslant \osc_{K_1 \cup K_2} f \leqslant A$. Следовательно, используя только что оговоренные оценки,
+                \begin{multline*}
+                    \sum_{I \in \Lambda} |I| \cdot \osc_I f\\
+                    = \sum_{I \in \Gamma} |I| \cdot \osc_I f
+                        + \sum_{I \in \Theta} |I| \cdot \osc_I f\\
+                    \leqslant \sum_{I \in \Gamma} |I| \cdot \osc_{J_I} f
+                        + \sum_{I \in \Theta} |I| \cdot \osc_{[a; b]} f\\
+                    \leqslant \sum_{I \in \Sigma} |I| \cdot \osc_{I} f
+                        + A \cdot \sum_{I \in \Theta} |I|\\
+                    \leqslant \sum_{I \in \Sigma} |I| \cdot \osc_{I} f
+                        + A \cdot L \cdot \alpha \cdot |\Theta|\\
+                    \leqslant S^+(f, \Sigma) - S^-(f, \Sigma) + A \cdot L \cdot \alpha \cdot |\Sigma|\\
+                    < \frac{\varepsilon}{2} + \frac{\varepsilon}{2}\\
+                    = \varepsilon
+                \end{multline*}
+                Таким образом $\delta := L \cdot \alpha$.
+            
+            \item[($\Leftarrow$)] Пусть для всякого $\varepsilon > 0$ существует $\delta > 0$, что для всякого разбиение $\Sigma$ отрезка $[a; b]$, где $\forall I \in \Sigma\; |I| < \delta$, верно, что
+                \[\sum_{I \in \Sigma} |I| \cdot \osc_I f < \varepsilon\]
+                Тогда
+                \[
+                    S^+(f, \Sigma) - S^-(f, \Sigma)
+                    = \sum_{I \in \Sigma} |I| \cdot (\sup_I f - \inf_I f)
+                    = \sum_{I \in \Sigma} |I| \cdot \osc_I f
+                    < \varepsilon
+                \]
+                Т.е. для всякого $\varepsilon > 0$
+                \[\inf_{\Sigma} S^+(f, \Sigma) - \sup_{\Sigma} S^-(f, \Sigma) < \varepsilon\]
+                Следовательно
+                \[\inf_{\Sigma} S^+(f, \Sigma) = \sup_{\Sigma} S^-(f, \Sigma)\]
+                т.е. $f$ интегрируема на $[a; b]$ по Риману.
+        \end{itemize}
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $f$ --- непрерывная на $[a; b]$ функция. Тогда она интегрируема по Риману на $[a; b]$.
+    \end{theorem}
+
+    \begin{proof}
+        Поскольку $f$ непрерывна на компакте $[a; b]$, то она равномерно непрерывна, т.е.
+        \[\forall \varepsilon > 0\, \exists \delta > 0:\; \forall x \in [a; b]\qquad f(U_\delta(x)) \subseteq U_\varepsilon(f(x))\]
+        Для каждого такого $\varepsilon$ получаемое $\delta$ обозначим за $\delta_\varepsilon$. Тогда для всякого подотрезка $I$ отрезка $[a; b]$ длины менее $\delta_{\varepsilon/ 2}$ верно, что $\osc_I f < \varepsilon$. Следовательно для любого разбиения $\Sigma$ с шагом не более $\delta_{\varepsilon/2}$ (т.е. $\forall I \in \Sigma\; |I| < \delta_{\varepsilon/2}$) мы имеем, что
+        \[\sum_{I \in \Sigma} |I| \cdot \osc_I f < [a; b] \cdot \varepsilon\]
+        Поэтому $f$ интегрируема по Риману на $[a; b]$.
+    \end{proof}
+
+    \begin{theorem}\ 
+        \begin{multicols}{2}
+            \begin{enumerate}
+                \item \[\int_a^b \lambda dx = \lambda(b-a)\]
+                \item Если $f$ интегрируема по Риману на $[a; b]$, то
+                    \[f \geqslant 0 \Longrightarrow \int_a^b f(x)dx \geqslant 0\]
+                \item Если $f$ и $g$ интегрируемы по Риману на $[a; b]$, то
+                    \[\int_a^b (f+g)(x)dx = \int_a^b f(x)dx + \int_a^b g(x)dx\]
+                \item Если $f$ интегрируема по Риману на $[a; b]$, то
+                    \[\int_a^b \lambda f(x)dx = \lambda \int_a^b f(x)dx\]
+                \item $f$ интегрируема по Риману на $[a; b]$ и $[b; c]$ тогда и только тогда, когда на $[c; a]$, и во всех случаях
+                    \[\int_a^b f(x)dx + \int_b^c f(x)dx = \int_a^c f(x)dx\]
+            \end{enumerate}
+        \end{multicols}
+    \end{theorem}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Очевидно, что для всякого разбиения $\Sigma$ верно, что $S^+(f, \Sigma) = S^-(f, \Sigma) = \lambda (b-a)$, следовательно и интеграл Римана равен $\lambda (b-a)$.
+            
+            \item Очевидно, что для всякого разбиения $\Sigma$ верно, что $S^-(f, \Sigma) \geqslant 0$, следовательно, если интеграл Римана определён, то он неотрицателен.
+            
+            \item Очевидно, что для всякого $\varepsilon > 0$ есть разбиения $\Sigma_1$ и $\Sigma_2$, что
+                \begin{align*}
+                    \sum_{I \in \Sigma_1} |I| \cdot \osc_I f &< \frac{\varepsilon}{2}&
+                    \sum_{I \in \Sigma_2} |I| \cdot \osc_I g &< \frac{\varepsilon}{2}
+                \end{align*}
+                Рассмотрим любое подразбиение $\Sigma$ разбиений $\Sigma_1$ и $\Sigma_2$. Тогда
+                \begin{multline*}
+                    S^+(f+g, \Sigma)\\
+                    = \sum_{I \in \Sigma} |I| \cdot \sup_I (f + g)\\
+                    \leqslant \sum_{I \in \Sigma} |I| \cdot \sup_I f + \sum_{I \in \Sigma} |I| \cdot \sup_I g\\
+                    \leqslant \sum_{I \in \Sigma_1} |I| \cdot \sup_I f + \sum_{I \in \Sigma_2} |I| \cdot \sup_I g\\
+                    = S^+(f, \Sigma_1) + S^+(g, \Sigma_2) 
+                \end{multline*}
+                Аналогично мы имеем, что $S^-(f+g, \Sigma) \geqslant S^-(f, \Sigma_1) + S^-(g, \Sigma_2)$. Таким образом отметим две важные строки неравенств.
+                \begin{gather*}
+                    S^+(f, \Sigma_1) + S^+(g, \Sigma_2) \geqslant S^+(f+g, \Sigma) \geqslant S^-(f+g, \Sigma) \geqslant S^-(f, \Sigma_1) + S^-(g, \Sigma_2)\\
+                    S^+(f, \Sigma_1) + S^+(g, \Sigma_2) \geqslant \int_a^b f(x)dx + \int_a^b g(x)dx \geqslant S^-(f, \Sigma_1) + S^-(g, \Sigma_2)\\
+                \end{gather*}
+                Так мы получаем, что $S^+(f+g, \Sigma)$, $S^-(f+g, \Sigma)$ и $\int_a^b f(x)dx + \int_a^b g(x)dx$ --- три числа с отрезка
+                \[\left[S^-(f, \Sigma_1) + S^-(g, \Sigma_2); S^+(f, \Sigma_1) + S^+(g, \Sigma_2)\right],\]
+                длина которого меньше $\varepsilon$. Следовательно $f + g$ интегрируема по Риману на $[a; b]$, и интеграл равен
+                \[\int_a^b f(x)dx + \int_a^b g(x)dx\]
+
+            \item Докажем сначала для $\lambda \geqslant 0$. Для всякого $\varepsilon > 0$ есть разбиение $\Sigma$ отрезка $[a; b]$, что
+                \[\sum_{I \in \Sigma} |I| \cdot \osc_I f < \varepsilon\]
+                Также имеем, что
+                \begin{gather*}
+                    S^+(\lambda f, \Sigma) = \sum_{I \in \Sigma} |I| \cdot \sup_I \lambda f = \sum_{I \in \Sigma} |I| \cdot \lambda \cdot \sup_I f = \lambda \sum_{I \in \Sigma} |I| \cdot \sup_I f = \lambda S^+(f, \Sigma)\\
+                    S^-(\lambda f, \Sigma) = \sum_{I \in \Sigma} |I| \cdot \inf_I \lambda f = \sum_{I \in \Sigma} |I| \cdot \lambda \cdot \inf_I f = \lambda \sum_{I \in \Sigma} |I| \cdot \inf_I f = \lambda S^-(f, \Sigma)\\
+                \end{gather*}
+                Следовательно
+                \begin{gather*}
+                    S^+(\lambda f, \Sigma) = \lambda S^+(f, \Sigma) \geqslant \lambda \int_a^b f(x)dx \geqslant \lambda S^-(f, \Sigma) = S^-(\lambda f, \Sigma)\\
+                    S^+(\lambda f, \Sigma) - S^-(\lambda f, \Sigma) < \lambda \varepsilon
+                \end{gather*}
+                Таким образом интеграл $\lambda f$ по Риману на $[a; b]$ определён и равен $\lambda \int_a^b f(x)dx$.
+
+                Теперь покажем для $\lambda = -1$. Заметим, что
+                \begin{gather*}
+                    S^+(-f, \Sigma) = \sum_{I \in \Sigma} |I| \cdot \sup_I -f = \sum_{I \in \Sigma} |I| \cdot -\inf_I f = -\sum_{I \in \Sigma} |I| \cdot \inf_I f = -S^-(f, \Sigma)\\
+                    S^-(-f, \Sigma) = \sum_{I \in \Sigma} |I| \cdot \inf_I -f = \sum_{I \in \Sigma} |I| \cdot -\sup_I f = -\sum_{I \in \Sigma} |I| \cdot \sup_I f = -S^+(f, \Sigma)\\
+                \end{gather*}
+                Следовательно
+                \begin{gather*}
+                    S^+(-f, \Sigma) = -S^-(f, \Sigma) \geqslant -\int_a^b f(x)dx \geqslant -S^+(f, \Sigma) = S^-(-f, \Sigma)\\
+                    S^+(-f, \Sigma) - S^-(-f, \Sigma) < \varepsilon
+                \end{gather*}
+                Таким образом интеграл $-f$ по Риману на $[a; b]$ определён и равен $-\int_a^b f(x)dx$.
+
+                Используя доказанные утверждения получаем, что для всякого $\lambda$ верно, что
+                \begin{multline*}
+                    \int_a^b \lambda f(x)dx\\
+                    = \int_a^b \sign(\lambda)\cdot |\lambda| f(x)dx\\
+                    = \sign(\lambda) \int_a^b |\lambda| f(x)dx\\
+                    = \sign(\lambda)|\lambda| \int_a^b f(x)dx\\
+                    = \lambda \int_a^b f(x)dx
+                \end{multline*}
+
+            \item Если $f$ интегрируема по Риману на некотором отрезке $I$, то $\sup_I f$ и $\inf_I f$ равны некоторым вещественным значениям (не $\pm\infty$).
+
+                Таким образом пусть $f$ интегрируема по Риману на $[a; b]$ и $[b; c]$. Тогда для всякого $\varepsilon > 0$ есть разбиения $\Sigma_L$ отрезка $[a; b]$ и $\Sigma_R$ отрезка $[b; c]$, что
+                \begin{align*}
+                    \sum_{I \in \Sigma_L} |I| \osc_I f &< \frac{\varepsilon}{2}&
+                    \sum_{I \in \Sigma_R} |I| \osc_I f &< \frac{\varepsilon}{2}
+                \end{align*}
+                Следовательно, если определить $\Sigma := \Sigma_L \cup \Sigma_R$,
+                \[
+                    S^+(f, \Sigma)
+                    = \sum_{I \in \Sigma} |I| \sup_I f
+                    = \sum_{I \in \Sigma_L} |I| \sup_I f + \sum_{I \in \Sigma_R} |I| \sup_I f
+                    \geqslant \int_a^b f(x)dx + \int_b^c f(x)dx
+                \]
+                По аналогии получаем, что
+                \[S^+(f, \Sigma) \geqslant \int_a^b f(x)dx + \int_b^c f(x)dx \geqslant S^-(f, \Sigma)\]
+                При этом
+                \[
+                    S^+(f, \Sigma) - S^-(f, \Sigma)
+                    = \sum_{I \in \Sigma} |I| \osc_I f
+                    = \sum_{I \in \Sigma_L} |I| \osc_I f + \sum_{I \in \Sigma_R} |I| \osc_I f
+                    < \varepsilon
+                \]
+                Таким образом $f$ интегрируема по Риману на $[a; c]$, а интеграл равен $\int_a^b f(x)dx + \int_b^c f(x)dx$.
+
+                Пусть теперь $f$ интегрируема на $[a; c]$. Тогда для всякого разбиения $\Sigma$ отрезка $[a; c]$ мы можем рассмотреть
+                \[\Sigma_L := \{I \cap [a; b] \mid I \in \Sigma\}\]
+                и тогда
+                \[\sum_{I \in \Sigma_L} |I| \cdot \osc_I f < \sum_{I \in \Sigma} |I| \cdot \osc_I f\]
+                Следовательно есть разбиения со сколь угодно маленькой осцелляцией $f$ на них, а значит $f$ интегрируема на $[a; b]$; аналогично и на $[b; c]$. А по предыдущим рассуждениям достигается равенство в тождестве интегралов.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{theorem}
+        Пусть дана функция $f$, а $M = \sup_{[a; b]} |f|$. Тогда
+        \[\left|\int_a^b f(x)dx\right| \leqslant M(b-a)\]
+    \end{theorem}
+
+    \begin{proof}
+        Очевидно, что при разбиении $\Sigma := \{[a; b]\}$
+        \begin{align*}
+            S^+(f, \Sigma) = \sum_{I \in \Sigma} |I| \cdot \sup_I f = (b - a) \cdot \sup_{[a; b]} f\\
+            S^-(f, \Sigma) = \sum_{I \in \Sigma} |I| \cdot \inf_I f = (b - a) \cdot \inf_{[a; b]} f
+        \end{align*}
+        Следовательно
+        \[
+            M(b-a)
+            \geqslant (b-a)\sup_{[a; b]} f
+            = S^+(f, \Sigma)
+            \geqslant \int_a^b f(x)dx
+            \geqslant S^-(f, \Sigma)
+            = (b-a)\sup_{[a; b]} f
+            \geqslant -M(b-a)
+        \]
+        откуда следует требуемое.
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $f: [a; b] \to \RR$ непрерывна. Тогда
+        \[F: [a, b] \to \RR, x \mapsto \int_a^x f(t)dt\]
+        является первообразной $f$.
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим какие-то $x$ и $y$, что $a \leqslant x < y \leqslant b$. Тогда
+        \[F(y) - F(x) = \int_a^y f(t)dt - \int_a^x f(t)dt = \int_x^y f(t)dt\]
+        Следовательно, рассматривая $\Sigma := \{[x; y]\}$,
+        \begin{gather*}
+            \sum_{I \in \Sigma} |I| \cdot \inf_I f \leqslant F(y) - F(x) \leqslant \sum_{I \in \Sigma} |I| \cdot \sup_I f\\
+            (y-x) \cdot \inf_{[x; y]} f \leqslant F(y) - F(x) \leqslant (y-x) \cdot \sup_{[x; y]} f\\
+            \inf_{[x; y]} f \leqslant \frac{F(y) - F(x)}{y - x} \leqslant \sup_{[x; y]} f
+        \end{gather*}
+        Немного меняя обозначения, получаем, что для всякого $\varepsilon \in [a - x; b - x] \setminus \{0\}$
+        \[\inf_{U_{|\varepsilon|}(x)} f \leqslant \frac{F(x + \varepsilon) - F(x)}{\varepsilon} \leqslant \sup_{U_{|\varepsilon|}(x)} f\]
+
+        Заметим, что по непрерывности $f$
+        \[\lim_{\varepsilon \to 0^+} \inf_{U_\varepsilon(x)} f = \lim_{\varepsilon \to 0^+} \sup_{U_\varepsilon(x)} f = f(x)\]
+        Следовательно
+        \[\lim_{\varepsilon \to 0} \frac{F(x + \varepsilon) - F(x)}{\varepsilon} = f(x)\]
+        Иначе говоря $F'(x) = f(x)$. Таким образом $F' = f$.
+    \end{proof}
+
+    \begin{corollary}[формула Ньютона-Лейбница]
+        Пусть $F$ --- первообразная непрерывной на $[a; b]$ функции $f$. Тогда
+        \[\int_a^b f(x)dx = F(b) - F(a)\]
+    \end{corollary}
+
+    \begin{proof}
+        Заметим, что $G(x) := \int_a^x f(t)dt$ --- первообразная $f$. Следовательно $G(x) - F(x) = C$ на $[a; b]$. Значит
+        \[\int_a^b f(x)dx = G(b) = G(b) - G(a) = (F(b) + C) - (F(a) + C) = F(b) - F(a)\]
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $(f_n)_{n=0}^\infty$ --- последовательность интегрируемых по Риману на $[a; b]$ функций --- равномерно сходится к $f$. Тогда $f$ интегрируема по Риману на $[a; b]$, и
+        \[\int_a^b f(x)dx = \lim_{n \to \infty} \int_a^b f_n(x)dx\]
+    \end{theorem}
+
+    \begin{proof}
+        Заметим, что для всякого $\varepsilon > 0$ есть $N \in \NN \cup \{0\}$, что для всяких $n, m > N$ верно, что
+        \[|f_n - f_m| \leqslant \frac{\varepsilon}{3(b-a)};\]
+        следовательно для всякого $n > N$ верно, что
+        \[|f - f_n| \leqslant \frac{\varepsilon}{3(b-a)}.\]
+        При этом существует такое разбиение $\Sigma$ отрезка $[a; b]$, что
+        \[S^+(f_{N+1}, \Sigma) - S^-(f_{N+1}, \Sigma) = \sum_{I \in \Sigma} |I| \cdot \osc_I f < \frac{\varepsilon}{3}.\]
+        Таким образом для всякого $n > N$ верно, что
+        \begin{multline*}
+            S^+(f_n, \Sigma)\\
+            = \sum_{I \in \Sigma} |I| \cdot \sup_I f_n
+            \leqslant \sum_{I \in \Sigma} |I| \cdot \left(\frac{\varepsilon}{3(b-a)} + \sup_I f_{N+1}\right)
+            = \frac{\varepsilon}{3} + \sum_{I \in \Sigma} |I| \cdot \sup_I f_{N+1}\\
+            = S^+(f_{N+1}, \Sigma) + \frac{\varepsilon}{3};
+        \end{multline*}
+        аналогично $S^-(f_n, \Sigma) \geqslant S^-(f_{N+1}, \Sigma) - \frac{\varepsilon}{3}$. Аналогично данные утверждения верны и для $f$ (вместо $f_n$).
+
+        Заметим, что
+        \begin{gather*}
+            S^+(f_{N+1}, \Sigma) + \frac{\varepsilon}{3} \geqslant S^+(f_n, \Sigma) \geqslant \int_a^b f_n(x)dx \geqslant S^-(f_n, \Sigma) \geqslant S^-(f_{N+1}, \Sigma) - \frac{\varepsilon}{3}\\
+            S^+(f_{N+1}, \Sigma) + \frac{\varepsilon}{3} \geqslant S^+(f, \Sigma) \geqslant S^-(f, \Sigma) \geqslant S^-(f_{N+1}, \Sigma) - \frac{\varepsilon}{3}\\
+        \end{gather*}
+        Таким образом
+        \[S^+(f, \Sigma) - S^-(f, \Sigma) < \varepsilon,\]
+        следовательно $f$ интегрируема по Риману на $[a; b]$. Таким образом мы имеем, что
+        \begin{gather*}
+            S^+(f_{N+1}, \Sigma) + \frac{\varepsilon}{3} \geqslant \int_a^b f_n(x)dx \geqslant S^-(f_{N+1}, \Sigma) - \frac{\varepsilon}{3}\\
+            S^+(f_{N+1}, \Sigma) + \frac{\varepsilon}{3} \geqslant \int_a^b f(x)dx \geqslant S^-(f_{N+1}, \Sigma) - \frac{\varepsilon}{3}\\
+        \end{gather*}
+        т.е. для всех $n > N$
+        \[\left|\int_a^b f_n(x)dx - \int_a^b f(x)dx\right| < \varepsilon\]
+        Это значит, что
+        \[\int_a^b f(x)dx = \lim_{n \to \infty} \int_a^b f_n(x)dx\]
+    \end{proof}
+
+    \begin{lemma}
+        Если $f$ и $g$ интегрируемы по Риману на $[a; b]$, то и $f \cdot g$.
+    \end{lemma}
+
+    \begin{proof}
+        Заметим, что, поскольку $f$ и $g$ интегрируемы по Риману, есть такие константы $C_f > 0$ и $C_g > 0$, что $|f| \leqslant C_f$ и $|g| \geqslant C_g$. Следовательно для всяких $x, y \in [a; b]$
+        \begin{multline*}
+            |f(x)g(x) - f(y)g(y)|\\
+            \leqslant |f(x)g(x) - f(y)g(x)| + |f(y)g(x) - f(y)g(y)|\\
+            \leqslant C_g|f(x) - f(y)| + C_f|g(x) - g(y)|
+        \end{multline*}
+        Значит для всякого отрезка $I$ верно, что
+        \[\osc_I f\cdot g \leqslant C_g \osc_I f + C_f \osc_I g\]
+        Следовательно для всякого разбиения $\Sigma$ отрезка $[a; b]$
+        \[\sum_{I \in \Sigma} |I| \cdot \osc_I f \cdot g \leqslant C_g \sum_{I \in \Sigma} |I| \cdot \osc_I f + C_f \sum_{I \in \Sigma} |I| \cdot \osc_I g\]
+        Вспомним, что для всякого $\varepsilon > 0$ есть разбиения $\Sigma_f$ и $\Sigma_g$ отрезка $[a; b]$, что
+        \begin{align*}
+            \sum_{I \in \Sigma_f} |I| \cdot \osc_I f &< \frac{\varepsilon}{2C_g}&
+            \sum_{I \in \Sigma_f} |I| \cdot \osc_I g &< \frac{\varepsilon}{2C_f}
+        \end{align*}
+        Рассмотрим общее подразбиение $\Sigma$ разбиений $\Sigma_f$ и $\Sigma_g$. Для него верны предыдущие предыдущие неравенства. Следовательно
+        \[\sum_{I \in \Sigma} |I| \cdot \osc_I f \cdot g < C_g \frac{\varepsilon}{2C_g} + C_f \frac{\varepsilon}{2C_f} = \varepsilon\]
+        Поэтому $f \cdot g$ интегрируема по Риману на $[a; b]$.
+    \end{proof}
+
+    \subsection{У чего есть выражаемая первообразная?}
+
+    \begin{lemma}\ 
+        \begin{multicols}{2}
+            \begin{enumerate}
+                \item \[\int 0 = C\]
+                \item \[\int a_0 + \dots + a_n x^n = C + a_0 x + \dots + a_n x^{n+1} \]
+                \item $\forall \alpha \in \RR \setminus \{0\}, x > 0$
+                    \[\int x^\alpha = \frac{x^{\alpha + 1}}{\alpha + 1} + C\]
+                \item $\forall x > 0$
+                    \[\int \frac{1}{x} = \ln(x) + C\]
+                \item \[\int e^x = e^x + C\]
+                \item \[\int \sin(x) = -\cos(x) + C\] \[\int \cos(x) = \sin(x) + C\]
+                \item \[\int \frac{1}{1+x^2} = \arctan(x) + C\]
+                \item \[\frac{1}{\sqrt{1-x^2}} = \arcsin(x) + C\]
+            \end{enumerate}
+        \end{multicols}
+    \end{lemma}
+
+    \begin{theorem}
+        Следующие виды функций имеют выражаемую первообразную:
+        \begin{multicols}{2}
+            \begin{enumerate}
+                \item рациональные функции;
+                \item рациональные функции от $\sin$ и $\cos$;
+                \item рациональные функции от $\sinh$ и $\cosh$;
+                \item рациональные функции от $x$ и $ax^2 + bx + 1$, где $a \neq 0$.
+            \end{enumerate}
+        \end{multicols}
+    \end{theorem}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Каждая рациональная функция представляется в виде суммы полиномов, членов вида $\frac{k}{(x+a)^n}$ и членов вида $\frac{px+q}{(ax^2+bx+c)^n}$. Покажем, что каждый из них имеет выражаемую первообразную.
+                \begin{itemize}
+                    \item Первообразная многочлена очевидна.
+                    \item \[\int \frac{dx}{x+a} = \ln(x+a) + C\]
+                    \item Для всякого $n > 1$
+                        \[\int \frac{dx}{(x+a)^n} = \frac{1}{(1-n)(x-a)^{n-1}} + C\]
+                    \item \[\int \frac{dx}{x^2+1} = \ctg^{-1}(x)\]
+                    \item \[\int \frac{xdx}{x^2+1} = \frac{1}{2} \ln(x^2+1)\]
+                    \item Для всякого $n > 1$
+                        \[\int \frac{xdx}{(x^2 + 1)^n} = \frac{1}{2(1-n)(x^2+1)^{n-1}}\]
+                    \item Заметим, что
+                        \[
+                            \left(\frac{x}{(x^2+1)^n}\right)'
+                            = \frac{1}{(x^2+1)^n} - 2n \frac{x^2}{(x^2+1)^{n+1}}
+                            = \frac{2n}{(x^2+1)^{n+1}} - \frac{2n-1}{(x^2+1)^n}
+                        \]
+                        Следовательно
+                        \[\int \frac{dx}{(x^2+1)^{n+1}} = \frac{x}{2n(x^2+1)^n} + \frac{2n-1}{2n} \int \frac{dx}{(x^2+1)^n}\]
+                        Таким образом несложно понять по индукции, что $\int \frac{dx}{(x^2+1)^n}$ для $n > 1$ есть некоторая сумма рациональных функций и $\ctg^{-1}$.
+                    \item Линейными заменами задача нахождения первообразных у $\frac{1}{(x+a)^n}$ и $\frac{px+q}{(ax^2+bx+c)^n}$ сводится к нахождению первообразных $\frac{1}{x^n}$, $\frac{1}{(x^2+1)^n}$ и $\frac{x}{(x^2+1)^n}$.
+                \end{itemize}
+
+            \item Заметим, что
+                \begin{align*}
+                    \sin(x) &= \frac{2 \tg(x/2)}{1 + \tg(x/2)^2}&
+                    \cos(x) &= \frac{1 - \tg(x/2)^2}{1 + \tg(x/2)^2}&
+                    dx &= \frac{2d(\tg(x/2))}{1+\tg(x/2)^2}
+                \end{align*}
+                Следовательно задача сводится к нахождению первообразной рациональной функции при помощи подстановки $t := \tg(x)$.
+
+            \item С одной стороны это можно свести к предыдущей задаче заменой $t := ix$. С другой стороны можно заметить, что
+                \begin{align*}
+                    \sinh(x) &= \frac{e^x - e^{-x}}{2}&
+                    \cosh(x) &= \frac{e^x + e^{-x}}{2}&
+                    dx &= \frac{d(e^x)}{e^x}
+                \end{align*}
+                Следовательно задача сводится к нахождению первообразной рациональной функции при помощи подстановки $t := e^x$.
+            
+            \item Линейными подстановками можно свести задачу к нахождению первообразной рациональной функции от $y$ и $\sqrt{\pm y^2 \pm 1}$ или только от $y$.
+                \begin{itemize}
+                    \item Случай рациональной функции только от $y$ уже был разобран.
+                    \item Если нам дана рациональная функция от $y$ и $\sqrt{1 - y^2}$, то заменой $t := \sin(y)$ она сводится к рациональной функции от $\sin$ и $\cos$.
+                    \item Если нам дана рациональная функция от $y$ и $\sqrt{y^2 - 1}$, то заменой $t := \cosh(y)$ она сводится к рациональной функции от $\sinh$ и $\cosh$.
+                    \item Если нам дана рациональная функция от $y$ и $\sqrt{1 + y^2}$, то заменой $t := \sinh(y)$ она сводится к рациональной функции от $\sinh$ и $\cosh$.
+                \end{itemize}
+        \end{enumerate}
+    \end{proof}
 \end{document}
