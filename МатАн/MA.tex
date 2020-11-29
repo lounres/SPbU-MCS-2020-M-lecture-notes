@@ -17,6 +17,11 @@
 \begin{document}
     \maketitle
 
+    \listoftodos[TODOs]
+
+    \tableofcontents
+
+    \vspace{2em}
     Литература:
     \begin{itemize}
         \item В. А. Зорич ``Математический анализ''
@@ -862,7 +867,7 @@
     \end{theorem}
 
     \begin{theorem}
-        Пусть $f: (a; b) \to \RR$, $f^{(1)}$, \dots, $f^{(n-1)}$ определены на $(t-\delta; t+\delta)$ для некоторого $\delta > 0$ и определена $f^{(n)}(t)$. Тогда
+        Пусть $f: (a; b) \to \RR$, $f^{(1)}$, \dots, $f^{(n-1)}$ определены на $(t-\delta; t+\delta)$ для некоторого $\delta > 0$ и определена $f^{(n)}(t)$. Тогда для всякого $x \in U_\delta(t)$
         \[f(x) = f(t) + \frac{f^{(1)}(t)}{1!}(x-t) + \dots + \frac{f^{(n)}(t)}{n!}(x-t)^n + o((x-t)^n)\]
     \end{theorem}
 
@@ -892,8 +897,8 @@
         Пусть $f(t) = f^{(1)}(t) = \dots = f^{(n)}(t) = 0$, а $f^{(n+1)} \neq 0$. Если $n$ чётно, то $t$ --- не экстремальные точка функции $f$, иначе $t$ --- экстремальная точка функции $f$.
     \end{theorem}
 
-    \begin{theorem}
-        Пусть $f: (a; b) \to \RR$, $f^{(1)}$, \dots, $f^{(n+1)}$ определены на $(t-\delta; t+\delta)$ для некоторого $\delta > 0$. Тогда существует $\xi \in (x; t)$, что
+    \begin{theorem}\label{finite_Teylor_series_theorem_engineers_variation}
+        Пусть $f: (a; b) \to \RR$, $f^{(1)}$, \dots, $f^{(n+1)}$ определены на $(t-\delta; t+\delta)$ для некоторого $\delta > 0$. Тогда для всякого $x \in U_\delta(t)$ существует $\xi \in (x; t)$, что
         \[f(x) = f(t) + \frac{f^{(1)}(t)}{1!}(x-t) + \dots + \frac{f^{(n)}(t)}{n!}(x-t)^n + \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-t)^{n+1}\]
     \end{theorem}
 
@@ -1082,7 +1087,7 @@
                 \item $\forall \alpha \in \RR \setminus \{0\}, x > 0$
                     \[\int x^\alpha = \frac{x^{\alpha + 1}}{\alpha + 1} + C\]
                 \item $\forall x > 0$
-                    \[\int \frac{1}{x} = \ln(x) + C\]
+                    \[\int \frac{1}{x} = \log(x) + C\]
                 \item \[\int e^x = e^x + C\]
                 \item \[\int \sin(x) = -\cos(x) + C\] \[\int \cos(x) = \sin(x) + C\]
                 \item \[\int \frac{1}{1+x^2} = \arctan(x) + C\]
@@ -1547,7 +1552,7 @@
                 \item $\forall \alpha \in \RR \setminus \{0\}, x > 0$
                     \[\int x^\alpha = \frac{x^{\alpha + 1}}{\alpha + 1} + C\]
                 \item $\forall x > 0$
-                    \[\int \frac{1}{x} = \ln(x) + C\]
+                    \[\int \frac{1}{x} = \log(x) + C\]
                 \item \[\int e^x = e^x + C\]
                 \item \[\int \sin(x) = -\cos(x) + C\] \[\int \cos(x) = \sin(x) + C\]
                 \item \[\int \frac{1}{1+x^2} = \arctan(x) + C\]
@@ -1573,11 +1578,11 @@
             \item Каждая рациональная функция представляется в виде суммы полиномов, членов вида $\frac{k}{(x+a)^n}$ и членов вида $\frac{px+q}{(ax^2+bx+c)^n}$. Покажем, что каждый из них имеет выражаемую первообразную.
                 \begin{itemize}
                     \item Первообразная многочлена очевидна.
-                    \item \[\int \frac{dx}{x+a} = \ln(x+a) + C\]
+                    \item \[\int \frac{dx}{x+a} = \log(x+a) + C\]
                     \item Для всякого $n > 1$
                         \[\int \frac{dx}{(x+a)^n} = \frac{1}{(1-n)(x-a)^{n-1}} + C\]
                     \item \[\int \frac{dx}{x^2+1} = \ctg^{-1}(x)\]
-                    \item \[\int \frac{xdx}{x^2+1} = \frac{1}{2} \ln(x^2+1)\]
+                    \item \[\int \frac{xdx}{x^2+1} = \frac{1}{2} \log(x^2+1)\]
                     \item Для всякого $n > 1$
                         \[\int \frac{xdx}{(x^2 + 1)^n} = \frac{1}{2(1-n)(x^2+1)^{n-1}}\]
                     \item Заметим, что
@@ -1617,4 +1622,168 @@
                 \end{itemize}
         \end{enumerate}
     \end{proof}
+
+    \section{Логарифм? Полезности?? Что???}
+
+    \begin{theorem}
+        Пусть дана функция $\varphi: (0; +\infty) \to \RR$, что
+        \begin{itemize}
+            \item $\forall a, b \in (0; +\infty)\quad \varphi(ab) = \varphi(a) + \varphi(b)$
+            \item $\varphi$ монотонна.
+        \end{itemize}
+        Тогда верны следующие утверждения:
+        \begin{enumerate}
+            \item $\varphi(1) = 0$;
+            \item $\forall a \in (0; +\infty), n \in \NN\quad \varphi(a^n) = n\varphi(a)$;
+            \item $\forall a \in (0; +\infty)\quad \varphi(a^{-1}) = -\varphi(a)$;
+            \item $\forall a \in (0; +\infty), q \in \QQ\quad \varphi(a^q) = q\varphi(a)$;
+            \item $\varphi$ непрерывна;
+            \item $\varphi$ бесконечно дифференцируема;
+            \item $\varphi'(x) = \frac{C}{x}$ для некоторого $C \in \RR$;
+            \item все такие $\phi$ имеют вид $\int_1^x \frac{Cdt}{t}$ для некоторого $C > 0$ и наоборот: любая такая функция удовлетворяет условиям на $\phi$.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}\ 
+        \begin{enumerate}
+            \item \[\varphi(1) = \varphi(1 \cdot 1) - \varphi(1) = \varphi(1) - \varphi(1) = 0.\]
+
+            \item Докажем по индукции по $n$. База при $n=0$ и $n=1$ очевидна. Весь шаг:
+                \[\varphi(a^{n+1}) = \varphi(a^n) + \varphi(a) = n\varphi(a) + \varphi(a) = (n+1)\varphi(a).\]
+
+            \item \[\varphi(a^{-1}) = \varphi(a \cdot a^{-1}) - \varphi(a) = \varphi(1) - \varphi(a) = -\varphi(a)\]
+
+            \item Пусть $q = \frac{kn}{m}$, где $n, m \in \NN \setminus \{0\}$, а $k = \pm 1$. Тогда
+                \[m\varphi(a^q) = \varphi(a^{mq}) = \varphi(a^{kn}) = k\varphi(a^n) = kn\varphi(a) = qm\varphi(a)\]
+                Следовательно
+                \[\varphi(a^q) = q\varphi(a)\]
+
+            \item Заметим, что $\lim_{x \to 1^+} \varphi(x)$ в связи с монотонностью и ограниченностью (например, значением $\varphi(1/2)$) функции $\varphi$ определён, значит равен некоторому $b$. Тогда
+                \[2b = \lim_{x \to 1^+} 2\varphi(x) = \lim_{x \to 1^+} \varphi(x^2) = \lim_{y \to 1^+} \varphi(y) = b\]
+                значит $b = 0$. Следовательно
+                \[\lim_{x \to 1^-} \varphi(x) = - \lim_{x \to 1^-} \varphi(x^{-1}) = - \lim_{y \to 1^+} \varphi(y) = 0\]
+                Таким образом $\varphi$ непрерывна в $1$. Следовательно
+                \[\lim_{x \to y} \varphi(x) = \varphi(y) + \lim_{x \to y} \varphi\left(\frac{x}{y}\right) = \varphi(y) + \lim_{\alpha \to 1} \varphi(\alpha)\]
+                т.е. $\varphi$ непрерывна во всех точках $(0; +\infty)$.
+
+            \item Рассмотрим
+                \[\Phi := (0; +\infty) \to \RR, x \mapsto \int_1^x \varphi(t)dt\]
+                Тогда мы имеем, что $\Phi$ --- первообразная, поскольку $\varphi$ непрерывна. А тогда если $\varphi$ имеет $n \in \NN \cup \{0\}$ производных, то $\Phi$ имеет $n+1$ производную. Заметим, что
+                \[
+                    \Phi(2x) - \Phi(x)
+                    = \int_x^{2x}\varphi(t)dt
+                    = x\int_x^{2x}\varphi\left(\frac{t}{x}\right)d\frac{t}{x} + x\int_x^{2x}\varphi(x)d\frac{t}{x}
+                    = Cx + \varphi(x)x
+                \]
+                где
+                \[C := \int_1^2 \varphi(t)dt\]
+                Следовательно
+                \[\varphi(x) = \frac{\Phi(2x) - \Phi(x)}{x} - C\]
+                Таким образом, если $\Phi$ имеет $n \in \NN \cup \{0\}$ производных, то $\varphi$ тоже. Значит $\Phi$ и $\phi$ бесконечно дифференцируемы.
+
+            \item Пусть фиксировано некоторое $y > 0$. Следовательно
+                \[y\varphi'(xy) = (\varphi(xy))' = (\varphi(x) + \varphi(y))' = \varphi'(x)\]
+                а значит, если подставить $y = x^{-1}$
+                \[\varphi'(x) = \frac{\varphi'(1)}{x}\]
+                Таким образом определяя $C := \varphi'(1)$ имеем, что
+                \[\varphi'(x) = \frac{C}{x}\]
+            
+            \item Действительно, если есть некоторое $\phi$, то $\phi$ и $\int_1^x \frac{\phi'(1)dt}{t}$ являются первообразными $\frac{\phi'(1)}{x}$, значит отличаются на константу. При этом в $1$ они обе равны $0$, значит функции совпадают.
+
+                Теперь же покажем, что $\psi(x) := \int_1^x \frac{Cdt}{t}$ является корнем функционального уравнения.
+                \begin{itemize}
+                    \item Поскольку $\frac{C}{x}$ --- функция одного знака, то $\psi$ монотонна.
+                    \item
+                        \begin{align*}
+                            \psi(xy)
+                            &= \int_1^{xy} \frac{Cdt}{t}&
+                            &= \int_1^x \frac{Cdt}{t} + \int_x^{xy} \frac{Cdt}{t}\\
+                            &= \int_1^x \frac{Cdt}{t} + \int_x^{xy} \frac{Cd(t/x)}{(t/x)}&
+                            &= \int_1^x \frac{Cdt}{t} + \int_1^{y} \frac{Cds}{s}&
+                            &= \psi(x) + \psi(y)
+                        \end{align*}
+                \end{itemize}
+        \end{enumerate}
+    \end{proof}
+
+    \begin{definition}
+        \emph{Натуральный логарифм} --- функция
+        \[\log: (0; +\infty) \to \RR, x \mapsto \int_1^x \frac{dt}{t}\]
+
+        \emph{Экспонента} --- функция
+        \[\exp: \RR \to (0; +\infty), x \mapsto \log^{-1}(x)\]
+    \end{definition}
+
+    \begin{theorem}\ 
+        \begin{enumerate}
+            \item $\exp$ корректно определена;
+            \item $\exp$ непрерывна;
+            \item $\exp$ бесконечно дифференцируема, и каждая производная $\exp$ равна $\exp$;
+            \item $\exp(0) = 1$;
+            \item $\exp(a + b) = \exp(a) \cdot \exp(b)$;
+            \item \[\exp(x) = \sum_{n=0}^\infty \frac{x^n}{n!};\]
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}\ 
+        \begin{enumerate}
+            \item Поскольку $\log$ монотонна, то всякое значение из области значений $\log$ --- всё $\RR$ --- принимается единожды. Следовательно $\exp$ корректно определена.
+            \item Поскольку всякая монотонная биекция из интервала в интервал является непрерывной функцией, то и $\exp$ непрерывна на всяком интервале.
+            \item По свойству дифференцирования
+                \[\exp'(x) = \frac{1}{\log'(\exp(x))} = \frac{1}{1/\exp(x)} = \exp(x)\]
+                Таким образом $\exp$ дифференцируема раз, и при дифференцировании не меняется. Следовательно $\exp$ бесконечно дифференцируема.
+            \item Следует из того, что $\log(1) = 0$.
+            \item Следует из того, что $\log(xy) = \log(x) + \log(y)$, подстановкой $x := \log^{-1}(a)$ и $y := \log^{-1}(b)$.
+            \item Вспомним, что по теореме \ref{finite_Teylor_series_theorem_engineers_variation} для всякого $x \in \RR$ и $n \in \NN \cup \{0\}$ есть $\xi_n \in (0; x)$, что
+                \[
+                    \exp(x)
+                    = \sum_{k=0}^n \frac{\exp^{(k)}(0)}{k!}(x-0)^k + \frac{\exp^{(n+1)}(\xi_n)}{(n+1)!}(x-0)^{n+1}
+                    = \sum_{k=0}^n \frac{x^k}{k!} + \frac{\exp(\xi_n)x^{n+1}}{(n+1)!}
+                \]
+                Вспомним также, что
+                \[
+                    \sum_{k=0}^\infty \frac{x^k}{k!} \stackrel{\mathrm{def}}{=} \lim \left(\sum_{k=0}^n \frac{x^k}{k!}\right)_{n=0}^\infty
+                \]
+                Чтобы показать, что предел этой последовательности реально совпадает с $\exp(x)$, покажем, что
+                \[\lim \left(\exp(x) - \sum_{k=0}^n \frac{x^k}{k!}\right)_{n=0}^\infty = 0\]
+                Действительно,
+                \[
+                    \left(\left|\exp(x) - \sum_{k=0}^n \frac{x^k}{k!}\right|\right)_{n=0}^\infty
+                    = \left(\left|\frac{\exp(\xi_n)x^{n+1}}{(n+1)!}\right|\right)_{n=0}^\infty
+                    \leqslant \exp(|x|) \left(\frac{|x|^{n+1}}{(n+1)!}\right)_{n=0}^\infty
+                \]
+                Пусть $N = \lceil 2|x| \rceil$. Тогда для всякого $n \geqslant N$ имеем, что
+                \[
+                    \frac{|x|^{n+1}}{(n+1)!}
+                    = \frac{|x|^N}{N!} \prod_{k=N+1}^{n+1} \frac{|x|}{k}
+                    < \frac{|x|^N}{N!} \prod_{k=N+1}^{n+1} \frac{1}{2}
+                    = \frac{|x|^N\cdot 2^{N-1}}{N!} \cdot \frac{1}{2^n}
+                \]
+                Следовательно, с момента $N$ последовательность
+                \[\left(\frac{|x|^{n+1}}{(n+1)!}\right)_{n=0}^\infty\]
+                сходится к $0$ немедленнее, чем геометрическая прогрессия, а тогда и
+                \[\lim \left(\exp(x) - \sum_{k=0}^n \frac{x^k}{k!}\right)_{n=0}^\infty = 0\]
+        \end{enumerate}
+    \end{proof}
+
+    \begin{theorem}
+        \begin{multicols}{2}
+            \begin{enumerate}
+                \item $(a^x)' = \log(a)a^x$
+                \item $(x^a)' = a x^{a-1}$
+            \end{enumerate}
+        \end{multicols}
+    \end{theorem}
+
+    \begin{proof}\ 
+        \begin{enumerate}
+            \item \[(a^x)' = \exp(x \log(a))' = (x \log(a))' a^x = \log(a) a^x\]
+            \item \[(x^a)' = \exp(a \log(x))' = (a \log(x))' x^a = \frac{a}{x} x^a = a x^{a-1}\]
+        \end{enumerate}
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $f: (a; b) \to \RR$, $f^{(1)}$, \dots, $f^{(n+1)}$ определены на $(t-\delta; t+\delta)$ для некоторого $\delta > 0$. Тогда для всякого $x \in U_\delta(t)$
+        \[f(x) = \sum_{k=0}^n \frac{f^{(k)}(t)}{k!}(x-t)^k + \frac{1}{n!} \int_t^x f^{(n+1)}(s)(s-t)^n ds\]
+    \end{theorem}
 \end{document}
