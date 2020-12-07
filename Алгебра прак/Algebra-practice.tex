@@ -56,4 +56,76 @@
     \begin{exercise}
         Найти все решения $17 x + 24 y = 3$ над $\ZZ$.
     \end{exercise}
+
+    \newpage
+    \section{Занятие 30.11.2020}
+
+    \begin{lemma}
+        Пусть $\{\alpha_i\}_{i=1}^n$ --- различные (комплексные) значения, а $f$ --- некоторый полином степени $< n$. Тогда
+        \[\frac{f(x)}{\prod_{i=1}^n (x - \alpha_i)} = \sum_{i=1}^n \frac{a_i}{x-\alpha_i}\]
+        где
+        \[a_i := \frac{f(\alpha_i)}{\prod_{t \neq i} (\alpha_i - \alpha_t)}\] 
+    \end{lemma}
+
+    \begin{proof}
+        Заметим, что по интерполяционной теореме Лагранжа
+        \[
+            f(x)
+            = \sum_{i=1}^n f(\alpha_i) \prod_{j \neq i} \frac{x - \alpha_j}{\alpha_i - \alpha_j}
+            = \sum_{i=1}^n a_i \prod_{j \neq i} (x - \alpha_j)
+        \]
+        Следовательно
+        \[\frac{f(x)}{\prod_{i=1}^n (x - \alpha_i)} = \sum_{i=1}^n \frac{a_i}{x-\alpha_i}\]
+    \end{proof}
+
+    \begin{lemma}
+        Пусть $\{\alpha_i\}_{i=1}^n$ --- различные (комплексные) значения. Определим
+        \[P(x) := \prod_{i=1}^n (x - \alpha_i)\]
+        Тогда
+        \[\prod_{i \neq t} (\alpha_t - \alpha_i) = P'(\alpha_i)\]
+    \end{lemma}
+
+    \begin{proof}
+        Заметим, что
+        \[P'(x) = \sum_{i=1}^n \prod_{j \neq i} (x - \alpha_j)\]
+        Следовательно
+        \[P'(\alpha_t) = \sum_{i=1}^n \prod_{j \neq i} (\alpha_t - \alpha_j) = \prod_{j \neq t} (\alpha_t - \alpha_j)\]
+    \end{proof}
+
+    \begin{corollary}
+        \[\prod_{\substack{i \in [0; n-1]\\ i \neq t}} (\zeta_n^t - \zeta_n^i) = n\zeta_n^{-t}\]
+    \end{corollary}
+
+    \begin{theorem}
+        \[\frac{2n+1}{x^{2n+1}-1} - \frac{1}{x-1} + n = \frac{x^2-1}{2x} \sum_{i=1}^n \frac{1}{\frac{x^2+1}{2x} - \cos(\frac{2\pi i}{2n+1})}\]
+    \end{theorem}
+
+    \begin{proof}
+        \[
+            \frac{2n+1}{x^{2n+1}-1}
+            = \sum_{i=1}^{2n+1} \frac{1}{x - \zeta_{2n+1}^i} \cdot \frac{2n+1}{(2n+1) \zeta_{2n+1}^{-i}}
+            = \sum_{i=1}^{2n+1} \frac{1}{\zeta_{2n+1}^{-i} x - 1}
+        \]
+        Заметим, что
+        \[
+            \frac{1}{\zeta_{2n+1}^i x - 1} + \frac{1}{\zeta_{2n+1}^{-i} x - 1}
+            = \frac{2x \cos(\frac{2 \pi i}{2n+1}) - 2}{x^2 + 1 - 2x \cos(\frac{2 \pi i}{2n+1})}
+            = \frac{x^2 - 1}{x^2 + 1 - 2x \cos(\frac{2 \pi i}{2n+1})} - 1
+            = \frac{\frac{x^2-1}{2x}}{\frac{x^2+1}{2x} - \cos(\frac{2\pi i}{2n+1})} - 1
+        \]
+        Следовательно
+        \[
+            \frac{2n+1}{x^{2n+1}-1} - \frac{1}{x-1} + n
+            = \sum_{i=1}^n \frac{1}{\zeta_{2n+1}^i x - 1} + \frac{1}{\zeta_{2n+1}^{-i} x - 1}
+            = \frac{x^2-1}{2x} \sum_{i=1}^n \frac{1}{\frac{x^2+1}{2x} - \cos(\frac{2\pi i}{2n+1})}
+        \]
+    \end{proof}
+
+    \begin{corollary}
+        \[\sum_{i=1}^n \frac{1}{1 - \cos(\frac{2\pi i}{2n+1})} = \frac{n(n+1)}{3}\]
+    \end{corollary}
+
+    \begin{corollary}
+        \[\sum_{i=1}^n \frac{1}{1 - \cos(\frac{2\pi i}{2n+1})} = \frac{n(n+1)}{3}\]
+    \end{corollary}
 \end{document}
