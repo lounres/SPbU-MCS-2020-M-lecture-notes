@@ -1535,7 +1535,7 @@
                 \item $\forall \alpha \in \RR \setminus \{0\}, x > 0$
                     \[\int x^\alpha = \frac{x^{\alpha + 1}}{\alpha + 1} + C\]
                 \item $\forall x > 0$
-                    \[\int \frac{1}{x} = \log(x) + C\]
+                    \[\int \frac{1}{x} = \ln(x) + C\]
                 \item \[\int e^x = e^x + C\]
                 \item \[\int \sin(x) = -\cos(x) + C\] \[\int \cos(x) = \sin(x) + C\]
                 \item \[\int \frac{1}{1+x^2} = \arctan(x) + C\]
@@ -1561,11 +1561,11 @@
             \item Каждая рациональная функция представляется в виде суммы полиномов, членов вида $\frac{k}{(x+a)^n}$ и членов вида $\frac{px+q}{(ax^2+bx+c)^n}$. Покажем, что каждый из них имеет выражаемую первообразную.
                 \begin{itemize}
                     \item Первообразная многочлена очевидна.
-                    \item \[\int \frac{dx}{x+a} = \log(x+a) + C\]
+                    \item \[\int \frac{dx}{x+a} = \ln(x+a) + C\]
                     \item Для всякого $n > 1$
                         \[\int \frac{dx}{(x+a)^n} = \frac{1}{(1-n)(x-a)^{n-1}} + C\]
                     \item \[\int \frac{dx}{x^2+1} = \tg^{-1}(x)\]
-                    \item \[\int \frac{xdx}{x^2+1} = \frac{1}{2} \log(x^2+1)\]
+                    \item \[\int \frac{xdx}{x^2+1} = \frac{1}{2} \ln(x^2+1)\]
                     \item Для всякого $n > 1$
                         \[\int \frac{xdx}{(x^2 + 1)^n} = \frac{1}{2(1-n)(x^2+1)^{n-1}}\]
                     \item Заметим, что
@@ -1691,10 +1691,10 @@
 
     \begin{definition}
         \emph{Натуральный логарифм} --- функция
-        \[\log: (0; +\infty) \to \RR, x \mapsto \int_1^x \frac{dt}{t}\]
+        \[\ln: (0; +\infty) \to \RR, x \mapsto \int_1^x \frac{dt}{t}\]
 
         \emph{Экспонента} --- функция
-        \[\exp: \RR \to (0; +\infty), x \mapsto \log^{-1}(x)\]
+        \[\exp: \RR \to (0; +\infty), x \mapsto \ln^{-1}(x)\]
     \end{definition}
 
     \begin{theorem}\ 
@@ -1710,13 +1710,13 @@
 
     \begin{proof}\ 
         \begin{enumerate}
-            \item Поскольку $\log$ монотонна, то всякое значение из области значений $\log$ --- всё $\RR$ --- принимается единожды. Следовательно $\exp$ корректно определена.
+            \item Поскольку $\ln$ монотонна, то всякое значение из области значений $\ln$ --- всё $\RR$ --- принимается единожды. Следовательно $\exp$ корректно определена.
             \item Поскольку всякая монотонная биекция из интервала в интервал является непрерывной функцией, то и $\exp$ непрерывна на всяком интервале.
             \item По свойству дифференцирования
-                \[\exp'(x) = \frac{1}{\log'(\exp(x))} = \frac{1}{1/\exp(x)} = \exp(x)\]
+                \[\exp'(x) = \frac{1}{\ln'(\exp(x))} = \frac{1}{1/\exp(x)} = \exp(x)\]
                 Таким образом $\exp$ дифференцируема раз, и при дифференцировании не меняется. Следовательно $\exp$ бесконечно дифференцируема.
-            \item Следует из того, что $\log(1) = 0$.
-            \item Следует из того, что $\log(xy) = \log(x) + \log(y)$, подстановкой $x := \log^{-1}(a)$ и $y := \log^{-1}(b)$.
+            \item Следует из того, что $\ln(1) = 0$.
+            \item Следует из того, что $\ln(xy) = \ln(x) + \ln(y)$, подстановкой $x := \ln^{-1}(a)$ и $y := \ln^{-1}(b)$.
             \item Вспомним, что по теореме \ref{finite_Teylor_series_theorem_engineers_variation} для всякого $x \in \RR$ и $n \in \NN \cup \{0\}$ есть $\xi_n \in (0; x)$, что
                 \[
                     \exp(x)
@@ -1752,7 +1752,7 @@
     \begin{theorem}
         \begin{multicols}{2}
             \begin{enumerate}
-                \item $(a^x)' = \log(a)a^x$
+                \item $(a^x)' = \ln(a)a^x$
                 \item $(x^a)' = a x^{a-1}$
             \end{enumerate}
         \end{multicols}
@@ -1760,8 +1760,8 @@
 
     \begin{proof}\ 
         \begin{enumerate}
-            \item \[(a^x)' = \exp(x \log(a))' = (x \log(a))' a^x = \log(a) a^x\]
-            \item \[(x^a)' = \exp(a \log(x))' = (a \log(x))' x^a = \frac{a}{x} x^a = a x^{a-1}\]
+            \item \[(a^x)' = \exp(x \ln(a))' = (x \ln(a))' a^x = \ln(a) a^x\]
+            \item \[(x^a)' = \exp(a \ln(x))' = (a \ln(x))' x^a = \frac{a}{x} x^a = a x^{a-1}\]
         \end{enumerate}
     \end{proof}
 
@@ -1789,6 +1789,8 @@
             &= \frac{1}{(n+1)!}\int_t^x g^{(n+1)}(s)(x-s)^{(n+1)} ds
         \end{align*}
     \end{proof}
+
+    \subsection{Формулы Валлиса и Стирлинга}
 
     \begin{theorem}[формула Валлиса]
         \[
@@ -1829,7 +1831,286 @@
         \[\lim_{n \to \infty} \left(\frac{(2n)!!}{(2n-1)!!}\right)^2 \frac{1}{2n+1} = \frac{\pi}{2}\]
     \end{proof}
 
-    \newpage
+    \begin{theorem}[формула Стирлинга]
+        \[n! \sim \sqrt{2\pi n} \left(\frac{n}{e}\right)^n\]
+    \end{theorem}
+
+    \begin{proof}
+        Вспомним, что для $x \in (-1; 1)$
+        \begin{align*}
+            \ln(1+x) &= x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots&
+            \ln(1-x) &= -x - \frac{x^2}{2} - \frac{x^3}{3} - \frac{x^4}{4} - \cdots&
+        \end{align*}
+        Следовательно
+        \[
+            \ln\left(\frac{1+x}{1-x}\right)
+            = \ln(1+x) - \ln(1-x) = 2x + \frac{2x^3}{3} + \frac{2x^5}{5} + \cdots
+            = 2x \left(1 + \frac{x^2}{3} + \frac{x^4}{5} + \cdots \right)
+        \]
+        Пусть $n \in \NN \setminus \{0\}$. Подставим $x = \frac{1}{2n+1}$. Тогда
+        \begin{multline*}
+            \left(n + \frac{1}{2}\right)\ln\left(1 + \frac{1}{n}\right)
+            = \frac{1}{2x} \ln\left(\frac{1+x}{1-x}\right)\\
+            = 1 + \frac{x^2}{3} + \frac{x^4}{5} + \cdots
+            \in \left(1; 1 + \frac{1}{3} \cdot \frac{x^2}{1 - x^2}\right)
+            = \left(1; 1 + \frac{1}{12n(n+1)}\right)
+        \end{multline*}
+
+        Рассмотрим последовательность $(x_n)_{n=1}^\infty := \left(\frac{n! \cdot e^n}{n^{n+1/2}}\right)_{n=1}^\infty$. Заметим, что
+        \[
+            \ln\left(\frac{x_{n+1}}{x_n}\right)
+            = \ln\left(\frac{(n+1) \cdot e}{(n+1)^{n+3/2} / n^{n+1/2}}\right)
+            = \ln\left(\frac{e}{(1 + \frac{1}{n})^{n + 1/2}}\right)
+            = 1 - \left(n + \frac{1}{2}\right)\ln\left(1 + \frac{1}{n}\right)
+        \]
+        Таким образом $\ln(x_{n+1}/x_n) \in (0; \frac{-1}{12n(n+1)})$. Следовательно $\ln(x_n) < \ln(x_1)$ и
+        \begin{align*}
+            \ln(x_n) - \ln(x_1)
+            &> \frac{-1}{12n(n-1)} + \frac{-1}{12(n-1)(n-2)} + \cdots + \frac{-1}{12\cdot 2 \cdot 1}\\
+            &= \frac{1}{12}\left(\frac{1}{n} - \frac{1}{n-1} + \frac{1}{n-1} - \frac{1}{n-2} + \cdots + \frac{1}{2} - \frac{1}{1}\right)\\
+            &= \frac{1}{12}\left(\frac{1}{n} - 1\right)
+        \end{align*}
+        Значит $\lim_{n \to \infty} \ln(x_n) \geqslant \frac{-1}{12}$ (предел убывающей ограниченной последовательности), а тогда $\lim_{n \to \infty} x_n$ определён и равен $\alpha > 0$. Значит
+        \[n! \sim \alpha \sqrt{n} \left(\frac{n}{e}\right)^n\]
+
+        Теперь нужно показать, что $\alpha = \sqrt{2 \pi}$. По формуле Валлиса
+        \begin{align*}
+            \sqrt{2\pi}
+            &\sim 2 \frac{(2n)!!}{(2n-1)!!} \cdot \frac{1}{\sqrt{2n+1}}&
+            &= 2 \frac{((2n)!!)^2}{(2n)!} \cdot \frac{1}{\sqrt{2n+1}}&
+            &= 2 \frac{2^{2n}(n!)^2}{(2n)!} \cdot \frac{1}{\sqrt{2n+1}}\\
+            &\sim 2^{2n+1} \frac{\alpha^2 n \left(\frac{n}{e}\right)^{2n}}{\alpha \sqrt{2n} \left(\frac{2n}{e}\right)^{2n}} \cdot \frac{1}{\sqrt{2n}}&
+            &= \frac{2^{2n+1} \alpha^2 n}{\alpha (2n) 2^{2n}} = \alpha
+        \end{align*}
+        Таким образом $\alpha = \sqrt{2 \pi}$.
+    \end{proof}
+
+    \begin{remark}
+        Из оценки $\ln(x_n) - \ln(x_1) > \frac{1}{12} (\frac{1}{n} - 1)$ следует, что
+        \begin{multline*}
+            \ln(x_n) - \ln(\alpha)
+            = \lim_{m \to \infty} \ln(x_n) - \ln(x_m)
+            = \sum_{k=n}^\infty \ln(x_k) - \ln(x_{k+1})\\
+            < \sum_{k=n}^\infty \frac{1}{12k(k+1)}
+            = \frac{1}{12} \sum_{k=n}^\infty \frac{1}{n} - \frac{1}{n+1}
+            = \frac{1}{12n}
+        \end{multline*}
+        Таким образом $x_n = \alpha (1 + O(\frac{1}{n}))$. А значит
+        \[n! = \sqrt{2 \pi n} \left(\frac{n}{e}\right)^n \left(1 + O\left(\frac{1}{n}\right)\right)\]
+    \end{remark}
+
+    \begin{lemma}
+        Пусть дана функция $f \geqslant 0$, невозрастающая на $[0; +\infty)$. Тогда $\sum_{n=0}^\infty f(n)$ сходится тогда и только тогда, когда $\int_0^\infty f(x)dx$ сходится.
+    \end{lemma}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[($\Rightarrow$)] \[\int_0^N f(x)dx = \sum_{k=0}^{N-1} \int_k^{k+1} f(x)dx \leqslant \sum_{k=0}^{N-1} f(k)\]
+                Следовательно, поскольку $\int_0^A f(x)dx$ возрастает по $A$, но ограничена сверху значением $\sum_{n=0}^\infty f(n)$, то $\int_0^{+\infty} f(x)dx$ сходится.
+            \item[($\Leftarrow$)] \[\sum_{k=0}^N f(x) \leqslant f(0) + \sum_{k=0}^{N-1} \int_k^{k+1} f(x)dx = f(0) + \int_0^N f(x)dx\]
+                Следовательно, поскольку $\sum_0^N f(x)dx$ возрастает по $N$, но ограничена сверху значением $f(0) + \int_0^{+\infty} f(x)dx$, то $\sum_{n=0}^\infty f(n)$ сходится.
+        \end{itemize}
+    \end{proof}
+
+    \begin{theorem}
+        \[\sum_{k=1}^n \frac{1}{k} = \ln(n) + \gamma + o(1)\]
+        для некоторой константы $\gamma$.
+    \end{theorem}
+
+    \begin{definition}
+        Константа $\gamma$ из прошлой теоремы называется \emph{константой Эйлера} или \emph{константой Эйлера-Маскерони}.
+    \end{definition}
+
+    \begin{proof}
+        \[\sum_{k=1}^n \frac{1}{k} - \ln(n) = 1 + \sum_{k=2}^n \frac{1}{k} - \ln(k) + \ln(k-1)\]
+        Заметим, что
+        \[\ln(k-1) - \ln(k) = \ln\left(\frac{k-1}{k}\right) = \ln\left(1-\frac{1}{k}\right) = -\frac{1}{k} - \frac{1}{2k^2} - \frac{1}{3k^3} - \cdots\]
+        Следовательно
+        \[\sum_{k=1}^n \frac{1}{k} - \ln(n) = 1 - \sum_{k=2}^n \left(\frac{1}{2k^2} + \frac{1}{3k^3} + \frac{1}{4k^4} + \cdots\right)\]
+        Поскольку
+        \[\frac{1}{2k^2} + \frac{1}{k^3} + \cdots < \frac{1}{2k^2} \left(1 + \frac{1}{k} + \frac{1}{k^2} + \cdots\right) = \frac{1}{2k(k-1)} = \frac{1}{2(k-1)} - \frac{1}{2k}\]
+        то
+        \[\sum_{k=2}^n \left(\frac{1}{2k^2} + \frac{1}{3k^3} + \frac{1}{4k^4} + \cdots\right) \leqslant \sum_{k=2}^n \frac{1}{2(k-1)} - \frac{1}{2k} = \frac{1}{2} - \frac{1}{2n}\]
+        Значит
+        \[\sum_{k=2}^\infty \left(\frac{1}{2k^2} + \frac{1}{3k^3} + \frac{1}{4k^4} + \cdots\right)\]
+        --- ряд положительных значений, ограниченный сверху значением $1/2$, следовательно сходится; пусть к некоторой константе $\lambda$. Значит мы получаем, что
+        \[\sum_{k=2}^n \left(\frac{1}{2k^2} + \frac{1}{3k^3} + \frac{1}{4k^4} + \cdots\right) = \lambda - o(1)\]
+        и следовательно
+        \[\sum_{k=1}^n \frac{1}{k} - \ln(n) = 1 - \lambda + o(1) = \gamma + o(1)\]
+    \end{proof}
+
+    \begin{remark}
+        Таким рассуждением мы получаем, что ряд
+        \[\sum_{k, l \geqslant 2} \frac{1}{l \cdot k^l}\]
+        сильно сходится и равен $1 - \gamma$. Следовательно
+        \[1 - \gamma = \sum_{l=2}^\infty \frac{\zeta(l) - 1}{l}\]
+    \end{remark}
+
+    \subsection{Бернулли обернули}
+
+    \begin{definition}
+        Определим последовательность чисел Бернулли $(B_n)_{n=0}^\infty$ как последовательность, чья экспоненциальная производящая функция есть $\frac{x}{\exp(x) - 1}$, т.е. на уровне формальных степенных рядов верно, что
+        \[\sum_{n=0}^\infty \frac{B_n x^n}{n!} = \frac{x}{\exp(x) - 1}\]
+
+        \begin{table}[h]
+            \centering
+            \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c}
+                $B_0$ & $B_1$ & $B_2$ & $B_3$ & $B_4$ & $B_5$ & $B_6$ & $B_7$ & $B_8$ & $B_9$ & $B_{10}$ & $\cdots$\\
+                \hline
+                \rule[-10pt]{0pt}{30pt} $1$ & $-\dfrac{1}{2}$ & $\dfrac{1}{6}$ & $0$ & $-\dfrac{1}{30}$ & $0$ & $\dfrac{1}{42}$ & $0$ & $-\dfrac{1}{30}$ & $0$ & $\dfrac{5}{66}$ & $\cdots$
+            \end{tabular}
+        \end{table}
+    \end{definition}
+
+    \begin{lemma}
+        \begin{align*}
+            &B_0 = 1&
+            &\sum_{k=0}^n B_k \binom{n+1}{k} = 0
+        \end{align*}
+    \end{lemma}
+
+    \begin{proof}
+        На уровне формальных рядов
+        \[\frac{\exp(x) - 1}{x} = \sum_{k=0}^\infty \frac{x^k}{(k+1)!}\]
+        Следовательно
+        \[1 = \left(\sum_{k=0}^\infty \frac{1}{(k+1)!} x^k\right) \cdot \left(\sum_{k=0}^\infty \frac{B_k}{k!}x^k\right)\]
+        Значит, рассматривая коэффициенты при степенях $x$, получаем, что
+        \begin{align*}
+            &B_0 = 1&
+            &\sum_{k=0}^n \frac{B_k}{k!(n-k+1)!} = 0
+        \end{align*}
+        Домножая последнее равенство на $(n+1)!$ получаем, что
+        \[\sum_{k=0}^n B_k \binom{n+1}{k} = 0\]
+    \end{proof}
+
+    \begin{lemma}
+        Ряд Тейлора $\frac{x}{\exp(x) - 1}$ при $x = 0$ равен $\sum_{k=0}^\infty \frac{B_k}{k!}x^k$ (если доопределить правильно функцию в нуле).
+    \end{lemma}
+
+    \begin{proof}
+        Определим
+        \begin{align*}
+            &f(x) := \begin{cases}
+                1& \text{ если $x = 0$}\\
+                \frac{\exp(x) - 1}{x}& \text{ иначе}
+            \end{cases}&
+            &g(x) = \frac{1}{f(x)}
+        \end{align*}
+        Заметим, что $f$ просто задаётся рядом $\sum_{k=0}^\infty \frac{x^k}{(k+1)!}$ и всюду положительна, поэтому $g$ определена корректно.
+
+        Тогда очевидно равенство $f \cdot g = 1$. Продифференцируем его $n \in \NN \setminus \{0\}$ раз:
+        \[0 = (f \cdot g)^{(n)} = \sum_{k=0}^n \binom{n}{k} f^{(k)} \cdot g^{(n-k)}\]
+        Подставляя в последнее $0$ получаем, что
+        \begin{align*}
+            &g^{(0)}(0) = 1&
+            &\frac{1}{n+1}\sum_{k=0}^\infty g^{(k)}(0) \binom{n+1}{k} = \sum_{k=0}^\infty g^{(k)}(0) \binom{n}{n-k} \frac{1}{n-k+1} = 0
+        \end{align*}
+        Тем самым последовательность $(g^{(n)}(0))_{n=0}^\infty$ удовлетворяет тому же рекуррентному соотношению, что и $(B_n)_{n=0}^\infty$, значит они совпадают. А это значит, что ряд Тейлора $g$ есть
+        \[\sum_{k=0}^\infty \frac{g^{(k)}(0)}{k!} x^k = \sum_{k=0}^\infty \frac{B_k}{k!} x^k\]
+    \end{proof}
+
+    \begin{statement}
+        \[S_m(n) = \sum_{k=1}^{n-1} k^m = \sum_{k=0}^m \binom{m}{k} B_{m-k} \frac{n^k}{k+1}\]
+    \end{statement}
+
+    \begin{lemma}
+        Для всякого $n \in \NN \setminus \{0\}$ верно, что $B_{2n+1} = 0$.
+    \end{lemma}
+
+    \begin{proof}
+        Заметим, что
+        \[\frac{x}{\exp(x) - 1} + \frac{x}{2} = \frac{x}{2} \cdot \frac{\exp(x) + 1}{\exp(x) - 1} = \frac{x}{2} \cdot \frac{\exp(x/2) + \exp(-x/2)}{\exp(x/2) - \exp(-x/2)} = \frac{x}{2} \cdot \coth(x/2)\]
+        При этом $\frac{x}{2}\cth(x/2)$ является чётной функцией, значит производные всех нечётных степеней равны $0$, откуда и получаем, что $B_{2n+1} = 0$.\footnote{Но для $n = 0$ мы получаем равенство $B_1 + \frac{1}{2} = 0$, поэтому только для $n=0$ рассуждение неверно.}
+    \end{proof}
+
+    \begin{definition}
+        Многочлены Бернулли --- такая последовательность многочленов $(B_n(t))_{n=0}^\infty$, что на уровне формальных рядов (теперь от $x$ и $y$)
+        \[\frac{x \exp(yx)}{\exp(x) - 1} = \sum_{n=0}^\infty \frac{B_n(y) x^n}{n!}\]
+    \end{definition}
+
+    \begin{remark*}
+        Определение корректно, поскольку данный формальный ряд по сути является произведением рядов $\sum_{n=0}^\infty \frac{B_n}{n!} x^n$ и $\exp(yx)$, что значит, что в каждом мономе степень $x$ не менее степени $y$, значит формальные ряды в разложении $B_n$ получаются конечными, т.е. являются просто многочленами.
+    \end{remark*}
+
+    \begin{corollary}
+        $B_n(0) = B_n$.
+    \end{corollary}
+
+    \begin{lemma}
+        \[\sum_{k=0}^n \binom{n+1}{k} B_k(y) = (n+1) y^n\]
+    \end{lemma}
+
+    \begin{proof}
+        По определению
+        \[\left(\sum_{k=0}^\infty \frac{(xy)^k}{k!}\right) = \left(\sum_{l=0}^\infty \frac{x^l}{(l+1)!}\right) \left(\sum_{m=0}^\infty \frac{B_m(y) x^m}{m!}\right)\]
+        Рассматривая коэффициенты при степенях $x$ получаем, что
+        \[\frac{y^n}{n!} = \sum_{k=0}^n \frac{1}{(n-k+1)!} \cdot \frac{B_k(y)}{k!} = \frac{1}{(n+1)!} \sum_{k=0}^n \binom{n+1}{k} B_k(y)\]
+        Откуда мы и получаем требуемое равенство.
+    \end{proof}
+
+    \begin{corollary}
+        $\deg(B_n) = n$.
+    \end{corollary}
+
+    \begin{lemma}
+        $B_{n+1}' = (n+1) B_{n}$.
+    \end{lemma}
+
+    \begin{proof}
+        Давайте продифференцируем по $y$ равенство (на уровне формальных рядов)
+        \[\frac{x \exp(yx)}{\exp(x) - 1} = \sum_{n=0}^\infty \frac{B_n(y)}{n!} x^n\]
+        Получаем, что
+        \[\sum_{n=1}^\infty \frac{B_{n-1}(y)}{(n-1)!} x^n = x \sum_{n=0}^\infty \frac{B_n(y)}{n!} x^n = \frac{x^2 \exp(yx)}{\exp(x) - 1} = \sum_{n=1}^\infty \frac{B'_n(y)}{n!} x^n\]
+        Следовательно $B'_n = n B_{n-1}$.
+    \end{proof}
+
+    \begin{corollary}
+        $B_n(y) = \sum_{k=0}^n \frac{B_{n-k}}{k!} y^k$.
+    \end{corollary}
+
+    \begin{proof}
+        \[B_n(y) = \sum_{k=0}^n \frac{B_n^{(k)}(0)}{k!} x^k = \sum_{k=0}^n \frac{B_{n-k}(0)}{k!} x^k = \sum_{k=0}^n \frac{B_{n-k}}{k!} x^k\]
+    \end{proof}
+
+    \begin{theorem}[формула Эйлера-Маклорена]
+        Пусть даны целые $a$ и $b$ и функция $f$, которая имеет $m$ ($m \in \NN \setminus \{0\}$) производных на $[a; b]$. Тогда
+        \begin{align*}
+            &\sum_{k=a}^{b-1} f(k) = \int_{a}^b f(x)dx + \sum_{k=1}^m \left.\frac{B_k}{k!} f^{(k-1)}(x)\right|_a^b + R_m&
+            &R_m = (-1)^{m+1} \int_a^b \frac{B_m(\{x\})}{m!} f^{(m)}(x)dx
+        \end{align*}
+    \end{theorem}
+
+    \begin{proof}
+        Заметим, что достаточно доказать формулу для $a = 0$ и $b = 1$, а $\{x\}$ можно заменить на $x$. Также будем доказывать её по индукции по $m$.
+
+        \textbf{База.} $m=1$. Тогда $B_1(x) = x - \frac{1}{2}$. Следовательно по интегрированию по частям (по функциям $f$ и $B_1$)
+        \[\left.f(x)\left(x - \frac{1}{2}\right)\right|_0^1 = \int_0^1 f(x)dx + \int_0^1 \left(x - \frac{1}{2}\right)f'(x)dx\]
+        Таким образом
+        \[f(0) = \int_0^1 f(x)dx + \frac{1/2}{1!} \left.f(x)\right|_0^1 + R_1\]
+
+        \textbf{Шаг.} Пусть утверждение для $m$ верно; покажем верность для $m+1$. Заметим, что нужно показать, что
+        \[R_m = \left.\frac{B_{m+1}}{(m+1)!} f^{(m)}(x)\right|_0^1 + R_{m+1}\]
+        Интегрируя по частям по функциям $f^{(m)}(x)$ и $B_{m+1}(x)/(m+1)!$, получаем, что
+        \begin{align*}
+            (-1)^{m+1}\int_0^1 \frac{B'_{m+1}(x)}{(m+1)!}f^{(m)}(x)dx
+            &= (-1)^{m+1} \left.\frac{B_{m+1}(x)}{(m+1)!} f^{(m)}(x) \right|_0^1 + (-1)^{m+2} \int_0^1 \frac{B_{m+1}(x)}{(m+1)!}f^{(m+1)}(x)dx\\
+            &= (-1)^{m+1} \left.\frac{B_{m+1}(x)}{(m+1)!} f^{(m)}(x) \right|_0^1 + R_{m+1}
+        \end{align*}
+        Поскольку $B'_{m+1}(x) = (m+1) B_m(x)$, то получаем
+        \[R_m = (-1)^{m+1} \left.\frac{B_{m+1}(x)}{(m+1)!} f^{(m)}(x) \right|_0^1 + R_{m+1}\]
+        Следовательно осталось показать, что $(-1)^{m+1}B_{m+1} = B_{m+1}(0) = B_{m+1}(1)$. Первое неравенство верно, поскольку для чётных $m$ верно, что $B_{m+1} = B_{m+1}(0) = 0$, а при нечётных $B_{m+1} = B_{m+1}(0)$, а $(-1)^{m+1} = 1$. Осталось показать, что $B_{m+1}(0) = B_{m+1}(1)$.
+
+        Заметим, что
+        \begin{align*}
+            &\sum_{n=0}^\infty \frac{B_n(0)}{n!} x^n = \frac{x \exp(0 \cdot x)}{\exp(x) - 1}&
+            &\sum_{n=0}^\infty \frac{B_n(1)}{n!} x^n = \frac{x \exp(1 \cdot x)}{\exp(x) - 1}&
+        \end{align*}
+        При этом
+        \[\frac{x}{\exp(x) - 1} - \frac{x \exp(x)}{\exp(x) - 1} = \frac{x (1 - \exp(x))}{\exp(x) - 1} = -x\]
+        что значит, что $B_n(0) = B_n(1)$ для всех $n \in (\NN \cup \{0\}) \setminus \{1\}$. Этого хватает, так как $m \geqslant 2$.
+    \end{proof}
+
+    \newpage\null\thispagestyle{empty}\newpage
     \section{Мои придумки вне лекций}
 
     \subsection{Сильная сходимость}
