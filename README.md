@@ -1,7 +1,7 @@
 # SPbU-MCS-2020-M-lecture-notes &mdash; конспекты лекций
 Это мои конспекты лекций. Они направлены на лично меня, но могут найтись полезными для наборов М и МААД 2020 года.
 
-Для вёрстки используется [MikTeX](https://miktex.org/) и [моя TeX-библиотечка](https://github.com/lounres/TeX-libs).
+Для вёрстки используется [MikTeX](https://miktex.org/) и [моя TeX-библиотечка](https://github.com/lounres/TeX-libs). Также в директории [.tex](.tex) расположены стилевые пакеты проекта.
 
 P.S. Сокращения:
 - WIP &ndash; Work In Progress
