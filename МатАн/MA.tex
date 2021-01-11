@@ -2,6 +2,7 @@
 \usepackage{../.tex/mcs-notes}
 \usepackage{todonotes}
 \usepackage{multicol}
+\usepackage{float}
 
 \settitle
 {Математический анализ --- 1.}
@@ -13,6 +14,8 @@
 \DeclareMathOperator*{\osc}{osc}
 \DeclareMathOperator{\sign}{sign}
 \DeclareMathOperator{\const}{const}
+\DeclareMathOperator{\grad}{grad}
+\newcommand{\eqdef}{\mathbin{\stackrel{\mathrm{def}}{=}}}
 
 \begin{document}
     \maketitle
@@ -738,7 +741,7 @@
             &\Longrightarrow&
             f(x) &\in \left(f(t) + \frac{3}{2}\lambda(x-t); f(t) + \frac{1}{2}\lambda(x-t)\right)
         \end{align*}
-        что значит, что $f$ в точке $t$ "строго" убывает --- противоречие. Значит $f'(t) \geqslant 0$.
+        что значит, что $f$ в точке $t$ ``строго'' убывает --- противоречие. Значит $f'(t) \geqslant 0$.
     \end{proof}
 
     \begin{definition}
@@ -773,8 +776,8 @@
         \[\lambda := \frac{f(a) - f(b)}{g(a) - g(b)}\]
         а $\tau(x) := f(x) - \lambda g(x)$. В таком случае
         \[\frac{\tau(a) - \tau(b)}{g(a) - g(b)} = \frac{(f(a) - f(b) - \lambda (g(a) - g(b)))}{g(a) - g(b)} = \lambda - \lambda = 0\]
-        значит $\tau(a) = \tau(b)$, значит есть $c \in [a; b]$, что $\tau(c) = 0$. Тогда
-        \[\frac{f'(c)}{g'(c)} = \frac{(\tau + \lambda g)'(c)}{g(c)} = \frac{\tau'(c)}{g(c)} + \lambda = \lambda = \frac{f(a) - f(b)}{g(a) - g(b)}\]
+        значит $\tau(a) = \tau(b)$, значит есть $c \in [a; b]$, что $\tau'(c) = 0$. Тогда
+        \[\frac{f'(c)}{g'(c)} = \frac{(\tau + \lambda g)'(c)}{g'(c)} = \frac{\tau'(c)}{g'(c)} + \lambda = \lambda = \frac{f(a) - f(b)}{g(a) - g(b)}\]
     \end{proof}
 
     \begin{theorem}[Лагранж]
@@ -791,7 +794,7 @@
         \begin{enumerate}
             \item Если $f' \geqslant 0$, то $f$ возрастающая функция.
             \item Если $f' > 0$, то $f$ строго возрастающая функция.
-            \item Если $f$ возрастающая функция, то $f' > 0$.
+            \item Если $f$ возрастающая функция, то $f' \geqslant 0$.
         \end{enumerate}
     \end{theorem}
 
@@ -830,7 +833,7 @@
     \begin{proof}
         Есть несколько способов:
         \begin{enumerate}
-            \item Несложно видеть, что для любого $\varepsilon > 0$ есть некоторая правая окрестность $a$, в которой функция $f'$ лежит в $\varepsilon$-окрестности $d$. Тогда $f(x) - (d-\varepsilon)x$ убывает в данной окрестности, а $f(x) - (d+\varepsilon)x$ возрастает, значит $f(x) - f(a) \in ((d + \varepsilon)(x-a); (d-\varepsilon)(x-a))$. В таком случае $f'(a)$ определена и равна $d$.
+            \item Несложно видеть, что для любого $\varepsilon > 0$ есть некоторая правая окрестность $a$, в которой функция $f'$ лежит в $\varepsilon$-окрестности $d$. Тогда $f(x) - (d-\varepsilon)x$ возрастает в данной окрестности, а $f(x) - (d+\varepsilon)x$ убывает, значит $f(x) - f(a) \in ((d - \varepsilon)(x-a); (d + \varepsilon)(x-a))$. В таком случае $f'(a)$ определена и равна $d$.
             \item По теореме Лагранжа для любого $x \in [a; b)$ найдётся $\xi \in (a; x)$, что
                 \[\frac{f(x) - f(a)}{x - a} = f'(\xi)\]
                 Значит
@@ -847,7 +850,8 @@
 
     \begin{proof}
         Пусть дано $\varepsilon > 0$, а
-        \[d := \lim_{x \to a^+} \frac{f'(x)}{g'(x)}\]. Тогда есть $\delta > 0$, что для любого $t \in (a; a + \delta)$ значение $f'(t)/g'(t)$ лежит в $U_\varepsilon(d)$. Легко видеть, что для любых $x, y \in (a; a + \delta)$ существует $\xi \in (x; y) \subseteq (a; a + \delta)$, что
+        \[d := \lim_{x \to a^+} \frac{f'(x)}{g'(x)}.\]
+        Тогда есть $\delta > 0$, что для любого $t \in (a; a + \delta)$ значение $f'(t)/g'(t)$ лежит в $U_\varepsilon(d)$. Легко видеть, что для любых $x, y \in (a; a + \delta)$ существует $\xi \in (x; y) \subseteq (a; a + \delta)$, что
         \[\frac{f(x) - f(y)}{g(x) - g(y)} = f'(\xi) \in U_\varepsilon(d)\]
         Устремляя $x$ к $a$, получаем, что $f(y)/g(y)$ тоже лежит в $U_\varepsilon(d)$. Тогда по определению предела
         \[\lim_{x \to a^+} \frac{f(x)}{g(x)} = d = \lim_{x \to a^+} \frac{f'(x)}{g'(x)}\]
@@ -1551,7 +1555,7 @@
                 \item рациональные функции;
                 \item рациональные функции от $\sin$ и $\cos$;
                 \item рациональные функции от $\sinh$ и $\cosh$;
-                \item рациональные функции от $x$ и $\sqrt{ax^2 + bx + 1}$, где $a \neq 0$.
+                \item рациональные функции от $x$ и $\sqrt{ax^2 + bx + c}$, где $a \neq 0$.
             \end{enumerate}
         \end{multicols}
     \end{theorem}
@@ -1725,7 +1729,7 @@
                 \]
                 Вспомним также, что
                 \[
-                    \sum_{k=0}^\infty \frac{x^k}{k!} \stackrel{\mathrm{def}}{=} \lim \left(\sum_{k=0}^n \frac{x^k}{k!}\right)_{n=0}^\infty
+                    \sum_{k=0}^\infty \frac{x^k}{k!} \eqdef \lim \left(\sum_{k=0}^n \frac{x^k}{k!}\right)_{n=0}^\infty
                 \]
                 Чтобы показать, что предел этой последовательности реально совпадает с $\exp(x)$, покажем, что
                 \[\lim \left(\exp(x) - \sum_{k=0}^n \frac{x^k}{k!}\right)_{n=0}^\infty = 0\]
@@ -1952,7 +1956,7 @@
         Определим последовательность чисел Бернулли $(B_n)_{n=0}^\infty$ как последовательность, чья экспоненциальная производящая функция есть $\frac{x}{\exp(x) - 1}$, т.е. на уровне формальных степенных рядов верно, что
         \[\sum_{n=0}^\infty \frac{B_n x^n}{n!} = \frac{x}{\exp(x) - 1}\]
 
-        \begin{table}[h]
+        \begin{table}[H]
             \centering
             \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c}
                 $B_0$ & $B_1$ & $B_2$ & $B_3$ & $B_4$ & $B_5$ & $B_6$ & $B_7$ & $B_8$ & $B_9$ & $B_{10}$ & $\cdots$\\
@@ -2009,10 +2013,6 @@
         \[\sum_{k=0}^\infty \frac{g^{(k)}(0)}{k!} x^k = \sum_{k=0}^\infty \frac{B_k}{k!} x^k\]
     \end{proof}
 
-    \begin{statement}
-        \[S_m(n) = \sum_{k=1}^{n-1} k^m = \sum_{k=0}^m \binom{m}{k} B_{m-k} \frac{n^k}{k+1}\]
-    \end{statement}
-
     \begin{lemma}
         Для всякого $n \in \NN \setminus \{0\}$ верно, что $B_{2n+1} = 0$.
     \end{lemma}
@@ -2020,7 +2020,7 @@
     \begin{proof}
         Заметим, что
         \[\frac{x}{\exp(x) - 1} + \frac{x}{2} = \frac{x}{2} \cdot \frac{\exp(x) + 1}{\exp(x) - 1} = \frac{x}{2} \cdot \frac{\exp(x/2) + \exp(-x/2)}{\exp(x/2) - \exp(-x/2)} = \frac{x}{2} \cdot \coth(x/2)\]
-        При этом $\frac{x}{2}\cth(x/2)$ является чётной функцией, значит производные всех нечётных степеней равны $0$, откуда и получаем, что $B_{2n+1} = 0$.\footnote{Но для $n = 0$ мы получаем равенство $B_1 + \frac{1}{2} = 0$, поэтому только для $n=0$ рассуждение неверно.}
+        При этом $\frac{x}{2}\cth(x/2)$ является чётной функцией, значит производные всех нечётных степеней равны $0$, откуда и получаем, что $B_{2n+1} = 0$.\footnote{Но для $B_1$ мы получаем равенство $B_1 + \frac{1}{2} = 0$, поэтому только для $n=0$ рассуждение неверно.}
     \end{proof}
 
     \begin{definition}
@@ -2029,7 +2029,7 @@
     \end{definition}
 
     \begin{remark*}
-        Определение корректно, поскольку данный формальный ряд по сути является произведением рядов $\sum_{n=0}^\infty \frac{B_n}{n!} x^n$ и $\exp(yx)$, что значит, что в каждом мономе степень $x$ не менее степени $y$, значит формальные ряды в разложении $B_n$ получаются конечными, т.е. являются просто многочленами.
+        Определение корректно, поскольку данный формальный ряд по сути является произведением рядов $\sum_{n=0}^\infty \frac{B_n}{n!} x^n$ и $\exp(yx)$, что значит, что в каждом мономе степень $x$ не менее степени $y$, значит формальные ряды при каждой степени $x$ в разложении $\frac{x \exp(yx)}{\exp(x) - 1}$ --- ряды $B_n(y)$ --- получаются конечными, т.е. являются просто многочленами.
     \end{remark*}
 
     \begin{corollary}
@@ -2065,11 +2065,36 @@
     \end{proof}
 
     \begin{corollary}
-        $B_n(y) = \sum_{k=0}^n \frac{B_{n-k}}{k!} y^k$.
+        $B_n(y) = \sum_{k=0}^n \binom{n}{k} B_{n-k} y^k$.
     \end{corollary}
 
     \begin{proof}
-        \[B_n(y) = \sum_{k=0}^n \frac{B_n^{(k)}(0)}{k!} x^k = \sum_{k=0}^n \frac{B_{n-k}(0)}{k!} x^k = \sum_{k=0}^n \frac{B_{n-k}}{k!} x^k\]
+        \[B_n(y) = \sum_{k=0}^n \frac{B_n^{(k)}(0)}{k!} x^k = \sum_{k=0}^n \frac{B_{n-k}(0) n!}{k! (n-k)!} x^k = \sum_{k=0}^n \binom{n}{k} B_{n-k} x^k\]
+    \end{proof}
+
+    \begin{lemma}
+        $B_n(y) = B_n(1-y) (-1)^n$.
+    \end{lemma}
+
+    \begin{proof}
+        Действительно,
+        \begin{multline*}
+            \sum_{n=0}^\infty \frac{B_n(1-y) x^n}{n!}
+            = \frac{x \exp((1-y)x)}{\exp(x) - 1}
+            = \frac{x \exp(-yx)}{1 - \exp(-x)}\\
+            = \frac{-x \exp(y(-x))}{\exp(-x) - 1}
+            = \sum_{n=0}^\infty \frac{B_n(y) (-x)^n}{n!}
+            = \sum_{n=0}^\infty \frac{(-1)^n B_n(y) x^n}{n!}
+        \end{multline*}
+        Следовательно, выделяя полиномы от $y$ при степенях $x$, получаем искомое равенство.
+    \end{proof}
+
+    \begin{corollary}
+        $\int_0^1 B_n(y) dy = 0$
+    \end{corollary}
+
+    \begin{proof}
+        \[\int_0^1 B_n(y) dy = \left.\frac{B_{n+1}(y)}{n+1}\right|_0^1 = \frac{B_{n+1}(1) - B_{n+1}(0)}{n+1} = 0\]
     \end{proof}
 
     \begin{theorem}[формула Эйлера-Маклорена]
@@ -2084,9 +2109,9 @@
         Заметим, что достаточно доказать формулу для $a = 0$ и $b = 1$, а $\{x\}$ можно заменить на $x$. Также будем доказывать её по индукции по $m$.
 
         \textbf{База.} $m=1$. Тогда $B_1(x) = x - \frac{1}{2}$. Следовательно по интегрированию по частям (по функциям $f$ и $B_1$)
-        \[\left.f(x)\left(x - \frac{1}{2}\right)\right|_0^1 = \int_0^1 f(x)dx + \int_0^1 \left(x - \frac{1}{2}\right)f'(x)dx\]
+        \[\frac{f(1) + f(0)}{2} = \left.f(x)\left(x - \frac{1}{2}\right)\right|_0^1 = \int_0^1 f(x)dx + \int_0^1 \left(x - \frac{1}{2}\right)f'(x)dx\]
         Таким образом
-        \[f(0) = \int_0^1 f(x)dx + \frac{1/2}{1!} \left.f(x)\right|_0^1 + R_1\]
+        \[f(0) = \int_0^1 f(x)dx + \frac{-1/2}{1!} \left.f(x)\right|_0^1 + R_1\]
 
         \textbf{Шаг.} Пусть утверждение для $m$ верно; покажем верность для $m+1$. Заметим, что нужно показать, что
         \[R_m = \left.\frac{B_{m+1}}{(m+1)!} f^{(m)}(x)\right|_0^1 + R_{m+1}\]
@@ -2098,17 +2123,336 @@
         \end{align*}
         Поскольку $B'_{m+1}(x) = (m+1) B_m(x)$, то получаем
         \[R_m = (-1)^{m+1} \left.\frac{B_{m+1}(x)}{(m+1)!} f^{(m)}(x) \right|_0^1 + R_{m+1}\]
-        Следовательно осталось показать, что $(-1)^{m+1}B_{m+1} = B_{m+1}(0) = B_{m+1}(1)$. Первое неравенство верно, поскольку для чётных $m$ верно, что $B_{m+1} = B_{m+1}(0) = 0$, а при нечётных $B_{m+1} = B_{m+1}(0)$, а $(-1)^{m+1} = 1$. Осталось показать, что $B_{m+1}(0) = B_{m+1}(1)$.
-
-        Заметим, что
-        \begin{align*}
-            &\sum_{n=0}^\infty \frac{B_n(0)}{n!} x^n = \frac{x \exp(0 \cdot x)}{\exp(x) - 1}&
-            &\sum_{n=0}^\infty \frac{B_n(1)}{n!} x^n = \frac{x \exp(1 \cdot x)}{\exp(x) - 1}&
-        \end{align*}
-        При этом
-        \[\frac{x}{\exp(x) - 1} - \frac{x \exp(x)}{\exp(x) - 1} = \frac{x (1 - \exp(x))}{\exp(x) - 1} = -x\]
-        что значит, что $B_n(0) = B_n(1)$ для всех $n \in (\NN \cup \{0\}) \setminus \{1\}$. Этого хватает, так как $m \geqslant 2$.
+        Следовательно осталось показать, что $(-1)^{m+1}B_{m+1} = B_{m+1}(0) = B_{m+1}(1)$. Заметим, что уже есть $B_{m+1} = B_{m+1}(0) = (-1)^{m+1} B_{m+1}(1)$. Осталось заметить, что при нечётных $m$ мы имеем $(-1)^{m+1} = 1$, а при чётных --- $B_{m+1} = 0$, так как $m+1 \geqslant 2$. Отсюда следует искомое.
     \end{proof}
+
+    \begin{example}
+        Давайте посчитаем $\sum_{k=1}^{n-1} k^d$. Для этого подставим в формулу Эйлера-Маклорена функцию $f(x) := x^d$, отрезок $[a; b] := [0; n]$ и $m = d+1$:
+        \begin{align*}
+            \sum_{k=1}^{n-1} k^d
+            &= \sum_{k=0}^{n-1} f(k)\\
+            &=
+                \int_0^n f(x) dx
+                + \sum_{k=1}^m \left.\frac{B_k}{k!} f^{(k-1)}(x)\right|_0^n
+                + (-1)^{m+1} \int_0^n \frac{B_m(\{x\})}{m!} f^{(m)}(x) dx\\
+            &=
+                \left.\frac{x^{d+1}}{d+1}\right|_0^n
+                + \sum_{k=1}^m \left.\frac{B_k}{k!} \frac{d!}{(d-k+1)!} x^{d-k+1}\right|_0^n
+                + (-1)^{m+1} \int_0^n \frac{B_m(\{x\})}{m!} \cdot 0 \cdot dx\\
+            &=
+                \frac{n^{d+1}}{d+1}
+                + \sum_{k=1}^{d+1} B_k \frac{d!}{k! (d+1-k)!} n^{d+1-k}\\
+            &= \frac{1}{d+1} \sum_{k=0}^{d+1} B_k \binom{d+1}{k} n^{d+1-k}
+        \end{align*}
+    \end{example}
+
+    \subsection{Некоторые методы интегрирования и их результаты}
+
+    Рассмотрим неформальные примеры и докажем теоремы, их формализующие.
+
+    \begin{example}
+        Несложно понять, что
+        \[K := \int_0^{+\infty} e^{-x^2} dx\]
+        сходится. Заметим также, что для всякого $t > 0$
+        \[
+            K
+            = \int_0^{+\infty} e^{-x^2} dx
+            = \int_0^{+\infty} e^{-(ty)^2} d(ty)
+            = \int_0^{+\infty} t e^{-y^2 t^2} dy
+        \]
+        Следовательно
+        \begin{align*}
+            K^2
+            &= K \cdot \int_0^{+\infty} e^{-t^2} dt&
+            &= \int_0^{+\infty} e^{-t^2} \cdot K \cdot dt\\
+            &= \int_0^{+\infty} e^{-t^2} \left(\int_0^{+\infty} t e^{-t^2y^2} dy\right) dt&
+            &= \int_0^{+\infty} \left(\int_0^{+\infty} t e^{-t^2(y^2+1)} dy\right) dt\\
+            &= \int_0^{+\infty} \left(\int_0^{+\infty} t e^{-t^2(y^2+1)} dt\right) dy&
+            &= \int_0^{+\infty} \left(\int_0^{+\infty} e^{-t^2(y^2+1)} \frac{d(t^2)}{2}\right) dy\\
+            &= \int_0^{+\infty} \frac{1}{2} \left(\int_0^{+\infty} e^{-v(y^2+1)} dv\right) dy&
+            &= \frac{1}{2} \int_0^{+\infty} \left.\frac{e^{-v(y^2+1)}}{-(y^2+1)}\right|_0^{+\infty} dy\\
+            &= \frac{1}{2} \int_0^{+\infty} \frac{dy}{y^2+1}&
+            &= \frac{1}{2} \left. \arctan(y) \right|_0^{+\infty} = \frac{\pi}{4}&
+        \end{align*}
+        откуда $K = \frac{\sqrt{\pi}}{2}$.
+    \end{example}
+
+    \begin{example}
+        Рассмотрим функцию
+        \[I(a) := \int_0^{+\infty} e^{-ax} \frac{\sin(x)}{x} dx\]
+        Тогда
+        \[
+            I'(a)
+            = \int_0^{+\infty} (-x) e^{-ax} \frac{\sin(x)}{x} dx
+            = \int_0^{+\infty} -e^{-ax} \sin(x) dx
+            = \left.\frac{e^{-ax}(a \sin(x) + \cos(x))}{a^2 + 1}\right|_0^{+\infty}
+            = -\frac{1}{a^2 + 1}
+        \]
+        Значит $I(a) = C - \arctan(a)$. Но поскольку
+        \[
+            \lim_{a \to \infty} I(a) + \arctan(a)
+            = \lim_{a \to \infty} \int_0^{+\infty} e^{-ax} \frac{\sin(x)}{x} dx + \arctan(a)
+            = 0 + \frac{\pi}{2}
+        \]
+        то $C = \frac{\pi}{2}$, а значит
+        \[\int_0^{+\infty} \frac{\sin(x)}{x} dx = I(0) = \frac{\pi}{2} - \arctan(0) = \frac{\pi}{2}\]
+    \end{example}
+
+    \begin{example}
+        \begin{align*}
+            \int_0^1 \frac{x^b - x^a}{\ln(x)} dx
+            &= \int_0^1 \left(\int_a^b x^y dy\right) dx&
+            &= \int_a^b \left(\int_0^1 x^y dx\right) dy\\
+            &= \int_a^b \frac{dy}{y+1}&
+            &= \ln(b+1) - \ln(a+1)\\
+            &= \ln\left(\frac{b+1}{a+1}\right)
+        \end{align*}
+    \end{example}
+
+    \begin{example}
+        Заметим, что
+        \[
+            \int_1^{+\infty} \frac{x^2 - y^2}{(x^2 + y^2)^2} dy
+            = \left. \frac{y}{x^2 + y^2} \right|_0^{+\infty}
+            = - \frac{1}{x^2 + 1}
+        \]
+        Таким образом
+        \begin{align*}
+            &\int_1^{+\infty} \left(\int_1^{+\infty} \frac{x^2 - y^2}{(x^2 + y^2)^2} dy\right) dx = -\frac{\pi}{4}&
+            &\text{ но }&
+            &\int_1^{+\infty} \left(\int_1^{+\infty} \frac{x^2 - y^2}{(x^2 + y^2)^2} dx\right) dy = \frac{\pi}{4}
+        \end{align*}
+    \end{example}
+
+    \begin{remark*}
+        Этот пример говорит о том, что не всегда можно переставлять интегралы местами.
+    \end{remark*}
+
+    \begin{theorem}
+        Пусть даны непрерывные функции $a$ и $b$ на $[x_0; x_1]$. Пусть также дана непрерывная функция $f(x, t)$ на $\{(x, t) \mid t \in [a(x); b(x)] \wedge x \in [x_0; x_1]\}$. Тогда $\int_{a(x)}^{b(x)} f(x, t) dt$ непрерывна.
+    \end{theorem}
+
+    \begin{proof}
+        \[
+            \lim_{y \to x} \int_{a(y)}^{b(y)} f(y, t) dt
+            = \lim_{y \to x} \int_{a(y)}^{a(x)} f(y, t) dt
+                + \lim_{y \to x} \int_{b(x)}^{b(y)} f(y, t) dt
+                + \lim_{y \to x} \int_{a(x)}^{b(x)} f(y, t) dt
+        \]
+
+        \begin{thlemma}
+            \[\lim_{y \to x} \int_{b(x)}^{b(y)} f(y, t) dt = 0\]
+        \end{thlemma}
+
+        \begin{proof}
+            Заметим, что
+            \[
+                \left|\int_{b(x)}^{b(y)} f(y, t) dt \right|
+                \leqslant |b(y) - b(x)| \cdot \max_{t \in [b(x); b(y)]} |f(y, t)|
+            \]
+            Заметим, что из непрерывности $f$ следует, что
+            \[
+                \max_{t \in [b(x); b(y)]} |f(y, t)|
+                \leqslant \max_{\substack{y \in [x - \varepsilon; x + \varepsilon]\\ t \in [b(x); b(y)]}} |f(y, t)|
+            \]
+            Но при этом $\lim_{y \to x} |b(y) - b(x)| = 0$, следовательно
+            \[\lim_{y \to x} \left|\int_{b(x)}^{b(y)} f(y, t) dt \right| = 0\]
+            откуда и получается требуемое.
+        \end{proof}
+
+        \begin{thlemma}
+            \[\lim_{y \to x} \int_{a(x)}^{b(x)} f(y, t) dt = \int_{a(x)}^{b(x)} f(x, t) dt\]
+        \end{thlemma}
+
+        \begin{proof}
+            Поскольку $f$ непрерывна, то непрерывна и $f(y, t) - f(x, t)$. Значит
+            \begin{multline*}
+                \lim_{y \to x} \int_{a(x)}^{b(x)} f(y, t) dt - \int_{a(x)}^{b(x)} f(x, t) dt
+                = \lim_{y \to x} \int_{a(x)}^{b(x)} (f(y, t) - f(x, t)) dt\\
+                \leqslant \lim_{y \to x} |b(x) - a(x)| \max_{t \in [a(x); b(x)]} |f(y, t) - f(x, t)|
+                \leqslant |b(x) - a(x)| \lim_{\varepsilon \to 0} \max_{\substack{y \in [x - \varepsilon; x + \varepsilon]\\ t \in [a(x); b(x)]}} |f(y, t) - f(x, t)| = 0
+            \end{multline*}
+        \end{proof}
+
+        Объединяя всё вышесказанное, получаем требуемое.        
+    \end{proof}
+
+    \begin{theorem}[интегральное правило Лейбница, ``дифференцирование под знаком интеграла'']
+        Пусть даны функции $a$ и $b$ на $[x_0; x_1]$ с непрерывными производными. Пусть также дана функция $f(x, t)$, что $f$ и $\frac{\partial}{\partial x}f$ непрерывны на множестве $\{(x, t) \mid t \in [a(x); b(x)] \wedge x \in [x_0; x_1]\}$. Тогда для всякого $x \in [x_0; x_1]$
+        \[
+            \frac{d}{dx} \int_{a(x)}^{b(x)} f(x, t) dt
+            = f(x, b(x)) \cdot \frac{d}{dx} b(x)
+            - f(x, a(x)) \cdot \frac{d}{dx} a(x)
+            + \int_{a(x)}^{b(x)} \frac{\partial}{\partial x} f(x, t) dt
+        \]
+    \end{theorem}
+
+    \begin{proof}
+        \begin{align*}
+            \frac{d}{dx} \int_{a(x)}^{b(x)} f(x, t) dt
+            &\eqdef \lim_{\delta \to 0} \frac{\int_{a(x + \delta)}^{b(x + \delta)} f(x + \delta, t) dt - \int_{a(x)}^{b(x)} f(x, t) dt}{\delta}\\
+            &= \lim_{\delta \to 0} \left(
+                \frac{\int_{a(x + \delta)}^{a(x)} f(x + \delta, t) dt}{\delta}
+                + \frac{\int_{b(x)}^{b(x + \delta)} f(x + \delta, t) dt}{\delta}
+                + \frac{\int_{a(x)}^{b(x)} (f(x + \delta, t) - f(x, t)) dt}{\delta}
+            \right)
+        \end{align*}
+        
+        \begin{thlemma}
+            \[\lim_{\delta \to 0} \frac{\int_{b(x)}^{b(x + \delta)} f(x + \delta, t) dt}{\delta} = f(x, b(x)) \cdot \frac{d}{dx} b(x)\]
+        \end{thlemma}
+
+        \begin{proof}
+            \begin{align*}
+                \lim_{\delta \to 0} \frac{\int_{b(x)}^{b(x + \delta)} f(x + \delta, t) dt}{\delta}
+                &= \lim_{\delta \to 0} \frac{b(x + \delta) - b(x)}{\delta} \cdot \frac{\int_{b(x)}^{b(x + \delta)} f(x + \delta, t) dt}{b(x + \delta) - b(x)}\\
+                &= \frac{d}{dx} b(x) \cdot \lim_{\delta \to 0} \frac{\int_{b(x)}^{b(x + \delta)} f(x + \delta, t) dt}{b(x + \delta) - b(x)}\\
+                % &= f(x, b(x)) \cdot \frac{d}{dx} b(x)
+            \end{align*}
+
+            Заметим, что
+            \[
+                \min_{t \in [b(x); b(x + \delta)]} f(x + \delta, t)
+                \leqslant \frac{\int_{b(x)}^{b(x + \delta)} f(x + \delta, t) dt}{b(x + \delta) - b(x)}
+                \leqslant \max_{t \in [b(x); b(x + \delta)]} f(x + \delta, t)
+            \]
+            По непрерывности $f$ предыдущие минимум и максимум определены и
+            \[
+                \lim_{\delta \to 0} \min_{t \in [b(x); b(x + \delta)]} f(x + \delta, t)
+                = \lim_{\delta \to 0} \max_{t \in [b(x); b(x + \delta)]} f(x + \delta, t)
+                = f(x, b(x))
+            \]
+            Тогда 
+            \[
+                \lim_{\delta \to 0} \frac{\int_{b(x)}^{b(x + \delta)} f(x + \delta, t) dt}{b(x + \delta) - b(x)}
+                = f(x, b(x))
+            \]
+            Отсюда следует требуемое.
+        \end{proof}
+
+        \begin{thlemma}
+            \[
+                \lim_{\delta \to 0} \frac{\int_{a(x)}^{b(x)} (f(x + \delta, t) - f(x, t)) dt}{\delta}
+                = \int_{a(x)}^{b(x)} \frac{\partial}{\partial x} f(x, t) dt
+            \]
+        \end{thlemma}
+
+        \begin{proof}
+            Заметим, что для всяких $\delta$ и $t \in [a(x); b(x)]$ есть $\gamma_t(\delta) \in (0; \delta)$, что
+            \[\frac{f(x + \delta, t) - f(x, t)}{\delta} = \frac{\partial}{\partial x} f(x +  \gamma_t(\delta), t)\]
+            Тогда
+            \[
+                \frac{\int_{a(x)}^{b(x)} (f(x + \delta, t) - f(x, t)) dt}{\delta}
+                = \int_{a(x)}^{b(x)} \frac{\partial}{\partial x} f(x + \gamma_t(\delta), t) dt
+            \]
+            Заметим, что
+            \begin{align*}
+                &\left|\int_{a(x)}^{b(x)} \frac{\partial}{\partial x} f(x + \gamma_t(\delta), t) dt - \int_{a(x)}^{b(x)} \frac{\partial}{\partial x} f(x, t) dt\right|\\
+                \leqslant& \int_{a(x)}^{b(x)} \left|\frac{\partial}{\partial x} f(x + \gamma_t(\delta), t) - \frac{\partial}{\partial x} f(x, t)\right| dt\\
+                \leqslant& \int_{a(x)}^{b(x)} \max_{y \in [x; x + \delta]} \left|\frac{\partial}{\partial x} f(y, t) - \frac{\partial}{\partial x} f(x, t)\right| dt\\
+                \leqslant& (b(x) - a(x)) \max_{\substack{y \in [x; x + \delta]\\ t \in [a(x); b(x)]}} \left|\frac{\partial}{\partial x} f(y, t) - \frac{\partial}{\partial x} f(x, t)\right|\\
+            \end{align*}
+            Следовательно так как $\frac{\partial}{\partial x} f$ непрерывна, то $\frac{\partial}{\partial x} f(y, t) - \frac{\partial}{\partial x} f(x, t)$ непрерывна, а поэтому
+            \[\lim_{\delta \to 0} \max_{\substack{y \in [x; x + \delta]\\ t \in [a(x); b(x)]}} \left|\frac{\partial}{\partial x} f(y, t) - \frac{\partial}{\partial x} f(x, t)\right| = 0\]
+            и тогда
+            \[
+                \lim_{\delta \to 0} \int_{a(x)}^{b(x)} \frac{\partial}{\partial x} f(x + \gamma_t(\delta), t) dt
+                = \int_{a(x)}^{b(x)} \frac{\partial}{\partial x} f(x, t) dt
+            \]
+            Таким образом получаем требуемое.
+        \end{proof}
+
+        Объединяя всё вышесказанное, получаем требуемое.
+    \end{proof}
+
+    \begin{corollary}
+        Если взять функции $a$ и $b$ константными, то будет лишь условие на непрерывность $f$ и $\frac{\partial}{\partial x} f(x, t)$ на прямоугольнике $[x_0; x_1] \times [a; b]$, а мы получим, что
+        \[\frac{d}{dx} \int_a^b f(x, t) dt = \int_a^b \frac{\partial}{\partial x} f(x, t) dt\]
+    \end{corollary}
+
+    \begin{theorem}
+        Пусть дана непрерывная функция $f(x, y)$ на $[a; b] \times [c; d]$. Тогда интегралы
+        \begin{align*}
+            &\int_a^b \left(\int_c^d f(x, y) dy\right) dx&
+            &\text{ и }&
+            &\int_c^d \left(\int_a^b f(x, y) dx\right) dy
+        \end{align*}
+        определены и равны.
+    \end{theorem}
+
+    \begin{proof}
+        Заметим, что $\int_a^t f(x, y) dx$ и $\int_c^s f(x, y) dy$ являются непрерывными функциями от $y$ и $x$ соответственно. Следовательно интегралы
+        \begin{align*}
+            &F(t, s) := \int_a^t \left(\int_c^s f(x, y) dy\right) dx&
+            &\text{ и }&
+            &G(t, s) := \int_c^s \left(\int_a^t f(x, y) dx\right) dy
+        \end{align*}
+        определены. При этом
+        \[\frac{\partial}{\partial t} F(t, s) = \int_c^s f(t, y) dy\]
+        и
+        \[
+            \frac{\partial}{\partial t} G(t, s)
+            = \frac{\partial}{\partial t} \int_c^s \left(\int_a^t f(x, y) dx\right) dy
+            = \int_c^s \frac{\partial}{\partial t} \left(\int_a^t f(x, y) dx\right) dy
+            = \int_c^s f(t, y) dy
+        \]
+        Т.е. $\frac{\partial}{\partial t} F = \frac{\partial}{\partial t} G$.
+
+        При этом несложно видеть, что $F(a, s) = G(a, s) = 0$, следовательно
+        \[
+            F(t, s)
+            = \int_a^t \frac{\partial}{\partial t} F(x, s) dx + F(a, s)
+            = \int_a^t \frac{\partial}{\partial t} G(x, s) dx + G(a, s)
+            = G(t, s)
+        \]
+    \end{proof}
+
+    % \begin{theorem}
+    %     Пусть дана непрерывная функция $f$ на $[a; +\infty) \times [c; + \infty)$ константного знака. Пусть также
+    %     \begin{align*}
+    %         I_x(y) &:= \int_a^\infty f(x, y) dx&
+    %         I_y(x) &:= \int_c^\infty f(x, y) dy
+    %     \end{align*}
+    %     определены при всех $y \in [c; + \infty)$ и $x \in [a; +\infty)$ и непрерывны там. Тогда
+    %     \[
+    %         \int_c^\infty \left(\int_a^\infty f(x, y) dx\right) dy
+    %         = \int_a^\infty \left(\int_c^\infty f(x, y) dy\right) dx
+    %     \]
+    % \end{theorem}
+
+    % \begin{theorem}
+    %     Пусть дана непрерывная функция $f$ на $[a; +\infty) \times [c; + \infty)$. Пусть также
+    %     \begin{align*}
+    %         I_x(y) &:= \int_a^\infty f(x, y) dx&
+    %         I_y(x) &:= \int_c^\infty f(x, y) dy
+    %     \end{align*}
+    %     определены при всех $y \in [c; + \infty)$ и $x \in [a; +\infty)$ и равномерно непрерывны на всяких отрезках $[a; b]$ и $[c; d]$ Соответственно. Тогда
+    %     \[
+    %         \int_c^\infty \left(\int_a^\infty f(x, y) dx\right) dy
+    %         = \int_a^\infty \left(\int_c^\infty f(x, y) dy\right) dx
+    %     \]
+    % \end{theorem}
+
+    \subsection{Кривые}
+
+    \begin{definition}
+        \emph{Кривая} --- непрерывное отображение отрезка $[0; 1]$ в любое топологическое пространство (например, $\RR^n$). 
+    \end{definition}
+
+    \todo[inline]{Кривая Пеано, тра-ля-ля...}
+
+    \begin{definition}
+        \emph{Длина кривой} $\tau$ --- значение
+        \[\sup \left\{\sum_{k=1}^n d(\tau(x_{k-1}), \tau(x_k)) \mid n \in \NN \setminus \{0\} \wedge x_0 = 0 \wedge x_n = 1\right\}\]
+    \end{definition}
+
+    \begin{statement}
+        Если дана кривая $\tau$ в $\RR^n$ и она дифференцируема по всем координатам, то её длина равна
+        \[
+            \int_0^1 \sqrt{\left(\frac{\partial}{\partial x_1} \tau(t)\right)^2 + \dots + \left(\frac{\partial}{\partial x_n} \tau(t)\right)^2} dt
+            = \int_0^1 |\grad(\tau(t))| dt
+        \]
+    \end{statement}
 
     \newpage\null\thispagestyle{empty}\newpage
     \section{Мои придумки вне лекций}
@@ -2237,6 +2581,84 @@
     \end{proof}
 
     \begin{lemma}
+        Пусть дана функция $f(t) := \sum_{n=0}^\infty a_n t^n$. Пусть также известно, что $f$ сходится в $a$-окрестности нуля. Тогда для всякого $x$ из этой окрестности верно, что ряд
+        \[f_x(t) := \sum_{n=0}^\infty \frac{f^{(n)}(x)}{n!} t^n = \sum_{n=0}^\infty \left(\sum_{k=0}^\infty a_{n+k} \binom{n+k}{n} x^k\right) t^n\]
+        сильно сходится в $(a-|x|)$-окрестности нуля и равен $f(x+t)$.
+    \end{lemma}
+
+    \begin{proof}
+        Пусть дано $t$, что $|t| < a - |x|$. Тогда из сильной сходимости при модуле меньшем $a$ получаем, что сумма $\sum_{n=0}^\infty |a_n| (|x| + |t|)^n$ сходится. Заметим, что каждый член $|a_n| (|x| + |t|)^n$ можно разложить на $n+1$ членов: $|a_n| \binom{n}{0} |x|^n + |a_n| \binom{n}{1} |x|^{n-1} |t| + \dots$. Тогда сумма новых членов будет равна тому же, а тогда можно получить для каждого $n \in \NN \cup \{0\}$ ограничения
+        \begin{align*}
+            \left|\frac{f^{(n)}(x)}{n!} t^n\right|
+            &= |t|^n \frac{1}{n!} \left|\sum_{k=0}^\infty a_{n+k} \frac{(n+k)!}{k!} x^k\right|\\
+            &\leqslant |t|^n \frac{1}{n!} \sum_{k=0}^\infty |a_{n+k}| \frac{(n+k)!}{k!} |x|^k\\
+            &= \sum_{k=0}^\infty |a_{n+k}| \binom{n+k}{n} |x|^k |t|^n,
+        \end{align*}
+        так как последнее --- подсумма нашей суммы. Причём по набору членов суммы
+        \begin{align*}
+            &\sum_{n=0}^\infty |a_n| (|x| + |t|)^n&
+            &\text{ и }&
+            &\sum_{n=0}^\infty \sum_{k=0}^\infty |a_{n+k}| \binom{n+k}{n} |x|^k |t|^n
+        \end{align*}
+        совпадают, поэтому мы можем сказать, что вторая сумма сходится. Следовательно сильно сходится и ряд $f_x(t)$.
+
+        Далее покажем, что $f_x(t) = f(x + t)$. Рассматривая префиксные суммы ряда $f(x + t)$ и раскрывая скобки, можно получить почленную сходимость (как ряды от $t$) к $f_x(t)$. Действительно:
+        \[
+            \frac{f^{(n)}(x)}{n!} t^n
+            = \frac{t^n}{n!} \sum_{k=0}^\infty a_{n+k} \frac{(n+k)!}{k!} x^k
+            = \sum_{k=0}^\infty a_{n+k} \binom{n+k}{k} t^n x^k;
+        \]
+        таким образом раскрыв скобки в $f(x + t)$ до члена $M$ мы получаем префиксную сумму для $k$ до $M - n$. Заметим, что для всякого $\varepsilon > 0$ есть некоторый хвост
+        \[\sum_{n=N}^\infty \left(\sum_{k=0}^\infty |a_{n+k}| \binom{n+k}{k} |t|^n |x|^k\right) < \frac{\varepsilon}{4}\]
+        Тогда для всех остальных членов от $0$ до $N-1$ есть такие значения $M_n$, что для всякого $n$ от $0$ до $N-1$ имеет место неравенство
+        \[\sum_{k=M_n+1}^\infty |a_{n+k}| \binom{n+k}{k} |t|^n |x|^k < \frac{\varepsilon}{4N}\]
+        Пусть $M := \max(M_0 + 0, M_1 + 1, \dots, M_{N-1} + (N-1))$. Таким образом
+        \begin{align*}
+            |f_x(t) - f(x + t)|
+            &\leqslant
+                \left|\sum_{n=N}^\infty \frac{f^{(n)}(x)}{n!}t^n\right|
+                + \left|\sum_{n=0}^{N-1} \frac{f^{(n)}(x)}{n!}t^n - f(x + t)\right|\\
+            &\leqslant
+                \sum_{n=N}^\infty \left(\sum_{k=0}^\infty |a_{n+k}| \binom{n+k}{k} |t|^n |x|^k\right)
+                + \left|\sum_{n=0}^{N-1} \frac{f^{(n)}(x)}{n!}t^n - f(x + t)\right|\\
+            &\leqslant
+                \frac{\varepsilon}{4}
+                + \left|\sum_{n=0}^{N-1} \frac{f^{(n)}(x)}{n!}t^n - \sum_{n=0}^{M} a_n (x + t)^n\right|
+                + \left|\sum_{n=M+1} a_n (x + t)^n\right|\\
+            &\leqslant
+                \frac{\varepsilon}{4}
+                + \left|\sum_{n=0}^{N-1} \frac{f^{(n)}(x)}{n!}t^n - \sum_{n+k=0}^M a_{n+k} \binom{n+k}{n} t^n x^k\right|
+                + \sum_{n+k>M} |a_{n+k}| \binom{n+k}{n} |t|^n |x|^k\\
+            &\leqslant
+                \frac{\varepsilon}{4}
+                + \left|\sum_{n=0}^{N-1} \left(\frac{f^{(n)}(x)}{n!}t^n - \sum_{k=0}^{M-n} a_{n+k} \binom{n+k}{n} t^n x^k\right)\right|\\
+                &+ \sum_{n=N}^\infty \sum_{k=0}^\infty |a_{n+k}| \binom{n+k}{n} |x|^k |t|^n
+                + \sum_{n=0}^{N-1} \sum_{k=M-n+1}^\infty |a_{n+k}| \binom{n+k}{n} |x|^k |t|^n\\
+            &\leqslant
+                \frac{\varepsilon}{4} + \frac{\varepsilon}{4}
+                + \sum_{n=0}^{N-1} \frac{\varepsilon}{4N}
+                + \left|\sum_{n=0}^{N-1} \left(\frac{f^{(n)}(x)}{n!}t^n - \sum_{k=0}^{M-n} a_{n+k} \binom{n+k}{n} t^n x^k\right)\right|\\
+            &\leqslant
+                \frac{3\varepsilon}{4}
+                + \sum_{n=0}^{N-1} \left|\frac{f^{(n)}(x)}{n!}t^n - \sum_{k=0}^{M-n} a_{n+k} \binom{n+k}{n} t^n x^k\right|\\
+            &\leqslant
+                \frac{3\varepsilon}{4}
+                + \sum_{n=0}^{N-1} \left|\sum_{k=M-n+1}^\infty a_{n+k} \binom{n+k}{n} t^n x^k\right|\\
+            &\leqslant
+                \frac{3\varepsilon}{4}
+                + \sum_{n=0}^{N-1} \sum_{k=M-n+1}^\infty |a_{n+k}| \binom{n+k}{n} |t|^n |x|^k\\
+            &\leqslant
+                \frac{3\varepsilon}{4}
+                + \sum_{n=0}^{N-1} \frac{\varepsilon}{4N}\\
+            &= \varepsilon
+        \end{align*}
+    \end{proof}
+
+    \begin{remark*}
+        Последняя часть с оценкой недостатка заимствует (но сложно) рассуждение из леммы \ref{limit_to_stronge_conv_series_lemma}. В обоих случаях находится малый хвост главной последовательности, после чего при выкидывании мы теряем его дважды (у основного ряда и у рядов под пределом) и нам остаётся с остатком от $\varepsilon$ в запасе оценить разность между членами конечного префикса.
+    \end{remark*}
+
+    \begin{lemma}\label{limit_to_stronge_conv_series_lemma}
         Пусть $\sum_{n=0}^\infty a_n$ --- сильно сходящийся ряд, а $(\sum_{n=0}^\infty b_{k,n})_{k=0}^\infty$ --- последовательность сильно сходящихся рядов, что есть некоторая константа $C$, что для всякого $n \in \NN \cup \{0\}$ верно, что
         \begin{itemize}
             \item $(b_{k, n})_{k=0}^\infty \to a_n$,
@@ -2330,7 +2752,7 @@
 
     \begin{proof}
         Давайте рассмотрим следующую таблицу.
-        \begin{table}[h]
+        \begin{table}[H]
             \centering
             \begin{tabular}{c||c|c|c|c|c|c}
                 \raisebox{-14pt}{\rule{0pt}{36pt}}$\times$ & $\dfrac{a^0}{0!}$ & $\dfrac{a^1}{1!}$ & $\dfrac{a^2}{2!}$ & $\dfrac{a^3}{3!}$ & $\dfrac{a^4}{4!}$ & $\cdots$\\
@@ -2374,7 +2796,7 @@
         \[\lim_{n \to \infty} \frac{\binom{n}{k}}{n^k}x^k = \frac{x^k}{k!}\]
         и заодно
         \[\left|\frac{\binom{n}{k}}{n^k}x^k\right| < \left|\frac{x^k}{k!}\right|\]
-        Следовательно по теореме мы получаем, что последовательность рядов, почленно сходящихся к $\exp(x)$ и почленно ограниченных по модулю константой $C=1$. Значит предел определён и равен $\exp(x)$.
+        Следовательно мы получаем последовательность рядов, почленно сходящихся к $\exp(x)$ и почленно ограниченных по модулю константой $C=1$. Значит по теореме предел определён и равен $\exp(x)$.
     \end{proof}
 
     \begin{exercise}
@@ -2382,7 +2804,8 @@
         \begin{enumerate}
             \item Покажите, что $f$ сходится при любом $x$.
             \item Покажите, что $f(x+1) = -f(x)$.
-            \item Превратите $f$ в ряд и покажите, что $f$ сильно сходится при всяком $x$ (осторожно, аккуратная возня с суммами и не очень аккуратная с оценками).
+            \item Превратите $f$ в ряд и покажите, что $f$ сильно сходится при всяком $x$ (осторожно, аккуратная возня с суммами и не очень аккуратная --- с оценками).
+            \item Какое значение получается, если подставить $x = \frac{1}{2}$? Чему конкретно, можно предположить, равна функция $f(x)$?
         \end{enumerate}
     \end{exercise}
 
