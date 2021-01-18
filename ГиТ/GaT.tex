@@ -1,6 +1,7 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{../.tex/mcs-notes}
 \usepackage{todonotes}
+\usepackage{multicol}
 
 \settitle
 {Геометрия и топология.}
@@ -37,6 +38,10 @@
         \item Ю.Г. Борисович, Н.М. Близняков, Я.А. Израилевич, Т.Н. Фоменко, ``Введение в топологию'', М.:Наука. Физматлит, 1995.
         \item James Munkres, Topology.
     \end{itemize}
+
+    \section{Метрические и топологические пространства. Базовые понятия.}
+    
+    \subsection{Метрические пространства.}
 
     \begin{definition}
         Функция $d: X \times X \to \RR_+$ называется \emph{метрикой} (или \emph{расстоянием}) в множестве $X$, если:
@@ -195,6 +200,8 @@
         \end{enumerate}
     \end{proof}
 
+    \subsection{Топологические пространства.}
+
     \begin{definition}
         Пусть $X$ --- некоторое множество. Рассмотрим набор $\Omega$ его подмножеств, для которого:
         \begin{enumerate}
@@ -236,11 +243,15 @@
 
     \begin{theorem}
         Пусть $U$ --- открыто, а $V$ --- замкнуто в $(X, \Omega)$. Тогда:
-        \begin{itemize}
-            \item $U \setminus V$ открыто;
-            \item $V \setminus U$ замкнуто.
-        \end{itemize}
+        \begin{multicols}{2}
+            \begin{itemize}
+                \item $U \setminus V$ открыто;
+                \item $V \setminus U$ замкнуто.
+            \end{itemize}
+        \end{multicols}
     \end{theorem}
+
+    \subsection{Внутренность и замыкание множества. Разные виды точек.}
 
     \begin{definition}
         Пусть $(X, \Omega)$ --- топологическое пространство и $A \subseteq X$. Тогда \emph{внутренностью} множества $A$ называется
@@ -249,16 +260,18 @@
     \end{definition}
 
     \begin{theorem}\ 
-        \begin{itemize}
-            \item $\Int(A)$ --- открытое множество.
-            \item $\Int(A) \subseteq A$.
-            \item $B\text{ --- открыто} \wedge B \subseteq A \Rightarrow B \subseteq \Int(A)$.
-            \item $A = \Int(A) \Leftrightarrow A \text{ --- открыто}$.
-            \item $\Int(\Int(A)) = \Int(A)$.
-            \item $A \subseteq B \Rightarrow \Int(A) \subseteq \Int(B)$.
-            \item $\Int(\bigcap_{k=1}^n A_k) = \bigcap_{k=1}^n \Int(A_k)$.
-            \item $\Int(\bigcup_{A \in \Sigma} A) \supseteq \bigcup_{A \in \Sigma} \Int(A)$.
-        \end{itemize}
+        \begin{multicols}{2}
+            \begin{itemize}
+                \item $\Int(A)$ --- открытое множество.
+                \item $\Int(A) \subseteq A$.
+                \item $B\text{ --- открыто} \wedge B \subseteq A \Rightarrow B \subseteq \Int(A)$.
+                \item $A = \Int(A) \Leftrightarrow A \text{ --- открыто}$.
+                \item $\Int(\Int(A)) = \Int(A)$.
+                \item $A \subseteq B \Rightarrow \Int(A) \subseteq \Int(B)$.
+                \item $\Int(\bigcap_{k=1}^n A_k) = \bigcap_{k=1}^n \Int(A_k)$.
+                \item $\Int(\bigcup_{A \in \Sigma} A) \supseteq \bigcup_{A \in \Sigma} \Int(A)$.
+            \end{itemize}
+        \end{multicols}
     \end{theorem}
 
     \begin{definition}
@@ -295,17 +308,19 @@
     \end{definition}
 
     \begin{theorem}\ 
-        \begin{itemize}
-            \item $\Cl(A)$ --- замкнутое множество.
-            \item $\Cl(A) \supseteq A$.
-            \item $B\text{ --- замкнуто} \wedge B \supseteq A \Rightarrow B \supseteq \Cl(A)$.
-            \item $A = \Cl(A) \Leftrightarrow A \text{ --- замкнуто}$.
-            \item $\Cl(\Cl(A)) = \Cl(A)$.
-            \item $A \subseteq B \Rightarrow \Cl(A) \subseteq \Cl(B)$.
-            \item $\Cl(\bigcup_{k=1}^n A_k) = \bigcup_{k=1}^n \Cl(A_k)$.
-            \item $\Cl(\bigcap_{A \in \Sigma} A) \subseteq \bigcap_{A \in \Sigma} \Cl(A)$.
-            \item $\Cl(A) \sqcup \Int(X \setminus A) = X$.
-        \end{itemize}
+        \begin{multicols}{2}
+            \begin{itemize}
+                \item $\Cl(A)$ --- замкнутое множество.
+                \item $\Cl(A) \supseteq A$.
+                \item $B\text{ --- замкнуто} \wedge B \supseteq A \Rightarrow B \supseteq \Cl(A)$.
+                \item $A = \Cl(A) \Leftrightarrow A \text{ --- замкнуто}$.
+                \item $\Cl(\Cl(A)) = \Cl(A)$.
+                \item $A \subseteq B \Rightarrow \Cl(A) \subseteq \Cl(B)$.
+                \item $\Cl(\bigcup_{k=1}^n A_k) = \bigcup_{k=1}^n \Cl(A_k)$.
+                \item $\Cl(\bigcap_{A \in \Sigma} A) \subseteq \bigcap_{A \in \Sigma} \Cl(A)$.
+                \item $\Cl(A) \sqcup \Int(X \setminus A) = X$.
+            \end{itemize}
+        \end{multicols}
     \end{theorem}
 
     \begin{definition}
@@ -332,12 +347,14 @@
     \end{theorem}
 
     \begin{theorem}\ 
-        \begin{itemize}
-            \item $\Fr(A)$ замкнуто.
-            \item $\Fr(A) = \Fr(X \setminus A)$.
-            \item $A\text{ замкнуто} \Leftrightarrow A \supseteq \Fr(A)$.
-            \item $A\text{ открыто} \Leftrightarrow A \cap \Fr(A) = \varnothing$.
-        \end{itemize}
+        \begin{multicols}{2}
+            \begin{itemize}
+                \item $\Fr(A)$ замкнуто.
+                \item $\Fr(A) = \Fr(X \setminus A)$.
+                \item $A\text{ замкнуто} \Leftrightarrow A \supseteq \Fr(A)$.
+                \item $A\text{ открыто} \Leftrightarrow A \cap \Fr(A) = \varnothing$.
+            \end{itemize}
+        \end{multicols}
     \end{theorem}
 
     \begin{definition}
@@ -355,6 +372,8 @@
             \item $\Cl(A) = \{\text{предельные точки $A$}\} \sqcup \{\text{изолированные точки $A$}\}$.
         \end{itemize}
     \end{theorem}
+
+    \subsection{Сравнение топологий.}
 
     \begin{definition}
         Пусть $\Omega_1$ и $\Omega_2$ --- топологии на $X$. Тогда если $\Omega_1 \subseteq \Omega_2$, то говорят, что $\Omega_1$ \emph{слабее (грубее)} $\Omega_2$, а $\Omega_2$ \emph{сильнее (тоньше)} $\Omega_1$.
@@ -402,6 +421,8 @@
     \begin{definition}
         Топологическое пространство \emph{метризуемо}, если есть метрика, её порождающая.
     \end{definition}
+
+    \subsection{База и предбаза топологии.}
 
     \begin{definition}
         \emph{База} топологии $\Omega$ --- такое семейство $\Sigma$ открытых множеств, что всякое открытое $U$ представимо в виде объединения множеств из $\Sigma$.
@@ -492,6 +513,8 @@
         По теореме о критерии базы $\Omega$ --- топология, где $\Sigma$ --- база. С другой стороны $\Omega$ --- множество, которое содержится как подмножество в любой топологии, которая содержит как подмножество $\Sigma$. Следовательно $\Omega$ --- минимальное топология, содержащая как подмножество $\Sigma$, а значит и $\Delta$. Поэтому $\Delta$ --- предбаза в $\Omega$. 
     \end{proof}
 
+    \subsection{Индуцированная топология.}
+
     \begin{theorem}
         Пусть $(X, \Omega)$ --- топологическое пространство, а $A \subseteq X$. Тогда множество
         \[\Omega_A := \{U \cap A \mid U \in \Omega\}\]
@@ -499,7 +522,7 @@
     \end{theorem}
 
     \begin{definition}
-        Пусть $(X, \Omega)$ топологическое пространство, а $A \subseteq X$. Тогда
+        Пусть $(X, \Omega)$ --- топологическое пространство, а $A \subseteq X$. Тогда
         \[\Omega_A := \{U \cap A \mid U \in \Omega\}\]
         --- топология, \emph{индуцированная} множеством $A$, а $(A, \Omega_A)$ --- подпространство $(X, \Omega)$.
     \end{definition}
@@ -514,6 +537,11 @@
             \item Пусть $(X, \Omega)$ --- топологическое пространство и $B \subseteq A \subseteq X$. Тогда $(\Omega_A)_B = \Omega_B$, т.е. топология, которая индуцируется в $B$ топологией, индуцированной в $A$, совпадает с топологией,индуцированной непосредственно из $X$.
         \end{itemize}
     \end{theorem}
+
+    \section{Взаимоотношения топологических пространств???}
+    \todo[inline]{Уточнить раздел.}
+
+    \subsection{Непрерывность.}
 
     \begin{definition}
         Пусть $X$, $Y$ --- топологические пространства. Отображение $f: X \to Y$ называется \emph{непрерывным}, если прообраз всякого открытого множества из $Y$ открыт в $X$.
@@ -593,6 +621,8 @@
         \end{itemize}
     \end{example}
 
+    \subsection{Фундаментальные покрытия.}
+
     \begin{definition}
         Покрытие $\Gamma$ топологического пространства $X$ называется \emph{фундаментальным}, если
         \[\forall U \subseteq X:\quad \Bigl(\forall A \in \Gamma\quad U \cap A \text{ открыто в } A\Bigr) \quad \longrightarrow \quad \Bigl(U \text{ открыто в } X\Bigr)\]
@@ -654,6 +684,8 @@
         \end{enumerate}
     \end{proof}
 
+    \subsection{Произведения топологических пространств.}
+
     \begin{theorem}
         Пусть $(X, \Omega_X)$ и $(Y, \Omega_Y)$ --- топологические пространства. Тогда
         \[\Sigma := \{U \times V \mid U \in \Omega_X \wedge V \in \Omega_Y\}\]
@@ -682,7 +714,7 @@
     \begin{definition}
         Обозначения:
         \begin{itemize}
-            \item $X = \prod_{i \in I} X_i$– произведение топологических пространств.
+            \item $X = \prod_{i \in I} X_i$ --- произведение топологических пространств.
             \item Элементами $X$ являются такие функции $x: I \to \bigcup_{i \in I} X_i$, что $x(i) \in X_i$.
             \item $p_i: X \to X_i$ --- координатная проекция, где $p_i(x) := x(i)$.
         \end{itemize}
@@ -804,7 +836,7 @@
     \end{proof}
 
     \begin{corollary}
-        Произведения метрических пространств по функции $g(x, y) := (x^\alpha + y^\alpha)^{1/\alpha}$ для всякого $\alpha \geqslant 1$ даёт такую же топологию, что и произведение стандартных топологий на метрических пространствах. В случае $\alpha = 2$ мы имеем стандартное произведение пространств.
+        Произведения метрических пространств по функции $g(x, y) := (x^\alpha + y^\alpha)^{1/\alpha}$ для всякого $\alpha \geqslant 1$ даёт такую же топологию, что и произведение стандартных топологий на метрических пространствах. В случае $\alpha = 2$ мы имеем стандартное произведение метрических пространств.
     \end{corollary}
 
     \begin{theorem}
@@ -862,13 +894,17 @@
         \end{cases}\]
     \end{remark}
 
+    \subsection{Гомеоморфность.}
+
     \begin{definition}
         Пусть $X$, $Y$ --- топологические пространства. Отображение $f: X \to Y$ называется \emph{гомеоморфизмом}, если
-        \begin{enumerate}
-            \item $f$ --- биекция,
-            \item $f$ --- непрерывно,
-            \item $f^{-1}$ --- непрерывно.
-        \end{enumerate}
+        \begin{multicols}{3}
+            \begin{enumerate}
+                \item $f$ --- биекция,
+                \item $f$ --- непрерывно,
+                \item $f^{-1}$ --- непрерывно.
+            \end{enumerate}
+        \end{multicols}
     \end{definition}
 
     \begin{definition}
@@ -894,6 +930,8 @@
         \end{itemize}
     \end{remark}
 
+    \section{Сложные свойства топологических пространств.}
+
     \begin{definition}
         \emph{Топологическое свойство} --- свойство топологического пространства, которое сохраняется при гомеоморфизмах.
 
@@ -903,6 +941,8 @@
     \begin{remark*}
         Для доказательства \emph{негомеоморфности} двух топологических пространств, как правило, находят топологическое свойство или инвариант, который их различает.
     \end{remark*}
+
+    \subsection{Аксиомы счётности (axioms of countability).}
 
     \begin{remark*}
         С этого момента \emph{счётным множеством} называется всякое множество $X$, что есть инъекция $X \to \NN$. 
@@ -979,12 +1019,14 @@
 
     \begin{lemma}
         TFAE:
-        \begin{itemize}
-            \item $A$ --- всюду плотно.
-            \item $\Int(X \setminus A) = \varnothing$.
-            \item Всякое непустое открытое множество в $X$ пересекается с $A$.
-            \item Всякая точка $X$ является точкой прикосновения $A$.
-        \end{itemize}
+        \begin{multicols}{2}
+            \begin{itemize}
+                \item $A$ --- всюду плотно.
+                \item $\Int(X \setminus A) = \varnothing$.
+                \item Всякое непустое открытое множество в $X$ пересекается с $A$.
+                \item Всякая точка $X$ является точкой прикосновения $A$.
+            \end{itemize}
+        \end{multicols}
     \end{lemma}
 
     \begin{proof}
@@ -994,6 +1036,8 @@
 
         Если всякое непустое открытое множество пересекается с $A$, то в любой окрестности любой точки будут точки $A$, поэтому всякая точка $X$ является точкой прикосновения. Если же есть непустое открытое множество, непересекающееся с $A$, то оно является окрестностью любой своей точки, а значит все его точки не являются точками прикосновения.
     \end{proof}
+
+    \subsection{Сепарабельность.}
 
     \begin{definition}
         Топологическое пространство \emph{сепарабельно}, если оно содержит счётное всюду плотное множество.
@@ -1023,6 +1067,8 @@
                 При этом $|\Sigma| \leqslant |A| \times |\NN \setminus \{0\}| \leqslant |\NN| \times |\NN| = |\NN|$.
         \end{enumerate}
     \end{proof}
+
+    \subsection{Аксиомы отделимости (\T-аксиомы).}
 
     \begin{definition}
         Топологическое пространство удовлетворяет \emph{первой аксиоме отделимости} $\T_1$, если каждая из любых двух различных точек пространства обладает окрестностью, не содержащей другую из этих точек.
@@ -1154,6 +1200,8 @@
         % \end{enumerate}
         \todo[inline]{Доказать. Пока лень...}
     \end{proof}
+
+    \subsection{Связность.}
 
     \begin{definition}
         Топологическое пространство \emph{связно}, если его нельзя разбить на два непустых открытых множества.
@@ -1287,6 +1335,8 @@
         Компоненты связности замкнуты.
     \end{corollary}
 
+    \subsection{Линейная связность.}
+
     \begin{definition}
         \emph{Путём} в топологическом пространстве $X$ называется непрерывное отображение $\alpha: [0,1] \to X$. Началом пути $\alpha$ называется точка $\alpha(0)$, концом --- точка $\alpha(1)$. При этом говорят, что путь $\alpha$ соединяет точку $\alpha(0)$ сточкой $\alpha(1)$.
     \end{definition}
@@ -1362,6 +1412,8 @@
         \end{enumerate}
     \end{proof}
 
+    \subsection{Применение топологических свойств и инвариант для доказательства негомеорфности.}
+
     \begin{lemma}
         Пусть $X$, $Y$ --- топологические пространства, а $f: X \to Y$ --- гомеоморфизм. Тогда для любой точки $a \in X$ пространства $X \setminus \{a\}$ и $Y \setminus \{f(a)\}$ гомеоморфны.
     \end{lemma}
@@ -1381,6 +1433,8 @@
     \begin{proof}
         Если из $\RR^2$ выколоть любое конечное множество точек, то множество останется связным. С другой стороны этим свойством не обладают ни интервалы в широком смысле, ни $S^1$.
     \end{proof}
+
+    \subsection{Компактность и ограниченность.}
 
     \begin{definition}
         Топологическое пространство \emph{компактно}, если из любого его открытого покрытия можно выделить конечное подпокрытие.
@@ -1472,7 +1526,7 @@
         \begin{align*}
             U &:= \bigcup_{i=1}^n U_{a_i}&
             &\text{ и }&
-            V &:= \bigcap_{i=1}^n V_{a_i}&
+            V &:= \bigcap_{i=1}^n V_{a_i}
         \end{align*}
         являются непересекающимися окрестностями $A$ и $b$. Поскольку $A$ и $b$ случайны, то $\T_3$ выполнена.
 
@@ -1480,7 +1534,7 @@
         \begin{align*}
             U &:= \bigcup_{i=1}^n U_{a_i}&
             &\text{ и }&
-            V &:= \bigcap_{i=1}^n V_{a_i}&
+            V &:= \bigcap_{i=1}^n V_{a_i}
         \end{align*}
         являются непересекающимися окрестностями $A$ и $B$. Поскольку $A$ и $B$ случайны, то $\T_4$ выполнена.
 
@@ -1589,11 +1643,13 @@
 
     \begin{definition}
         Отображение $f: X \to Y$ называется \emph{вложением}, если $f$ --- гомеоморфизм между $X$ и $f(X)$. Иначе говоря, $f$ --- вложение, если
-        \begin{itemize}
-            \item $f$ непрерывно;
-            \item $f$ --- инъекция;
-            \item $f^{-1}$ непрерывно на области определения.
-        \end{itemize}
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item $f$ непрерывно;
+                \item $f$ --- инъекция;
+                \item $f^{-1}$ непрерывно на области определения.
+            \end{itemize}
+        \end{multicols}
     \end{definition}
 
     \begin{corollary}
@@ -1638,6 +1694,8 @@
     \begin{proof}
         Применим лемму Лебега для отображения $f$ и покрытия пространства $Y$ шарами радиуса $\varepsilon/2$.
     \end{proof}
+
+    \subsection{Предел последовательности, фундаментальные последовательности, секвенциальное замыкание и полнота метрического пространства.}
 
     \begin{definition}
         Пусть $(a_n)_{n=0}^\infty$ --- последовательность точек топологического пространства $X$. Точка $b \in X$ называется её \emph{пределом}, если для всякой окрестности $U$ точки $b$ есть $N \in \NN$ такое, что $a_n \in U$ для всех $n > N$.
@@ -1702,10 +1760,12 @@
     \end{proof}
 
     \begin{example}\ 
-        \begin{enumerate}
-            \item $[0;1]$ --- полное подпространство.
-            \item $(0;1)$ --- неполное подпространство.
-        \end{enumerate}
+        \begin{multicols}{2}
+            \begin{enumerate}
+                \item $[0;1]$ --- полное подпространство.
+                \item $(0;1)$ --- неполное подпространство.
+            \end{enumerate}
+        \end{multicols}
     \end{example}
 
     \begin{corollary}
@@ -1729,14 +1789,16 @@
     \end{proof}
 
     \begin{definition}
-        Внешность множества $A$ --- $\Ext(A) := \Int(X \setminus A)$.
+        \emph{Внешность множества} $A$ --- $\Ext(A) := \Int(X \setminus A)$.
     \end{definition}
 
     \begin{lemma}\ 
-        \begin{enumerate}
-            \item $\Ext(A)$ открыто.
-            \item $X := \Int(A) \sqcup \Fr(A) \sqcup \Ext(A)$.
-        \end{enumerate}
+        \begin{multicols}{2}
+            \begin{enumerate}
+                \item $\Ext(A)$ открыто.
+                \item $X = \Int(A) \sqcup \Fr(A) \sqcup \Ext(A)$.
+            \end{enumerate}
+        \end{multicols}
     \end{lemma}
 
     \begin{definition}
@@ -1746,8 +1808,10 @@
     \begin{lemma}
         TFAE
         \begin{enumerate}
-            \item $A$ нигде не плотно.
-            \item $\Ext(A)$ всюду плотно.
+            \begin{multicols}{2}
+                \item $A$ нигде не плотно.
+                \item $\Ext(A)$ всюду плотно.
+            \end{multicols}
             \item Любое непустое открытое $U \subseteq X$ содержит как подмножество непустое открытое $V \subseteq U$, что $V \cap A = \varnothing$.
         \end{enumerate}
     \end{lemma}
@@ -1791,11 +1855,13 @@
 
     \begin{definition}
         Пусть $X$ --- метрическое пространство. \emph{Пополнение} $X$ --- такое метрическое пространство $X$, что
-        \begin{itemize}
-            \item $\overline{X}$ полно;
-            \item $X$ --- подпространство $\overline{X}$;
-            \item $X$ всюду плотно в $\overline{X}$.
-        \end{itemize}
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item $\overline{X}$ полно;
+                \item $X$ --- подпространство $\overline{X}$;
+                \item $X$ всюду плотно в $\overline{X}$.
+            \end{itemize}
+        \end{multicols}
     \end{definition}
 
     \begin{theorem}
@@ -1941,11 +2007,13 @@
 
     \begin{theorem}\label{compact_tern_theorem}
         Для метрического пространства $X$ TFAE:
-        \begin{enumerate}
-            \item $X$ компактно.
-            \item $X$ секвенциально компактно.
-            \item $X$ полно и вполне ограничено.
-        \end{enumerate}
+        \begin{multicols}{3}
+            \begin{enumerate}
+                \item $X$ компактно.
+                \item $X$ секвенциально компактно.
+                \item $X$ полно и вполне ограничено.
+            \end{enumerate}
+        \end{multicols}
     \end{theorem}
     
     \begin{proof}\ 
@@ -1980,10 +2048,12 @@
 
     \begin{theorem}
         Пусть топологическое пространство $X$ удовлетворяет \SAC. Тогда TFAE:
-        \begin{enumerate}
-            \item $X$ компактно.
-            \item $X$ секвенциально компактно.
-        \end{enumerate}
+        \begin{multicols}{2}
+            \begin{enumerate}
+                \item $X$ компактно.
+                \item $X$ секвенциально компактно.
+            \end{enumerate}
+        \end{multicols}
     \end{theorem}
 
     \begin{proof}\ 
@@ -1998,6 +2068,8 @@
             $\SCl(W_{k_n}) \subseteq \Cl(W_{k_n}) = W_{k_n} \Rightarrow \forall n\; a \in W_{k_n} \Rightarrow \forall n\; a \in W_n \Rightarrow a \in \bigcap_{n=0}^\infty W_n = \bigcap_{n=0}^\infty F_n = X \setminus \bigcup_{n=0}^\infty U_n = \varnothing$ --- противоречие.
         \end{itemize}
     \end{proof}
+
+    \subsection{Разбиение топологического пространства.}
 
     \begin{definition}
         \emph{Разбиение множества} --- это его покрытие попарно непересекающимися подмножествами.
@@ -2141,6 +2213,8 @@
         \end{enumerate}
     \end{example}
 
+    \section{Многообразия.}
+
     \begin{definition}
         \emph{$n$-мерное многообразие (без края)} --- хаусдорфово топологическое пространство со счётной базой (\SAC), что каждая его точка иммеет окрестность гомеоморфную $\RR^n$ (или же, что эквивалентно, $B^n$).
 
@@ -2222,6 +2296,8 @@
         Многообразие \emph{замкнуто}, если оно компактно и не имеет края.
     \end{definition}
 
+    \subsection{Симплексы и триангулируемость.}
+
     \begin{definition}
         Точки $a_0$, \dots, $a_n$ в $\RR^n$ \emph{независимы}, если они не лежат в одной плоскости размерности $n-1$.
     \end{definition}
@@ -2262,8 +2338,14 @@
         Для всякого $n \geqslant 4$ есть нетриангулируемое компактное $n$-многообразие.
     \end{theorem}
 
+    \subsection{Классификация двумерных замкнутых многообразий.}
+
     \begin{definition}
-        Модельные многообразия.
+        \emph{Поверхность} --- двумерное многообразие.
+    \end{definition}
+
+    \begin{definition}
+        Модельные поверхности.
         \todo[inline]{Картиночки и пояснения.}
         \begin{enumerate}
             \item Первая серия. Сферы с ручками.
@@ -2288,7 +2370,7 @@
     \end{remark*}
 
     \begin{definition}
-        Пусть $F$ --- замкнутая поверхность (т.е. компактная и без края). \emph{Топологическим треугольником} в $F$ будем называть пару $(T, \varphi)$, где $T$ --- подпространство в $F$, а $\varphi: \Delta \to T$ – гомеоморфизм некоторого треугольника $\Delta \subseteq \RR^2$ на $T$. Образы вершин, сторон треугольника называются соответственно \emph{вершинами, ребрами} топологического треугольника $T$.
+        Пусть $F$ --- замкнутая поверхность. \emph{Топологическим треугольником} в $F$ будем называть пару $(T, \varphi)$, где $T$ --- подпространство в $F$, а $\varphi: \Delta \to T$ – гомеоморфизм некоторого треугольника $\Delta \subseteq \RR^2$ на $T$. Образы вершин, сторон треугольника называются соответственно \emph{вершинами, ребрами} топологического треугольника $T$.
     \end{definition}
 
     \begin{definition}
@@ -2304,11 +2386,11 @@
         Пусть $K = {(T_i, \varphi_i)}_{i=1}^k$ --- триангуляция поверхности $F$. Можно считать, что треугольники (прообразы треугольников $T_i$) лежат в одной плоскости и не пересекаются. Пусть $(T_i, \varphi_i)$ и $(T_j,\varphi_j)$ --- треугольники из $K$, и $T_i\cap T_j = a$ --- их общее ребро. Пусть $a_i = \varphi_i^{-1}(a)$, $a_j = \varphi_j^{-1}(a)$ --- соответствующие ему стороны (ребра) в $\Delta_i$ и $\Delta_j$. Определен склеивающий гомеоморфизм
         \[\phi_{i, j} := \phi_j^{-1} |_a \circ \phi_j |_a: a_i \to a_j\]
         Таким образом, триангуляции $K$ можно сопоставить набор $(\{\Delta_i\}_{i=1}^k, \{\phi_{i, j}\}_{i, j = 1}^k)$ треугольников плоскости вместе с гомеоморфизмами $\varphi_{i, j}$ для соответствующих пар ребер. Объявим в $\bigcup_{i=1}^k \Delta_i$ эквивалентными точки, соответствующие друг другу при гомеоморфизмах $\varphi_{i, j}$.
-
-        \begin{theorem}
-            Факторпространство $(\bigcap_{i=1}^k \Delta_i)/\sim$ гомеоморфно $F$.
-        \end{theorem}
     \end{remark}
+
+    \begin{theorem}
+        Факторпространство $(\bigcap_{i=1}^k \Delta_i)/\sim$ гомеоморфно $F$.
+    \end{theorem}
 
     \begin{definition}
         \emph{Разверткой} называется система $Q = (\{Q_i\}, \{\varphi_{i,j}\})$, где $\{Q_i\}$ --- конечный набор непересекающихся плоских многоугольников, а $\{\varphi_{i, j}\}$ --- конечный набор склеивающих гомеоморфизмов пар ребер многоугольников из набора $\{Q_i\}$, причем каждое ребро склеивается только с одним ребром; допускается склейка ребер одного многоугольника.
@@ -2385,6 +2467,8 @@
         Все поверхности, задаваемые каноническими развертками I и II типа попарно различны (не гомеоморфны).
     \end{theorem}
 
+    \subsection{Классификация одномерных замкнутых многообразий.}
+
     \begin{theorem}
         Всякое связное замкнутое 1-многообразие гомеоморфно $S^1$.
     \end{theorem}
@@ -2401,10 +2485,12 @@
 
             Таким образом для всякой такой пары интервалов $I$ и $J$ есть только два варианта (с точностью до перестановки и
             переворачивания):
-            \begin{enumerate}
-                \item $I = (a; b)$, $J = (0; 1)$.
-                \item $I = (a; 1)$, $J = (0; b)$.
-            \end{enumerate}
+            \begin{multicols}{2}
+                \begin{enumerate}
+                    \item $I = (a; b)$, $J = (0; 1)$.
+                    \item $I = (a; 1)$, $J = (0; b)$.
+                \end{enumerate}
+            \end{multicols}
             В первом случае $V \subseteq U$, поэтому $V \cup U = U \simeq \RR$. Во втором случае таких пар интервалов либо одна, либо две. Если одна, то $U \cup V \simeq \RR$. Если две пары, то $U \cup V \simeq S^1$.
         \end{proof}
 
@@ -2413,11 +2499,13 @@
         Если $U \cup V$ гомеоморфно $\RR$. Тогда в нашем покрытии можно заменить два элемента --- $U$ и $V$ --- на один элемент $U \cup V$, что противоречит минимальности покрытия. Значит по лемме $U \cup V$ гомеоморфно $S^1$.
         
         Опишем свойства $U \cup V$:
-        \begin{enumerate}
-            \item компактно (т.к. $S^1$);
-            \item замкнуто (компакт в хаусдорфовом пр-ве);
-            \item открыто.
-        \end{enumerate}
+        \begin{multicols}{3}
+            \begin{enumerate}
+                \item компактно (т.к. $S^1$);
+                \item замкнуто (компакт в хаусдорфовом пр-ве);
+                \item открыто.
+            \end{enumerate}
+        \end{multicols}
         Тогда в силу связности $U \cup V = M$.
     \end{proof}
 \end{document}
