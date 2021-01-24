@@ -1,0 +1,51 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{math-text}
+
+\title{Математические основы алгоритмов}
+\author{А. С. Охотин}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    \begin{definition}
+        \emph{Машина с произвольным доступом в память (RAM)}. У нас есть память в виде ячеек на $\ZZ$, где хранятся программы и следующие операции:
+        \begin{itemize}
+            \item присваивание: $A = B$;
+            \item арифметические операции: \verb|A = B + C|, \verb|A = B - C|, \verb|A = B × C|, \verb|A = B / C|, \verb|A = B ÷ C|;
+            \item \verb|GOTO n|;
+            \item \verb|GOTO x_n|;
+            \item \verb|IF A == B THEN GOTO n| (вместо \verb|A == B| может быть \verb|A >= B|; вместо \verb|n| может быть \verb|x_n|); 
+        \end{itemize}
+    \end{definition}
+
+    \begin{definition}
+        \emph{Сложность работы программы} --- это такая функция $t(n)$ равная максимуму затрачиваемых ходов по всем входным данным длины $n$.
+    \end{definition}
+
+    \begin{remark}
+        Рассматривают ещё модель ``log-cost'', где каждая операция стоит логарифм от входящих в неё значений.
+    \end{remark}
+
+    \begin{definition}
+        \emph{Сложность памяти программы} --- это такая функция $s(n)$ равная максимуму затрачиваемого места по всем входным данным длины $n$.
+    \end{definition}
+
+    \begin{theorem}[Карацуба]
+        Умножение двух чисел длины не более $n$ можно посчитать за время $O(n^{\log_2(3)})$.
+    \end{theorem}
+
+    \begin{theorem}
+        Давйте разобьём наши числа $\overline{a_{n-1}\dots a_0}$ и $\overline{b_{n-1}\dots b_0}$ на две приемерно равные половины: $\overline{a_{n-1}\dots a_0} = \overline{A_1A_2}$, $\overline{b_{n-1}\dots b_0} = \overline{B_1B_2}$. Тогда произведение (без переносов переполнения разрядов) равно
+        \[\overline{A_1B_1;(A_1+A_2)(B_1B_2)-A_1B_1-A_2B_2;A_2B_2}\]
+        Видно, что для этого нужно сделать три умножения и четыре сложения (вычитания). Т.е. $T(n) = 3 T(n/2) + O(n)$. Тем самым $T(n) = O(n^{\log_2(3)})$.
+    \end{theorem}
+
+    \begin{theorem}
+        Сортировка добавлением элемента работает за $\approx n^2/2$.
+    \end{theorem}
+
+    \begin{theorem}
+        Сортировка слиянием (merge sort) работает за $O(n\log(n))$.
+    \end{theorem}
+\end{document}
