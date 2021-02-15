@@ -1,0 +1,307 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{../.tex/mcs-notes}
+\usepackage{todonotes}
+\usepackage{mathrsfs}
+
+\settitle
+{Основы математической логики.}
+{\href{http://www.mi-ras.ru/~speranski/}{Станислав Олегович Сперанский}}
+{\%D0\%9E\%D0\%9C\%D0\%9B\%2FML.pdf}
+\date{}
+
+% \newcommand{\subsets}{\ensuremath{\mathcal{P}}\xspace}
+% \newcommand{\finsubsets}{\ensuremath{\mathcal{P_{\mathrm{fin}}}}\xspace}
+% \DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\dom}{dom}
+% \DeclareMathOperator{\range}{range}
+% \DeclareMathOperator{\Min}{Min}
+% \DeclareMathOperator{\Seq}{Seq}
+% \DeclareMathOperator{\Left}{left}
+% \DeclareMathOperator{\Right}{right}
+% \DeclareMathOperator{\IS}{IS}
+% \DeclareMathOperator{\ord}{ord}
+% \DeclareMathOperator{\Ord}{Ord}
+% \DeclareMathOperator{\card}{card}
+% \DeclareMathOperator{\Card}{Card}
+% \newcommand{\ZF}{\ensuremath{\mathrm{ZF}}\xspace}
+% \newcommand{\ZFC}{\ensuremath{\mathrm{ZFC}}\xspace}
+% \newcommand{\CH}{\ensuremath{\mathrm{CH}}\xspace}
+\newcommand{\Prop}{\ensuremath{\mathrm{Prop}}\xspace}
+\newcommand{\Formul}{\ensuremath{\mathrm{Form}}\xspace}
+\newcommand{\Sub}{\ensuremath{\mathrm{Sub}}\xspace}
+\newcommand{\NP}{\ensuremath{\mathrm{NP}}\xspace}
+
+
+\begin{document}
+    \maketitle
+
+    \listoftodos[TODOs]
+
+    \tableofcontents
+
+    \vspace{2em}
+    Материалы лекций: \href{http://www.mi-ras.ru/~speranski/courses/logic-1-2021-spring/materials.html}{ссылка}
+    % \todo[color=green!40, inline]{Добавить конспекты теории из упражнений. Слить аккуратно воедино. Добавить ссылку на упражнения.}
+    
+    % Литература:
+    % \begin{itemize}
+    %     \item K. Hrbacek and T. Jech. Introduction to Set Theory. 3rd ed., revised and expanded. Marcel Dekker, Inc., 1999.
+    %     \item T. Jech. Set Theory. 3rd ed., revised and expanded. Springer, 2002.
+    % \end{itemize}
+
+    \subsection{Формальности про алфавиты и слова}
+
+    \begin{definition}
+        \emph{Алфавит} $A$ --- множество элементов произвольной природы.
+
+        \emph{$A$-слова} или \emph{слова над алфавитом $A$} --- элементы $A^*$ (т.е. всевозможные конечные последовательности элементов из $A$).
+
+        Для всякого $w \in A^*$ \emph{длиной слова $w$} называется $|w|$ (что также равно $\dom(w)$).
+    \end{definition}
+
+    \begin{definition}
+        Пусть даны слова $w_1$ и $w_2$ над $A$. Рассмотрим отображение
+        \[
+            v:
+            |w_1| + |w_2| \to A,
+            i \mapsto \begin{cases}
+                w_1(i)& \text{ если $i < |w_1|$}\\
+                w_2(i - |w_1|)& \text{ если $i \geqslant |w_1|$}
+            \end{cases}
+        \]
+        Понятно, что $v \in A^*$. Полученное $v$ называется конкатенацией $w_1$ и $w_2$ и обозначается $w_1w_2$.
+    \end{definition}
+
+    \begin{definition}
+        Пусть $w, w' \in A^*$. Тогда $w'$ называется \emph{подсловом $w$}, если $w = v_0 w' v_1$ для некоторых $\{v_0; v_1\} \subseteq A^*$. Обозначение: $w' \preccurlyeq w$.
+
+        В этом случае $\langle w'; |v_0|\rangle$ называется \emph{вхождением} $w'$ в $w$.
+    \end{definition}
+
+    \begin{definition}
+        Пусть $\langle w', k\rangle$ --- вхождение $w'$ в $w$, т.е. $w = v_0 w' v_1$, где $|v_0| = k$. Тогда для всякого $u \in A^*$ можно определить
+        \[w [w' / u, k] := v_0 u v_1,\]
+        т.е. результат замены данного вхождения $w'$ в $w$ на $u$.
+        
+        Если никакие два различных вхождения $w'$ в $w$ не пересекаются, то можно определить $w [w' / u]$ как результат одновременной замены всех вхождений $w'$ в $w$ на $u$. 
+    \end{definition}
+
+    \subsection{Язык пропозициональной классической логики\\(Proposal Classic Logic, PCL)}
+
+    \begin{definition}
+        Пусть (навсегда) зафиксировано некоторое счётное множество \Prop. Будем называть его элементы \emph{пропозициональными переменными} или просто \emph{переменными}.
+
+        Алфавит $\mathscr{L}$ классической пропозициональной классической логики состоит из элементов \Prop, а также:
+        \begin{itemize}
+            \item символов связок:
+                \begin{itemize}
+                    \item $\rightarrow$ --- символ импликации,
+                    \item $\wedge$ --- символ конъюнкции,
+                    \item $\vee$ --- символ дизъюнкции,
+                    \item $\neg$ --- символ отрицания,
+                \end{itemize}
+            \item и вспомогательных символов: ( и ).
+        \end{itemize}
+
+        Обозначим за \Formul наименьшее подмножество $\mathscr{L}^*$, замкнутое относительно следующих порождающих правил:
+        \begin{itemize}
+            \item если $p \in \Prop$, то $p \in \Formul$;
+            \item если $\{\varphi, \psi\} \in \Prop$, то $(\varphi \rightarrow \psi) \in \Formul$;
+            \item если $\{\varphi, \psi\} \in \Prop$, то $(\varphi \wedge \psi) \in \Formul$;
+            \item если $\{\varphi, \psi\} \in \Prop$, то $(\varphi \vee \psi) \in \Formul$;
+            \item если $\varphi \in \Formul$, то $\neg \varphi \in \Formul$.
+        \end{itemize}
+        Элементы \Formul называются формулами.
+    \end{definition}
+
+    \begin{theorem}
+        \Formul существует.
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим семейство $T$ всех подмножеств $\mathscr{L}^*$, удовлетворяющих порождающим правилам выше. Заметим, что $T$ не пусто, так как содержит $\mathscr{L}^*$. Тогда можно рассмотреть $F := \bigcap T$. Несложно убедиться, что оно удовлетворяет всем порождающим правилам, значит лежит в $T$. И при этом меньше по включению всех других множеств в $T$. Значит его и можно взять в качестве $\Formul$.
+    \end{proof}
+
+    \begin{definition}
+        Будем говорить, что $\varphi$ является \emph{началом $\psi$}, и писать $\varphi \sqsubseteq \psi$, если $\psi = \varphi \tau$ для некоторого $v \in \mathscr{L}^*$.
+    \end{definition}
+
+    \begin{lemma}
+        Всякое $\varphi \in \Formul$ имеет один из следующих видов:
+        \begin{enumerate}
+            \item $p$ для некоторого $p \in \Prop$;
+            \item $(\theta \circ \chi)$ для некоторых $\{\theta; \chi\} \subseteq \Formul$ и $\circ \in \{\rightarrow; \wedge; \vee\}$;
+            \item $\neg \theta$ для некоторого $\theta \in \Formul$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        Предположим противное. Тогда рассмотрим $F := \Formul \setminus \{\varphi\}$. Заметим, что $F$ удовлетворяет тем же порождающим правилам, что и $\Formul$. Действительно:
+        \begin{itemize}
+            \item Если $p \in \Prop$, то $p \in \Formul$. При этом $p \neq \varphi$ по условию леммы. Следовательно $p \in F$.
+            \item Если $\{\varphi, \psi\} \in \Prop$, то $(\varphi \rightarrow \psi) \in \Formul$. При этом $(\varphi \rightarrow \psi) \neq \varphi$ по условию леммы. Следовательно $(\varphi \rightarrow \psi) \in F$. Аналогично для $\wedge$ и $\vee$.
+            \item Если $\varphi \in \Formul$, то $\neg \varphi \in \Formul$. При этом $\neg \varphi \neq \varphi$ по условию леммы. Следовательно $\neg \varphi \in F$.
+        \end{itemize}
+        Значит $F$ --- меньшее по включение чем $\Formul$ множество, удовлетворяющее условиям наложенным на $\Formul$ --- противоречие.
+    \end{proof}
+
+    \begin{corollary}
+        Рассмотрим последовательность множеств $(F_n)_{n=0}^\infty$, что $F_0 = \Prop$, а
+        \[
+            F_{n+1} = F_n 
+            \cup \{(\varphi \circ \chi) \mid \{\theta; \chi\} \subseteq \Formul \wedge \circ \in \{\rightarrow; \wedge; \vee\}\}
+            \cup \{\neg \theta \mid \theta \in \Formul\}
+        \]
+        Тогда
+        \begin{enumerate}
+            \item всякое $F_n \subseteq \Formul$;
+            \item всякое $\varphi \in \Formul$ лежит в некотором $F_n$.
+        \end{enumerate}
+    \end{corollary}
+
+    \begin{corollary}
+        $\bigcup_{n=0}^\infty F_n = \Formul$. 
+    \end{corollary}
+
+    \begin{lemma}
+        Пусть $\{\varphi; \psi\} \subseteq \Formul$ таковы, что $\psi \sqsubseteq \varphi$. Тогда $\psi = \varphi$.
+    \end{lemma}
+
+    \begin{proof}
+        Докажем утверждение возвратной индукцией по $|\varphi|$.
+        
+        Рассмотрим случаи.
+        \begin{enumerate}
+            \item Если $\varphi \in \Prop$, то, очевидно, $\psi = \varphi$.
+            \item Если $\varphi = (\theta \circ \chi)$, где $\{\theta; \chi\} \in \Formul$ и $\circ \in \{\rightarrow; \wedge; \vee\}$, то $\psi$ начинается на ``('', значит имеет вид $(\theta' \circ' \chi')$, где $\{\theta'; \chi'\} \in \Formul$ и $\circ' \in \{\rightarrow; \wedge; \vee\}$. Следовательно либо $\theta \sqsubseteq \theta'$, либо $\theta' \sqsubseteq \theta$. Но $|\theta| < |\varphi| - 3$, и $|\theta'| < |\psi| - 3 \leqslant |\varphi| - 3$. Тогда можно применить предположение индукции и получить, что $\theta = \theta'$. Значит $\circ = \circ'$, а далее по аналогии получаем, что $\chi = \chi'$. Следовательно $\varphi = \psi$.
+            \item Если $\varphi = \neg \theta$, то $\psi$ начинается на ``$\neg$'', следовательно $\psi = \neg \theta'$. Тогда $\theta' \sqsubseteq \theta$, а тогда по предположению индукции $\theta' = \theta$, значит $\varphi = \psi$.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{theorem}[о единственности представления формул]
+        Всякая формула в $\Formul \setminus \Prop$ представляется единственным образом в одном из видов
+        \begin{itemize}
+            \item $(\theta \rightarrow \chi)$,
+            \item $(\theta \wedge \chi)$,
+            \item $(\theta \vee \chi)$,
+            \item $\neg \theta$,
+        \end{itemize}
+        где $\{\theta; \chi\} \subseteq \Formul$.
+    \end{theorem}
+
+    \begin{proof}
+        По доказанной лемме всякое $\phi$ имеет такое представление. Пусть тогда их несколько; рассмотрим случаи.
+        \begin{enumerate}
+            \item Если $\phi$ начинается на ``('', то тогда $\phi = (\theta \circ \chi) = (\theta' \circ' \chi')$. Тогда по доказанной лемме $\theta = \theta'$, $\circ = \circ'$, $\chi = \chi'$. Значит представления совпадают.
+            \item Если $\phi$ начинается на ``$\neg$'', то $\phi = \neg \theta = \neg \theta'$. Тогда $\theta = \theta'$, а следовательно представления совпадают.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{definition}
+        Для всякого $\varphi \in \Formul$ определим
+        \[\Sub(\varphi) := \{\psi \Formul \mid \psi \preccurlyeq \varphi\}.\]
+        Элементы $\Sub(\varphi)$ называют \emph{подформулами $\varphi$}.
+    \end{definition}
+
+    \begin{lemma}
+        Пусть $\varphi \in \Formul$. Тогда каждое вхождение ``$\neg$'' или ``$($'' в $\varphi$ является началом вхождения некоторой подформулы.
+    \end{lemma}
+
+    \begin{proof}
+        \todo[inline]{TODO (А надо ли?)}
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $\varphi \in \Formul$.
+        \begin{enumerate}
+            \item Если $\varphi \in \Prop$, то $\Sub(\varphi) = \{\varphi\}$.
+            \item Если $\varphi = (\theta \circ \chi)$, где $\{\theta; \chi\} \subseteq \Formul$ и $\circ \in \{\rightarrow; \wedge; \vee\}$, то
+                \[\Sub(\varphi) = \Sub(\theta) \cup \Sub(\chi) \cup \{\varphi\}.\]
+            \item Если $\varphi = \neg \theta$, где $\theta \in \Formul$, то
+                \[\Sub(\varphi) = \Sub(\theta) \cup \{\varphi\}.\]
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Очевидно.
+            \item \todo[inline]{Непонятно. TODO}
+            \item \todo[inline]{Непонятно. TODO}
+        \end{enumerate}
+    \end{proof}
+
+    \subsection{Семантика пропозициональной классической логики}
+
+    \begin{definition}
+        Под \emph{оценкой} мы будем понимать произвольную функцию из $\Prop$ в $2$ (т.е. в $\{0; 1\}$). Интуитивно $0$ --- <<ложь>>, а $1$ --- <<правда>>.
+    \end{definition}
+
+    \begin{theorem}
+        Пусть дана случайная $v: \Prop \to 2$. Тогда существует единственная $v^*: \Formul \to 2$, которая удовлетворяет следующим свойствам:
+        \begin{enumerate}
+            \item $\forall p \in \Prop\qquad v^*(p) = 1 \Leftrightarrow v(p) = 1$.
+            \item $\forall \{\varphi; \psi\} \subseteq \Formul\qquad v^*(\text{``$(\varphi \rightarrow \psi)$''}) = 1 \Leftrightarrow v^*(\varphi) = 0 \vee v^*(\psi) = 1$.
+            \item $\forall \{\varphi; \psi\} \subseteq \Formul\qquad v^*(\text{``$(\varphi \wedge \psi)$''}) = 1 \Leftrightarrow v^*(\varphi) = 1 \wedge v^*(\psi) = 1$.
+            \item $\forall \{\varphi; \psi\} \subseteq \Formul\qquad v^*(\text{``$(\varphi \vee \psi)$''}) = 1 \Leftrightarrow v^*(\varphi) = 1 \vee v^*(\psi) = 1$.
+            \item $\forall \varphi \in \Formul\qquad v^*(\neg \varphi) = 1 \Leftrightarrow v^*(\varphi) = 0$.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        \todo[inline]{TODO}
+    \end{proof}
+
+    \begin{definition}
+        Если для некоторой оценки $v$ и формулы $\varphi$ верно, что $v^*(\varphi) = 1$, то пишут $v \Vdash \varphi$.
+    \end{definition}
+
+    \begin{definition}
+        Формулу $\varphi$ называют:
+        \begin{itemize}
+            \item \emph{выполнимой}, если $v \Vdash \varphi$ для некоторой оценки $v$;
+            \item \emph{общезначимой} (или \emph{тождественно истинной}, или \emph{тавтологией}), если $v \Vdash \varphi$ для всякой оценки $v$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{remark*}
+        Очевидно, например, что
+        \[\varphi \text{ общезначима}\quad \Longleftrightarrow\quad \neg \varphi \text{ не выполнима}.\]
+    \end{remark*}
+
+    \begin{theorem*}[Кук-Левин]
+        Проблема выполнимости для пропозициональной классической логики \NP-полна.
+    \end{theorem*}
+
+    \begin{definition}
+        Пусть $\Gamma \subseteq \Formul$ и $\varphi \in \Formul$. Говорят, что $\varphi$ \emph{семантически следует из $\Gamma$}, если для любой оценки $v$
+        \[(\forall \psi \in \Gamma \quad v \Vdash \psi) \qquad \longrightarrow \qquad v \Vdash \varphi.\]
+        Обозначение: $\Gamma \vDash \varphi$.
+
+        Вместо $\varnothing \vDash \varphi$ обычно пишут $\vDash \varphi$.
+    \end{definition}
+
+    \begin{remark*}
+        Очевидно, например, что
+        \[\vDash \varphi\quad \Longleftrightarrow\quad \varphi \text{ общезначима}.\]
+    \end{remark*}
+
+    \begin{definition}
+        Формулы $\varphi$ и $\psi$ называются \emph{семантически эквивалентными}, если $\vDash \varphi \leftrightarrow \psi$. Обозначение: $\varphi \equiv \psi$.
+    \end{definition}
+
+    \begin{example}
+        Для любых $\{\varphi; \psi; \chi\} \subseteq \Formul$:
+        \begin{itemize}
+            \item $(\varphi \rightarrow \psi) \equiv \neg \varphi \vee \psi$;
+            \item $(\varphi \vee \psi) \wedge \chi \equiv (\varphi \wedge \chi) \vee (\psi \wedge \chi)$;
+            \item $(\varphi \wedge \psi) \vee \chi \equiv (\varphi \vee \chi) \wedge (\psi \vee \chi)$;
+            \item $\neg (\varphi \wedge \psi) \equiv \neg \varphi \vee \neg \psi$;
+            \item $\neg (\varphi \vee \psi) \equiv \neg \varphi \wedge \neg \psi$;
+            \item $\neg \neg \varphi \equiv \varphi$.
+        \end{itemize}
+    \end{example}
+
+    \begin{exercise}
+        Всякая формула семантически эквивалентна некоторой ДНФ.
+    \end{exercise}
+\end{document}
