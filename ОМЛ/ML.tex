@@ -2,6 +2,8 @@
 \usepackage{../.tex/mcs-notes}
 \usepackage{todonotes}
 \usepackage{mathrsfs}
+\usepackage{bussproofs}
+\usepackage{multicol}
 
 \settitle
 {Основы математической логики.}
@@ -23,13 +25,35 @@
 % \DeclareMathOperator{\Ord}{Ord}
 % \DeclareMathOperator{\card}{card}
 % \DeclareMathOperator{\Card}{Card}
-% \newcommand{\ZF}{\ensuremath{\mathrm{ZF}}\xspace}
-% \newcommand{\ZFC}{\ensuremath{\mathrm{ZFC}}\xspace}
-% \newcommand{\CH}{\ensuremath{\mathrm{CH}}\xspace}
+\newcommand{\ZF}{\ensuremath{\mathrm{ZF}}\xspace}
+\newcommand{\Caxiom}{\ensuremath{\mathrm{C}}\xspace}
+\newcommand{\ZFC}{\ensuremath{\mathrm{ZFC}}\xspace}
+\newcommand{\CH}{\ensuremath{\mathrm{CH}}\xspace}
 \newcommand{\Prop}{\ensuremath{\mathrm{Prop}}\xspace}
 \newcommand{\Formul}{\ensuremath{\mathrm{Form}}\xspace}
 \newcommand{\Sub}{\ensuremath{\mathrm{Sub}}\xspace}
 \newcommand{\NP}{\ensuremath{\mathrm{NP}}\xspace}
+\newcommand{\Pred}{\ensuremath{\mathrm{Pred}}\xspace}
+\newcommand{\Func}{\ensuremath{\mathrm{Func}}\xspace}
+\newcommand{\Const}{\ensuremath{\mathrm{Const}}\xspace}
+\newcommand{\arity}{\ensuremath{\mathrm{arity}}\xspace}
+\newcommand{\id}{\ensuremath{\mathrm{id}}\xspace}
+\newcommand{\Id}{\ensuremath{\mathrm{Id}}\xspace}
+\newcommand{\Img}{\ensuremath{\mathrm{Im}}\xspace}
+\newcommand{\Aut}{\ensuremath{\mathrm{Aut}}\xspace}
+\newcommand{\least}{\ensuremath{\mathrm{least}}\xspace}
+\newcommand{\Var}{\ensuremath{\mathrm{Var}}\xspace}
+\newcommand{\Term}{\ensuremath{\mathrm{Term}}\xspace}
+\newcommand{\Atom}{\ensuremath{\mathrm{Atom}}\xspace}
+\newcommand{\sub}{\ensuremath{\mathrm{sub}}\xspace}
+\newcommand{\FV}{\ensuremath{\mathrm{FV}}\xspace}
+\newcommand{\Sent}{\ensuremath{\mathrm{Sent}}\xspace}
+\newcommand{\Th}{\ensuremath{\mathrm{Th}}\xspace}
+\newcommand{\supp}{\ensuremath{\mathrm{supp}}\xspace}
+\newcommand{\Eq}{\ensuremath{\mathrm{Eq}}\xspace}
+\newcommand{\tildeforall}{\widetilde{\forall}}
+\newcommand{\tildeexists}{\widetilde{\exists}}
+\newcommand{\Abs}{\ensuremath{\mathrm{Abs}}\xspace}
 
 
 \begin{document}
@@ -86,21 +110,21 @@
         Если никакие два различных вхождения $w'$ в $w$ не пересекаются, то можно определить $w [w' / u]$ как результат одновременной замены всех вхождений $w'$ в $w$ на $u$. 
     \end{definition}
 
-    \subsection{Язык пропозициональной классической логики\\(Proposal Classic Logic, PCL)}
+    \subsection{Язык пропозициональной классической логики\\(Propositional Classic Logic, PCL)}
 
     \begin{definition}
         Пусть (навсегда) зафиксировано некоторое счётное множество \Prop. Будем называть его элементы \emph{пропозициональными переменными} или просто \emph{переменными}.
 
-        Алфавит $\mathscr{L}$ классической пропозициональной классической логики состоит из элементов \Prop, а также:
+        Алфавит $\mathscr{L}$ пропозициональной классической логики состоит из элементов \Prop, а также:
         \begin{itemize}
             \item символов связок:
                 \begin{itemize}
-                    \item $\rightarrow$ --- символ импликации,
-                    \item $\wedge$ --- символ конъюнкции,
-                    \item $\vee$ --- символ дизъюнкции,
-                    \item $\neg$ --- символ отрицания,
+                    \item ``$\rightarrow$'' --- символ импликации,
+                    \item ``$\wedge$'' --- символ конъюнкции,
+                    \item ``$\vee$'' --- символ дизъюнкции,
+                    \item ``$\neg$'' --- символ отрицания,
                 \end{itemize}
-            \item и вспомогательных символов: ( и ).
+            \item и вспомогательных символов: ``('' и ``)''.
         \end{itemize}
 
         Обозначим за \Formul наименьшее подмножество $\mathscr{L}^*$, замкнутое относительно следующих порождающих правил:
@@ -111,7 +135,7 @@
             \item если $\{\varphi, \psi\} \in \Prop$, то $(\varphi \vee \psi) \in \Formul$;
             \item если $\varphi \in \Formul$, то $\neg \varphi \in \Formul$.
         \end{itemize}
-        Элементы \Formul называются формулами.
+        Элементы \Formul называются \emph{формулами}.
     \end{definition}
 
     \begin{theorem}
@@ -239,11 +263,11 @@
     \begin{theorem}
         Пусть дана случайная $v: \Prop \to 2$. Тогда существует единственная $v^*: \Formul \to 2$, которая удовлетворяет следующим свойствам:
         \begin{enumerate}
-            \item $\forall p \in \Prop\qquad v^*(p) = 1 \Leftrightarrow v(p) = 1$.
-            \item $\forall \{\varphi; \psi\} \subseteq \Formul\qquad v^*(\text{``$(\varphi \rightarrow \psi)$''}) = 1 \Leftrightarrow v^*(\varphi) = 0 \vee v^*(\psi) = 1$.
-            \item $\forall \{\varphi; \psi\} \subseteq \Formul\qquad v^*(\text{``$(\varphi \wedge \psi)$''}) = 1 \Leftrightarrow v^*(\varphi) = 1 \wedge v^*(\psi) = 1$.
-            \item $\forall \{\varphi; \psi\} \subseteq \Formul\qquad v^*(\text{``$(\varphi \vee \psi)$''}) = 1 \Leftrightarrow v^*(\varphi) = 1 \vee v^*(\psi) = 1$.
-            \item $\forall \varphi \in \Formul\qquad v^*(\neg \varphi) = 1 \Leftrightarrow v^*(\varphi) = 0$.
+            \item $\forall p \in \Prop\qquad v^*(p) = 1 \quad \Longleftrightarrow \quad v(p) = 1$;
+            \item $\forall \{\varphi; \psi\} \subseteq \Formul\qquad v^*(\text{``$(\varphi \rightarrow \psi)$''}) = 1 \quad \Longleftrightarrow \quad v^*(\varphi) = 0 \vee v^*(\psi) = 1$;
+            \item $\forall \{\varphi; \psi\} \subseteq \Formul\qquad v^*(\text{``$(\varphi \wedge \psi)$''}) = 1 \quad \Longleftrightarrow \quad v^*(\varphi) = 1 \wedge v^*(\psi) = 1$;
+            \item $\forall \{\varphi; \psi\} \subseteq \Formul\qquad v^*(\text{``$(\varphi \vee \psi)$''}) = 1 \quad \Longleftrightarrow \quad v^*(\varphi) = 1 \vee v^*(\psi) = 1$;
+            \item $\forall \varphi \in \Formul\qquad v^*(\neg \varphi) = 1 \quad \Longleftrightarrow \quad v^*(\varphi) = 0$.
         \end{enumerate}
     \end{theorem}
 
@@ -304,4 +328,1883 @@
     \begin{exercise}
         Всякая формула семантически эквивалентна некоторой ДНФ.
     \end{exercise}
+
+    \subsection{Гильбертовское исчисление для пропозициональной классической логики}
+
+    \begin{definition}
+        Рассмотрим следующие аксиомы:
+        \begin{description}
+            \item[$\mathrm{I1}$.] $\varphi \rightarrow (\psi \rightarrow \varphi)$;
+            \item[$\mathrm{I2}$.] $(\varphi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\varphi \rightarrow \psi) \rightarrow (\varphi \rightarrow \chi))$;
+            \item[$\mathrm{C1}$.] $\varphi \wedge \psi \rightarrow \varphi$;
+            \item[$\mathrm{C2}$.] $\varphi \wedge \psi \rightarrow \psi$;
+            \item[$\mathrm{C3}$.] $\varphi \rightarrow (\psi \rightarrow \varphi \wedge \psi)$;
+            \item[$\mathrm{D1}$.] $\varphi \rightarrow \varphi \vee \psi$;
+            \item[$\mathrm{D2}$.] $\psi \rightarrow \varphi \vee \psi$;
+            \item[$\mathrm{D3}$.] $(\varphi \rightarrow \chi) \rightarrow ((\psi \rightarrow \chi) \rightarrow (\varphi \vee \psi \rightarrow \chi))$;
+            \item[$\mathrm{N1}$.] $(\varphi \rightarrow \psi) \rightarrow ((\varphi \rightarrow \neg \psi) \rightarrow \neg \varphi)$;
+            \item[$\mathrm{N2}$.] $\neg \varphi \rightarrow (\varphi \rightarrow \psi)$;
+            \item[$\mathrm{N3}$.] $\varphi \vee \neg \varphi$.
+        \end{description}
+
+        Также имеется ровно одно \emph{правило вывода}, именуемое \emph{``modus ponens''}:
+        \begin{prooftree}
+            \AxiomC{$\varphi$}
+            \AxiomC{$\varphi \rightarrow \psi$}
+                \RightLabel{($\mathrm{MP}$)}
+                \BinaryInfC{$\psi$}
+        \end{prooftree}
+
+        Пусть $\Gamma \subseteq \Formul$. \emph{Вывод из $\Gamma$} в данном гильбертовском исчислении --- конечная последовательность
+        \[\varphi_0, \dots, \varphi_n\]
+        (где $n \in \NN$) элементов $\Formul$, что для каждого $i \in \{0; \dots; n\}$ верно одно из следующих условий:
+        \begin{itemize}
+            \item $\varphi_i$ есть аксиома;
+            \item $\varphi_i$ является элементом $\Gamma$;
+            \item существуют $\{j; k\} \subseteq \{0; \dots; i-1\}$ такие, что $\varphi_k = \varphi_j \rightarrow \varphi_i$.
+        \end{itemize}
+        При этом $\varphi_n$ называется \emph{заключением} рассматриваемого вывода, а элементы $\Gamma$ --- его \emph{гипотезами}.
+
+        Для $\Gamma \cup \{\varphi\} \subseteq \Formul$ запись $\Gamma \vdash \varphi$ означает, что существует вывод из $\Gamma$ с заключением $\varphi$. Вместо $\varnothing \vdash \varphi$ обычно пишут $\vdash \varphi$.
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item {\bf Монотонность.} Если $\Gamma \subseteq \Delta$ и $\Gamma \vdash \varphi$, то $\Delta \vdash \varphi$.
+            \item {\bf Транзитивность.} Если для всякого $\psi \in \Gamma$ верно $\Delta \vdash \psi$ и $\Gamma \vdash \varphi$, то $\Delta \vdash \varphi$.
+            \item {\bf Компактность.} Если $\Gamma \vdash \varphi$, то для некоторого конечного $\Delta \subseteq \Gamma$ верно $\Delta \vdash \varphi$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}\ 
+        \begin{enumerate}
+            \item Рассматривая вывод $\varphi$ из $\Gamma$, сиюминутно получаем вывод $\varphi$ из $\Delta$.
+            \item Возьмём вывод $\varphi$ из $\Gamma$. Рассмотрим все использованные утверждения $\Gamma$ в этом выводе; получим конечное множество $\Gamma'$. Далее для всякого $\psi \in \Gamma'$ рассмотрим вывод $\psi$ из $\Delta$, сотрём $\psi$ на конце этого вывода и припишем его в начало ранее рассмотренного вывода $\varphi$. Тогда несложно понять, что мы получаем вывод $\varphi$ из $\Delta$.
+            \item Хватает просто взять в качестве $\Delta$ множество всех формул из $\Gamma$, использованных в каком-то конкретном выводе $\varphi$ из $\Gamma$. Тогда очевидно, что $\Delta$ конечно, а рассмотренный вывод станет выводом $\varphi$ из $\Delta$.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{example}
+        Покажем, что $\vdash \varphi \vee \psi \rightarrow \psi \vee \varphi$:
+        \begin{center}
+            \begin{tabular}{rll}
+                1.& $(\varphi \rightarrow \psi \vee \varphi) \rightarrow ((\psi \rightarrow \psi \vee \varphi) \rightarrow (\varphi \vee \psi \rightarrow \psi \vee \varphi))$& $\mathrm{D3}$\\
+                2.& $\varphi \rightarrow \psi \vee \varphi$& $\mathrm{D2}$\\
+                3.& $\psi \rightarrow \psi \vee \varphi$& $\mathrm{D1}$\\
+                4.& $(\psi \rightarrow \psi \vee \varphi) \rightarrow (\varphi \vee \psi \rightarrow \psi \vee \varphi)$& из 2 и 1; $\mathrm{MP}$\\
+                5.& $\varphi \vee \psi \rightarrow \psi \vee \varphi$& из 3 и 4; $\mathrm{MP}$\\
+            \end{tabular}
+        \end{center}
+    \end{example}
+
+    \begin{example}
+        Покажем, что $\{\varphi \vee \psi\} \vdash \psi \vee \varphi$:
+        \begin{center}
+            \begin{tabular}{rll}
+                1.& $\psi \rightarrow (\varphi \rightarrow \psi \wedge \varphi)$& $\mathrm{C3}$\\
+                2.& $\varphi \wedge \psi \rightarrow \psi$& $\mathrm{C2}$\\
+                3.& $\varphi \wedge \psi \rightarrow \varphi$& $\mathrm{C1}$\\
+                4.& $\varphi \wedge \psi$& гипотеза\\
+                5.& $\psi$& из 4 и 2; $\mathrm{MP}$\\
+                6.& $\varphi$& из 4 и 3; $\mathrm{MP}$\\
+                7.& $\varphi \rightarrow \psi \wedge \varphi$& из 5 и 1; $\mathrm{MP}$\\
+                8.& $\psi \wedge \varphi$& из 6 и 7; $\mathrm{MP}$\\
+            \end{tabular}
+        \end{center}
+    \end{example}
+
+    \begin{lemma}\label{self-implication-lemma}
+        $\vdash \varphi \rightarrow \varphi$.
+    \end{lemma}
+
+    \begin{proof}
+        \begin{center}
+            \begin{tabular}{rll}
+                1.& $(\varphi \rightarrow ((\varphi \rightarrow \varphi) \rightarrow \varphi)) \rightarrow ((\varphi \rightarrow (\varphi \rightarrow \varphi)) \rightarrow (\varphi \rightarrow \varphi))$& $\mathrm{I2}$\\
+                2.& $\varphi \rightarrow ((\varphi \rightarrow \varphi) \rightarrow \varphi)$& $\mathrm{I1}$\\
+                3.& $\varphi \rightarrow (\varphi \rightarrow \varphi)$& $\mathrm{I1}$\\
+                4.& $(\varphi \rightarrow (\varphi \rightarrow \varphi)) \rightarrow (\varphi \rightarrow \varphi)$& из 2 и 1\\
+                5.& $\varphi \rightarrow \varphi$& из 3 и 4\\
+            \end{tabular}
+        \end{center}
+    \end{proof}
+
+    \begin{remark}
+        Важно, что для доказательства были использованы только $\mathrm{I1}$, $\mathrm{I2}$ и $\mathrm{MP}$.
+    \end{remark}
+
+    \begin{theorem}[о дедукции в гильбертовском исчислении]
+        Для любых $\Gamma \cup \{\varphi; \psi\} \subseteq \Formul$ верно, что
+        \[\Gamma \cup \{\varphi\} \vdash \psi \qquad \Longleftrightarrow \qquad \Gamma \vdash \varphi \rightarrow \psi.\]
+    \end{theorem}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[$\Longleftarrow$)] Пусть $\Gamma \vdash \varphi \rightarrow \psi$. Зафиксируем какой-нибудь вывод
+                \[\varphi_0, \dots, \varphi_n\]
+                из $\Gamma$, где $\varphi_n = \varphi \rightarrow \psi$. Тогда несложно убедиться, что
+                \[\varphi_0, \dots, \varphi_n, \varphi, \psi\]
+                будет выводом $\psi$ из $\Gamma \cup \{\varphi\}$. Стало быть, $\Gamma \cup \{\varphi\} \vdash \psi$.
+
+            \item[$\Longrightarrow$)] Пусть $\Gamma \cup \{\varphi\} \vdash \psi$. Зафиксируем какой-нибудь вывод
+                \[\psi_0, \dots, \psi_n\]
+                из $\Gamma \cup \{\varphi\}$, где $\psi_n = \psi$. Покажем по полной индукции по $i$, что $\Gamma \vdash \varphi \rightarrow \psi_i$.
+
+                Рассмотрим возможные случаи.
+                \begin{itemize}
+                    \item Пусть $\psi_i$ --- аксиома или элемент $\Gamma$. Тогда
+                        \begin{center}
+                            \begin{tabular}{rll}
+                                1.& $\psi_i \rightarrow (\varphi \rightarrow \psi_i)$& $\mathrm{I2}$\\
+                                2.& $\psi_i$& гипотеза / элемент $\Gamma$\\
+                                3.& $\varphi \rightarrow \psi_i$& из 2 и 1\\
+                            \end{tabular}
+                        \end{center}
+                        будет выводом из $\varnothing$ или $\Gamma$ соответственно. Стало быть, $\Gamma \vdash \varphi \rightarrow \psi_i$.
+
+                    \item Пусть $\psi_i = \varphi$. По лемме \ref{self-implication-lemma} мы имеем, что $\vdash \varphi \rightarrow \varphi$. Стало быть, $\Gamma \vdash \varphi \rightarrow \varphi$.
+                    
+                    \item Пусть $\psi_i$ получено из предыдущих $\psi_j$ и $\psi_k = \psi_j \rightarrow \psi_i$ по $\mathrm{MP}$. Тогда можно построить следующий ``квазивывод'' из $\Gamma$:
+                        \begin{center}
+                            \begin{tabular}{rll}
+                                1.& $(\varphi \rightarrow (\psi_j \rightarrow \psi_i)) \rightarrow ((\varphi \rightarrow \psi_j) \rightarrow (\varphi \rightarrow \psi_i))$& $\mathrm{I2}$\\
+                                2.& $\varphi \rightarrow (\psi_j \rightarrow \psi_i)$& предположение индукции\\
+                                3.& $\varphi \rightarrow \psi_j$& предположение индукции\\
+                                4.& $(\varphi \rightarrow \psi_j) \rightarrow (\varphi \rightarrow \psi_i)$& из 2 и 1\\
+                                5.& $\varphi \rightarrow \psi_i$& из 3 и 4\\
+                            \end{tabular}
+                        \end{center}
+                        Стало быть, $\Gamma \vdash \varphi \rightarrow \psi_i$.
+                \end{itemize}
+
+                В частности, при $i := n$ мы имеем, что $\Gamma \vdash \varphi \rightarrow \psi_n$, т.е. $\Gamma \vdash \varphi \rightarrow \psi$.
+        \end{itemize}
+    \end{proof}
+
+    \begin{remark}
+        Важно, что для доказательства были использованы только $\mathrm{I1}$, $\mathrm{I2}$ и $\mathrm{MP}$.
+    \end{remark}
+
+    \begin{definition}
+        Для удобства введём обозначения
+        \[\top := p_\star \rightarrow p_\star \quad \text{ и } \quad \bot := \neg \top,\]
+        где $p_\star$ --- фиксированная пропозициональная константа.
+    \end{definition}
+
+    \begin{corollary}
+        Для любых $\Gamma \cup \{\varphi\} \subseteq \Formul$,
+        \[
+            \Gamma \vdash \varphi
+            \quad \Longleftrightarrow \quad
+            \vdash \bigwedge_{i=1}^n \psi_i \rightarrow \varphi \text{ для некоторых } \{\psi_1; \dots; \psi_n\} \subseteq \Gamma.
+        \]
+        (В случае $n=0$ соответствующая конъюнкция отождествляется с $\top$.)
+    \end{corollary}
+
+    \begin{proof}
+        Заметим, что для всяких $\{\psi_1; \dots; \psi_n; \varphi\} \subseteq \Gamma$.
+        \[
+            \vdash \bigwedge_{i=1}^n \psi_i \rightarrow \varphi
+            \quad \Longleftrightarrow \quad
+            \left\{\bigwedge_{i=1}^n \psi_i\right\} \vdash \varphi
+        \]
+        и
+        \[
+            \Gamma \vdash \varphi
+            \quad \Longleftrightarrow \quad
+            \{\psi_1; \dots; \psi_n\} \vdash \varphi \text{ для некоторых } \{\psi_1; \dots; \psi_n\} \subseteq \Gamma.
+        \]
+        Соответственно нужно лишь показать, что
+        \[
+            \{\psi_1; \dots; \psi_n\} \vdash \varphi
+            \quad \Longleftrightarrow \quad
+            \left\{\bigwedge_{i=1}^n \psi_i\right\} \vdash \varphi
+        \]
+
+        По $\mathrm{C1}$ и $\mathrm{C2}$ имеем, что $\left\{\bigwedge_{i=1}^n \psi_i\right\} \vdash \{\psi_i\}_{i=1}^n$, а по $\mathrm{C3}$ --- что $\{\psi_i\}_{i=1}^n \vdash \left\{\bigwedge_{i=1}^n \psi_i\right\}$. Из транзитивности $\vdash$ получаем искомый равносильный переход.
+    \end{proof}
+
+    \begin{lemma}
+        Всякая аксиома гильбертовского исчисления общезначима.
+    \end{lemma}
+
+    \begin{theorem}[о корректности $\vDash$]\label{Hilbert-conclusion-correctness}
+        Для всяких $\Gamma \cup \{\varphi\} \subseteq \Formul$
+        \[
+            \Gamma \vdash \varphi
+            \quad \Longrightarrow \quad
+            \Gamma \vDash \varphi
+        \]
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $\Gamma \vdash \varphi$. Зафиксируем какой-нибудь вывод
+        \[\varphi_1, \dots, \varphi_n\]
+        $\varphi$ из $\Gamma$. Рассмотрим произвольную оценку $v$ такую, что $v \Vdash \psi$ для всех $\psi \in \Gamma$. Покажем по индукции по $i \in \{0; \dots; n\}$, что $v \Vdash \varphi_i$. Для этого рассмотрим следующие случаи:
+        \begin{itemize}
+            \item Если $\varphi_i$ --- аксиома, то $\vDash \varphi_i$, а потому $v \Vdash \varphi_i$.
+            \item Если $\varphi_i$ --- элемент $\Gamma$, то тогда, очевидно, $v \Vdash \varphi_i$.
+            \item Если $\varphi_i$ получается из предшествующих $\varphi_j$ и $\varphi_k = \varphi_j \rightarrow \varphi_i$ по $\mathrm{MP}$. Ввиду предположения индукции,
+            \[
+                v \Vdash \varphi_j
+                \quad \text{ и } \quad
+                v \Vdash \varphi_j \rightarrow \varphi_i,
+            \]
+            откуда немедленно следует $v \Vdash \varphi_i$.
+        \end{itemize}
+        В частности при $i := n$ мы имеем $v \Vdash \varphi_n$, т.е. $v \Vdash \varphi$.
+
+        Таким образом $\Gamma \vDash \varphi$.
+    \end{proof}
+
+    \begin{definition}
+        $\Gamma \subseteq \Formul$ называется \emph{простой теорией}, если оно удовлетворяет следующим условиям:
+        \begin{itemize}
+            \item $\Gamma \neg \Formul$;
+            \item $\{\varphi \in \Formul \mid \Gamma \vdash \varphi\} \subseteq \Gamma$;
+            \item для любого $\varphi \vee \psi \in \Gamma$ верно, что $\varphi \in \Gamma$ или $\psi \in \Gamma$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{lemma}
+        Пусть $\Gamma$ --- простая теория. Тогда для любых $\{\varphi; \psi\} \subseteq \Formul$:
+        \begin{align*}
+            \neg \varphi \in \Gamma \quad &\Longleftrightarrow \quad \varphi \notin \Gamma;\\
+            \varphi \wedge \psi \in \Gamma \quad &\Longleftrightarrow \quad \varphi \in \Gamma \text{ и } \psi \in \Gamma;\\
+            \varphi \vee \psi \in \Gamma \quad &\Longleftrightarrow \quad \varphi \in \Gamma \text{ или } \psi \in \Gamma;\\
+            \varphi \rightarrow \psi \in \Gamma \quad &\Longleftrightarrow \quad \varphi \notin \Gamma \text{ или } \psi \in \Gamma.\\
+        \end{align*}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[$\neg$, $\Rightarrow$)] Пусть $\neg \varphi \in \Gamma$. Предположим, что $\varphi \in \Gamma$. Рассмотрим всякое $\psi \in \Formul$.
+                \begin{center}
+                    \begin{tabular}{rll}
+                        1.& $\neg \varphi \rightarrow (\varphi \rightarrow \psi)$& $\mathrm{N2}$\\
+                        2.& $\neg \varphi$& гипотеза\\
+                        3.& $\varphi$& гипотеза\\
+                        4.& $\varphi \rightarrow \psi$& из 2 и 1\\
+                        5.& $\psi$& из 3 и 4\\
+                    \end{tabular}
+                \end{center}
+                То есть $\Gamma \vdash \psi$, а значит $\Gamma \vdash \Formul$. Следовательно по построению $\Gamma = \Formul$ --- противоречие. Значит $\varphi \notin \Gamma$.
+
+            \item[$\neg$, $\Leftarrow$)] Пусть $\varphi \notin \Gamma$. Поскольку $\vdash \varphi \vee \neg \varphi$, тем более $\Gamma \vdash \varphi \vee \neg \varphi$, то $\varphi \vee \neg \varphi \in \Gamma$, откуда по построению $\neg \varphi \in \Gamma$.
+
+            \item[$\wedge$, $\Rightarrow$)] Пусть $\varphi \wedge \psi \in \Gamma$. Используя $\mathrm{C1}$ и $\mathrm{C2}$, получаем, что $\Gamma \vdash \varphi$ и $\Gamma \vdash \psi$, следовательно $\varphi \in \Gamma$ и $\psi \in \Gamma$.
+
+            \item[$\wedge$, $\Leftarrow$)] Пусть $\varphi \in \Gamma$ и $\psi \in \Gamma$. Используя $\mathrm{C3}$, получаем, что $\Gamma \vdash \varphi \wedge \psi$, а следовательно $\varphi \wedge \psi \in \Gamma$.
+            
+            \item[$\vee$, $\Rightarrow$)] Пусть $\varphi \vee \psi \in \Gamma$. Тогда по построению $\Gamma$ имеем $\varphi \in \Gamma$ или $\psi \in \Gamma$.
+
+            \item[$\vee$, $\Leftarrow$)] Пусть $\varphi \in \Gamma$ или $\psi \in \Gamma$. Тогда применяя $\mathrm{D1}$ или $\mathrm{D2}$, получаем, что $\Gamma \vdash \varphi \vee \psi$, следовательно $\varphi \vee \psi \in \Gamma$.
+
+            \item[$\rightarrow$, $\Rightarrow$)] Пусть $\varphi \rightarrow \psi \in \Gamma$. Следовательно если $\varphi \in \Gamma$, то $\Gamma \vdash \psi$, т.е. $\psi \in \Gamma$. Таким образом $\varphi \notin \Gamma$ или $\psi \in \Gamma$.
+
+            \item[$\rightarrow$, $\Leftarrow$)] Пусть $\varphi \notin \Gamma$ или $\psi \in \Gamma$. В первом случае $\neg \varphi \in \Gamma$, откуда с помощью $\mathrm{N2}$ получаем $\Gamma \vdash \varphi \rightarrow \psi$, а значит $\varphi \rightarrow \psi \in \Gamma$. Во втором случае $\Gamma \vdash \varphi \rightarrow \psi$ можно получить с помощью $\mathrm{I1}$.
+        \end{itemize}
+    \end{proof}
+
+    \begin{lemma}[о расширении, aka Линдебаума]
+        Пусть $\Gamma \cup \{\varphi\} \subseteq \Formul$ таковы, что $\Gamma \nvdash \varphi$. Тогда существует простая теория $\Gamma' \supseteq \Gamma$, что $\Gamma' \nvdash \varphi$.
+    \end{lemma}
+
+    \begin{proof}
+        Ясно, что $\Formul$ счётно. Поэтому его элементы можно расположить в последовательность $(\psi_n)_{n=0}^\infty$ (т.е. $\Formul = \{\psi_n\}_{n=0}^\infty$). Теперь определим последовательность $(\Gamma_n)_{n=0}^\infty$ подмножеств $\Formul$ по рекурсии следующим образом.
+        \begin{itemize}
+            \item Если $n=0$, то $\Gamma_n = \Gamma$.
+            \item Если $n = m + 1$ и $\Gamma_m \cup \{\psi_m\} \vdash \varphi$, то $\Gamma_n := \Gamma_m$.
+            \item Если $n = m + 1$ и $\Gamma_m \cup \{\psi_m\} \nvdash \varphi$, то $\Gamma_n := \Gamma_m \cup \{\psi_m\}$.
+        \end{itemize}
+        По построению мы имеем $\Gamma_0 \subseteq \Gamma_1 \subseteq \dots$. Кроме того, $\Gamma_n \nvdash \varphi$ для всех $n \in \NN$. Возьмём
+        \[\Gamma' := \bigcup_{n \in \NN} \Gamma_n\]
+
+        Заметим следующее.
+        \begin{itemize}
+            \item Безусловно $\Gamma \subseteq \Gamma'$.
+            \item $\Gamma' \nvdash \varphi$. Действительно, иначе есть конечное $\Delta \subseteq \Gamma'$, что $\Delta \vdash \varphi$. Следовательно есть $\Gamma_n \supseteq \Delta$, т.е. $\Gamma_n \vdash \varphi$ --- противоречие с определением $\Gamma_n$.
+            \item Для всякого $\psi \in \Formul$
+                \[\psi \notin \Gamma' \quad \Longrightarrow \quad \Gamma' \cup \{\psi\} \vdash \varphi\]
+                Действительно, $\psi = \psi_n$ для некоторого $n$. Тогда из $\psi \notin \Gamma'$ следует, что $\Gamma_n \cup \{\psi\} \vdash \varphi$, и следовательно $\Gamma' \cup \{\varphi\} \vdash \varphi$.
+        \end{itemize}
+
+        Проверим, что $\Gamma'$ --- простая теория.
+        \begin{itemize}
+            \item Из $\Gamma' \nvdash \varphi$ следует, что $\Gamma' \neq \Formul$.
+            \item Пусть $\psi \notin \Gamma'$. Тогда из того, что $\Gamma' \nvdash \varphi$ и $\Gamma' \cup \{\psi\} \vdash \varphi$ следует, что $\Gamma' \nvdash \psi$.
+            \item Пусть $\theta \notin \Gamma'$ и $\chi \notin \Gamma'$. Тогда $\Gamma' \cup \{\theta\} \vdash \varphi$ и $\Gamma' \cup \{\chi\} \vdash \varphi$. Следовательно $\Gamma' \vdash \theta \rightarrow \varphi$ и $\Gamma' \vdash \chi \rightarrow \varphi$. Тогда по $\mathrm{D3}$ имеем, что $\Gamma' \vdash \theta \vee \chi \rightarrow \varphi$, т.е. $\Gamma' \cup \{\theta \vee \chi\} \vdash \varphi$, следовательно $\theta \vee \chi \notin \Gamma'$.
+        \end{itemize}
+
+        Таким образом $\Gamma'$ --- простая теория, обладающая необходимыми свойствами.
+    \end{proof}
+
+    \begin{proof}[Доказательство для любой мощности $\Prop$.]
+        Пусть $\kappa := |\Prop|$. Ясно, что $|\Formul| = \kappa$. Поэтому элементы $\Formul$ можно расположить в трансфинитную последовательность длины $\kappa$:
+        \[\langle \psi_\alpha: \alpha \in \kappa\rangle\]
+        т.е. $\Formul = \{\psi_\alpha\}_{\alpha \in \kappa}$. Определим $\langle \Gamma_\alpha \rangle_{\alpha \in \kappa}$ по трансфинитной рекурсии следующим образом.
+        \begin{itemize}
+            \item Если $\alpha = 0$, то $\Gamma_\alpha := \Gamma$.
+            \item Если $\alpha = \beta + 1$ и $\Gamma_\beta \cup \{\psi_\beta\} \vdash \psi$, то $\Gamma_\alpha := \Gamma_\beta$.
+            \item Если $\alpha = \beta + 1$ и $\Gamma_\beta \cup \{\psi_\beta\} \nvdash \psi$, то $\Gamma_\alpha := \Gamma_\beta \cup \{\psi_\beta\}$.
+            \item Если $\alpha$ --- предельный ординал, то $\Gamma_\alpha = \bigcup_{\beta \in \alpha} \Gamma_\beta$.
+        \end{itemize}
+        По построению мы имеем $\Gamma_\beta \subseteq \Gamma_\alpha$ для всяких $\beta \in \alpha \in \kappa$. Кроме того, $\Gamma_\alpha \nvdash \varphi$ для всех $\alpha \in \kappa$. Возьмём
+        \[\Gamma' := \bigcup_{\alpha \in \kappa} \Gamma_\alpha\]
+
+        Заметим следующее.
+        \begin{itemize}
+            \item Безусловно $\Gamma \subseteq \Gamma'$.
+            \item $\Gamma' \nvdash \varphi$. Действительно, иначе есть конечное $\Delta \subseteq \Gamma'$, что $\Delta \vdash \varphi$. Следовательно есть $\Gamma_\alpha \supseteq \Delta$, т.е. $\Gamma_\alpha \vdash \varphi$ --- противоречие с определением $\Gamma_\alpha$.
+            \item Для всякого $\psi \in \Formul$
+                \[\psi \notin \Gamma' \quad \Longrightarrow \quad \Gamma' \cup \{\psi\} \vdash \varphi\]
+                Действительно, $\psi = \psi_\alpha$ для некоторого $n$. Тогда из $\psi \notin \Gamma'$ следует, что $\Gamma_\alpha \cup \{\psi\} \vdash \varphi$, и следовательно $\Gamma' \cup \{\varphi\} \vdash \varphi$.
+        \end{itemize}
+
+        Проверим, что $\Gamma'$ --- простая теория.
+        \begin{itemize}
+            \item Из $\Gamma' \nvdash \varphi$ следует, что $\Gamma' \neq \Formul$.
+            \item Пусть $\psi \notin \Gamma'$. Тогда из того, что $\Gamma' \nvdash \varphi$ и $\Gamma' \cup \{\psi\} \vdash \varphi$ следует, что $\Gamma' \nvdash \psi$.
+            \item Пусть $\theta \notin \Gamma'$ и $\chi \notin \Gamma'$. Тогда $\Gamma' \cup \{\theta\} \vdash \varphi$ и $\Gamma' \cup \{\chi\} \vdash \varphi$. Следовательно $\Gamma' \vdash \theta \rightarrow \varphi$ и $\Gamma' \vdash \chi \rightarrow \varphi$. Тогда по $\mathrm{D3}$ имеем, что $\Gamma' \vdash \theta \vee \chi \rightarrow \varphi$, т.е. $\Gamma' \cup \{\theta \vee \chi\} \vdash \varphi$, следовательно $\theta \vee \chi \notin \Gamma'$.
+        \end{itemize}
+
+        Таким образом $\Gamma'$ --- простая теория, обладающая необходимыми свойствами.
+    \end{proof}
+
+    \begin{example}
+        Пусть $v$ --- оценка. Рассмотрим
+        \[\Gamma_v := \{\varphi \in \Formul \mid v \Vdash \varphi\}\]
+        Легко убедиться, что $\Gamma_v$ --- простая теория.
+    \end{example}
+
+    \begin{definition}
+        Для всякой простой теории $\Gamma$ определим оценку
+        \[
+            v_\Gamma(p) =
+            \begin{cases}
+                1& \text{ если $p \in \Gamma$}\\
+                1& \text{ иначе}
+            \end{cases}
+        \]
+        Иначе говоря, $v_\Gamma$ --- характеристическая функция для $\Prop \cap \Gamma$.
+    \end{definition}
+
+    \begin{lemma}
+        Пусть $\Gamma$ --- простая теория. Тогда для всякой $\varphi \in \Formul$
+        \[v_\Gamma \Vdash \varphi \quad \Longleftrightarrow \quad \varphi \in \Gamma\]
+    \end{lemma}
+
+    \begin{proof}
+        Докажем это по полной индукции по $|\varphi|$.
+
+        \textbf{Шаг.} Рассмотрим случаи.
+        \begin{itemize}
+            \item $\varphi \in \Prop$. В таком случае доказываемое утверждение очевидно следует из определения $v_\Gamma$.
+            \item $\varphi = (\theta \rightarrow \chi)$.
+            \[
+                v_\Gamma \Vdash \varphi
+                \quad \Longleftrightarrow \quad
+                v_\Gamma \nVdash \theta \vee v_\Gamma \Vdash \chi
+                \quad \Longleftrightarrow \quad
+                \theta \notin \Gamma \vee \chi \in \Gamma
+                \quad \Longleftrightarrow \quad
+                \varphi \in \Gamma
+            \]
+            \item $\varphi = (\theta \wedge \chi)$.
+            \[
+                v_\Gamma \Vdash \varphi
+                \quad \Longleftrightarrow \quad
+                v_\Gamma \Vdash \theta \wedge v_\Gamma \Vdash \chi
+                \quad \Longleftrightarrow \quad
+                \theta \in \Gamma \wedge \chi \in \Gamma
+                \quad \Longleftrightarrow \quad
+                \varphi \in \Gamma
+            \]
+            \item $\varphi = (\theta \vee \chi)$.
+            \[
+                v_\Gamma \Vdash \varphi
+                \quad \Longleftrightarrow \quad
+                v_\Gamma \Vdash \theta \vee v_\Gamma \Vdash \chi
+                \quad \Longleftrightarrow \quad
+                \theta \in \Gamma \vee \chi \in \Gamma
+                \quad \Longleftrightarrow \quad
+                \varphi \in \Gamma
+            \]
+            \item $\varphi = \neg \theta$.
+            \[
+                v_\Gamma \Vdash \varphi
+                \quad \Longleftrightarrow \quad
+                v_\Gamma \nVdash \theta
+                \quad \Longleftrightarrow \quad
+                \theta \notin \Gamma
+                \quad \Longleftrightarrow \quad
+                \varphi \in \Gamma
+            \]
+        \end{itemize}
+    \end{proof}
+
+    \begin{theorem}[о сильной полноте $\vdash$]
+        Для любых $\Gamma \cup \{\varphi\} \subseteq \Formul$
+        \[
+            \Gamma \vdash \varphi
+            \quad \Longleftrightarrow \quad
+            \Gamma \vDash \varphi
+        \]
+    \end{theorem}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[$\Rightarrow$)] См. \hyperref[Hilbert-conclusion-correctness]{теорему о корректности}.
+            \item[$\Leftarrow$)] Допустим, что $\Gamma \nvdash \varphi$. Как нам известно найдётся простая теория $\Gamma' \supseteq \Gamma$, что $\Gamma' \nvdash \varphi$. Очевидно, $\varphi \notin \Gamma'$. Следовательно $v_{\Gamma'} \Vdash \psi$ для всех $\psi \in \Gamma'$, но $v_{\Gamma'} \nVdash \varphi$. В итоге, $\Gamma' \nvDash \varphi$, и тем более $\Gamma \nvDash \varphi$.
+        \end{itemize}
+    \end{proof}
+
+    \begin{corollary}[теорема о слабой полноте $\vdash$]
+        Для любой $\varphi \in \Gamma$
+        \[
+            \vdash \varphi
+            \quad \Longleftrightarrow \quad
+            \vDash \varphi
+        \]
+    \end{corollary}
+
+    \begin{corollary}[теорема о компактности $\vDash$]
+        Для любых $\Gamma \cup \{\varphi\} \subseteq \Formul$
+        \[
+            \Gamma \vDash \varphi
+            \quad \Longleftrightarrow \quad
+            \Delta \vDash \varphi \text{ для некоторого конечного $\Delta \subseteq \Gamma$}.
+        \]
+    \end{corollary}
+
+    \subsection{Структуры}
+
+    \begin{definition}
+        \emph{Сигнатура} --- четвёрка вида
+        \[\sigma = \langle \Pred_\sigma, \Func_\sigma, \Const_\sigma, \arity_\sigma \rangle\]
+        где $\Pred_\sigma$, $\Func_\sigma$, $\Const_\sigma$ --- попарно непересекающиеся множества, а $\arity_\sigma$ --- функция из $\Pred_\sigma \cup \Func_\sigma$ в $\NN \setminus \{0\}$.
+
+        Элементы $\Pred_\sigma$, $\Func_\sigma$, $\Const_\sigma$ называются соответственно \emph{предикатными}, \emph{функциональными} и \emph{константными символами} $\sigma$.
+
+        Для данного символа $\varepsilon \in \Pred_\sigma \cup \Func_\sigma$ число $\arity(\varepsilon)$ называют \emph{его местностью}, \emph{арностью} или \emph{валентностью}.
+
+        Когда из контекста понятно, о какой сигнатуре идёт речь, то индекс $\cdot_\sigma$ может опускаться.
+
+        В дальнейшем при записи сигнатур нами будет допускаться определённая свобода. Так, если
+        \[
+            \Pred_\sigma = \{P_1; \dots; P_i\},
+            \qquad
+            \Func_\sigma = \{f_1; \dots; f_j\}
+            \qquad
+            \text{и}
+            \qquad
+            \Const_\sigma = \{c_1; \dots; c_j\},
+        \]
+        то $\sigma$ удобно представить как
+        \[\langle P_1^{n_1}, \dots, P_i^{n_i}; f_1^{m_1}, \dots, f_j^{m_j}; c_1, \dots, c_k \rangle,\]
+        где $n_1$, \dots, $n_i$ и $m_1$, \dots, $m_j$ суть местности соответственно $P_1$, \dots, $P_i$ и $f_1$, \dots, $f_j$.
+    \end{definition}
+
+    \begin{example}\hypertarget{strict-POS-signature-definition}{}
+        Сигнатура (строгих) ЧУМ --- $\langle {<}^2 \rangle$, абелевых групп --- $\langle {=}^2; {+}^2; {-}^1; 0 \rangle$.
+    \end{example}
+
+    \begin{remark*}
+        Неформально говоря, элементы $\Pred_\sigma$ играют роль ``отношений'' (например: равенство ``$=$'', упорядоченность ``$<$'' или ``$\leqslant$'', отношение делимости ``$\mid$'' или ``$\divided$''; при этом отношения можно брать не только на парах элементов), $\Func_\sigma$ --- роль функций и операторов (например: сложение (двухместное) ``$+$'', умножение (двухместное) ``$\cdot$'', унарный минус aka отрицание (унарное) ``$-$''), а $\Const_\sigma$ --- роль глобальных констант (например: нейтральные по сложению ``$0$'' и умножению ``$1$'' элементы колец, пространство векторов $V_A$ в аффинном пространстве).
+        \todo[inline]{Уточнить про роль константных символов.}
+    \end{remark*}
+
+    \begin{definition}
+        Пусть дана сигнатура $\sigma$. \emph{$\sigma$-структура} --- пара вида
+        \[\mathfrak{A} = \langle A, I_\mathfrak{A} \rangle\]
+        где $A$ --- непустое множество, а $I_\mathfrak{A}$ --- функция с областью определения $\Pred_\sigma \cup \Func_\sigma \cup \Const_\sigma$, что:
+        \begin{itemize}
+            \item для любого $n$-местного $P \in \Pred_\sigma$ верно $I_\mathfrak{A}(P) \subseteq A^n$;
+            \item для любого $m$-местного $f \in \Pred_\sigma$ верно $I_\mathfrak{A}(f): A^m \rightarrow A$;
+            \item для любого $c \in \Pred_\sigma$ верно $I_\mathfrak{A}(c) \in A$.
+        \end{itemize}
+
+        При этом $A$ называется \emph{носителем} или \emph{универсумом $\mathfrak{A}$}, а $I_\mathfrak{A}$ --- \emph{интерпретацией $\sigma$ в $\mathfrak{A}$}. Вместо $I_\mathfrak{A}(P)$, $I_\mathfrak{A}(f)$ и $I_\mathfrak{A}(c)$ часто пишут соответственно $P^\mathfrak{A}$, $f^\mathfrak{A}$ и $c^\mathfrak{A}$.
+
+        Кроме того, если $\sigma$ представляется как
+        \[\langle P_1^{n_1}, \dots, P_i^{n_i}; f_1^{m_1}, \dots, f_j^{m_j}; c_1, \dots, c_k \rangle,\]
+        то $\mathfrak{A}$ удобно представить как
+        \[\langle A; P_1^\mathfrak{A}, \dots, P_i^\mathfrak{A}; f_1^\mathfrak{A}, \dots, f_j^\mathfrak{A}; c_1^\mathfrak{A}, \dots, c_k^\mathfrak{A} \rangle.\]
+        Более того, для некоторых стандартных структур $\mathfrak{A}$ даже индекс $\cdot^\mathfrak{A}$ может опускаться, хоть это и чревато некоторой путаницей.
+    \end{definition}
+
+    \begin{remark*}
+        В предыдущем семестре для ЧУМ мы использовали запись $\langle A, {<}_A \rangle$, но аккуратнее было бы $\mathfrak{A} = \langle A; {<}_\mathfrak{A} \rangle$; вместе с тем, очевидно, далеко не всякая структура в сигнатуре ЧУМ является ЧУМ.
+    \end{remark*}
+
+    \begin{example}\hypertarget{R-signature-definition}{}
+        Рассмотрим сигнатуру
+        \[\sigma := \langle {=}^2; s^1, {+}^2, {\cdot}^2; 0 \rangle.\]
+        \hypertarget{R-structure-definition}{}
+        Обозначим через $\mathfrak{R}$ $\sigma$-структуру с носителем $\NN$, что:
+        \begin{itemize}
+            \item $=^\mathfrak{R}$ --- это отношение равенства на $\NN$;
+            \item $s^\mathfrak{R}$ --- это функция последователя на $\NN$;
+            \item $+^\mathfrak{R}$ --- это обычная функция сложения на $\NN$;
+            \item $\cdot^\mathfrak{R}$ --- это обычная функция умножения на $\NN$;
+            \item $0^\mathfrak{R}$ --- это настоящий ноль из $\mathfrak{R}$.
+        \end{itemize} 
+        Эту структуру называют \emph{стандартной моделью арифметики}. 
+    \end{example}
+
+    \begin{example}\hypertarget{ring-signature-definition}{}
+        Рассмотрим сигнатуру
+        \[\sigma := \langle {=}^2; {+}^2, {-}^1, {\cdot}^2; 0, 1 \rangle.\]
+        Её называют \emph{сигнатурой колец}, разумеется. Обозначим
+        \hypertarget{Z-structure-definition}{}
+        \[
+            \mathfrak{Z} :=
+            \quad
+            \begin{gathered}
+                \text{$\sigma$-структура с носителем $\ZZ$, в которой все символы}\\
+                \text{$\sigma$ интерпретируются естественным образом.}
+            \end{gathered}
+        \]
+        В частности, ${-}^\mathfrak{Z}$ --- это функция взятия обратного по сложению над $\ZZ$. По аналогии вместо $\ZZ$ можно было бы использовать:
+        \begin{itemize}
+            \item $\ZZ/n\ZZ$ aka $\ZZ_n$, т.е. множество всех целых чисел по модулю $n$;
+            \item $M_n(\RR)$, т.е. множество всех матриц порядка $n$ над $\RR$;
+            \item $\QQ[x]$, т.е. множество всех многочленов от $x$ с коэффициентами из $\QQ$.
+        \end{itemize}
+    \end{example}
+
+    \begin{example}
+        Рассмотрим сигнатуру
+        \[\sigma := \langle {=}^2, {\cong}^4, B^3 \rangle.\]
+        \hypertarget{G-structure-definition}{}
+        Обозначим через $\mathfrak{G}$ $\sigma$-структуру с носителем $\RR \times \RR$, что:
+        \begin{itemize}
+            \item ${=}^\mathfrak{G}$ --- это отношение равенства на $\RR \times \RR$;
+            \item ${\cong}^\mathfrak{G}$ определяется по правилу
+                \[
+                    (r_1, r_2, r_3, r_4) \in {\cong}^\mathfrak{G}
+                    \quad \Longleftrightarrow \quad
+                    \text{отрезки $r_1r_2$ и $r_3r_4$ равны;}
+                \]
+            \item $B^\mathfrak{G}$ определяется по правилу
+                \[
+                    (r_1, r_2, r_3) \in B^\mathfrak{G}
+                    \quad \Longleftrightarrow \quad
+                    \text{$r_2$ лежит между $r_1$ и $r_3$ на прямой.}
+                \]
+        \end{itemize}
+        Её можно назвать \emph{стандартной моделью геометрии}.
+    \end{example}
+
+    \begin{example}
+        Пусть $\sigma$ --- сигнатура из предыдущего примера. Возьмём
+        \[\HH := \{z \in \CC \mid \Img(z) > 0\}.\]
+        \hypertarget{H-structure-definition}{}
+        Обозначим через $\mathfrak{H}$ $\sigma$-структуру с носителем $\HH$, что:
+        \begin{itemize}
+            \item ${=}^\mathfrak{H}$ --- это отношение равенства на $\RR \times \RR$;
+            \item ${\cong}^\mathfrak{H}$ определяется по правилу
+                \[
+                    (r_1, r_2, r_3, r_4) \in {\cong}^\mathfrak{G}
+                    \quad \Longleftrightarrow \quad
+                    \begin{gathered}
+                        \text{отрезки $r_1r_2$ и $r_3r_4$ равны}\\
+                        \text{в смысле метрики Пуанкаре;}                        
+                    \end{gathered}
+                \]
+            \item $B^\mathfrak{H}$ определяется по правилу
+                \[
+                    (r_1, r_2, r_3) \in B^\mathfrak{G}
+                    \quad \Longleftrightarrow \quad
+                    \begin{gathered}
+                        \text{$r_2$ лежит между $r_1$ и $r_3$ на полуокружности}\\
+                        \text{(или полупрямой), ортогональной вещественной оси.}
+                    \end{gathered}
+                \]
+        \end{itemize}
+        Её называют \emph{моделью Пуанкаре геометрии Лобачевского}.
+    \end{example}
+
+    \begin{definition}
+        Пусть $\mathfrak{A}$ и $\mathfrak{B}$ --- две $\sigma$-структуры. \emph{Гомоморфизм из $\mathfrak{A}$ в $\mathfrak{B}$} --- такое отображение $\xi: A \to B$, что
+        \begin{enumerate}
+            \item \label{structure-def-predicate-condition} для любого $n$-местного $P \in \Pred_\sigma$ и всех $(a_1, \dots, a_n) \in A^n$
+                \[
+                    (a_1, \dots, a_n) \in P^\mathfrak{A}
+                    \quad \Longrightarrow \quad
+                    (\xi(a_1), \dots, \xi(a_n)) \in P^\mathfrak{B};
+                \]
+            \item для любого $m$-местного $f \in \Pred_\sigma$ и всех $(a_1, \dots, a_m) \in A^m$
+                \[
+                    \xi(f^\mathfrak{A}(a_1, \dots, a_n)) = f^\mathfrak{B}(\xi(a_1), \dots, \xi(a_m));
+                \]
+            \item для любого $c \in \Pred_\sigma$
+                \[
+                    \xi(c^\mathfrak{A}) = c^\mathfrak{B}
+                \]
+        \end{enumerate}
+    \end{definition}
+
+    \begin{lemma}
+        Композиция гомоморфизмов --- гомоморфизм.
+    \end{lemma}
+
+    \begin{definition}
+        \emph{Вложение $\mathfrak{A}$ в $\mathfrak{B}$} --- инъективный гомоморфизм из $\mathfrak{A}$ в $\mathfrak{B}$ с усиленным до равносильности условием \ref{structure-def-predicate-condition}, т.е.
+        \begin{center}
+            $\xi^{-1}[P^\mathfrak{B}] = P^\mathfrak{A}$\quad для каждого $P \in \Pred_\sigma$.
+        \end{center}
+    \end{definition}
+
+    \begin{lemma}
+        Композиция вложений --- вложение.
+    \end{lemma}
+
+    \begin{definition}
+        \emph{Изоморфизм из $\mathfrak{A}$ в $\mathfrak{B}$} --- сюръективное вложение $\mathfrak{A}$ в $\mathfrak{B}$.
+
+        Говорят, что $\mathfrak{A}$ и $\mathfrak{B}$ изоморфны, и пишут $\mathfrak{A} \simeq \mathfrak{B}$, если есть хоть какой-то изоморфизм из $\mathfrak{A}$ в $\mathfrak{B}$.
+    \end{definition}
+
+    \begin{lemma}
+        Композиция изоморфизмов --- изоморфизм.
+    \end{lemma}
+
+    \begin{lemma}
+        Изоморфность --- ``отношение эквивалентности'', т.е.
+        \begin{enumerate}
+            \item для всякой структуры $\mathfrak{A}$ верно
+                \[\mathfrak{A} \simeq \mathfrak{A};\]
+            \item для всяких структур $\mathfrak{A}$ и $\mathfrak{B}$ верно
+                \[\mathfrak{A} \simeq \mathfrak{B} \quad \Longleftrightarrow \quad \mathfrak{B} \simeq \mathfrak{A};\]
+            \item для всяких структур $\mathfrak{A}$, $\mathfrak{B}$ и $\mathfrak{C}$ верно
+                \[\mathfrak{A} \simeq \mathfrak{B} \simeq \mathfrak{C} \quad \Longrightarrow \quad \mathfrak{A} \simeq \mathfrak{C}.\]
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{lemma}
+        Гомоморфизм $\xi$ из $\mathfrak{A}$ в $\mathfrak{B}$ является изоморфизмом тогда и только тогда, когда есть обратный к нему, т.е. гомоморфизм $\eta$ из $\mathfrak{B}$ в $\mathfrak{A}$, что
+        \begin{center}
+            $\xi \circ \eta = \id_A$ \quad и \quad $\eta \circ \xi = \id_B$.
+        \end{center}
+    \end{lemma}
+
+    \begin{example}
+        Рассмотрим нестрогие ЧУМ $\mathfrak{A}$ и $\mathfrak{B}$, что:
+        \begin{itemize}
+            \item $A = B = \NN \setminus \{0\}$;
+            \item ${\leqslant}^\mathfrak{A}$ --- это отношение делимости на $\NN \setminus \{0\}$;
+            \item ${\leqslant}^\mathfrak{B}$ --- это обычный порядок на $\NN \setminus \{0\}$.
+        \end{itemize}
+        Тогда
+        \[\lambda: A \to B, a \mapsto a\]
+        будет биективным гомоморфизмом из $\mathfrak{A}$ в $\mathfrak{B}$, но даже не вложением.
+    \end{example}
+
+    \begin{example}
+        Рассмотрим нестрогие ЧУМ $\mathfrak{A}$ и $\mathfrak{B}$, что:
+        \begin{itemize}
+            \item $A = \NN$ и $B = \PP$;
+            \item ${\leqslant}^\mathfrak{A}$ --- это обычный порядок на $\NN$;
+            \item ${\leqslant}^\mathfrak{B}$ --- это обычный порядок на $\PP$.
+        \end{itemize}
+        Тогда
+        \[\lambda: A \to B, a \mapsto \text{``$a$-тое простое число''}\]
+        будет изоморфизмом из $\mathfrak{A}$ в $\mathfrak{B}$.
+    \end{example}
+
+    \begin{example}
+        Зафиксируем $p \in \PP$. Рассмотрим группы $\mathfrak{A}$ и $\mathfrak{B}$, что:
+        \begin{itemize}
+            \item $A = \ZZ$ и $B = \ZZ_p$;
+            \item ${+}^\mathfrak{A}$ --- это сложение на $\ZZ$;
+            \item ${+}^\mathfrak{B}$ --- это сложение на $\ZZ_p$.
+        \end{itemize}
+        Тогда
+        \[\lambda: A \to B, a \mapsto a \mathop{\mathrm{mod}} p\]
+        будет сюръективным гомоморфизмом из $\mathfrak{A}$ в $\mathfrak{B}$.
+    \end{example}
+
+    \begin{example}
+        Рассмотрим группы $\mathfrak{A}$ и $\mathfrak{B}$, что:
+        \begin{itemize}
+            \item $A = \RR$ и $B = \RR \setminus \{0\}$;
+            \item ${+}^\mathfrak{A}$ --- это сложение на $\RR$;
+            \item ${+}^\mathfrak{B}$ --- это \underline{умножение} на $\RR \setminus \{0\}$.
+        \end{itemize}
+        Тогда
+        \[\lambda: A \to B, a \mapsto 2^a\]
+        будет вложением $\mathfrak{A}$ в $\mathfrak{B}$.
+    \end{example}
+
+    \begin{definition}
+        \emph{Автоморфизм $\mathfrak{A}$} --- изоморфизм из $\mathfrak{A}$ в $\mathfrak{A}$.
+
+        Множество всех автоморфизмов $\mathfrak{A}$ обозначается за $\Aut(\mathfrak{A})$.
+    \end{definition}
+
+    \begin{remark*}
+        Интуитивно автоморфизмы --- абстрактный аналог симметрий.
+
+        Также над $\Aut(A)$ можно естественным образом задать структуру группы, где роль бинарной операции играет композиция.
+    \end{remark*}
+
+    \begin{example}
+        Пусть $\xi$ --- произвольный автоморфизм стандартной \hyperlink{R-structure-definition}{модели $\mathfrak{R}$ арифметики}. Тогда
+        \[
+            \xi(0) = 0, \quad
+            \xi(1) = s^\mathfrak{R}(\xi(0)) = 1, \quad
+            \xi(2) = s^\mathfrak{R}(s^\mathfrak{R}(\xi(0))) = 2, \dots
+        \]
+        Значит $\xi = \id_{\NN}$. Стало быть, $\Aut(\mathfrak{R}) = \{\id_{\NN}\}$.
+    \end{example}
+
+    \begin{example}\hypertarget{R_le-structure-definition}{}
+        Обозначим через $\mathfrak{R}_{<}$ стандартный ЧУМ с носителем $\NN$. Пусть $\xi$ --- произвольный автоморфизм $\mathfrak{R}_{<}$. Нетрудно понять, что:
+        \begin{align*}
+            \xi(\least(\NN)) &= \least(\NN);\\
+            \xi(\least(\NN \setminus \{0\})) &= \least(\NN \setminus \{\xi(0)\});\\
+            \xi(\least(\NN \setminus \{0, 1\})) &= \least(\NN \setminus \{\xi(0), \xi(1)\});\\
+            &\hspace{0.5em}\vdots
+        \end{align*}
+        Отсюда мы получаем:
+        \begin{align*}
+            \xi(0) &= \least(\NN) = 0;\\
+            \xi(1) &= \least(\NN \setminus \{\xi(0)\}) = 1;\\
+            \xi(2) &= \least(\NN \setminus \{\xi(0), \xi(1)\}) = 2;\\
+            &\hspace{0.5em}\vdots
+        \end{align*}
+        Значит, $\xi = \id_{\NN}$. Стало быть, $\Aut(\mathfrak{R}_{<}) = \id_{\NN}$.
+    \end{example}
+
+    \begin{example}[со схемой решения]\hypertarget{D-structure-definition}{}
+        Обозначим через $\mathfrak{D}$ нестрогий ЧУМ с носителем $\NN \setminus \{0\}$, в котором $\leqslant$ интерпретируется как отношение делимости. Заметим, что
+        \begin{itemize}
+            \item всякий автоморфизм $\mathfrak{D}$ переводит элементы $\PP$ в элементы $\PP$;
+            \item каждую биекцию из $\PP$ в $\PP$ можно единственным образом расширить до автоморфизма $\mathfrak{D}$.
+        \end{itemize}
+        Отсюда нетрудно получить, что $\Aut(\mathfrak{D})$ фактически состоит из перестановок $\PP$, а точнее, из их расширений.
+    \end{example}
+
+    \begin{example}[в качестве дополнительного упражнения]\label{G-structure-isomorphisms-example}
+        Для стандартной \hyperlink{G-structure-definition}{модели $\mathfrak{G}$ геометрии} всякий автоморфизм представим в виде композиции движения и гомотетии.
+    \end{example}
+
+    \subsection{Язык кванторной классической логики\\(Quantifier Classic Logic, QCL)}
+
+    \begin{definition}
+        Пусть (навсегда) зафиксировано некоторое счётное множество \Var. Будем называть его элементы \emph{предметными переменными} или просто \emph{переменными}.
+
+        Пусть дана сигнатура $\sigma$. Алфавит $\mathscr{L}_\sigma$ квантовой классической логики над $\sigma$ состоит из элементов $\Pred_\sigma \cup \Func_\sigma \cup \Const_\sigma \cup \Var$, а также:
+        \begin{itemize}
+            \item символов связок: ``$\rightarrow$'', ``$\wedge$'', ``$\vee$'' и ``$\neg$'',
+            \item символов кванторов: ``$\forall$'' и ``$\exists$'',
+            \item и вспомогательных символов: ``('', ``)'' и ``,''.
+        \end{itemize}
+        Для каждого $x \in \Var$ слова ``$\forall x$'' и ``$\exists x$'' называются \emph{кванторами по $x$}.
+
+        Обозначим за $\Term_\sigma$ наименьшее подмножество $\mathscr{L}_\sigma^*$, замкнутое относительно следующих порождающих правил:
+        \begin{itemize}
+            \item если $x \in \Var$, то $x \in \Term_\sigma$;
+            \item если $c \in \Const$, то $c \in \Term_\sigma$;
+            \item если $f \in \Func_\sigma$, $\arity_\sigma(f) = n$ и $\{t_1, \dots, t_n\} \subseteq \Term_\sigma$, то $f(t_1, \dots, t_n) \in \Term_\sigma$.
+        \end{itemize}
+        Элементы $\Term_\sigma$ называются \emph{$\sigma$-термами}.
+    \end{definition}
+
+    \begin{example}
+        Пусть $\sigma$ --- \hyperlink{R-signature-definition}{сигнатура стандартной модели арифметики}. Тогда
+        \[{+}(s({+}(x, y)), {\cdot}(s(x), y))\]
+        является $\sigma$-термом, который удобнее записать как $s(x + y) + s(x) \cdot y$.
+    \end{example}
+
+    \begin{definition}
+        Обозначим за $\Formul_\sigma$ наименьшее подмножество $\mathscr{L}_\sigma^*$, замкнутое относительно следующих порождающих правил:
+        \begin{itemize}
+            \item если $P \in \Pred_\sigma$, $\arity_\sigma(f) = n$ и $\{t_1, \dots, t_n\} \subseteq \Term_\sigma$, то $f(t_1, \dots, t_n) \in \Formul_\sigma$;
+            \item если $\{\Phi, \Psi\} \subseteq \Formul_\sigma$, то $\{(\Phi \rightarrow \Psi), (\Phi \wedge \Psi), (\Phi \vee \Psi), \neg \Phi\} \in \Formul_\sigma$;
+            \item если $\Phi \subseteq \Formul_\sigma$ и $x \in \Var$, то $\{\forall x\ \Phi, \exists x\ \Phi\} \in \Formul_\sigma$.
+        \end{itemize}
+        Элементы $\Formul_\sigma$ называются \emph{$\sigma$-формулами}.
+
+        Под \emph{атомарными $\sigma$-формулами}, или \emph{$\sigma$-атомами}, понимают те, что не содержат ни символов связок ни символов кванторов. Множество всех $\sigma$-атомов обозначается за $\Atom_\sigma$.
+    \end{definition}
+
+    \begin{definition}
+        Для любого $t \in \Term_\sigma$ определим
+        \[\sub(t) := \{s \in \Term_\sigma \mid s \preccurlyeq t\}.\]
+        Элементы $\sub(t)$ называются \emph{подтермами $t$}.
+        
+        Для любого $\Phi \in \Formul_\sigma$ определим
+        \[\Sub(\Phi) := \{\Psi \in \Formul_\sigma \mid \Psi \preccurlyeq \Phi\}.\]
+        Элементы $\Sub(\Phi)$ называются \emph{подформулами $\Phi$}.
+    \end{definition}
+
+    \begin{lemma}
+        Пусть $\{s, t\} \subseteq \Term_\sigma$ таковы, что $t \sqsubseteq s$. Тогда $t = s$.
+    \end{lemma}
+
+    \begin{theorem}[о единственности представления термов]
+        Всякий $t \in \Term_\sigma \setminus (\Var \cup \Const_\sigma)$ можно единственным образом представить в виде
+        \[f(t_1, \dots, t_n),\]
+        где $f \in \Func_\sigma$, $\arity_\sigma(f) = n$ и $\{t_1, \dots, t_n\} \subseteq \Term_\sigma$.
+    \end{theorem}
+
+    \begin{lemma}
+        Пусть $t \in \Term_\sigma$ и $f \in \Func_\sigma$. Тогда всякое вхождение $f$ в $t$ является началом вхождения некоторого подтерма.
+    \end{lemma}
+
+    \begin{theorem}[о подтермах]
+        Пусть $t \in \Term_\sigma$.
+        \begin{enumerate}
+            \item Если $t \in \Var \cup \Const_\sigma$, то $\sub(t) = \{t\}$.
+            \item Если $t = f(t_1, \dots, t_n)$, где $f \in \Func_\sigma$, $\arity_\sigma(f) = n$ и $\{t_1, \dots, t_n\} \subseteq \Term_\sigma$, то
+                \[\sub(t) = \sub(t_1) \cup \dots \cup \sub(t_n) \cup \{t\}\]
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{theorem}[о единственности представления атомов]
+        Всякий $\Phi \in \Atom_\sigma$ можно единственным способом представить в виде
+        \[P(t_1, \dots, t_n),\]
+        где $P \in \Pred_\sigma$, $\arity_\sigma(P) = n$ и $\{t_1, \dots, t_n\} \subseteq \Term_\sigma$.
+    \end{theorem}
+
+    \begin{lemma}
+        Пусть $\{\Phi, \Psi\} \subseteq \Formul_\sigma$ таковы, что $\Phi \sqsubseteq \Psi$. Тогда $\Phi = \Psi$.
+    \end{lemma}
+
+    \begin{theorem}
+        Всякую $\Phi \in \Formul_\sigma \setminus \Atom_\sigma$ можно единственным образом представить в виде
+        \begin{center}
+            $(\Theta \rightarrow \Omega)$, \quad
+            $(\Theta \wedge \Omega)$, \quad
+            $(\Theta \vee \Omega)$, \quad
+            $\neg \Theta$, \quad
+            $\forall x\ \Theta$ или
+            $\exists x\ \Theta$,            
+        \end{center}
+        где $\{\Theta; \Omega\} \subseteq \Formul_\sigma$.
+    \end{theorem}
+
+    \begin{lemma}
+        Пусть $\Phi \in \Formul_\sigma$. Тогда всякое вхождение ``$\neg$'', ``('', ``$\forall$'' или ``$\exists$'' в $\Phi$ является началом вхождения некоторой подформулы.
+    \end{lemma}
+
+    \begin{theorem}[о подформулах]
+        Пусть $\Phi \in \Formul_\sigma$.
+        \begin{enumerate}
+            \item Если $\Phi \in \Atom_\sigma$, то $\Sub(\Phi) = \{\Phi\}$.
+            \item Если $\Phi = (\Theta \circ \Omega)$, где $\{\Theta, \Omega\} \subseteq \Formul_\sigma$ и ${\circ} \in \{{\rightarrow}, {\wedge}, {\vee}\}$, то
+                \[\Sub(\Phi) = \Sub(\Theta) \cup \Sub(\Omega) \cup \{\Phi\}.\]
+            \item Если $\Phi = \neg \Theta$, где $\Theta \in \Formul_\sigma$, то
+                \[\Sub(\Phi) = \Sub(\Theta) \cup \{\Phi\}.\]
+            \item Если $\Phi = Q x\ \Theta$, где $x \in \Var$, $\Theta \in \Formul_\sigma$ и $Q \in \{\forall, \exists\}$, то
+                \[\Sub(\Phi) = \Sub(\Theta) \cup \{\Phi\}.\]
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{definition}
+        Пусть $\Phi \in \Formul_\sigma$, $x \in \Var$ и $Q \in \{\forall, \exists\}$.
+
+        Каждое вхождение $Qx$ в $\Phi$ является началом вхождения некоторой подформулы, причём единственного. Его называют \emph{областью действия} данного вхождения $Qx$.
+
+        Вхождение $x$ в $\Phi$ называется \emph{связанным}, если оно входит в область действия какого-нибудь вхождения $\forall x$ или $\exists x$, и \emph{свободными} иначе.
+
+        Далее, говорят, что $x$ является \emph{свободной переменной в $\Phi$}, если у $x$ есть хотя бы одно свободное вхождение в $\Phi$. Множество свободных переменных $\Phi$ обозначается за $\FV(\Phi)$.
+
+        Интуитивно элементы $\FV(\Phi)$ играют роль параметров $\Phi$. Запись $\Phi(x_1, \dots, x_l)$ указывает на то, что $\FV(\Phi) \subseteq \{x_1, \dots, x_l\}$.
+
+        Наконец, обозначим
+        \[\Sent_\sigma := \{\Phi \in \Formul_\sigma \mid \FV(\Phi) = \varnothing\}.\]
+        Элементы $\Sent_\sigma$ называют \emph{$\sigma$-предложениями}, реже --- \emph{замкнутыми $\sigma$-формулами}. Они могут выступать в качестве нелогических аксиом.
+    \end{definition}
+        
+    \begin{example}    
+        Пусть $\sigma$ --- \hyperlink{R-signature-definition}{сигнатура арифметики}. Рассмотрим $\sigma$-формулу
+        \[\Phi := \forall x\ \exists y\ x = y + 0 \cdot u \wedge \forall y\ \exists u\ x + u = y.\]
+        Тогда $\FV(\Phi) = \{u; x\}$. Тут мы можем написать $\Phi(u, x)$ или $\Phi(x, u)$; также приемлемы ``избыточные'' $\Phi(u, x, y)$ или $\Phi(x, u, v)$ и т.п.
+    \end{example}
+
+    \begin{example}
+        Пусть $\sigma$ --- \hyperlink{strict-POS-signature-definition}{сигнатура (строгих) ЧУМ}. В таком случае под \emph{аксиомами ЧУМ} понимают следующие предложения:
+        \begin{enumerate}
+            \item $\forall x\ \neg (x < x)$;
+            \item $\forall x\ \forall y\ \forall z\ (x < y \wedge y < z \rightarrow x < z)$.
+        \end{enumerate}
+
+        Интуитивно $\sigma$-структура является ЧУМ, если и только если она удовлетворяет этим аксиомам.
+    \end{example}
+
+    \begin{definition}
+        Пусть $\Phi \in \Formul_\sigma$, $x \in \Var$ и $t \in \Term_\sigma$. Обозначим
+        \[
+            \Phi(x/t) :=
+            \begin{gathered}
+                \text{результат одновременной замены всех}\\
+                \text{свободных вхождений $x$ в $\Phi$ на $t$.}
+            \end{gathered}
+        \]
+    \end{definition}
+
+    \begin{remark*}
+        Применение этой операции порой приводит к весьма нежелательным последствиям. Так, $\sigma$-формулы вида
+        \[\forall x\ \Phi \rightarrow \Phi(x/t)\]
+        кажутся истинными, но при
+        \[
+            \sigma := \langle {<}^2 \rangle,
+            \quad
+            \Phi := \exists y\ x < y
+            \quad \text{ и } \quad
+            t := y
+        \]
+        мы получаем
+        \[\forall x\ \exists y\ x < y \rightarrow \exists y\ y < y.\]
+        Кроме того, $\sigma$-формулы вида
+        \[\Phi(x/t) \rightarrow \exists x\ \Phi\]
+        кажутся истинными, но при
+        \[
+            \sigma := \langle {=}^2 \rangle,
+            \quad
+            \Phi := \forall y\ x = y
+            \quad \text{ и } \quad
+            t := y
+        \]
+        мы получаем
+        \[\forall y\ y = y \rightarrow \exists x\ \forall y\ x = y.\]
+        Поэтому с подстановками нужно быть аккуратнее.
+    \end{remark*}
+
+    \begin{definition}
+        Мы будем говорить, что \emph{$t$ свободен для (подстановки вместо) $x$ в $\Phi$}, если ни одно из свободных вхождений $x$ в $\Phi$ не находится в области действия квантора по переменной $t$.
+    \end{definition}
+
+    \begin{remark}
+        В частности, всякая переменная, не присутствующая в $\Phi$, является свободной для подстановки вместо всякой другой переменой в $\Phi$.
+    \end{remark}
+
+    \subsection{Семантика кванторной классической логики}
+
+    \begin{definition}
+        \emph{Означивание переменных в $\mathfrak{A}$}, или просто \emph{означинвание в $\mathfrak{A}$} --- функция из $\Var$ в $A$.
+        
+        Каждое означивание $\nu$ в $\mathfrak{A}$ можно расширить до $\overline{\nu}: \Term_\sigma \rightarrow A$ естественным образом:
+        \begin{enumerate}
+            \item $\forall x \in \Var \qquad \overline{\nu}(x) = \nu(x)$;
+            \item $\forall c \in \Const_\sigma \qquad \overline{\nu}(c) = c^\mathfrak{A}$;
+            \item Для всякого $n$-местного $f \in \Func_\sigma$ и всяких $\{t_1, \dots, t_n\} \subseteq \Term_\sigma$
+                \[
+                    \overline{\nu}(\text{``$f(t_1, \dots, t_n)$''})
+                    = f^\mathfrak{A}(\overline{\nu}(t_1), \dots, \overline{\nu}(t_n)).
+                \]
+        \end{enumerate}
+
+        В дальнейшем для любых $x \in \Var$ и $a \in A$ через $\nu_a^x$ будет обозначаться означивание
+        \[
+            \nu_a^x(y) :=
+            \begin{cases}
+                \nu(y)& \text{ если $y \neq x$}\\
+                a& \text{ если $y  x$}
+            \end{cases}
+        \]
+
+    \end{definition}
+
+    \begin{definition}
+        Пусть дано означивание $\nu$ в $\mathfrak{A}$. Определим $\mathfrak{A} \Vdash \Phi[\nu]$ индукцией по построению $\Phi$:
+        \begin{enumerate}
+            \item для всякого $n$-местного предиката $P \in \Pred_\sigma$ и всяких $\{t_1, \dots, t_n\} \subseteq \Term_\sigma$
+                \[
+                    \mathfrak{A} \Vdash P(t_1, \dots, t_n)[\nu]
+                    \quad \Longleftrightarrow \quad
+                    (\overline{\nu}(t_1), \dots, \overline{\nu}(t_n)) \in P^\mathfrak{A};
+                \]
+            \item для всяких $\{\Psi, \Theta\} \subseteq \Formul_\sigma$
+                \[
+                    \mathfrak{A} \Vdash (\Psi \rightarrow \Theta)[\nu]
+                    \quad \Longleftrightarrow \quad
+                    \mathfrak{A} \nVdash \Psi[\nu] \text{ или } \mathfrak{A} \Vdash \Theta[\nu];
+                \]
+            \item для всяких $\{\Psi, \Theta\} \subseteq \Formul_\sigma$
+                \[
+                    \mathfrak{A} \Vdash (\Psi \wedge \Theta)[\nu]
+                    \quad \Longleftrightarrow \quad
+                    \mathfrak{A} \Vdash \Psi[\nu] \text{ и } \mathfrak{A} \Vdash \Theta[\nu];
+                \]
+            \item для всяких $\{\Psi, \Theta\} \subseteq \Formul_\sigma$
+                \[
+                    \mathfrak{A} \Vdash (\Psi \vee \Theta)[\nu]
+                    \quad \Longleftrightarrow \quad
+                    \mathfrak{A} \Vdash \Psi[\nu] \text{ или } \mathfrak{A} \Vdash \Theta[\nu];
+                \]
+            \item для всякого $\Psi \in \Formul_\sigma$
+                \[
+                    \mathfrak{A} \Vdash \neg \Psi[\nu]
+                    \quad \Longleftrightarrow \quad
+                    \mathfrak{A} \nVdash \Psi[\nu];
+                \]
+            \item для всякого $\Psi \in \Formul_\sigma$ и всякого $x \in \Var$
+                \[
+                    \mathfrak{A} \Vdash \exists x\ \Psi[\nu]
+                    \quad \Longleftrightarrow \quad
+                    \mathfrak{A} \Vdash \Psi[\nu_a^x] \text{ для некоторого } a \in A;
+                \]
+            \item для всякого $\Psi \in \Formul_\sigma$ и всякого $x \in \Var$
+                \[
+                    \mathfrak{A} \Vdash \forall x\ \Psi[\nu]
+                    \quad \Longleftrightarrow \quad
+                    \mathfrak{A} \Vdash \Psi[\nu_a^x] \text{ для всех } a \in A.
+                \]
+        \end{enumerate}
+
+        Когда $\mathfrak{A} \Vdash \Phi[\nu]$, мы будем говорить, что \emph{$\Phi$ истинно в $\mathfrak{A}$ при $\nu$}, или \emph{$\mathfrak{A}$ удовлетворяет $\Phi$ при $\nu$}.
+    \end{definition}
+
+    \begin{remark}
+        (Не)верность $\mathfrak{A} \Vdash \Phi[\nu]$ не зависит от того, какие значения $\nu$ сопоставляет элементам $\Var \setminus \FV(\Phi)$.
+    \end{remark}
+
+    \begin{definition}
+        Если $\Phi$ имеет вид $\Phi(x_1, \dots, x_l)$, т.е. $\FV(\Phi) \subseteq \{x_1, \dots, x_l\}$, то вместо $\mathfrak{A} \Vdash \Phi[\nu]$ нередко пишут
+        \[\mathfrak{A} \Vdash \Phi[x_1/\nu(x_1), \dots, x_l/\nu(x_l)],\]
+        или же
+        \[\mathfrak{A} \Vdash \Phi[\nu(x_1), \dots, \nu(x_l)].\]
+        В частности, для $\Phi \in \Sent_\sigma$ обычно используется запись $\mathfrak{A} \Vdash \Phi$.
+
+        Наконец, пусть $\Gamma \subseteq \Sent_\sigma$. Говорят, что \emph{$\mathfrak{A}$ является моделью $\Gamma$}, и пишут $\mathfrak{A} \Vdash \Gamma$, если $\mathfrak{A} \Vdash \Phi$ для всех $\Phi \in \Gamma$.
+    \end{definition}
+
+    \begin{theorem}\label{attribution-through-isomorphism-theorem}
+        Пусть $\xi$ --- изоморфизм $\mathfrak{A}$ и $\mathfrak{B}$.
+        \begin{enumerate}
+            \item Для любого означивания $\nu$ в $\mathfrak{A}$ $\nu \circ \xi$ является означиванием $\mathfrak{B}$.
+            \item Для каждого $\sigma$-терма $t$ и любого означивания $\nu$ в $\mathfrak{A}$
+                \[\overline{\nu \circ \xi}(t) = \xi(\overline{\nu}(t)),\]
+                т.е. $\overline{\nu \circ \xi} = \overline{\nu} \circ \xi$.
+            \item Для каждой $\sigma$-формулы $\Phi$ и любого означивания $\nu$ в $\mathfrak{A}$
+                \[
+                    \mathfrak{A} \Vdash \Phi[\nu]
+                    \quad \Longleftrightarrow \quad
+                    \mathfrak{B} \Vdash \Phi[\nu \circ \xi].
+                \]
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        \todo[inline]{TODO (А надо ли?)}
+        \begin{enumerate}
+            \item Очевидно.
+            \item Очевидно получается из простой индукции по построению $t$.
+            \item Очевидно получается из простой индукции по построению $\Phi$.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{definition}
+        Для произвольного класса $\sigma$-структур $\mathcal{K}$ положим
+        \[\Th(\mathcal{K}) := \{\Phi \in \Sent_\sigma \mid \mathfrak{A} \Vdash \Phi \text{ для всех } \mathfrak{A} \in \mathcal{K}\}\]
+
+        Вместо $\Th(\{\mathfrak{A}\})$ обычно пишут \emph{$\Th(\mathfrak{A})$}. Говорят, что \emph{$\mathfrak{A}$ и $\mathfrak{B}$ элементарно эквивалентны}, если $\Th(\mathfrak{A}) = \Th(\mathfrak{B})$.
+    \end{definition}
+
+    \begin{lemma}
+        Изоморфные структуры элементарно эквивалентны.
+    \end{lemma}
+
+    \begin{definition}
+        Пусть дана произвольная $\sigma$-структура $\mathfrak{A}$.
+
+        $S \subseteq A^l$ \emph{определимо в $\mathfrak{A}$}, если существует $\sigma$-формула $\Phi(x_1, \dots, x_l)$, что
+        \[S = \{\overrightarrow{a} \in A^l \mid \mathfrak{A} \Vdash \Phi[\overrightarrow{a}]\};\]
+        в этом случае ещё говорят, что $\Phi$ определяет $S$ в $\mathfrak{A}$.
+
+        $\xi: A^l \to A$ \emph{определима в $\mathfrak{A}$}, если определим её график. $a \in A$ \emph{определим в $\mathfrak{A}$}, если $\{a\}$ определимо.
+    \end{definition}
+
+    \begin{example}
+        Отношение делиммости на $\NN$ определимо в \hyperlink{R-structure-definition}{$\mathfrak{R}$} посредством формулы
+        \[\Phi(x, y) := x \neq 0 \wedge \exists u\ x \cdot u = y,\]
+        а обычный строгий порядок на $\NN$ --- посредством
+        \[\Psi(x, y) := \exists u\ (u \neq 0 \wedge x + u = y).\]
+    \end{example}
+
+    \begin{example}
+        Функция последователя на $\NN$ определима в \hyperlink{R_le-structure-definition}{$\mathfrak{R}_{<}$} посредством
+        \[x < y \wedge \neg \exists u\ (x < u \wedge u < y).\]
+    \end{example}
+
+    \begin{example}
+        В \hyperlink{Z-structure-definition}{стандартном кольце $\mathfrak{Z}$ с носителем $\ZZ$} будет определимо отношение ``быть больше нуля''; тут можно использовать
+        \[\Phi(x) := x \neq 0 \wedge \exists u_1, u_2, u_3, u_4\ (x = u_1^2 + u_2^2 + u_3^2 + u_4^2),\]
+        а потому обычный строгий порядок на $\ZZ$ определим в $\mathfrak{Z}$ посредством
+        \[\Psi(x, y) := \exists u\ (\Phi(u) \wedge x + u = y).\]
+    \end{example}
+
+    \begin{example}
+        Обычный строгий порядок на $\RR$ определим в стандартном кольце $\mathfrak{R}$ с носителем $\RR$ посредством
+        \[\Theta(x, y) := \exists u\ (u \neq 0 \wedge x + u^2 = y).\]
+    \end{example}
+
+    \begin{example}
+        Рассмотрим \hyperlink{G-structure-definition}{стандартную модель $\mathfrak{G}$ геометрии}. В ней определимы отношения
+        \begin{itemize}
+            \item ``$x$ лежит на прямой $yz$'' посредством
+                \[\Phi(x, y, z) := B(x, y, z) \vee B(z, x, y) \vee B(y, z, x)\]
+            \item и ``прямые $xx'$ и $yy'$ параллельны'' посредством
+                \[\Psi(x, x', y, y') := x \neq x' \wedge y \neq y' \wedge \neg \exists u\ (\Phi(u, x, x') \wedge \Phi(u, y, y')).\]
+        \end{itemize}
+        \hypertarget{Euclid_5-axiom-definition}{}При этом аксиому о параллельности можно выразить так:
+        \[
+            \mathrm{Euclid}_5 := \forall x, y, z\ (x \neq y \wedge \neg \Phi(z, x, y) \rightarrow \forall u, v\ (\Psi(z, u, x, y) \wedge \Psi(z, v, x, y) \rightarrow \Phi(z, u, v)))
+        \]
+        Она будет истина в $\mathfrak{G}$, но ложна в \hyperlink{H-structure-definition}{модели $\mathfrak{H}$}.
+    \end{example}
+
+    \begin{example}[без доказательства]
+        Рассмотрим структуру $\langle \NN; \mid; s \rangle$, где $\mid$ интерпретируется как отношение делимости на $\NN$. Ноль определим в этой структуре посредством
+        \[\Phi(x) := \neg x \mid x,\]
+        а отношение равенства на $\NN$ --- посредством
+        \[\Psi(x, y) := (\Phi(x) \wedge \Phi(y)) \vee (x \mid y \wedge y \mid x).\]
+        \href{https://en.wikipedia.org/wiki/Julia_Robinson}{Джулией Робинсон} было доказано, что
+        \begin{quotation}
+            функции сложения и умножения на $\NN$ определимы в $\langle \NN; \mid; s \rangle$.
+        \end{quotation}
+    \end{example}
+
+    \begin{example}[без доказательства]
+        Для каждого $n \in \NN$ обозначим
+        \[\supp(n) := \text{множество всех простых делителей $n$}.\]
+        \href{https://en.wikipedia.org/wiki/Erd\%C5\%91s\%E2\%80\%93Woods_number}{Гипотеза Эрдёша-Вудса} заключается в следующем.
+        \begin{quotation}
+            Найдётся такое $N \in \NN$, что для любых $i, j \in \NN$ из
+            \[\supp(i+n) = \supp(j+n) \text{ для всех } n \in \{0, \dots, N\}\]
+            следует, что $i = j$.
+        \end{quotation}
+        Это известная открытая проблема.
+
+        Теперь рассмотрим $\langle \NN; \perp; s \rangle$, где $\perp$ интерпретируется как отношение взаимной простоты на $\NN$. Джоном Вудсом было показано, что TFAE:
+        \begin{itemize}
+            \item отношение равенства на $\NN$ определимо в $\langle; \perp; s \rangle$;
+            \item функции сложения и умножения на $\NN$ определимы в $\langle; {=}, \perp; s \rangle$;
+            \item верна гипотеза Эрдёша-Вудса.
+        \end{itemize}
+    \end{example}
+
+    \begin{example}
+        Известно, что
+        \begin{itemize}
+            \item всякое (вычислимо) перечислимое множество определимо в \hyperlink{R-structure-definition}{$\mathfrak{R}$};
+            \item всякая частичная вычислимая функция определима в $\mathfrak{R}$.
+        \end{itemize}
+        Например, $f: n \mapsto 2^n$ оказывается определима в $\mathfrak{R}$.
+
+        Этот пример связан со знаменитыми теоремами Гёделя о неполноте ``достаточно богатых систем''.
+    \end{example}
+
+    \begin{theorem}
+        Пусть $S$ определимо в $\mathfrak{A}$. Тогда для любого $\xi \in \Aut(\mathfrak{A})$
+        \[\xi[S] \subseteq S,\]
+        т.е. $S$ замкнуто относительно автоморфизмов $\mathfrak{A}$.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $\Phi(x_1, \dots, x_l)$ --- формула, задающая $S$ в $\mathfrak{A}$ и $(a_1, \dots, a_l)$ --- случайный элемент $A^l$. Из теоремы \ref{attribution-through-isomorphism-theorem} следует, что
+        \[
+            \mathfrak{A} \Vdash \Phi[a_1, \dots, a_l]
+            \quad \Longleftrightarrow \quad
+            \mathfrak{A} \Vdash \Phi[\xi(a_1), \dots, \xi(a_l)]
+        \]
+        Следовательно, $(\xi(a_1), \dots, \xi(a_l)) \in S$. Поэтому $\xi[S] \subseteq S$.
+    \end{proof}
+    
+    \begin{corollary}
+        В терминах предыдущей теоремы
+        \[\xi[S] = S.\]
+    \end{corollary}
+
+    \begin{remark}
+        Это даёт необходимое, но далеко не достаточное условие определимости. Так если $\Formul_\sigma$ счётно, $A$ бесконечно и $\Aut(\mathfrak{A}) = \{\id_A\}$, то:
+        \begin{itemize}
+            \item всякое $S \subseteq A^l$ замкнуто относительно автоморфизмов $\mathfrak{A}$;
+            \item множество всех определимых в $\mathfrak{A}$ множеств не больше $|\Formul_\sigma|$, т.е. не более чем счётно;
+            \item значит, существует $2^{|A|}$ замкнутых относительно автоморфизмов $\mathfrak{A}$, но не определимых в $\mathfrak{A}$ множеств.
+        \end{itemize}
+
+        Конкретным примером $\mathfrak{A}$ может служить \hyperlink{R_le-structure-definition}{$\mathfrak{R}_{<}$}.
+    \end{remark}
+
+    \begin{example}
+        В $\langle \ZZ; =; + \rangle$ неопределимо обычное отношение порядка на $\ZZ$, так как $\xi: a \mapsto -a$ является автоморфизмом данной структуры, нарушающим это отношение.
+    \end{example}
+
+    \begin{example}
+        С другой стороны, в $\langle \ZZ; {<} \rangle$ уже не определима функция сложения на $\ZZ$, так как $\xi: a \mapsto a + 1$ является автоморфизмом данной структуры, несохраняющим данное эту функцию.
+    \end{example}
+
+    \begin{example}
+        В \hyperlink{D-structure-definition}{$\mathfrak{D}$} нельзя определить никакой элемент, кроме $1$.
+    \end{example}
+
+    \begin{example}[см. упражнение \ref{G-structure-isomorphisms-example}]
+        В \hyperlink{G-structure-definition}{$\mathfrak{G}$} нельзя определить:
+        \begin{itemize}
+            \item никакую конкретную фигуру за исключением $\varnothing$ и $\RR \times \RR$;
+            \item отношение ``длина отрезка $xy$ равна единице'';
+            \item отношение ``вершины треугольника $xyz$ обходятся против часовой стрелки''.
+        \end{itemize}
+    \end{example}
+
+    \begin{definition}
+        Пусть $=$ содержится в $\Pred_\sigma$, причём $\arity_\sigma({=}) = 2$. $\sigma$-структуру $\mathfrak{A}$ называют \emph{нормальной}, если $=$ интерпретируется в $\mathfrak{A}$ как настоящее равенство, т.е. ${=}^\mathfrak{A}$ совпадает с $\id_A$.
+    \end{definition}
+
+    \begin{remark}
+        С практической точки зрения, если мы работаем в рамках фиксированного языка, начинает стираться грань между:
+        \begin{itemize}
+            \item \emph{настоящим равенством}, для разговора о котором необходимо выйти за пределы данного языка;
+            \item \emph{неразличимостью средствами языка}.
+        \end{itemize}
+        В математике роль отношения равенства нередко играет отношение эквивалентности специального типа.
+    \end{remark}
+
+    \begin{definition}
+        Обозначим через $\Eq_\sigma$ множество, состоящее из $\sigma$-предложений
+        \begin{itemize}
+            \item $\forall x\ x$,
+            \item $\forall x\ \forall y\ (x = y \rightarrow y = x)$,
+            \item $\forall x\ \forall y\ \forall z\ (x = y \wedge y = z \rightarrow x = z)$,
+        \end{itemize}
+        а также всех $\sigma$-предложений видов
+        \begin{itemize}
+            \item $\forall x_1\ \forall y_1\ \dots \forall x_n\ \forall y_n\ (x_1 = y_1 \wedge \dots \wedge x_n = y_n \rightarrow (P(x_1, \dots, x_n) \leftrightarrow P(y_1, \dots, y_n)))$, где $P \in \Pred_\sigma$, $\arity_\sigma(P) = n$,
+            \item $\forall x_1\ \forall y_1\ \dots \forall x_m\ \forall y_m\ (x_1 = y_1 \wedge \dots \wedge x_m = y_m \rightarrow f(x_1, \dots, x_m) = f(y_1, \dots, y_m))$, где $f \in \Func_\sigma$, $\arity_\sigma(f) = m$.
+        \end{itemize}
+        Под \emph{аксиомами равенства для $\sigma$} понимают элементы $\Eq_\sigma$.
+    \end{definition}
+
+    \begin{remark}
+        Разумеется, $\mathfrak{A} \Vdash \Eq_\sigma$ для всякой нормальной $\sigma$-структуры $\mathfrak{A}$.
+    \end{remark}
+
+    \begin{definition}
+        Пусть $\mathfrak{A}$ --- произвольная модель $\Eq_\sigma$.
+
+        Очевидно, ${=}^\mathfrak{A}$ будет отношением эквивалентности на $A$. Обозначим через $\mathfrak{A}'$ нормальную $\sigma$-структуру с носителем $A/{=}_\mathfrak{A}$, что:
+        \begin{itemize}
+            \item для любого $c \in \Const_\sigma$
+                \[c^{\mathfrak{A}'} := [c^\mathfrak{A}];\]
+            \item для любого $m$-местного $f \in \Func_\sigma$
+                \[f^{\mathfrak{A}'}([a_1], \dots, [a_m]) := [f^\mathfrak{A}(a_1, \dots, a_m)];\]
+            \item для любого $n$-местного $P \in \Func_\sigma$
+                \[([a_1], \dots, [a_m]) \in P^{\mathfrak{A}'} \quad :\Longleftrightarrow \quad (a_1, \dots, a_m) \in f^\mathfrak{A}.\]
+        \end{itemize}
+        (Здесь $[a]$ --- класс эквивалентности $a$ по ${=}^\mathfrak{A}$.) Корректность данного определения обеспечивают аксиомы равенства для $\sigma$.
+    \end{definition}
+
+    \begin{theorem}
+        Для любых $\sigma$-формулы $\Phi$ и означивания $\nu$ в $\mathfrak{A}$
+        \[
+            \mathfrak{A} \Vdash \Phi[\nu]
+            \quad \Longleftrightarrow \quad
+            \mathfrak{A}' \Vdash \Phi[\nu'],
+        \]
+        где $\nu': x \mapsto [\nu(x)]$.
+    \end{theorem}
+
+    \begin{theorem}%\label{attribution-through-isomorphism-theorem}
+        \begin{enumerate}\ 
+            \item Для любого означивания $\nu$ в $\mathfrak{A}$ $\nu'$ является означиванием в $\mathfrak{A}'$.
+            \item Для каждого $\sigma$-терма $t$ и любого означивания $\nu$ в $\mathfrak{A}$
+                \[\overline{\nu'}(t) = [\overline{\nu}(t)].\]
+            \item Для каждой $\sigma$-формулы $\Phi$ и любого означивания $\nu$ в $\mathfrak{A}$
+                \[
+                    \mathfrak{A} \Vdash \Phi[\nu]
+                    \quad \Longleftrightarrow \quad
+                    \mathfrak{A}' \Vdash \Phi[\nu'].
+                \]
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        \todo[inline]{TODO (А надо ли?)}
+        \begin{enumerate}
+            \item Очевидно.
+            \item Очевидно получается из простой индукции по построению $t$.
+            \item Очевидно получается из простой индукции по построению $\Phi$.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{corollary}
+        Для каждого $\Gamma \subseteq \Sent_\sigma$ TFAE:
+        \begin{itemize}
+            \item у $\Gamma$ есть нормальная модель;
+            \item у $\Gamma \cup \Eq$ есть модель.
+        \end{itemize}
+    \end{corollary}
+
+    Отныне будет предполагаться, что все рассматриваемые $\sigma$-структуры нормальны, если явным способом не оговорено обратное.
+
+    \begin{definition}
+        $\sigma$-формулу называют:
+        \begin{itemize}
+            \item \emph{выполнимой}, если $\mathfrak{A} \Vdash \Phi[\nu]$ для некоторых $\mathfrak{A}$ и $\nu$;
+            \item \emph{общезначимой}, если $\mathfrak{A} \Vdash \Phi[\nu]$ для всех $\mathfrak{A}$ и $\nu$.
+        \end{itemize}
+        Здесь подразумевается, что $\mathfrak{A}$ бегает по $\sigma$-структурам, тогда как $\nu$ --- по означиваниям в $\mathfrak{A}$.
+    \end{definition}
+
+    \begin{remark}
+        Очевидно, что
+        \[\Phi \text{ общезначима} \quad \Longleftrightarrow \quad \neg \Phi \text{ не выполнима.}\]
+    \end{remark}
+
+    \begin{theorem}[Чёрча; должно быть на старших курсах]
+        Проблема выполнимости для кванторной классической логики в сигнатуре $\langle R^2 \rangle$ алгоритмически неразрешима.
+    \end{theorem}
+
+    \begin{definition}
+        Пусть $\Phi \in \Formul_\sigma$, и $x_1, \dots, x_l$ суть в точности все элементы $\FV(\Phi)$ в порядке появления в $\Phi$. Обозначим
+        \[
+            \tildeforall \Phi := \forall x_1\ \dots \forall x_l\ \Phi
+            \quad \text{ и }\quad
+            \tildeexists \Phi := \exists x_1\ \dots \exists x_l\ \Phi
+        \]
+        Тогда $\tildeforall \Phi$ называют \emph{универсальным замыканием $\Phi$}, а $\tildeexists \Phi$ --- \emph{экзистенциальным замыканием $\Phi$}.
+    \end{definition}
+
+    \begin{remark}
+        Ясно, что для каждой $\mathfrak{A}$:
+        \begin{align*}
+            \mathfrak{A} \Vdash \tildeforall \Phi \quad &\Longleftrightarrow \quad \mathfrak{A} \Vdash \Phi[\nu] \text{ для всех } \nu;\\
+            \mathfrak{A} \Vdash \tildeexists \Phi \quad &\Longleftrightarrow \quad \mathfrak{A} \Vdash \Phi[\nu] \text{ для некоторого } \nu.
+        \end{align*}
+        Стало быть, имеют место следующие эквивалентности:
+        \begin{align*}
+            \Phi \text{ выполнима} \quad &\Longleftrightarrow \quad \mathfrak{A} \Vdash \tildeexists \Phi \text{ для некоторой } \mathfrak{A};\\
+            \Phi \text{ общезначима} \quad &\Longleftrightarrow \quad \mathfrak{A} \Vdash \tildeforall \Phi \text{ для всех } \mathfrak{A}.
+        \end{align*}
+    \end{remark}
+
+    \begin{definition}
+        Пусть $\Gamma \subseteq \Sent_\sigma$ и $\Phi \in \Formul_\sigma$. Говорят, что \emph{$\Phi$ семантически следует из $\Gamma$}, и пишут $\Gamma \vDash \Phi$, если для любой $\mathfrak{A}$
+        \[\mathfrak{A} \Vdash \Gamma \quad \longrightarrow \quad \mathfrak{A} \Vdash \tildeforall \Phi.\]
+        Вместо $\varnothing \vDash \Phi$ обычно пишут $\vDash \Phi$.
+
+        Формулы $\Phi$ и $\Psi$ называются \emph{семантически эквивалентными}, если $\vDash \Phi \leftrightarrow \Psi$; при этом пишут $\Phi \equiv \Psi$.
+    \end{definition}
+
+    \begin{remark}
+        Очевидно
+        \[\vDash \Phi \quad \Longleftrightarrow \quad \Phi \text{ общезначима}.\]
+    \end{remark}
+
+    \begin{example}
+        Для любых $\Phi \in \Formul_\sigma$ и $x \in \Var$
+        \[
+            \neg \forall x \Phi \equiv \exists x \neg \Phi
+            \quad \text{ и } \quad
+            \neg \exists x \Phi \equiv \forall x \neg \Phi.
+        \]
+    \end{example}
+
+    \begin{definition}
+        $\sigma$-формула называется \emph{бескванторной}, если $\forall \not\preccurlyeq \Phi$ и $\exists \not\preccurlyeq \Phi$.
+
+        Под \emph{пренексными нормальными формами (ПНФ)} понимаются $\sigma$-формулы вида
+        \[Q_1 x_1\ \dots Q_l x_l\ \Psi,\]
+        где $\{Q_1, \dots, Q_l\} \subseteq \{\forall, \exists\}$, $\{x_1, \dots, x_l\} \subseteq \Var$ и $\Psi$ бескванторная.
+    \end{definition}
+
+    \begin{exercise}
+        Всякая $\sigma$-формула семантически эквивалентна некоторой ПНФ.
+    \end{exercise}
+
+    \subsection{Гильбертовское исчисление для кванторной классической логики}
+
+    \begin{definition}
+        Рассмотрим следующие аксиомы:
+        \begin{description}
+            \item[$\mathrm{I1}$.] $\Phi \rightarrow (\Psi \rightarrow \Phi)$;
+            \item[$\mathrm{I2}$.] $(\Phi \rightarrow (\Psi \rightarrow \Theta)) \rightarrow ((\Phi \rightarrow \Psi) \rightarrow (\Phi \rightarrow \Theta))$;
+            \item[$\mathrm{C1}$.] $\Phi \wedge \Psi \rightarrow \Phi$;
+            \item[$\mathrm{C2}$.] $\Phi \wedge \Psi \rightarrow \Psi$;
+            \item[$\mathrm{C3}$.] $\Phi \rightarrow (\Psi \rightarrow \Phi \wedge \Psi)$;
+            \item[$\mathrm{D1}$.] $\Phi \rightarrow \Phi \vee \Psi$;
+            \item[$\mathrm{D2}$.] $\Psi \rightarrow \Phi \vee \Psi$;
+            \item[$\mathrm{D3}$.] $(\Phi \rightarrow \Theta) \rightarrow ((\Psi \rightarrow \Theta) \rightarrow (\Phi \vee \Psi \rightarrow \Theta))$;
+            \item[$\mathrm{N1}$.] $(\Phi \rightarrow \Psi) \rightarrow ((\Phi \rightarrow \neg \Psi) \rightarrow \neg \Phi)$;
+            \item[$\mathrm{N2}$.] $\neg \Phi \rightarrow (\Phi \rightarrow \Psi)$;
+            \item[$\mathrm{N3}$.] $\Phi \vee \neg \Phi$;
+            \item[$\mathrm{Q1}$.] $\forall x\ \Phi \rightarrow \Phi(x/t)$, где $t$ свободен для $x$ в $\Phi$;
+            \item[$\mathrm{Q2}$.] $\Phi(x/t) \rightarrow \exists x\ \Phi$, где $t$ свободен для $x$ в $\Phi$.
+        \end{description}
+
+        Кроме того, в случаях, когда ${=}$ содержится в $\Pred_\sigma$, элементы $\Eq_\sigma$ также будут считаться аксиомами нашего исчисления.
+
+        Помимо них у нас имеется правило ``modus ponens'', т.е.
+        \begin{prooftree}
+            \AxiomC{$\Phi$}
+            \AxiomC{$\Phi \rightarrow \Psi$}
+                \RightLabel{($\mathrm{MP}$)}
+                \BinaryInfC{$\Psi$}
+        \end{prooftree}
+        и добавляются два новых ``кванторных'' правила вывода:
+        \begin{multicols}{3}
+            \centering
+            \begin{prooftree}
+                \AxiomC{$\Phi \rightarrow \Psi$}
+                    \RightLabel{($\mathrm{BR}1$)}
+                    \UnaryInfC{$\Phi \rightarrow \forall x\ \Psi$}
+            \end{prooftree}
+            и
+            \begin{prooftree}
+                \AxiomC{$\Phi \rightarrow \Psi$}
+                    \RightLabel{($\mathrm{BR}2$)}
+                    \UnaryInfC{$\exists x\ \Phi \rightarrow \Psi$}
+            \end{prooftree}
+        \end{multicols}
+        где $x \notin \FV(\Psi)$. Он традиционно называются \emph{правилами Бернайса}.
+
+        Пусть $\Gamma \subseteq \Sent_\sigma$. \emph{Вывод из $\Gamma$} в данном гильбертовском исчислении --- конечная последовательность
+        \[\Phi_0, \dots, \Phi_n\]
+        (где $n \in \NN$) элементов $\Formul_\sigma$, что для каждого $i \in \{0; \dots; n\}$ верно одно из следующих условий:
+        \begin{itemize}
+            \item $\Phi_i$ есть аксиома;
+            \item $\Phi_i$ является элементом $\Gamma$;
+            \item существуют $\{j; k\} \subseteq \{0; \dots; i-1\}$ такие, что $\Phi_k = \Phi_j \rightarrow \Phi_i$;
+            \item существует $j \in \{0; \dots; i-1\}$ такое, что $\Phi_i$ получается из $\Phi_j$ по $\mathrm{BR1}$ или по $\mathrm{BR2}$.
+        \end{itemize}
+        При этом $\Phi_n$ называется \emph{заключением} рассматриваемого вывода, а элементы $\Gamma$ --- его \emph{гипотезами}.
+
+        Для $\Gamma \subseteq \Sent_\sigma$ и $\Phi \in \Formul_\sigma$ запись $\Gamma \vdash \Phi$ означает, что существует вывод из $\Gamma$ с заключением $\Phi$. Вместо $\varnothing \vdash \Phi$ обычно пишут $\vdash \Phi$.
+    \end{definition}
+
+    \begin{definition}
+        Пусть даны $\Gamma \subseteq \Sent_\sigma$ и $\Phi \in \Formul_\sigma$.
+        \begin{itemize}
+            \item \emph{$\Phi$ опровержима в $\Gamma$}, если $\Gamma \vdash \neg \Phi$.
+            \item \emph{$\Phi$ независима от $\Gamma$}, если $\Gamma \nvdash \Phi$ и $\Gamma \nvdash \neg \Phi$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{example}
+        Благодаря трудам Коэна и Гёделя мы знаем, что:
+        \begin{itemize}
+            \item \Caxiom независима от \ZF, а \CH --- от \ZFC;
+            \item в частности, $\neg \Caxiom$ не опровержимо в \ZF, а $\neg \CH$ --- в \ZFC.
+        \end{itemize}
+        Разумеется, тут предполагается непротиворечивость соответственно \ZF и \ZFC, поскольку иначе выводимо всё, что угодно.
+    \end{example}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item {\bf Монотонность.} Если $\Gamma \subseteq \Delta$ и $\Gamma \vdash \Phi$, то $\Delta \vdash \Phi$.
+            \item {\bf Транзитивность.} Если для всякого $\Psi \in \Gamma$ верно $\Delta \vdash \Psi$ и $\Gamma \vdash \Phi$, то $\Delta \vdash \Phi$.
+            \item {\bf Компактность.} Если $\Gamma \vdash \Phi$, то для некоторого конечного $\Delta \subseteq \Gamma$ верно $\Delta \vdash \Phi$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{remark*}
+        Однако стоит помнить, что $\Gamma$ и $\Delta$ представляют собой множества $\sigma$-предложений, т.е. у их элементов нет свободных переменных.
+    \end{remark*}
+
+    \begin{proof}\ 
+        \begin{enumerate}
+            \item Рассматривая вывод $\Phi$ из $\Gamma$, сиюминутно получаем вывод $\Phi$ из $\Delta$.
+            \item Возьмём вывод $\Phi$ из $\Gamma$. Рассмотрим все использованные утверждения $\Gamma$ в этом выводе; получим конечное множество $\Gamma'$. Далее для всякого $\Psi \in \Gamma'$ рассмотрим вывод $\Psi$ из $\Delta$, сотрём $\Psi$ на конце этого вывода и припишем его в начало ранее рассмотренного вывода $\Phi$. Тогда несложно понять, что мы получаем вывод $\Phi$ из $\Delta$.
+            \item Хватает просто взять в качестве $\Delta$ множество всех формул из $\Gamma$, использованных в каком-то конкретном выводе $\Phi$ из $\Gamma$. Тогда очевидно, что $\Delta$ конечно, а рассмотренный вывод станет выводом $\Phi$ из $\Delta$.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{definition}
+        Пусть $\xi: \Prop \to \Formul_\sigma$. Для всякой пропозициональной формулы $\varphi$ обозначим
+        \[
+            \xi \varphi :=
+            \begin{gathered}
+                \text{результат замены (всех вхождений)}\\
+                \text{каждой $p \in \Prop$ в $\varphi$ на $\xi(p)$.}
+            \end{gathered}
+        \]
+        Также для удобства для всякого $\Gamma \subseteq \Formul$ определим $\xi \Gamma := \{\xi \psi \mid \psi \in \Gamma\}$
+    \end{definition}
+
+    \begin{remark*}
+        $\xi \varphi$ есть $\sigma$-формула.
+    \end{remark*}
+
+    \begin{lemma}
+        Пусть $\xi: \Prop \rightarrow \Formul_\sigma$ и $\Gamma \cup \{\varphi\} \subseteq \Formul$. Тогда
+        \[
+            \Gamma \vdash \varphi
+            \quad \Longrightarrow \quad
+            \xi \Gamma \vdash \xi \varphi.
+        \]
+    \end{lemma}
+    
+    \begin{remark*}
+        $\Gamma \vdash \varphi$ рассматривается в пропозициональном исчислении, а $\xi \Gamma \vdash \xi \varphi$ --- в кванторном.
+    \end{remark*}
+
+    \begin{proof}
+        Зафиксируем какой-нибудь вывод
+        \[\varphi_0, \dots, \varphi_n\]
+        $\varphi$ из $\Gamma$ (в пропозициональном исчислении), и рассмотрим последовательность
+        \[\xi \varphi_0, \dots, \xi \varphi_n.\]
+        Покажем индукцией по $i \in \{0, \dots, n\}$, что $\xi \varphi_0, \dots, \xi \varphi_i$ является выводом из $\xi \Gamma$ (в кванторном исчислении).
+
+        Возможны следующие случаи.
+        \begin{itemize}
+            \item $\varphi_i$ --- аксиома. Тогда $\xi \varphi_i$ --- аксиома.
+            \item $\varphi_i$ --- элемент $\Gamma$. Тогда $\xi \varphi_i$ --- элемент $\xi \Gamma$.
+            \item $\varphi_i$ получается из предшествующих $\varphi_j$ и $\varphi_k = \varphi_j \rightarrow \varphi_i$ по $\mathrm{MP}$. Тогда $\xi \varphi_i$ получается из предшествующих $\xi \varphi_j$ и $\xi \varphi_k = \xi \varphi_j \rightarrow \xi \varphi_i$ по $\mathrm{MP}$.
+        \end{itemize}
+
+        Стало быть, $\xi \Gamma \vdash \xi \varphi_i$ для всех $i \in \{0, \dots, n\}$. В частности для $i = n$ мы имеем, что $\xi \Gamma \vdash \xi \varphi$.
+    \end{proof}
+
+    \begin{corollary}
+        В терминах доказанной теоремы, предполагая $\Gamma = \varnothing$, получаем, что
+        \[
+            \vdash \varphi
+            \quad \Longrightarrow \quad
+            \vdash \xi \varphi.
+        \]
+    \end{corollary}
+
+    \begin{corollary}
+        Пусть $\xi: \Prop \to \Formul_\sigma$, $\varphi \in \Formul$ и $\vDash \varphi$ (в смысле проп. логики). Тогда $\vdash \xi \varphi$.
+    \end{corollary}
+
+    \begin{example}
+        Так, в нашем первопорядковом исчислении окажутся выводимы
+        \[\Phi \rightarrow \Phi, \quad \Phi \rightarrow \neg \neg \Phi \quad \text{ и } \quad \neg \neg \Phi \rightarrow \Phi\]
+        для произвольной $\sigma$-формулы $\Phi$.
+    \end{example}
+
+    \begin{example}
+        Пусть переменная $y$ не входит в $\sigma$-формулу $\Phi$. Тогда
+        \begin{center}
+            \begin{tabular}{rll}
+                1.& $\forall x\ \Phi \rightarrow \Phi(x/y)$& $\mathrm{Q1}$\\
+                2.& $\forall x\ \Phi \rightarrow \forall y\ \Phi(x/y)$& из 1; $\mathrm{BR1}$
+            \end{tabular}
+        \end{center}
+        будет выводом из $\varnothing$. Кроме того,
+        \begin{center}
+            \begin{tabular}{rll}
+                1.& $\forall y\ \Phi(x/y) \rightarrow \overbrace{\Phi(x/y)(y/x)}^\Phi$& $\mathrm{Q1}$\\
+                2.& $\forall y\ \Phi(x/y) \rightarrow \forall x\ \Phi$& из 1; $\mathrm{BR1}$
+            \end{tabular}
+        \end{center}
+        будет выводом из $\varnothing$. Стало быть, $\vdash \forall x\ \Phi \leftrightarrow \forall y\ \Phi(x/y)$.
+    \end{example}
+
+    \begin{example}
+        Покажем, что $\vdash \exists x\ \neg \Phi \rightarrow \neg \forall x\ \Phi$:
+        \begin{center}
+            \begin{tabular}{rll}
+                1.& $\forall x\ \Phi \rightarrow \overbrace{\Phi(x/x)}^\Phi$& $\mathrm{Q1}$\\
+                2.& $(\forall x\ \Phi \rightarrow \Phi) \rightarrow (\neg \Phi \rightarrow \neg \forall x\ \Phi)$& тавтология\\
+                3.& $\neg \Phi \rightarrow \neg \forall x\ \Phi$& из 1, 2; $\mathrm{MP}$\\
+                4.& $\exists x\ \neg \Phi \rightarrow \neg \forall x\ \Phi$& из 3; $\mathrm{BR2}$
+            \end{tabular}
+        \end{center}
+        Заметим, что с помощью тавтологий из этого можно легко получить $\vdash \forall x\ \Phi \rightarrow \neg \exists x\ \neg \Phi$.
+    \end{example}
+
+    \begin{example}
+        Пусть $\vdash \Phi \rightarrow \Psi$. Покажем, что тогда $\vdash \forall x\ \Phi \rightarrow \forall x\ \Psi$:
+        \begin{center}
+            \begin{tabular}{rll}
+                1.& $\forall x\ \Phi \rightarrow \Phi$& $\mathrm{Q1}$\\
+                2.& $\Phi \rightarrow \Psi$& предположение\\
+                3.& $\forall x\ \Phi \rightarrow \Psi$& из 1, 2 и тавтологий; $\mathrm{MP}$\\
+                4.& $\forall x\ \Phi \rightarrow \forall x\ \Psi$& из 3; $\mathrm{BR1}$
+            \end{tabular}
+        \end{center}
+        Используя $\mathrm{C1}$, $\mathrm{C2}$, $\mathrm{C3}$, отсюда легко получить:
+        \[
+            \vdash \Phi \leftrightarrow \Psi
+            \quad \Longrightarrow \quad
+            \vdash \forall x\ \Phi \leftrightarrow \forall x\ \Psi.
+        \]
+    \end{example}
+
+    \begin{definition}
+        Для удобства введём обозначения
+        \[
+            \top := \Phi_\star \rightarrow \Phi_\star
+            \quad \text{ и } \quad
+            \bot := \neg \top,
+        \]
+        где $\Phi_\star$ --- фиксированное $\sigma$-предложение.
+    \end{definition}
+
+    \begin{theorem}
+        Для любых $\Gamma \subseteq \Sent_\sigma$, $\Phi \in \Formul_\sigma$ и $x \in \Var$
+        \[
+            \Gamma \vdash \Phi
+            \quad \Longleftrightarrow \quad
+            \Gamma \vdash \forall x\ \Phi
+        \]
+    \end{theorem}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[$\Rightarrow$)] Пусть $\Gamma \vdash \Phi$.
+                \begin{center}
+                    \begin{tabular}{rll}
+                        1.& $\Phi$& выводится по предложению\\
+                        2.& $\Phi \rightarrow (\top \rightarrow \Phi)$& $\mathrm{I1}$\\
+                        3.& $\top \rightarrow \Phi$& из 1, 2; $\mathrm{MP}$\\
+                        4.& $\top \rightarrow \forall x\ \Phi$& из 3; $\mathrm{BR1}$\\
+                        5.& $\forall x\ \Phi$& из 4 и тавтологий; $\mathrm{MP}$\\
+                    \end{tabular}
+                \end{center}
+                
+            \item[$\Leftarrow$)] Пусть $\Gamma \vdash \forall x\ \Phi$.
+                \begin{center}
+                    \begin{tabular}{rll}
+                        1.& $\forall x\ \Phi$& выводится по предложению\\
+                        2.& $\forall x\ \Phi \rightarrow \overbrace{\Phi(x/x)}^\Phi$& $\mathrm{Q1}$\\
+                        3.& $\Phi$& из 1, 2; $\mathrm{MP}$\\
+                    \end{tabular}
+                \end{center}
+        \end{itemize}
+    \end{proof}
+
+    \begin{remark}
+        Значит, мы можем дополнительно использовать \emph{правило обобщения}:
+        \begin{prooftree}
+            \AxiomC{$\Phi$}
+                \RightLabel{($\mathrm{GR}$)}
+                \UnaryInfC{$\forall x\ \Phi$}
+        \end{prooftree}
+        Оно нередко фигурирует в альтернативных версиях гильбретовского исчисления для классической логики первого порядка.
+    \end{remark}
+
+    \begin{corollary}
+        Для любых $\Gamma \subseteq \Sent_\sigma$ и $\Phi \in \Formul_\sigma$
+        \[
+            \Gamma \vdash \Phi
+            \quad \Longleftrightarrow \quad
+            \Gamma \vdash \tildeforall \Phi.
+        \]
+    \end{corollary}
+
+    \begin{remark*}
+        Как нетрудно убедиться, для $\vDash$ имеет место аналогичное утверждение.
+    \end{remark*}
+
+    \begin{theorem}[о дедукции]
+        Для любых $\Gamma \cup \{\Phi\} \subseteq \Sent_\sigma$ и $\Psi \in \Formul_\sigma$,
+        \[
+            \Gamma \cup \{\Phi\} \vdash \Psi
+            \quad \Longleftrightarrow \quad
+            \Gamma \vdash \Phi \rightarrow \Psi.
+        \]
+    \end{theorem}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[$\Leftarrow$)] Тривиально.
+            \item[$\Leftarrow$)] Пусть $\Gamma \cup \{\Phi\} \vdash \Psi$. Зафиксируем какой-нибудь вывод
+                \[\Psi_0, \dots, \Psi_n\]
+                $\Psi$ из $\Gamma \cup \{\Phi\}$. По индукции по $i \in \{0, \dots, n\}$ покажем, что $\Gamma \vdash \Phi \rightarrow \Psi_i$. Ввиду аналогии с пропозициальным исчислением, достаточно разобрать лишь новые случаи, относящиеся к $\mathrm{BR1}$ и $\mathrm{BR2}$.
+                \begin{itemize}
+                    \item Пусть $\Psi_i = \Theta \rightarrow \forall x\ \Omega$ получается из предшествующего $\Psi_j = \Theta \rightarrow \Omega$ по $\mathrm{BR1}$. Тогда можно построить такой ``квазивывод'' из $\Gamma$:
+                        \begin{center}
+                            \begin{tabular}{rll}
+                                1.& $\Phi \rightarrow \overbrace{(\Theta \rightarrow \Omega)}^{\Psi_j}$& предположение индукции\\
+                                2.& $(\Phi \rightarrow (\Theta \rightarrow \Omega)) \rightarrow (\Phi \wedge \Theta \rightarrow \Omega)$& тавтология\\
+                                3.& $\Phi \wedge \Theta \rightarrow \Omega$& из 1, 2; $\mathrm{MP}$\\
+                                4.& $\Phi \wedge \Theta \rightarrow \forall x\ \Omega$& из 3; $\mathrm{BR1}$\\
+                                5.& $(\Phi \wedge \Theta \rightarrow \forall x\ \Omega) \rightarrow (\Phi \rightarrow (\Theta \rightarrow \Omega))$& тавтология\\
+                                6.& $\Phi \rightarrow (\Theta \rightarrow \Omega)$& из 4, 5; $\mathrm{MP}$\\
+                            \end{tabular}
+                        \end{center}
+                        Стало быть, $\Gamma \vdash \Phi \rightarrow (\theta \rightarrow \forall x\ \Omega)$.
+                    
+                        
+                    \item Пусть $\Psi_i = \exists x\ \Theta \rightarrow \Omega$ получается из предшествующего $\Psi_j = \Theta \rightarrow \Omega$ по $\mathrm{BR2}$. Тогда можно построить такой ``квазивывод'' из $\Gamma$:
+                        \begin{center}
+                            \begin{tabular}{rll}
+                                1.& $\Phi \rightarrow \overbrace{(\Theta \rightarrow \Omega)}^{\Psi_j}$& предположение индукции\\
+                                2.& $(\Phi \rightarrow (\Theta \rightarrow \Omega)) \rightarrow (\Theta \rightarrow (\Phi \rightarrow \Omega))$& тавтология\\
+                                3.& $\Theta \rightarrow (\Phi \rightarrow \Omega)$& из 1, 2; $\mathrm{MP}$\\
+                                4.& $\exists x\ \Theta \rightarrow (\Phi \rightarrow \Omega)$& из 3; $\mathrm{BR2}$\\
+                                5.& $(\exists x\ \Theta \rightarrow (\Phi \rightarrow \Omega)) \rightarrow (\Phi \rightarrow (\exists x\ \Theta \rightarrow \Omega))$& тавтология\\
+                                6.& $\Phi \rightarrow (\exists x\ \Theta \rightarrow \Omega)$& из 4, 5; $\mathrm{MP}$\\
+                            \end{tabular}
+                        \end{center}
+                        Стало быть, $\Gamma \vdash \Phi \rightarrow (\exists x\ \Theta \rightarrow \Omega)$.
+                \end{itemize}
+                В частности, при $i := n$ мы имеем $\Gamma \vdash \Phi \rightarrow \Psi_n$, т.е. $\Gamma \vdash \Phi \rightarrow \Psi$.
+        \end{itemize}
+    \end{proof}
+
+    \begin{corollary}
+        Для любых $\Gamma \subseteq \Sent_\sigma$ и $\Phi \in \Form_\sigma$
+        \[
+            \Gamma \vdash \Phi
+            \quad \Longleftrightarrow \quad
+            \vdash \bigwedge_{i=1}^n \Psi_i \rightarrow \Phi \text{ для некоторых } \{\Psi_1; \dots; \Psi_n\} \subseteq \Gamma.
+        \]
+        (В случае $n=0$ соответствующая конъюнкция отождествляется с $\top$.)
+    \end{corollary}
+    
+    \begin{lemma}
+        Пусть $\xi: \Prop \rightarrow \Formul_\sigma$, $\Gamma \cup \{\varphi\} \subseteq \Formul$. Тогда
+        \[
+            \Gamma \vDash \varphi
+            \quad \Longrightarrow \quad
+            \xi \Gamma \vDash \xi \varphi
+        \]
+    \end{lemma}
+    
+    \begin{proof}
+        Рассмотрим произвольные $\sigma$-структуру $\mathfrak{A}$ и означивание $\nu$ в $\mathfrak{A}$. Определим оценку
+        \[
+            v(p) :=
+            \begin{cases}
+                1& \text{ если $\mathfrak{A} \Vdash \xi(p) [\nu]$}\\
+                0& \text{ иначе.}
+            \end{cases}
+        \]
+        Легко видеть, что для всякой $\psi \in \Formul$
+        \[
+            v \Vdash \psi
+            \quad \Longleftrightarrow \quad
+            \mathfrak{A} \Vdash \xi \psi [\nu];
+        \]
+        это следует из простой индукции по построению $\psi$. Следовательно
+        \[
+            (\forall \psi \in \Gamma \quad v \Vdash \psi) \rightarrow v \Vdash \varphi
+            \quad \Longleftrightarrow \quad
+            (\forall \psi \in \Gamma \quad \mathfrak{A} \Vdash \xi \psi [\nu]) \rightarrow \mathfrak{A} \Vdash \xi \varphi [\nu].
+        \]
+        Но по определению $\varphi$ и $\Gamma$ мы имеем, что левое утверждение выполняется всегда, а значит и правая часть выполняется всегда. Стало быть, $\xi \Gamma \vDash \xi \varphi$.
+    \end{proof}
+
+    \begin{lemma}
+        Пусть $\Phi$ --- аксиома кванторного исчисления. Тогда $\vDash \Phi$.
+    \end{lemma}
+
+    \begin{proof}
+        \begin{itemize}
+            \item Пусть $\Phi$ --- пропозициональная аксиома. Тогда она имеет вид $\xi \varphi$, где $\varphi$ --- аксиома пропозиционального исчисления, а $\xi$ --- функция из $\Prop$ в $\Formul_\sigma$. Тогда $\vDash \varphi$, а значит и $\vDash \Phi$ по предыдущей лемме.
+
+            \item Пусть $\Phi$ --- кванторная аксиома, т.е. она имеет вид
+                \[
+                    \forall x\ \Psi \rightarrow \Psi(x/t)
+                    \quad \text{ или } \quad
+                    \Psi(x/t) \rightarrow \exists x\ \Psi(x),
+                \]
+                где $t$ свободен для $x$ в $\Psi$. Рассмотрим произвольные $\sigma$-структуру $\mathfrak{A}$ и означение $\nu$ в $\mathfrak{A}$. Можно показать индукцией по построению $\Psi$, что
+                \[
+                    \mathfrak{A} \vDash \Psi(x/t) [\nu]
+                    \quad \Longleftrightarrow \quad
+                    \mathfrak{A} \vDash \Psi [\nu_{\overline{\nu}(t)}^x].
+                \]
+                \todo[inline]{Может быть довести.}
+                Отсюда мы сразу получаем $\vDash \Phi$.
+        \end{itemize}
+    \end{proof}
+
+    \begin{theorem}[о корректности $\vdash$]
+        Для любых $\Gamma \subseteq \Sent_\sigma$ и $\Phi \in \Formul_\sigma$,
+        \[
+            \Gamma \vdash \Phi
+            \quad \Longrightarrow \quad
+            \Gamma \vDash \Phi
+        \]
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $\Gamma \vdash \Phi$. Зафиксируем какой-нибудь вывод
+        \[\Phi_0, \dots, \Phi_n\]
+        $\Phi$ из $\Gamma$. Пусть $\mathfrak{A}$ --- произвольная модель $\Gamma$. Покажем индукцией по $i \in \{0, \dots, n\}$, что $\mathfrak{A} \Vdash \Phi_i [\nu]$ для всякого означивания $\nu$ в $\mathfrak{A}$.
+
+        Рассмотрим возможные случаи.
+        \begin{itemize}
+            \item Пусть $\Phi_i$ --- аксиома. Тогда $\vDash \Phi_i$, а потому $\Gamma \vDash \Phi_i$.
+            \item Пусть $\Phi_i$ --- элемент $\Gamma$. Тогда, очевидно, $\mathfrak{A} \Vdash \Phi_i [\nu]$ для всех $\nu$.
+            \item Пусть $\Phi_i$ получается из предшествующих $\Phi_j$ и $\Phi_k = \Phi_j \rightarrow \Phi_i$ по $\mathrm{MP}$. В силу индукционной гипотезы, для вякого $\nu$
+                \[
+                    \mathfrak{A} \Vdash \Phi_j [\nu]
+                    \quad \text{ и } \quad
+                    \mathfrak{A} \Vdash \Phi_j \rightarrow \Phi_i [\nu],
+                \]
+                откуда немедленно следует $\mathfrak{A} \Vdash \Phi_i [\nu]$.
+            \item Пусть $\Phi_i = \Theta \rightarrow \forall x\ \Omega$ получается из предшествующего $\Phi_j = \Theta \rightarrow \Omega$ по $\mathrm{BR1}$. Рассмотрим произвольное означивание $\nu$. Заметим, что
+                \[
+                    \mathfrak{A} \Vdash \Theta[\nu]
+                    \quad \Longleftrightarrow \quad
+                    \mathfrak{A} \Vdash \Theta[\nu_a^x] \text{ для всех } a \in A
+                \]
+                (так как $x \notin \FV(\Theta)$). Кроме того, ввиду предположения индукции мы имеем $\mathfrak{A} \Vdash \Theta \rightarrow \Omega [\nu_a^x]$. Итак
+                \begin{align*}
+                    \mathfrak{A} \Vdash \Theta [\nu]\quad
+                    &\Longrightarrow \quad \mathfrak{A} \Vdash \Theta [\nu_a^x] \text{ для всех } a \in A\\
+                    &\Longrightarrow \quad \mathfrak{A} \Vdash \Omega [\nu_a^x] \text{ для всех } a \in A\\
+                    &\Longrightarrow \quad \mathfrak{A} \Vdash \forall x\ \Omega [\nu].
+                \end{align*}
+                Стало быть, $\mathfrak{A} \Vdash \Phi_i [\nu]$.
+            \item Случай $\mathfrak{BR2}$ по существу аналогичен случаю $\mathfrak{BR1}$.
+        \end{itemize}
+
+        В частности, $\mathfrak{A} \Phi [\nu]$ для всякого означивания $\nu$ в $\mathfrak{A}$. Таким образом $\Gamma \vDash \Phi$.
+    \end{proof}
+
+    \begin{corollary}
+        Для любой $\Phi \in \Formul_\sigma$, если $\vdash \Phi$, то $\vDash \Phi$.
+    \end{corollary}
+
+    \begin{definition}
+        $\Gamma \subseteq \Sent_\sigma$ называют \emph{противоречивым}, если $\Gamma \vdash \Phi$ и $\Gamma \vdash \neg \Phi$ для некоторой $\Phi \in \Formul_\sigma$, и \emph{непротиворечивым} иначе.
+    \end{definition}
+
+    \begin{lemma}
+        Для $\Gamma \subseteq \Formul_\sigma$ TFAE:
+        \begin{itemize}
+            \item $\vdash \Psi$ для всех $\Psi \in \Formul_\sigma$;
+            \item $\Gamma$ противоречиво;
+            \item $\Gamma \vdash \bot$.
+        \end{itemize}
+    \end{lemma}
+
+    \begin{corollary}
+        Пусть $\Gamma \subseteq \Sent_\sigma$ и $\Phi \in \Sent_\sigma$.
+        \begin{itemize}
+            \item Если у $\Gamma$ есть модель, то $\Gamma \nvdash \bot$.
+            \item Если у $\Gamma \cup \{\Phi\}$ есть модель, то $\Gamma \nvdash \neg \Phi$.
+            \item Если у $\Gamma \cup \{ \neg \Phi\}$ есть модель, то $\Gamma \nvdash \Phi$.
+        \end{itemize}
+    \end{corollary}
+
+    \begin{remark*}
+        Это, пожалуй, самый базовый метод доказательства непротиворечивости теорий независимости предложений от теории.
+    \end{remark*}
+
+    \begin{example}
+        Пусть в качестве $\sigma$ выступает $\langle =^2; s^1; 0 \rangle$, а $\Gamma$ состоит из
+        \begin{itemize}
+            \item $\forall x\ s(x) \neq 0$,
+            \item $\forall x\ \forall y\ (s(x) = s(y) \rightarrow x = y)$ и
+            \item $\forall x\ (x \neq 0 \rightarrow \exists y\ x = s(y))$.
+        \end{itemize}
+        Обозначим через $\mathfrak{A}$ и $\mathfrak{B}$ естественные $\sigma$-структуры с носителями $\NN$ и $\NN \cup \{\infty\}$ соответственно (считая $s^\mathfrak{B}(\infty) = \infty$). Возьмём
+        \[
+            \Phi := \forall x\ s(x) \neq x.
+        \]
+        Тогда $\mathfrak{A} \Vdash \Gamma \cup \{\Phi\}$ и $\mathfrak{B} \Vdash \Gamma \cup \{\neg \Phi\}$, а значит, $\Phi$ независима от $\Gamma$.
+    \end{example}
+
+    \begin{example}[без деталей]
+        Пусть $\sigma$ --- это сигнатура структур \hyperlink{G-structure-definition}{$\mathfrak{G}$} и \hyperlink{H-structure-definition}{$\mathfrak{H}$}, т.е. $\langle {=}^2; {\simeq}^4, B^3 \rangle$. $\sigma$-пре\-дло\-же\-ния, формализующие постулаты геометрии Евклида без постулата о единственности параллельной прямой, обычно именуют \emph{аксиомами абсолютной геометрии}; обозначим их через $\Abs$. Тогда
+        \[
+            \mathfrak{G} \Vdash \Abs \cup \{\mathrm{Euclid}_5\}
+            \quad \text{ и } \quad
+            \mathfrak{H} \Vdash \Abs \cup \{\neg \mathrm{Euclid}_5\}.
+        \]
+        Значит, \hyperlink{Euclid_5-axiom-definition}{$\mathrm{Euclid}_5$} (аксиома о параллельных) независима от $\Abs$.
+    \end{example}
 \end{document}
