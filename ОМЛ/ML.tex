@@ -4,6 +4,7 @@
 \usepackage{mathrsfs}
 \usepackage{bussproofs}
 \usepackage{multicol}
+\usepackage{stmaryrd}
 
 \settitle
 {Основы математической логики.}
@@ -15,7 +16,7 @@
 % \newcommand{\finsubsets}{\ensuremath{\mathcal{P_{\mathrm{fin}}}}\xspace}
 % \DeclareMathOperator{\Ind}{Ind}
 \DeclareMathOperator{\dom}{dom}
-% \DeclareMathOperator{\range}{range}
+\DeclareMathOperator{\range}{range}
 % \DeclareMathOperator{\Min}{Min}
 % \DeclareMathOperator{\Seq}{Seq}
 % \DeclareMathOperator{\Left}{left}
@@ -398,7 +399,7 @@
     \end{example}
 
     \begin{example}
-        Покажем, что $\{\varphi \vee \psi\} \vdash \psi \vee \varphi$:
+        Покажем, что $\{\varphi \wedge \psi\} \vdash \psi \wedge \varphi$:
         \begin{center}
             \begin{tabular}{rll}
                 1.& $\psi \rightarrow (\varphi \rightarrow \psi \wedge \varphi)$& $\mathrm{C3}$\\
@@ -560,7 +561,7 @@
     \begin{definition}
         $\Gamma \subseteq \Formul$ называется \emph{простой теорией}, если оно удовлетворяет следующим условиям:
         \begin{itemize}
-            \item $\Gamma \neg \Formul$;
+            \item $\Gamma \neq \Formul$;
             \item $\{\varphi \in \Formul \mid \Gamma \vdash \varphi\} \subseteq \Gamma$;
             \item для любого $\varphi \vee \psi \in \Gamma$ верно, что $\varphi \in \Gamma$ или $\psi \in \Gamma$.
         \end{itemize}
@@ -1482,8 +1483,8 @@
 
         Теперь рассмотрим $\langle \NN; \perp; s \rangle$, где $\perp$ интерпретируется как отношение взаимной простоты на $\NN$. Джоном Вудсом было показано, что TFAE:
         \begin{itemize}
-            \item отношение равенства на $\NN$ определимо в $\langle; \perp; s \rangle$;
-            \item функции сложения и умножения на $\NN$ определимы в $\langle; {=}, \perp; s \rangle$;
+            \item отношение равенства на $\NN$ определимо в $\langle \NN; \perp; s \rangle$;
+            \item функции сложения и умножения на $\NN$ определимы в $\langle \NN; {=}, \perp; s \rangle$;
             \item верна гипотеза Эрдёша-Вудса.
         \end{itemize}
     \end{example}
@@ -1568,7 +1569,7 @@
     \begin{definition}
         Обозначим через $\Eq_\sigma$ множество, состоящее из $\sigma$-предложений
         \begin{itemize}
-            \item $\forall x\ x$,
+            \item $\forall x\ x = x$,
             \item $\forall x\ \forall y\ (x = y \rightarrow y = x)$,
             \item $\forall x\ \forall y\ \forall z\ (x = y \wedge y = z \rightarrow x = z)$,
         \end{itemize}
@@ -2017,8 +2018,8 @@
                                 2.& $(\Phi \rightarrow (\Theta \rightarrow \Omega)) \rightarrow (\Phi \wedge \Theta \rightarrow \Omega)$& тавтология\\
                                 3.& $\Phi \wedge \Theta \rightarrow \Omega$& из 1, 2; $\mathrm{MP}$\\
                                 4.& $\Phi \wedge \Theta \rightarrow \forall x\ \Omega$& из 3; $\mathrm{BR1}$\\
-                                5.& $(\Phi \wedge \Theta \rightarrow \forall x\ \Omega) \rightarrow (\Phi \rightarrow (\Theta \rightarrow \Omega))$& тавтология\\
-                                6.& $\Phi \rightarrow (\Theta \rightarrow \Omega)$& из 4, 5; $\mathrm{MP}$\\
+                                5.& $(\Phi \wedge \Theta \rightarrow \forall x\ \Omega) \rightarrow (\Phi \rightarrow (\Theta \rightarrow \forall x\ \Omega))$& тавтология\\
+                                6.& $\Phi \rightarrow (\Theta \rightarrow \forall x\ \Omega)$& из 4, 5; $\mathrm{MP}$\\
                             \end{tabular}
                         \end{center}
                         Стало быть, $\Gamma \vdash \Phi \rightarrow (\theta \rightarrow \forall x\ \Omega)$.
@@ -2109,7 +2110,7 @@
         \end{itemize}
     \end{proof}
 
-    \begin{theorem}[о корректности $\vdash$]
+    \begin{theorem}[о корректности $\vdash$]\label{Hilbert-conclusion-correctness-2}
         Для любых $\Gamma \subseteq \Sent_\sigma$ и $\Phi \in \Formul_\sigma$,
         \[
             \Gamma \vdash \Phi
@@ -2207,4 +2208,263 @@
         \]
         Значит, \hyperlink{Euclid_5-axiom-definition}{$\mathrm{Euclid}_5$} (аксиома о параллельных) независима от $\Abs$.
     \end{example}
+
+    \begin{definition}
+        В дальнейшем, когда это не приводит к путанице, мы будем нередко отождествлять с $\sigma$ с $\Pred_\sigma \cup \Func_\sigma \cup \Const_\sigma$ (учитывая роли символов и их местности). В частности:
+        \begin{itemize}
+            \item запись $\varepsilon \in \sigma$ является сокращением для $\varepsilon \in \Pred_\sigma \cup \Func_\sigma \cup \Const_\sigma$;
+            \item запись $\sigma \subseteq \sigma'$ означает, что
+                \begin{align*}
+                    &\Pred_\sigma \subseteq \Pred_{\sigma'},&
+                    &\Func_\sigma \subseteq \Func_{\sigma'}&
+                    &\text{ и }&
+                    &\Const_\sigma \subseteq \Const_{\sigma'},
+                \end{align*}
+                причём $\arity_\sigma$ совпадает с сужением $\arity_{\sigma'}$ на $\Pred_\sigma \cup \Func_\sigma$;
+            \item под $|\sigma|$ подразумевается $|\Pred_\sigma \cup \Func_\sigma \cup \Const_\sigma|$.
+        \end{itemize}
+
+        Пусть даны $\sigma$-структура $\mathfrak{A}$ и $\sigma'$-структура $\mathfrak{A}'$, причём $\sigma'$ включает $\sigma$. Говорят, что $\mathfrak{A}$ является \emph{$\sigma$-обеднением} $\mathfrak{A}'$, а $\mathfrak{A}'$ --- \emph{$\sigma'$-обогащением}, если $A = A'$ и $\varepsilon^\mathfrak{A} = \varepsilon^{\mathfrak{A}'}$ для всех $\varepsilon \in \sigma$.
+    \end{definition}
+
+    \begin{theorem}[о сильной полноте $\vdash$]
+        Для любых $\Gamma \subseteq \Sent_\sigma$ и $\Phi \in \Formul_\sigma$
+        \[
+            \Gamma \vdash \Phi
+            \quad \Longleftrightarrow \quad
+            \Gamma \vDash \Phi
+        \]
+    \end{theorem}
+
+    \begin{proof}[Идея доказательства.]
+        \begin{itemize}
+            \item[$\Rightarrow$)] См. \hyperref[Hilbert-conclusion-correctness-2]{теорему о корректности}.
+            \item[$\Leftarrow$)] Допустим, что $\Gamma \nvdash \Phi$. Хотим показать, что $\Gamma \nvDash \Phi$.
+
+                Заметим, что $\Gamma \nvdash \Phi$ равносильно $\Gamma \nvdash \tildeforall \Phi$, а $\Gamma \nvDash \Phi$ --- $\Gamma \nvDash \tildeforall \Phi$. Теперь действуем по аналогии с пропозициональной логикой:
+                \begin{itemize}
+                    \item Построим ``насыщенную теорию'' $\Gamma' \supseteq \Gamma$ такую, что $\Gamma' \nvdash \tildeforall \Phi$; при этом $\Gamma' \nvdash \tildeforall \Phi$ будет равносильно $\tildeforall \Phi \notin \Gamma'$.
+                    \item Далее, с помощью $\Gamma'$ построим структуру $\mathfrak{A}_{\Gamma'}$ такую, что для любого предложения $\Psi$,
+                        \[
+                            \mathfrak{A}_{\Gamma'} \Vdash \Psi
+                            \quad \Longleftrightarrow \quad
+                            \Psi \in \Gamma'.
+                        \]
+                        Мы получим $\mathfrak{A}_{\Gamma'} \Vdash \Gamma$ и $\mathfrak{A}_{\Gamma'} \nVdash \tildeforall \Phi$. Стало быть, $\Gamma \nvDash \tildeforall \Phi$.
+                \end{itemize}
+        \end{itemize}
+    \end{proof}
+
+    \begin{remark*}
+        Для удобства обозначим
+        \[\Term^\circ_\sigma := \{t \in \Term_\sigma \mid \sub(t) \cap \Var = \varnothing\}.\]
+        Элементы $\Term^\circ_\sigma$ называются \emph{замкнутыми $\sigma$-термами}. В определении ``насыщенности'' в логике первого порядка используется естественный кванторный аналог дизъюнктивного свойства:
+        \begin{quotation}
+            Для любого $\exists x\ \Phi \in \Gamma$ существует $t \in \Term^\circ_\sigma$ такой, что $\Phi(x/t) \in \Gamma$.
+        \end{quotation}
+        Однако реализовать данное свойство в исходной сигнатуре $\sigma$ порой невозможно. Так, если $\Const_\sigma = \varnothing$, то $\Term^\circ_\sigma = \varnothing$, а потому ``насыщенных $\sigma$-теорий'' вообще не существует. Значит, придётся обогащать $\sigma$, добавляя новые константы.
+    \end{remark*}
+
+    \begin{remark}
+        Под \emph{мощностью $\mathfrak{A}$} традиционно понимают мощность носителя $\mathfrak{A}$, т.е. $|A|$. Далее мы убедимся, что теорема о сильной полноте $\vdash$ остаётся верной, если ограничиться рассмотрением $\sigma$-структур мощности $\leqslant |\Formul_\sigma|$.
+    \end{remark}
+
+    \begin{definition}
+        Изначально $\vdash$ определено для фиксированной структуры $\sigma$. По этой причине правильнее говорить о \emph{выводимости над $\sigma$}, а не просто о выводимости (без указания сигнатуры), и писать $\vdash_\sigma$ вместо $\vdash$.
+    \end{definition}
+
+    \begin{theorem}[о консервативности]
+        Пусть $\sigma \subseteq \sigma'$. Тогда для любых $\Gamma \subseteq \Sent_\sigma$ и $\Phi \in \Formul_\sigma$
+        \[
+            \Gamma \vdash_\sigma \Phi
+            \quad \Longleftrightarrow \quad
+            \Gamma \vdash_{\sigma'} \Phi.
+        \]
+    \end{theorem}
+
+    \begin{proof}
+        Как легко убедиться, $\Gamma \vDash_\sigma \Phi$ равносильно $\Gamma \vDash_{\sigma'} \Phi$, где $\vDash_\sigma$ и $\vDash_{\sigma'}$ --- это семантическое следование над $\sigma$ и $\sigma'$ соответственно. Значит
+        \[
+            \Gamma \vdash_\sigma \Phi
+            \quad \Longleftrightarrow \quad
+            \Gamma \vDash_\sigma \Phi
+            \quad \Longleftrightarrow \quad
+            \Gamma \vDash_{\sigma'} \Phi
+            \quad \Longleftrightarrow \quad
+            \Gamma \vdash_{\sigma'} \Phi
+        \]
+        (ввиду теоремы и сильной полноте для $\vdash_\sigma$ и $\vdash_{\sigma'}$).
+    \end{proof}
+
+    \begin{remark}
+        Тут хватит и слабой полноты, так как $\vdash$ компактно и монотонно.
+    \end{remark}
+
+    \begin{theorem}[о слабой полноте $\vdash$]
+        Для любой $\Phi \in \Formul_\sigma$
+        \[
+            \vdash \Phi
+            \quad \Longleftrightarrow \quad
+            \vDash \Phi,
+        \]
+        т.е. выводимость из $\varnothing$ равносильна общезначимости.
+    \end{theorem}
+
+    \begin{theorem}[о компактности $\vDash$, aka локальная теорема Гёделя-Мальцева]
+        Для любых $\Gamma \subseteq \Sent_\sigma$ и $\Phi \in \Formul_\sigma$
+        \[
+            \Gamma \vDash \Phi
+            \quad \Longleftrightarrow \quad
+            \Delta \vDash \Phi \text{ для некоторого конечного } \Delta \subseteq \Gamma.
+        \]
+    \end{theorem}
+
+    \begin{corollary}
+        Для любого $\Gamma \subseteq \Sent_\sigma$
+        \[
+            \Gamma \nvDash \bot
+            \quad \Longleftrightarrow \quad
+            \Delta \nvDash \bot \text{ для всех конечных } \Delta \subseteq \Gamma.
+        \]
+        Иначе говоря, $\Gamma$ выполнимо тогда и только тогда, когда всякое конечное подмножество $\Gamma$ выполнимо.
+    \end{corollary}
+
+    \begin{remark}
+        Всякое $\Gamma \subseteq \Sent_\sigma$ называют \emph{локально выполнимым}, если всякое конечное подмножество $\Gamma$ выполнимо. Стало быть
+        \[
+            \Gamma \text{ выполнимо}
+            \quad \Longleftrightarrow \quad
+            \Gamma \text{ локально выполнимо};
+        \]
+        отсюда ``локальная'' в альтернативном назывании. К слову, локальная выполнимость влечёт выполнимость влечёт непротиворечивость по теореме о корректности.
+    \end{remark}
+
+    \begin{remark*}
+        С помощью теоремы о компактности для $\vDash$ можно получить немало интересных результатов. Например:
+    \end{remark*}
+
+    \begin{statement}
+        Пусть у $\Gamma$ есть модели сколь угодно большой конечной мощности. Тогда у $\Gamma$ есть бесконечная модель.
+    \end{statement}
+
+    \begin{proof}
+        Мы будем считать, что $\Pred_\sigma$ содержит $=$; если его нет, можно воспользоваться неразличимостью некоторых элементов, после чего построить бесконечную модель, но тут нужно глубже вдаваться в подробности. Для каждого $n \in \NN \setminus \{0, 1\}$ положим
+        \[\Phi_n := \exists x_1\ \dots \exists x_n\ \bigwedge_{i=1}^{n-1} \bigwedge_{j=i+1}^n \neg x_i = x_j.\]
+        Очевидно, для любой $\sigma$-структуры $\mathfrak{A}$,
+        \[
+            \mathfrak{A} \Vdash \Phi_n
+            \quad \Longleftrightarrow \quad
+            |A| \geqslant n.
+        \]
+        Пусть $\Gamma \subseteq \Sent_\sigma$ удовлетворяет условию утверждения. Рассмотрим
+        \[\Gamma' := \Gamma \cup \{\Phi_n\}_{n \in \NN \setminus \{0, 1\}}.\]
+        Разумеется, $\Gamma'$ локально выполнимо. Значит оно выполнимо, т.е. у $\Gamma'$ есть модель $\mathfrak{A}$. Поскольку в $\mathfrak{A}$ выполнены все $\Phi_n$, то $A$ бесконечно.
+    \end{proof}
+
+    \begin{definition}
+        Пусть $\mathfrak{A}$ и $\mathfrak{B}$ --- $\sigma$-структуры. Говорят, что $\mathfrak{A}$ является \emph{подструктурой} $\mathfrak{B}$, а $\mathfrak{B}$ --- \emph{расширением} $\mathfrak{A}$, и пишут $\mathfrak{A} \leqslant \mathfrak{B}$, если $A \subseteq B$ и $\id_A$ является вложением $\mathfrak{A}$ в $\mathfrak{B}$. Итак, $\mathfrak{A} \leqslant \mathfrak{B}$ тогда и только тогда, когда:
+        \begin{itemize}
+            \item $c^\mathfrak{A} = c^\mathfrak{B}$ для каждого $c \in \Const_\sigma$;
+            \item $f^\mathfrak{A} = f^\mathfrak{B} \upharpoonright_{A^m}$ для каждого $m$-местного $f \in \Func_\sigma$;
+            \item $P^\mathfrak{A} = P^\mathfrak{B} \cap A^n$ для каждого $n$-местного $P \in \Pred_\sigma$.
+        \end{itemize}
+        Понятно, что $S \subseteq B$ является носителем (некоторой) подструктуры $\mathfrak{B}$, если и только если:
+        \begin{itemize}
+            \item $c^\mathfrak{B} \in S$ для каждого $c \in \Const_\sigma$;
+            \item $f^\mathfrak{B}[S^m] \subseteq S$ для каждого $m$-местного $f \in \Func_\sigma$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{remark*}
+        В случае, когда $S \subseteq B$ удовлетворяет описанным выше условиям, соответствующая подструктура определяется однозначно; поэтому подструктуры нередко отождествляют с их носителями при условии, что объемлющая $\mathfrak{B}$ фиксирована.
+    \end{remark*}
+
+    \begin{example}
+        Пусть $\mathfrak{A}$ --- ЧУМ. Тогда все подструктуры $\mathfrak{A}$ также есть ЧУМ. Кроме того, такие свойства как линейность и фундированность будет наследоваться при переходе к подструктурам.
+    \end{example}
+
+    \begin{example}
+        Пусть $\mathfrak{A}$ --- абелева группа в сигнатуре $\langle =; +^2, -^1; 0 \rangle$. Тогда подструктуры $\mathfrak{A}$ суть в точности подгруппы $\mathfrak{A}$. Без $-$ в сигнатуре, однако, это было бы неверно, поскольку могут отсутствовать обратные.
+    \end{example}
+
+    \begin{definition}
+        Говорят, что $\mathfrak{A}$ является \emph{элементарной подструктурой} $\mathfrak{B}$, а $\mathfrak{B}$ --- \emph{элементарным расширением} $\mathfrak{A}$, и пишут $\mathfrak{A} \preccurlyeq \mathfrak{B}$, если $\mathfrak{A} \leqslant \mathfrak{B}$ и для любых $\Phi(x_1, \dots, x_n) \in \Formul_\sigma$ и $(a_1, \dots, a_k) \in A^k$,
+        \[
+            \mathfrak{A} \Vdash \Phi[\vec{x}/\vec{a}]
+            \quad \Longleftrightarrow \quad
+            \mathfrak{B} \Vdash \Phi[\vec{x}/\vec{a}]
+        \]
+        Очевидно, $\mathfrak{A} \preccurlyeq \mathfrak{B}$ влечёт $\Th(\mathfrak{A}) = \Th(\mathfrak{B})$.
+    \end{definition}
+
+    \begin{theorem}[Лёвенгейма-Сколема, о понижении мощности]
+        У всякой $\sigma$-структуры есть элементарная подструктура мощности $\leqslant |\Formul_\sigma|$.
+    \end{theorem}
+
+    \begin{proof}
+        Возьмём $\kappa := |\Formul_\sigma|$. Не ограничивая общности, мы будем считать, что $\Pred_\sigma$ содержит $=$.
+
+        Пусть $\mathfrak{A}$ --- произвольная $\sigma$-структура. Для любых $\Phi(x_1, \dots, x_k, y) \in \Formul_\sigma$ и $(a_1, \dots, a_k) \in A^k$ положим
+        \[
+            \llbracket \Phi(\vec{a}, y) \rrbracket := \{a \in A \mid \mathfrak{A} \Vdash \Phi[\vec{x}/\vec{a}, y/a]\}
+        \]
+        Определим последовательность $\langle S_n : n \in \NN \rangle$ подмножеств $A$ следующим образом.
+        \begin{itemize}
+            \item Если $n = 0$, то $S_n$ --- некоторое фиксированное подмножество $A$ мощности $\leqslant \kappa$.
+            \item Если $n = m + 1$, то $S_n := S_m \cup \range \eta_m$, где $\eta_m$ --- какая-нибудь функция выбора для
+                \[\{\llbracket \Phi(\vec{a}, y) \rrbracket \mid \vec{a} \in S^*_m \wedge \mathfrak{A} \Vdash \exists y\ \Phi[\vec{x}/\vec{a}]\}\]
+        \end{itemize}
+        По построению мы имеем $S_0 \subseteq S_1 \subseteq S_2 \subseteq \dots$. Возьмём
+        \[S := \bigcup_{n \in \NN} S_n.\]
+        Понятно, что для любых $\Phi(x_1, \dots, x_k, y) \in \Formul_\sigma$ и $(a_1, \dots, a_k) \in S^k$
+        \begin{equation}
+            \mathfrak{A} \Vdash \exists y\ \Phi[\vec{x}/\vec{a}]
+            \quad \Longrightarrow \quad
+            \mathfrak{A} \Vdash \Phi[\vec{x}/\vec{a}, y/a] \text{ для некоторого } a \in S.
+            \label{Löwenheim–Skolem-theorem-eqution}
+        \end{equation}
+        Далее, $S$ является носителем некоторой подструктуры $\mathfrak{A}$:
+        \begin{itemize}
+            \item для всякого $c \in \Const_\sigma$ верно $\mathfrak{A} \Vdash \exists y\ c = y$, откуда $c^\mathfrak{A} \in S$;
+            \item для всякого $m$-местного $f \in \Func_\sigma$ и любого $\vec{a} \in S^m$ верно $\mathfrak{A} \Vdash \exists y\ f(\vec{x}) = y [\vec{x}/\vec{a}]$, откуда $f^\mathfrak{A}(\vec{a}) \in S$.
+        \end{itemize}
+        
+        Обозначим через $\mathfrak{G}$ подструктуру $\mathfrak{A}$ с носителем $S$. Заметим, что
+        \[
+            |S_n| \leqslant \kappa \text{ для всех } n \in \NN.
+        \]
+        Это легко установить по индукции:
+        \begin{itemize}
+            \item очевидно, $|S_0| \leqslant \kappa$;
+            \item если $|S_n| \leqslant \kappa$, то $|S_{n+1}| \leqslant |S_n| + |\Formul_\sigma| \cdot |S^*_n| \leqslant \kappa + \kappa \cdot \kappa = \kappa$.
+        \end{itemize}
+        Отсюда $|S| = |\bigcup_{n \in \NN} S_n| \leqslant \aleph_0 \cdot \kappa = \kappa$.
+
+        Наконец, используя \ref{Löwenheim–Skolem-theorem-eqution}, нетрудно показать, что индукцией по построению $\Phi(x_1, \dots, x_k) \in \Formul_\sigma$, что для любых $(a_1, \dots, a_k) \in S^k$
+        \[
+            \mathfrak{G} \Vdash \Phi[\vec{x}/\vec{a}]
+            \quad \Longleftrightarrow \quad
+            \mathfrak{A} \Vdash \Phi[\vec{x}/\vec{a}].
+        \]
+        Таким образом $\mathfrak{G} \preccurlyeq \mathfrak{A}$.
+    \end{proof}
+
+    \begin{corollary}
+        Для всякого $\Gamma \subseteq \Sent_\sigma$
+        \[
+            \text{у $\Gamma$ есть модель}
+            \quad \Longleftrightarrow \quad
+            \text{у $\Gamma$ есть модель мощности не более чем $|\Formul_\sigma|$.}
+        \]
+    \end{corollary}
+
+    \begin{exercise}
+        \[
+            |\Formul_\sigma|
+            = \max \{|\Pred_\sigma|, |\Func_\sigma|, |\Const_\sigma|, \aleph_0\}
+            = \max \{|\sigma|, \aleph_0\}
+        \]
+    \end{exercise}
+
+
 \end{document}
