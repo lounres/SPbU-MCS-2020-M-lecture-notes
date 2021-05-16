@@ -2,6 +2,9 @@
 \usepackage{../.tex/mcs-notes}
 \usepackage{todonotes}
 \usepackage{multicol}
+\usepackage{inkscape}
+\usepackage[all]{xy}
+\CompileMatrices
 
 \settitle
 {Геометрия и топология.}
@@ -9,13 +12,22 @@
 {\%D0\%93\%D0\%B8\%D0\%A2/GaT.pdf}
 \date{}
 
-\DeclareMathOperator{\diam}{diam}
-\DeclareMathOperator{\Int}{Int}
-\DeclareMathOperator{\Ext}{Ext}
-\DeclareMathOperator{\Cl}{Cl}
-\DeclareMathOperator{\Fr}{Fr}
-\DeclareMathOperator{\SCl}{SCl}
-\DeclareMathOperator{\Homeo}{Homeo}
+\newcommand{\Id}{\ensuremath{\mathrm{Id}}\xspace}
+\newcommand{\Ker}{\ensuremath{\mathrm{Ker}}\xspace}
+\newcommand{\Img}{\ensuremath{\mathrm{Im}}\xspace}
+\newcommand{\diam}{\ensuremath{\mathrm{diam}}\xspace}
+\newcommand{\Int}{\ensuremath{\mathrm{Int}}\xspace}
+\newcommand{\Ext}{\ensuremath{\mathrm{Ext}}\xspace}
+\newcommand{\Cl}{\ensuremath{\mathrm{Cl}}\xspace}
+\newcommand{\Fr}{\ensuremath{\mathrm{Fr}}\xspace}
+\newcommand{\SCl}{\ensuremath{\mathrm{SCl}}\xspace}
+\newcommand{\Lin}{\ensuremath{\mathrm{Lin}}\xspace}
+\newcommand{\Homeo}{\ensuremath{\mathrm{Homeo}}\xspace}
+\newcommand{\Aff}{\ensuremath{\mathrm{Aff}}\xspace}
+\newcommand{\Iso}{\ensuremath{\mathrm{Iso}}\xspace}
+\renewcommand{\Pr}{\ensuremath{\mathrm{Pr}}\xspace}
+\newcommand{\conv}{\ensuremath{\mathrm{conv}}\xspace}
+\newcommand{\RelInt}{\ensuremath{\mathrm{RelInt}}\xspace}
 \DeclareMathOperator*{\bigtimes}{\text{\raisebox{-6pt}{\scalebox{3}{$\times$}}}}
 \newcommand{\FAC}{\ensuremath{\mathrm{FAC}}\xspace}
 \newcommand{\SAC}{\ensuremath{\mathrm{SAC}}\xspace}
@@ -35,7 +47,9 @@
         \item Виро О.Я., Иванов О.А., Нецветаев Н.Ю., Харламов В.М., ``Элементарная топология'', М.:МЦНМО, 2012.
         \item Коснёвски Чес, ``Начальный курс алгебраической топологии'', М.:Мир, 1983.
         \item Ю.Г. Борисович, Н.М. Близняков, Я.А. Израилевич, Т.Н. Фоменко, ``Введение в топологию'', М.:Наука. Физматлит, 1995.
-        \item James Munkres, Topology.
+        \item James Munkres, ``Topology''.
+        \item Agusti Reventos i Tarrida, ``Affine maps, Euclidean motions and quadrics''.
+        \item Винберг, ``Курс алгебры''.
     \end{itemize}
 
     \section{Метрические и топологические пространства. Базовые понятия.}
@@ -1500,7 +1514,7 @@
     %     \item How can you describe by human speech what sets are in this object?
     % \end{enumerate}
 
-    \begin{theorem}
+    \begin{theorem}\label{closed-compact-in-hausdorff-space}
         Пусть $X$ --- хаусдорфово пространство, а $A \subseteq X$ --- компакт. Тогда $A$ замкнуто в $X$.
     \end{theorem}
 
@@ -1580,7 +1594,7 @@
         \end{itemize}
     \end{proof}
 
-    \begin{definition}
+    \begin{definition}\label{finite-intersection-property-definition}
         Набор подмножеств множества $X$ \emph{центрирован}, если пересечение любого его конечного поднабора множеств непусто.
     \end{definition}
 
@@ -1598,7 +1612,7 @@
         \end{itemize}
     \end{proof}
 
-    \begin{corollary}
+    \begin{corollary}\label{compactness-equivalence-closed-FIP-family-theorem-corollary-1}
         Пусть $X$ --- топологическое пространство, а $\{A_i\}_{i \in I}$ --- центрированный набор замкнутых множеств в $X$, хотя бы одно из которых компактно. Тогда $\bigcap_{i \in I} A_i$ непусто.
     \end{corollary}
 
@@ -2436,8 +2450,8 @@
         Теперь покажем, что одинаковые буквы можно поставить рядом. Если у нас есть два ребра $c$: одно из $A$ в $B$, а другое --- из $C$ в $D$, то разрежем многоугольник по диагонали $a$ из $B$ в $D$ и склеим по $c$. Тогда у нас будут две буквы $a$ подряд, а остальные дуги из $B$ в $C$ и из $D$ в $A$ будут соединены вместе. При этом другие пары соседних одинаковых букв нарушены не будут. Поэтому либо мы получим либо каноническую развёртку второго типа, либо у нас ещё будут буквы $a$ и $a^{-1}$. Также несложно видеть, что все вершины всё ещё остаются эквивалентными.
         \begin{figure}[h]
             \centering
-            \includegraphics[height=3cm]{GaT-1.png}
-            \includegraphics[height=3cm]{GaT-2.png}
+            \Large
+            \inkscapepicture{GaT-1}
             \caption{Выделение лент Мёбиуса}
             \label{surface_typisation_picture_4}
         \end{figure}
@@ -2447,7 +2461,8 @@
         Тогда находя две разделяющие пары противонаправленных рёбер сделаем пересборку развёртки как на рисунке \ref{surface_typisation_picture_5}.
         \begin{figure}[h]
             \centering
-            \includegraphics[height=3cm]{GaT-3.png}
+            \Large
+            \inkscapepicture{GaT-2}
             \caption{Выделение ручек}
             \label{surface_typisation_picture_5}
         \end{figure}
@@ -2459,6 +2474,7 @@
             \includegraphics[width=\textwidth]{GaT-4.png}
             \caption{Замена ручек лентами Мёбиуса}
             \label{surface_typisation_picture_6}
+            \todo[inline]{Перерисовать.}
         \end{figure}
     \end{proof}
 
@@ -2507,4 +2523,2417 @@
         \end{multicols}
         Тогда в силу связности $U \cup V = M$.
     \end{proof}
+
+    \section{Геометрия}
+
+    \subsection{Аффинные пространства}
+
+    \begin{definition}
+        \emph{Аффинное пространство (АП)} --- тройка $(X, \overrightarrow{X}, {+})$, где
+        \begin{itemize}
+            \item $X$ --- непустое множество, элементы которого называются \emph{точками},
+            \item $\overrightarrow{X}$ --- векторное пространство над полем $\RR$, которое называется \emph{присоединённое векторное пространство},
+            \item ${+}: X \times \overrightarrow{X} \to X$ --- операция ``откладывания вектора от точки'', которая удовлетворяет следующим аксиомам.
+                \begin{enumerate}
+                    \item Для всяких точек $x$ и $y$ есть единственный вектор $v \in \overrightarrow{X}$ такой, что $x + v = y$. Вектор $v$ обозначается как $\overrightarrow{xy}$ или $y - x$ и называется \emph{вектором между точками}.
+                    \item $\forall x \in X, v, u \in \overrightarrow{X}\qquad x + (v + u) = (x + v) + u$.
+                \end{enumerate}
+        \end{itemize}
+
+        Для краткости будем обозначать это аффинное пространство как просто $X$.
+    \end{definition}
+
+    \begin{example}
+        Пусть $V$ --- векторное пространство, а $+$ --- операция сложения векторов в нём. Тогда $(V, V, {+})$ будет аффинным пространством.
+    \end{example}
+
+    \begin{lemma}
+        Для любых точек $x$, $y$, $z$ аффинного пространства $X$ верно, что
+        \begin{enumerate}
+            \item $x + \overrightarrow{xy} = y$;
+            \item $\overrightarrow{xy} + \overrightarrow{yz} = \overrightarrow{xz}$;
+            \item $\overrightarrow{xx} = \overrightarrow{0}$;
+            \item $x + \overrightarrow{0} = x$;
+            \item $\overrightarrow{yx} = - \overrightarrow{xy}$;
+            \item $\overrightarrow{xy} = \overrightarrow{0} \Rightarrow x = y$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{lemma}
+        Пусть $o$ --- какая-то точка $X$. Рассмотрим отображение
+        \[\varphi_o: X \to \overrightarrow{X}, x \mapsto \overrightarrow{ox}.\]
+        Тогда $\phi_o$ --- биекция.
+    \end{lemma}
+
+    \begin{definition}
+        Эта биекция называется \emph{векторизацией} аффинного пространства.
+    \end{definition}
+
+    % \subsubsection{Линейная и барицентрическая комбинации}
+
+    \begin{definition}
+        \emph{Линейной комбинацией $\sum_{i=1}^n t_i p_i$ точек $p_1, \dots, p_n \in X$ с коэффициентами $t_1, \dots, t_n$ относительно начала отсчёта $o \in X$} называется либо вектор
+        \[v = \sum_{i=1}^n t_i \overrightarrow{op_i},\]
+        либо точка
+        \[p = o + v.\]
+
+        Линейная комбинация называется:
+        \begin{itemize}
+            \item \emph{барицентрической}, если $\sum_{i=1}^n t_i = 1$;
+            \item \emph{сбалансированной}, если $\sum_{i=1}^n t_i = 0$;
+        \end{itemize}
+    \end{definition}
+
+    \begin{theorem}\ 
+        \begin{enumerate}
+            \item Барицентрическая комбинации является точкой, независящей от начала отсчёта.
+            \item Сбалансированная комбинации является вектором, независящем от начала отсчёта.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        Пусть даны два различных начала отсчёта $o_1$ и $o_2$.
+
+        \begin{enumerate}
+            \begin{multicols}{2}
+                \item 
+                    \begin{align*}
+                        &\left(o_1 + \sum_{i=1}^n t_i \overrightarrow{o_1 p_i}\right) - \left(o_2 + \sum_{i=1}^n t_i \overrightarrow{o_2 p_i}\right)\\
+                        =&(o_1 - o_2) + \sum_{i=1}^n t_i (\overrightarrow{o_1 p_i} - \overrightarrow{o_2 p_i})\\
+                        =&\overrightarrow{o_2 o_1} + \sum_{i=1}^n t_i \overrightarrow{o_1 o_2}\\
+                        =&\overrightarrow{o_2 o_1} \left(1 - \sum_{i=1}^n t_i\right)\\
+                        =&\overrightarrow{0}
+                    \end{align*}
+                \item 
+                    \begin{align*}
+                        &\sum_{i=1}^n t_i \overrightarrow{o_1 p_i} - \sum_{i=1}^n t_i \overrightarrow{o_2 p_i}\\
+                        =&\sum_{i=1}^n t_i (\overrightarrow{o_1 p_i} - \overrightarrow{o_2 p_i})\\
+                        =&\sum_{i=1}^n t_i \overrightarrow{o_1 o_2}\\
+                        =&\overrightarrow{o_1 o_2} \sum_{i=1}^n t_i\\
+                        =&\overrightarrow{0}
+                    \end{align*}
+            \end{multicols}
+        \end{enumerate}
+    \end{proof}
+
+    \begin{definition}
+        Множество $Y \subseteq X$ --- \emph{аффинное подпространство}, если есть линейное подпространство $V$ пространства $\overrightarrow{X}$ и точка $p \in X$, что
+        \[Y = p + V := \{p + v \mid v \in V\}.\]
+        $V$ называется \emph{направлением} $Y$.
+    \end{definition}
+
+    \begin{lemma}
+        Пусть $Y = p + V$ --- аффинное подпространство.
+        \begin{enumerate}
+            \item Для любой точки $q \in Y$ верно, что $q + V = Y$.
+            \item $Y$ --- аффинное пространство с $\overrightarrow{Y} = V$.
+            \item Для любой точки $q \in Y$ верно, что $\varphi_q(Y) = V$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{definition}
+        \emph{Размерность} аффинного пространства $\dim(X) := \dim(\overrightarrow{X})$.
+    \end{definition}
+
+    \begin{definition}
+        \emph{Параллельный перенос} на вектор $v \in \overrightarrow{X}$ --- отображение
+        \[T_v: X \to X, x \mapsto x + v.\]
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item $T_{u + v} = T_u \circ T_v$.
+            \item $T_{\overrightarrow{0}} = \Id$.
+            \item $T_v$ --- биекция.
+            \item $T_v^{-1} = T_{-v}$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{corollary}
+        Параллельные переносы образуют группу, которая естественно изоморфна аддитивной группе $\overrightarrow{X}$.
+    \end{corollary}
+
+    \begin{definition}
+        Аффинные подпространства одинаковой размерности \emph{параллельны}, если их направления совпадают.
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item Два пространства параллельны тогда и только тогда, когда одно из них получается из другого параллельным переносом.
+            \item $X$ разбивается на аффинные подпространства, параллельные данному $Y$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{definition}
+        \emph{Прямая} --- аффинное подпространство размерности $1$.
+
+        \emph{Гиперплоскость} в $X$ --- аффинное подпространство размерности $\dim(X) - 1$.
+    \end{definition}
+
+    \begin{theorem}
+        Пересечение любого семейства аффинных подпространств есть либо пустое множество, либо аффинное подпространство.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть дано семейство $\Sigma$ аффинных подпространств. Если они все пересекаются (т.е. пересечение непусто), то можно выделить общую точку $p$. Тогда каждое аффинное пространство $A \in \Sigma$ имеет вид $p + V_A$, следовательно
+        \[\bigcap_{A \in \Sigma} A = \bigcap_{A \in \Sigma} p + V_A = p + \bigcap_{A \in \Sigma} V_A.\]
+        Поскольку пересечение векторных подпространств есть векторное подпространство, то есть некоторое векторное подпространство $U = \bigcap_{A \in \Sigma} V_A$, следовательно $\bigcap_{A \in \Sigma} A = p + U$, т.е. аффинное подпространство.
+    \end{proof}
+
+    \begin{definition}
+        \emph{Аффинная оболочка} непустого множества $A \subseteq X$ --- пересечение всех аффинных подпространств, содержащих $A$. Обозначение: $\Aff(A)$.
+    \end{definition}
+
+    \begin{remark}
+        $\Aff(A)$, как следует из теоремы, минимальное по включению аффинное пространство, содержащее $A$ как подмножество.
+    \end{remark}
+
+    \begin{theorem}\label{affin-hull-lower-definition}
+        $\Aff(A)$ есть множество всех барицентрических комбинаций точек из $A$, т.е.
+        \[\Aff(A) = \left\{\sum_{i=1}^n t_i a_i \mid n \in \NN \setminus \{0\} \wedge \{a_i\}_{i=1}^n \subseteq A \wedge \{t_i\}_{i=1}^n \subseteq \RR \wedge \sum_{i=1}^n t_i = 1\right\}\]
+    \end{theorem}
+
+    \begin{proof}
+        Возьмём в качестве начала отсчёта любую точку $o$ из $A$. Тогда всякая барицентрическая комбинация $\sum_{i=1}^n t_i a_i$ точек из $A$ будет равна
+        \[\sum_{i=1}^n t_i (o + v_i) = o + \sum_{i=1}^n t_i v_i\]
+        При этом если вместо этого взять набор точек $\{a_1; \dots; a_n; o\}$, то $t_{n+1} = 1 - \sum_{i=1}^n t_i$, т.е. множество всех барицентрических комбинаций превратится в множество всех линейных комбинаций векторов из $A - o = \{a - o \mid a \in A\}$, т.е. линейной оболочкой $A - o$.
+        
+        С другой стороны $\Aff(A) - o$ есть пересечение всех векторных подпространств, содержащих $A - o$, т.е. тоже является линейной оболочкой $A - o$. Таким образом наши объекты совпали.
+    \end{proof}
+
+    \begin{definition}
+        Множество точек $A$ называется \emph{аффинно зависимым}, если для некоторого $n \in \NN \setminus \{0\}$ существуют точки $a_1, \dots, a_n \in A$ и коэффициенты $t_1, \dots, t_n \in \RR \setminus \{0\}$, что
+        \[\sum_{i=1}^n t_i = 0\qquad \text{ и }\qquad \sum_{i=1}^n t_i p_i = \overrightarrow{0}\]
+        В противном случае множество называется \emph{аффинно независимым}.
+
+        Также говорят, что сами точки \emph{аффинно (не)зависимы}, если их множество аффинно (не)зависимо.
+    \end{definition}
+
+    \begin{theorem}
+        Пусть дано непустое $A \subseteq X$. TFAE
+        \begin{enumerate}
+            \item $A$ аффинно независимо.
+            \item Каждая из точек $A$ не представляется в виде конечной барицентрической комбинации остальных.
+            \item Каждая из точек $A$ не лежит в аффинной оболочке остальных точек $A$.
+            \item При выделенной точке $a \in A$ множество векторов $\{a' - a \mid a' \in A \setminus \{a\}\}$ линейно независимо.
+            \item Каждая из точек $\Aff(A)$ единственным образом представляется в виде конечной барицентрической комбинации точек из $A$.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[$1 \Rightarrow 2$)] Пусть какая-то точка $a$ выражается в виде барицентрической комбинации точек $b_1$, \dots, $b_n$:
+                \[a = \sum_{i=1}^n t_i b_i\]
+                Тогда мы имеем, что нетривиальная сбалансированная комбинация $a - \sum_{i=1}^n t_i b_i$ равна $\overrightarrow{0}$. Удаляя слагаемые с нулевыми коэффициентами (если таковые есть), получаем противоречие с аффинной независимостью.
+
+            \item[$1 \Leftarrow 2$)] Пусть дана есть точки $a_1, \dots, a_n \in A$ и коэффициенты $t_1, \dots, t_n \in \RR \setminus \{0\}$, что
+                \[\sum_{i=1}^n t_i = 0\qquad \text{ и }\qquad \sum_{i=1}^n t_i p_i = \overrightarrow{0}.\]
+                Тогда $n > 1$ и следовательно
+                \[a_1 = \sum_{i=2}^n \frac{-t_i}{t_1} a_i\]
+
+            \item[$2 \Leftrightarrow 3$)] По теореме \ref{affin-hull-lower-definition} имеем, что $A$ аффинно независимо тогда и только тогда, когда если никакая точка не представляется в виде барицентрической комбинации остальных, тогда и только тогда, когда она не лежит в афинной оболочке остальных.
+
+            \item[$1 \Leftrightarrow 4$)] Любая нетривиальная сбалансированная комбинация точек из $A$ равна $\overrightarrow{0}$ тогда и только тогда, когда нетривиальная сбалансированная комбинация векторов в них из $a$ равна $\overrightarrow{0}$. Таким образом $A$ аффинно зависимо тогда и только тогда, когда какая-то нетривиальная линейная комбинация векторов из $a$ в некоторые другие точки равна $\overrightarrow{0}$, что равносильно линейной зависимости $\{a' - a \mid a' \in A \setminus \{a\}\}$.
+
+            \item[$1 \Leftrightarrow 5$)] Какая-то точка $\Aff(A)$ представляется в виде двух различных барицентрических комбинаций точек из $A$ тогда и только тогда, когда есть нетривиальная сбалансированная комбинация точек из $A$. Соответственно каждая точка $\Aff(A)$ единственным образом представляется в виде барицентрической комбинации точек из $A$ тогда и только тогда, когда $A$ аффинно независимо.
+        \end{itemize}
+    \end{proof}
+
+    \begin{theorem}
+        Пусть дано конечное непустое $A \subseteq X$. Тогда $A$ аффинно независимо тогда и только тогда, когда $\dim(\Aff(A)) = |A| - 1$.
+    \end{theorem}
+
+    \begin{proof}
+        Выделим из $A$ точку $a$ и определим
+        \[A' := \{a' - a \mid a \in A \setminus \{a\}\}.\]
+        Тогда $A$ аффинно независимо тогда и тогда только тогда, когда $A'$ линейно независимо. При этом размерность аффинной оболочки $A$ и линейной оболочки $A'$ совпадают; таким образом не более $|A'| = |A| - 1$. Таким образом $A$ аффинно независимо, если $\deg(\Aff(A)) = |A| - 1$.
+    \end{proof}
+
+    \begin{corollary}
+        Для всякого (не обязательно конечного) множества $A \subseteq X$ верно неравенство
+        \[\deg(\Aff(A)) \leqslant |A| + 1\]
+    \end{corollary}
+
+    \begin{definition}
+        \emph{Аффинный базис (точечный базис)} --- максимальное по включению аффинно независимое множество. В частности, в $n$-мерном аффинном пространстве базис будет выглядеть как всякое аффинно независимое множество из $n+1$ точки.
+    \end{definition}
+
+    \begin{lemma}
+        Пусть дано подмножество $A$ АП $X$.
+        \begin{enumerate}
+            \item Если $A$ --- аффинный базис $X$, то аффинная оболочка $A$ содержит в себя всё $X$.
+            \item Если $A$ --- минимальное по включению множество, чья аффинная оболочка содержит всё $X$, то $A$ --- аффинный базис $X$.
+        \end{enumerate} 
+    \end{lemma}
+
+    \begin{lemma}
+        TFAE
+        \begin{enumerate}
+            \item $A$ --- аффинный базис $X$.
+            \item $A$ имеет вид $\{a\} \cup \{a + e\}_{e \in A'}$, где $a \in X$, а $A'$ --- базис $\overrightarrow{X}$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{remark}
+        Вследствие доказанной леммы также \emph{аффинным базисом} можно назвать любую точку $o \in X$ и базис $A'$ пространства $\overrightarrow{X}$.
+    \end{remark}
+
+    \begin{definition}
+        Пусть $A = \{a_i\}_{i \in I}$ --- аффинный базис $X$, а $p$ --- любая точка $X$. Тогда $p$ единственным образом представляется в виде барицентрической комбинации
+        \[p = \sum_{k=1}^n t_{i_k} a_{i_k}\]
+        точек $A$ (остальные $t_i$ равны $0$). Следовательно последовательность $(t_i)_{i \in I}$ называется \emph{барицентрическими координатами $p$}.
+    \end{definition}
+
+    \begin{definition}
+        Пусть $o$ --- начало отсчёта в $X$, $\{e_i\}_{i \in I}$ --- базис $\overrightarrow{X}$, а $p$ --- любая точка $X$. Тогда $p$ единственным образом представляется в виде
+        \[p = 0 + \sum_{k=1}^n x_{i_k} e_{i_k}\]
+        (остальные $x_i$ равны $0$). Следовательно последовательность $(x_i)_{i \in I}$ называется \emph{аффинными координатами точки $p$}.
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item Пусть $(t_i)_{i \in I}$ --- барицентрические координаты $p$ в аффинном базисе $\{a_i\}_{i \in I}$. Пусть также $j$ --- всякий индекс из $I$. Тогда $(t_i)_{i \in I \setminus \{j\}}$ --- аффинные координаты $p$ в базисе $\{a_i - a_j\}_{i \in I \setminus \{j\}}$ с центром отсчёта в $a_j$.
+            \item Пусть $(x_i)_{i \in I}$ --- аффинные координаты $p$ в базисе $\{e_i\}_{i \in I}$ с центром отсчёта $o$. Тогда $(t_i)_{i \in I \cup \{j\}}$ --- барицентрические координаты $p$ в аффинном базисе $\{a_i\}_{i \in I \cup \{j\}}$, где $t_i = x_i$ и $a_i = o + e_i$ для всех $i \in I$, а $t_j = 1 - \sum_{i \in I} t_i$ и $a_j = o$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{theorem}
+        Пусть даны АП $X$, $Y$ и точка $p \in X$. Любое отображение $F: X \to Y$ индуцирует отображение
+        \[\widetilde{F}_p: \overrightarrow{X} \to \overrightarrow{Y}, v \mapsto F(p+v) - F(p)\]
+
+        Тогда если для некоторой точки $p$ $\widetilde{F}_p$ линейно, то $\widetilde{F}_q = \widetilde{F}_p$ для всех $q \in X$.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $r \in X$ и $v = r - q$. Пусть также $u = q - p$. Тогда
+        \begin{align*}
+            \widetilde{F}_q(v)
+            &= F(r) - F(q)\\
+            &= (F(r) - F(p)) - (F(q) - F(p))\\
+            &= \widetilde{F}_p(r - p) - \widetilde{F}_p(q - p)\\
+            &= \widetilde{F}_p((r - p) - (q - p))\\
+            &= \widetilde{F}_p(r - q)\\
+            &= \widetilde{F}_p(v)
+        \end{align*}
+    \end{proof}
+
+    \begin{definition}
+        Пусть даны АП $X$ и $Y$. Отображение $F: X \to Y$ называется \emph{аффинным}, если $\widetilde{F}$ является линейным. Причём $\widetilde{F}$ называется \emph{линейной частью аффинного отображения $F$}.
+    \end{definition}
+
+    \begin{lemma}
+        Пусть дано отображение $F: X \to Y$. TFAE
+        \begin{enumerate}
+            \item $F$ аффинно.
+            \item Существует линейное отображение $L: \overrightarrow{X} \to \overrightarrow{Y}$, что для любых $p, q \in X$
+                \[F(p) - F(q) = L(p - q)\]
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{theorem}
+        Пусть даны $x \in X$, $y \in Y$ и линейное $L: \overrightarrow{X} \to \overrightarrow{Y}$. Тогда существует единственное аффинное отображение $F: X \to Y$, что
+        \[\widetilde{F} = L \text{ и } F(x) = y.\] 
+    \end{theorem}
+
+    \begin{proof}
+        \begin{itemize}
+            \item \textbf{Существование.} Определим
+                $F: X \to Y, p \mapsto y + L(p - x).$
+                Тогда понятно, что $\widetilde{F}_x = L$, а $F(x) = y$. Следовательно $F$ аффинно и удовлетворяет требуемым условиям.
+            \item \textbf{Единственность.} Пусть даны $F$ и $G$ --- аффинные отображения, удовлетворяющие требуемым условиям. Следовательно для всякой точки $p \in X$
+                \[F(p) = F(x) + \widetilde{F}(p - x) = y + L(p - x) = G(x) + \widetilde{G}(p - x) = G(p).\]
+        \end{itemize}
+    \end{proof}
+
+    \begin{corollary}
+        Пусть даны $x \in X$, $y \in Y$, базис $\{e_i\}_{i \in I}$ пространства $\overrightarrow{X}$ и множество $\{g_i\}_{i \in I}$ векторов в $\overrightarrow{Y}$. Тогда существует единственное аффинное $F: X \to Y$, что
+        \begin{itemize}
+            \item $F(x) = y$,
+            \item $\widetilde{F}(e_i) = g_i$ для всех $i \in I$.
+        \end{itemize}
+    \end{corollary}
+
+    \begin{corollary}
+        Пусть даны аффинный базис $\{x_i\}_{i \in I}$ в $X$ и подмножество $\{y_i\}_{i \in I}$ пространства $Y$. Тогда существует единственное аффинное отображение $F: X \to Y$, что $F(x_i) = y_i$ для всех $i \in I$.
+    \end{corollary}
+
+    \begin{lemma}
+        Аффинные отображения сохраняют барицентрические комбинации, т.е. для всяких аффинного отображения $F: X \to Y$, множества точек $\{x_i\}_{i=1}^n \subseteq X$ и множества чисел $\{t_i\}_{i=1}^n$, что $\sum_{i=1}^n t_i = 1$ верно, что
+        \[F\left(\sum_{i=1}^n t_i p_i\right) = \sum_{i=1}^n t_i F(p_i).\]
+    \end{lemma}
+
+    \begin{proof}
+        Пусть $x \in X$. Тогда
+        \begin{align*}
+            F\left(\sum_{i=1}^n t_i p_i\right)
+            &= F\left(x + \sum_{i=1}^n t_i (p_i - x)\right)&
+            &= F(x) + \widetilde{F}\left(\sum_{i=1}^n t_i (p_i - x)\right)\\
+            &= F(x) + \sum_{i=1}^n t_i \widetilde{F}(p_i - x)&
+            &= F(x) + \sum_{i=1}^n t_i (F(p_i) - F(x))\\
+            &= \sum_{i=1}^n t_i F(p_i)&
+        \end{align*}
+    \end{proof}
+
+    \begin{corollary}
+        Для всякого $A \subseteq X$
+        \[F(\Aff(A)) = \Aff(F(A))\]
+    \end{corollary}
+
+    \begin{lemma}
+        Композиция аффинных отображений --- аффинное отображение. При этом линейная часть композиции --- композиция линейных частей.
+    \end{lemma}
+
+    \begin{proof}
+        Пусть даны аффинные отображения $F: Y \to Z$, $F: X \to Y$. Тогда
+        \[
+            (F \circ G)(x) - (F \circ G)(y)
+            = \widetilde{F}(G(x) - G(y))
+            = (\widetilde{F} \circ \widetilde{G})(x - y)
+        \]
+        Следовательно $F \circ G$ аффинно и $\widetilde{F \circ G} = \widetilde{F} \circ \widetilde{G}$.
+    \end{proof}
+
+    \begin{theorem}
+        Пусть дано аффинное $F: X \to Y$.
+        \begin{enumerate}
+            \item Образ аффинного подпространства $X$ по $F$ есть аффинное подпространство $Y$.
+            \item Прообраз аффинного подпространства $Y$ по $F$ есть аффинное пространство $X$ или пустое множество.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}\ 
+        \begin{enumerate}
+            \item Пусть $A$ --- аффинное подпространство $X$. Тогда
+                \[F(A) = F(\Aff(A)) = \Aff(F(A)),\]
+                т.е. аффинное подпространство $Y$.
+            \item Пусть $B$ --- аффинное подпространство $Y$, а $A := F^{-1}(B)$. Тогда
+                \[F(\Aff(A)) = \Aff(F(A)) = \Aff(B) = B,\]
+                т.е. $\Aff(A) \subseteq F^{-1}(B) = A$, следовательно $A = \Aff(A)$, т.е. является аффинным подпространством $X$.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{theorem}
+        Класс параллельных переносов в $X$ совпадает с классом аффинных отображений $X$ на себя с тождественной линейной частью.
+    \end{theorem}
+
+    \begin{proof}\ 
+        \begin{itemize}
+            \item Пусть $F$ --- параллельный перенос в $X$ на вектор $v$. Тогда для всяких точек $p, q \in X$ верно, что
+                \[
+                    F(p) - F(q)
+                    = (p + v) - (q + v)
+                    = p - q
+                    = \Id(p - q)
+                \]
+                Следовательно $F$ --- аффинное отображение, а $\widetilde{F} = \Id$.
+            \item Пусть $F$ --- аффинное преобразование, что $\widetilde{F} = \Id$. Зафиксируем точку $p \in X$. Тогда для всякой точки $q \in X$
+                \[
+                    F(q) - q
+                    = (F(q) - F(p)) + (F(p) - p) + (p - q)
+                    = (\widetilde{F}(q-p) - (q-p)) + F(p) - p
+                    = F(p) - p
+                \]
+                Следовательно $F(q) = q + v$, где $v := F(p) - p$.
+        \end{itemize}
+    \end{proof}
+
+    \begin{definition}
+        Аффинное отображение $F: X \to X$, что $\widetilde{F} = k \Id$ для некоторого коэффициента $k \notin \{0, 1\}$, называется \emph{гомотетией}, а $k$ называется \emph{коэффициентом растяжения} гомотетии $F$.
+    \end{definition}
+
+    \begin{theorem}
+        Гомотетия имеет ровно одну неподвижную точку.
+    \end{theorem}
+
+    \begin{proof}
+        \begin{itemize}
+            \item \textbf{Существование.} Зафиксируем точку $p \in X$ и рассмотрим произвольную $q \in X$. Тогда
+                \[
+                    F(q)
+                    = F(p + \overrightarrow{pq})
+                    = F(p) + k\overrightarrow{pq}
+                    = p + \overrightarrow{pF(p)} + k\overrightarrow{pq}
+                    = q + \overrightarrow{pF(p)} - (1-k)\overrightarrow{pq}
+                \]
+                Следовательно $F(q) = q$ тогда и только тогда, когда $\overrightarrow{pF(p)} = (1-k)\overrightarrow{pq}$. Тогда определим
+                \[
+                    q := p + \frac{\overrightarrow{pF(p)}}{1-k}
+                \]
+                В таком случае условие выполнится, и тогда $F(q) = q$.
+            \item \textbf{Единственность.} Пусть $p$ и $q$ --- неподвижные точки $F$. Следовательно
+                \[
+                    \widetilde{F}(p-q)
+                    = F(p) - F(q)
+                    = p - q
+                    = 1 \cdot \Id(p - q)
+                \]
+                т.е. $k = 1$ --- противоречие.
+        \end{itemize}
+    \end{proof}
+
+    \begin{definition}
+        Неподвижная точка гомотетии называется \emph{центром гомотетии}.
+    \end{definition}
+
+    \begin{theorem}[основная теорема аффинной геометрии]\label{main-affine-theorem}
+        Пусть $X$, $Y$ --- аффинные пространства (над $\RR$), $\dim X \geqslant 2$. Пусть $F: X \to Y$ --- инъективное отображение, переводящее прямые в прямые. Тогда $F$ аффинно.
+    \end{theorem}
+
+    \begin{proof}
+        Будем обозначать прямую, проходящую чрез $a$ и $b$ за $(ab)$, а параллельность прямых $l_1$ и $l_2$ за $l_1 \parallel l_2$.
+
+        \begin{thlemma}\label{main-affine-theorem-thlemma-1}
+            Пусть $X$ --- АП, $\dim X \geqslant 2$. $l_1$ и $l_2$ --- параллельные прямые. Три различные точки: $a, b \in l_1$, $c \in l_2$. Пусть $l_3 = (ac)$, $b \in l_4$ и $l_3 \parallel l_4$.
+            \begin{enumerate}
+                \item Существует аффинная плоскость $\Sigma$, содержащая прямые $l_1$ и $l_2$.
+                \item Прямые $l_3$ и $l_4$ также лежат в $\Sigma$.
+                \item Прямые $l_2$ и $l_4$ пересекаются в одной точке, обозначим её $d$.
+                \item $\overrightarrow{ab} = \overrightarrow{cd}$ и $\overrightarrow{ac} = \overrightarrow{bd}$.
+                \item Прямые $l_5 = (ad)$ и $l_6 = (bc)$ лежат в $\Sigma$ и пересекаются в одной точке, обозначим её $o$.
+            \end{enumerate}
+        \end{thlemma}
+
+        \begin{proof}
+            \todo[inline]{TODO А надо ли?}
+        \end{proof}
+
+        \begin{thlemma}
+            $F$ сохраняет параллельность прямых, т.е. $l_1 \parallel l_2 \Leftrightarrow F(l_1) \parallel F(l_2)$.
+        \end{thlemma}
+
+        \begin{proof}
+            Если $l_1$ и $l_2$ пересекаются, то и пересекаются и их образы. И наоборот: если их образы пересекаются, то и сами прямые пересекаются в точке, являющейся прообразом пересечением.
+
+            Следовательно $F$ сохраняет непересекаемость прямых. Также заметим, что по лемме \ref{main-affine-theorem-thlemma-1} есть пересекающиеся (различные) прямые $l_5$ и $l_6$, пересекающиеся с $l_1$ и $l_2$ в разных точка. Следовательно их образами будут пересекающиеся прямые $l_5'$ и $l_6'$, пересекающиеся с образами $l_1$ и $l_2$ --- $l_1'$ и $l_2'$ --- в разных точках, следовательно $l_1'$ и $l_2'$ будут лежать в плоскости, порождённой $l_5'$ и $l_6'$. Следовательно будут параллельны, так как не пересекаются.
+        \end{proof}
+
+        \begin{thlemma}
+            Зафиксируем $a \in X$. Рассмотрим
+            \[\widetilde{F}_a: \overrightarrow{X} \to \overrightarrow{Y}, v \mapsto F(a + v) - F(a).\]
+            Тогда $\widetilde{F}_a$ аддитивно.
+        \end{thlemma}
+
+        \begin{proof}
+            Пусть даны неколлинеарные ненулевые вектора $u$ и $v$. Рассмотрим $b := a + u$, $c := a + v$. По лемме \ref{main-affine-theorem-thlemma-1} есть $d := a + u + v$. Тогда $F((ab)) \parallel F((cd))$, $F((ac)) \parallel F((bd))$, следовательно $F(b) - F(a) = F(d) - F(c)$. Значит
+            \begin{multline*}
+                    \widetilde{F}_a(u) + \widetilde{F}_a(v)
+                    = (F(b) - F(a)) + (F(c) - F(a))\\
+                    = (F(d) - F(c)) + (F(c) - F(a))
+                    = F(d) - F(a)
+                    = \widetilde{F}_a(u + v)
+            \end{multline*}
+
+            Теперь же пусть даны коллинеарные $u$ и $w$. Возьмём всякий неколлинеарный им $v$, и тогда
+            \[
+                \widetilde{F}_a(u+w) + \widetilde{F}_a(v)
+                = \widetilde{F}_a(u + w + v)
+                = \widetilde{F}_a(u) + \widetilde{F}_a(w + v)
+                = \widetilde{F}_a(u) + \widetilde{F}_a(w) + \widetilde{F}_a(v),
+            \]
+            а значит $\widetilde{F}_a(u + w) = \widetilde{F}_a(u) + \widetilde{F}_a(w)$.
+        \end{proof}
+
+        \begin{thlemma}
+            $\widetilde{F}_a$ не зависит от $a$.
+        \end{thlemma}
+
+        \begin{proof}
+            Пусть даны точки $a$ и $b$ и вектор $v$. Тогда
+            \[
+                \widetilde{F}_b(v) = F(b+v) - F(b)
+                = (F(a + \overrightarrow{ab} + v) - F(a)) - (F(b) - F(a))
+                = \widetilde{F}_a(\overrightarrow{ab} + v) - \widetilde{F}_a(\overrightarrow{ab})
+                = \widetilde{F}_a(v)
+            \]
+        \end{proof}
+
+        Поэтому можно рассматривать общую $\widetilde{F}$.
+
+        \begin{thlemma}
+            Для всякого $k \in \QQ$ и вектора $v$ верно, что
+            \[\widetilde{F}(kv) = k \widetilde{F}(v)\]
+        \end{thlemma}
+
+        \begin{proof}
+            \begin{enumerate}
+                \item Если $k = -1$, то
+                    \[
+                        \widetilde{F}(-u)
+                        = \widetilde{F}(-u) + \widetilde{F}(u) - \widetilde{F}(u)
+                        = \widetilde{F}(-u + u) - \widetilde{F}(u)
+                        = \widetilde{F}(0) - \widetilde{F}(u)
+                        = 0 - \widetilde{F}(u)
+                        = -\widetilde{F}(u)
+                    \]
+                \item Если $k \in \NN$, то
+                    \[
+                        \widetilde{F}(kv)
+                        = \widetilde{F}(\underbrace{v + \dots + v}_{k \text{ раз}})
+                        = \underbrace{F(v) + \dots + F(v)}_{k \text{ раз}}
+                        = k \widetilde{F}(v)
+                    \]
+                \item Если $k = -n$, где $n \in \NN$, то
+                    \[
+                        \widetilde{F}(-nv)
+                        = -\widetilde{F}(nv)
+                        = -n\widetilde{F}(v)
+                    \]
+                \item Если $k = 1/n$, где $n \in \NN$, то
+                    \[
+                        \widetilde{F}\left(\frac{1}{n}v\right)
+                        = \frac{1}{n} \cdot n \cdot \widetilde{F}\left(\frac{1}{n}v\right)
+                        = \frac{1}{n} \cdot \widetilde{F}\left(n \cdot \frac{1}{n}v\right)
+                        = \frac{1}{n} \widetilde{F}(v)
+                    \]
+                \item Если $k = n/m$, где $n \in \ZZ$, а $m \in \NN$, то
+                    \[
+                        \widetilde{F}\left(\frac{n}{m}v\right)
+                        = n\widetilde{F}\left(\frac{1}{m}v\right)
+                        = \frac{n}{m}\widetilde{F}(v)
+                    \]
+            \end{enumerate}
+        \end{proof}
+
+        \begin{thlemma}
+            Для всяких $\lambda \in \RR$ и ненулевого вектора $u$ $\widetilde{F}(\lambda u)$ коллинеарен $\widetilde{F}(u)$ и $\widetilde{F}(\lambda u) / \widetilde{F}(u)$.
+        \end{thlemma}
+
+        \begin{proof}
+            Коллинеарность следует из того, что прямая переходит в прямую. Теперь пусть имеется два ненулевых коллинеарных вектора $u$ и $v$. Рассмотрим им неколлинеарный вектор $w$. Отложим от любой точки $a$ вектора:
+            \begin{align*}
+                x_1 &:= a + u,&
+                x_2 &:= a + \lambda u,&
+                y_1 &:= a + v,&
+                y_2 &:= a + \lambda v,&
+                z_1 &:= a + w,&
+                z_2 &:= a + \lambda w.
+            \end{align*}
+
+            Поскольку гомотетия с центром в $a$ и коэффициентом $\lambda$ переводит $x_1$ в $x_2$, $y_1$ в $y_2$ и $z_1$ в $z_2$, то $(x_1y_1) \parallel (x_2y_2)$, $(z_1y_1) \parallel (z_2y_2)$.
+
+            Пусть $a'$, $x_1'$, $x_2'$, $y_1'$, $y_2'$, $z_1'$, $z_2'$ являются образами по $F$ точек $a$, $x_1$, $x_2$, $y_1$, $y_2$, $z_1$, $z_2$. Тогда $(x_1'y_1') \parallel (x_2'y_2')$, $(z_1'y_1') \parallel (z_2'y_2')$. При этом $a'$, $x_1'$, $x_2'$, $z_1'$ и $z_2'$ лежат на одной прямой, а $a'$, $y_1'$ и $y_2'$ --- на другой. Следовательно гомотетия с центром в $a'$ и коэффициентом $\overrightarrow{a'y_2'}/\overrightarrow{a'y_1'}$ переводит $y_1'$ в $y_2'$ и оставляет прямые параллельными, значит переводит $x_1'$ в $x_2'$ и $z_1'$ в $z_2'$. Следовательно
+            \[
+                \frac{\widetilde{F}(\lambda v)}{\widetilde{F}(v)}
+                = \frac{\overrightarrow{a'x_2'}}{\overrightarrow{a'x_1'}}
+                = \frac{\overrightarrow{a'y_2'}}{\overrightarrow{a'y_1'}}
+                = \frac{\overrightarrow{a'z_2'}}{\overrightarrow{a'z_1'}}
+                = \frac{\widetilde{F}(\lambda u)}{\widetilde{F}(u)}
+            \]
+        \end{proof}
+
+        Рассмотрим любую прямую $m$ и введём на $m$ и на $m' := F(m)$ аффинные координаты, так, что $F$ переводит $0$ в $0$ и $1$ в $1$. Пусть $\alpha: \RR \to \RR$ является сужением $F$ на $m$ описанным в данных координатных системах. Тогда по доказанным леммам мы имеем, что
+        \begin{itemize}
+            \item $\alpha(0) = 0$;
+            \item $\alpha(1) = 1$;
+            \item $\forall q \in \QQ, x \in \RR \quad \alpha(qx) = q \alpha(x)$;
+            \item $\forall \lambda, x, y \in \RR \quad \frac{\alpha(\lambda x)}{\alpha(x)} = \frac{\alpha(\lambda y)}{\alpha(y)}$;
+            \item $\forall x, y \in \RR \quad \alpha(x + y) = \alpha(x) + \alpha(y)$.
+        \end{itemize}
+
+        \begin{thlemma}
+            Для всяких $x, y \in \RR$ верно, что $\alpha(xy) = \alpha(x) \alpha(y)$. 
+        \end{thlemma}
+
+        \begin{proof}
+            Если $x = 0$, то
+            \[
+                \alpha(xy)
+                = \alpha(0y)
+                = \alpha(0)
+                = 0
+                = \alpha(0) \alpha(y)
+                = \alpha(x) \alpha(y);
+            \]
+            аналогично если $y = 0$.
+
+            Иначе же
+            \[
+                \alpha(xy)
+                = \alpha(x) \cdot \frac{\alpha(xy)}{\alpha(x)}
+                = \alpha(x) \cdot \frac{\alpha(y)}{\alpha(1)}
+                = \alpha(x) \cdot \alpha(1)
+            \]
+        \end{proof}
+
+        Тогда мы имеем, что для всякого многочлена $P$ с рациональными коэффициентами и всякой величины $r \in \RR$ мы имеем, что
+        \[\alpha(P(r)) = P(\alpha(r))\]
+        В частности, все числа, представимые в виде квадратов вещественных чисел, остаются представимыми. Значит неотрицательные числа $\alpha$ переводит в неотрицательные, а значит неположительные в неположительные. Следовательно $\alpha$ сохраняет порядок на $\RR$. При этом на $\QQ$ $\alpha$ тождественна. Следовательно из принципа вложенных отрезков выходит тождественность $\alpha$ на всё $\RR$.
+
+        Следовательно $\widetilde{F}$ линейна, значит $F$ аффинна.
+    \end{proof}
+
+    \subsection{Проективные пространства}
+
+    \begin{definition}
+        Пусть $V$ --- векторное пространство над полем $K$. Введём на множестве $V \setminus \{0\}$ отношение эквивалентности
+        \[x \sim y :\Leftrightarrow \exists \lambda \in K: x = \lambda y.\]
+        Тогда $(V \setminus \{0\}) / \sim$ --- \emph{проективное пространство}, порождённое векторным пространством $V$; обозначается $\PP(V)$.
+
+        Отображение $P: V \setminus \{0\} \to \PP(V), v \mapsto [v]_{\sim}$ --- \emph{каноническая проекция} или \emph{проективизация}.
+
+        Также $P(K^n)$ обозначается за $K P^n$.
+    \end{definition}
+
+    \begin{definition}
+        Пусть $W$ --- нетривиальное подпространство векторного пространства $V$. Тогда $\PP(W)$ называется \emph{подпространством} $\PP(V)$.
+    \end{definition}
+
+    \begin{definition}
+        \emph{Размерность} $\PP(V)$ равна $\dim(V) - 1$.
+    \end{definition}
+
+    \begin{theorem}\label{proj-subspaces-intersection-theorem}
+        Пусть даны $Y$ и $Z$ --- подпространства проективного пространства $X$, что $\dim(Y) + \dim(Z) \geqslant \dim(X)$ (все пространства конечномерные). Тогда
+        \begin{enumerate}
+            \item $Y \cap Z \neq \varnothing$;
+            \item $Y \cap Z$ --- подпространство;
+            \item $\dim(Y \cap Z) \geqslant \dim(Y) + \dim(Z) - \dim(X)$.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $X$, $Y$, $Z$ являются проективизациями $V_X$, $V_Y$ и $V_Z$ соответственно.
+        \begin{enumerate}
+            \item По определению $\dim(V_Y) + \dim(V_Z) \geqslant \dim(V_X) + 1$. Следовательно $V_Y \cap V_Z$ нетривиально, а значит $Y \cap Z \neq \varnothing$.
+            \item $V_Y \cap V_Z$ есть нетривиальное подпространство $V_X$, значит $Y \cap Z$ есть подпространство $X$.
+            \item
+                \begin{multline*}
+                    \dim(Y \cap Z)
+                    = \dim(V_Y \cap V_Z) - 1\\
+                    \geqslant \dim(V_Y) + \dim(V_Z) - \dim(V_X) - 1
+                    = \dim(Y) + \dim(Z) - \dim(X)
+                \end{multline*}
+        \end{enumerate}
+    \end{proof}
+
+    \begin{theorem}
+        Пересечение любого семейства проективных подпространств есть либо пустое множество, либо аффинное подпространство.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть дано семейство $\Sigma$ проективных подпространств. Каждое проективное пространство $A \in \Sigma$ является проективизацией некоторого векторного подпространства $V_A$. При этом понятно, что
+        \[\bigcap_{A \in \Sigma} A = \bigcap_{A \in \Sigma} \PP(V_A) = \PP\left(\bigcap_{A \in \Sigma} V_A\right).\]
+        Поскольку пересечение векторных подпространств есть векторное подпространство, то есть некоторое векторное подпространство $U = \bigcap_{A \in \Sigma} V_A$, следовательно $\bigcap_{A \in \Sigma} A = \PP(U)$, т.е. проективное подпространство. При этом $U$ получается пустым тогда и только тогда, когда $U$ тривиально.
+    \end{proof}
+
+    \begin{definition}
+        Пусть $X$ --- проективное пространство. \emph{Проективная оболочка} непустого подмножества $A \subseteq X$ --- пересечение всех проективных подпространств $X$, содержащих $A$.
+    \end{definition}
+
+    \begin{remark}
+        Как следует из теоремы, проективная оболочка множества $A$ есть минимальное по включению проективное подпространство, содержащее $A$.
+    \end{remark}
+
+    \begin{lemma}
+        Пусть дано всякое множество $A$ точек проективного пространства $X = \PP(V)$. Для всякого $a \in A$ обозначим за $v_a$ какой-нибудь вектор из $V$, каноническая проекция которого совпадает с $a$. Тогда проективная оболочка $A$ совпадает с проективизацией линейной оболочки $\{v_a\}_{a \in A}$.
+    \end{lemma}
+
+    \begin{proof}
+        Пусть $Y = \PP(U)$ --- случайное подпространство $X$. Тогда понятно, что для всякой точки $a \in A$ верно, что $a \in Y \Leftrightarrow v_a \in U$. Поэтому $A \subseteq Y \Leftrightarrow \{v_a\}_{a \in A} \subseteq U$. Поэтому пересечение всех проективных подпространств, содержащих $A$, является проективизацией пересечения всех векторных подпространств, содержащих $\{v_a\}_{a \in A}$. А это и значит, что проективная оболочка $A$ совпадает с проективизацией векторной оболочки $\{v_a\}_{a \in A}$.
+    \end{proof}
+
+    \begin{definition}
+        Пусть $X = \PP(V)$ --- проективное пространство размерности $n$. \emph{Проективный базис} $X$ --- множество из $n+2$ точек, никакие $n+1$ из которых не лежат в одной гиперплоскости.
+    \end{definition}
+
+    \begin{lemma}
+        Пусть дан базис $P = \{p_i\}_{i=1}^{n+2}$ проективного пространства $X = \PP(V)$. Тогда существует такой набор $\{v_i\}_{i=1}^{n+2}$ векторов из $V$, что $p_i$ будет канонической проекцией $v_i$, а $v_{n+2} = \sum_{i=1}^{n+1} v_i$.
+    \end{lemma}
+
+    \begin{proof}
+        Рассмотрим набор $E = \{e_i\}_{i=1}^{n+1}$ векторов из $V$, что $p_i$ является канонической проекцией $e_i$. Поскольку проективная оболочка $\{p_i\}_{i=1}^{n+1}$ совпадает со всем $X$, то линейная оболочка $E$ совпадает с $V$, а значит $E$ --- базис $V$. Выберем любой вектор $v_{n+2}$, канонической проекцией которого является $p_{n+2}$. Тогда $v_{n+2} = \sum_{i=1}^{n+1} \alpha_i e_i$. Заметим, что $\alpha_i \neq 0$ для каждого $i$, так как иначе линейная оболочка $E \setminus \{e_i\} \cup \{v_{n+2}\}$ не совпадает со всем $V$, а значит $P \setminus p_i$ лежит в какой-то гиперплоскости. Поэтому можно рассмотреть $v_i := \alpha_i e_i$. Тогда $p_i$ будет канонической проекцией $v_i$, а $v_{n+2} = \sum_{i=1}^{n+1} v_i$.
+    \end{proof}
+
+    \begin{definition}
+        Пусть $X = \PP(V)$. Зафиксируем некоторый базис $\{e_i\}_{i \in I}$ пространства $V$. Для всякой точки $p$ есть семейство
+        \[v \cdot (K \setminus \{0\}) = \{v \cdot \lambda \mid \lambda \in K \wedge \lambda \neq 0\} = P^{-1}(p).\]
+        Пусть $(x_i)_{i \in I}$ --- координаты $v$ в выбранном базисе. Тогда $(\lambda x_i)_{i \in I}$ --- координаты $\lambda v$, значит координаты $p$ ``определены с точностью до пропорциональности''.
+
+        Поэтому последовательность $(x_i)_{i \in I}$ с точностью до пропорциональности называется \emph{однородными координатами} точки $p$ и обозначается
+        \[
+            p = [x_i]_{i \in I}
+            \quad \text{ или } \quad
+            p = [x_0 : x_1 : \dots : x_n], \text{ где } n = \dim(X)
+        \]
+        В частности,
+        \[
+            [x_i]_{i \in I} = [y_i]_{i \in I}
+            \quad \Longleftrightarrow \quad
+            \exists \lambda \in K \setminus \{0\}:\ \forall i \in I\ y_i = \lambda x_i.
+        \]
+    \end{definition}
+
+    \begin{definition}
+        Пусть $X$ --- аффинное пространство. Зафиксируем $a \in X$ и определим стандартную векторизацию $X$ относительно $a$:
+        \[\varphi_a: X \to \overrightarrow{X}, x \mapsto \overrightarrow{ax}.\]
+        Рассмотрим векторное пространство $V := \overrightarrow{X} \times K$.
+
+        $\widehat{X} := \PP(V)$ --- \emph{проективное пополнение АП $X$}. При этом всякой точке $x \in X$ соответствует точка с однородными координатами
+        \[[\varphi_a(x) : 1],\]
+        т.е. первые координаты взяты у $\varphi_a$, а последняя установлена равной $1$. При этом $X_\infty := \PP(\overrightarrow{X} \times \{0\})$ --- множество \emph{бесконечно удалённых точек}.
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item $X_\infty$ --- гиперплоскость в $\widehat{X}$. Она называется \emph{бесконечно удалённой гиперплоскостью}.
+            \item Каждому аффинному подпространству $Y \subseteq X$ соответствует проективное подпространство $\widehat{Y} \subseteq \widehat{X}$.
+            \item Каждое проективное подпространство в $\widehat{X}$ либо соответствует аффинному подпространству в $X$, либо содержится в бесконечно удалённой гиперплоскости.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{example}
+        $\RR P^n$ --- проективное пополнение $\RR^n$. Это видно из стандартного вложения
+        \[\varphi: \RR^n \to \RR P^n, (x_1, \dots, x_n) \mapsto [x_1 : \dots : x_n : 1]\]
+        При этом бесконечные удалённые точки --- те, у которых последняя из однородных координат равна $0$.
+    \end{example}
+
+    \begin{definition}
+        Пусть $X = \PP(V)$ --- проективное пространство. Выберем в нём гиперплоскость $Y = \PP(U)$ и рассмотрим в $V$ аффинную гиперплоскость, параллельную $U$ и не проходящую через $0$. Тогда всякая прямая в $V$ либо лежит в $U$, либо пересекается с $W$ ровно в одной точке. Тем самым имеется биекция
+        \[\pi: X \setminus Y \to W, x \mapsto P(x) \cap W\]
+        называется \emph{аффинной картой пространства $\PP(V)$}.
+    \end{definition}
+
+    \begin{remark}\ 
+        \begin{enumerate}
+            \item $U = \overrightarrow{W}$.
+            \item $X = \widehat{W}$.
+            \item $Y = W_\infty$.
+        \end{enumerate}
+    \end{remark}
+
+    \begin{theorem}
+        Пусть $V$, $W$ --- векторные пространства и $L: V \mapsto W$ --- инъективное линейное отображение. Тогда существует единственное отображение $F: \PP(V) \to \PP(W)$, что коммутативна диаграмма
+        \[
+            \xymatrix{
+                V \setminus \{0\} \ar[d]^{P_V} \ar[r]^{L} & W \setminus \{0\} \ar[d]^{P_W}\\
+                {\PP}(V) \ar[r]^{F} & {\PP}(W)
+            }
+        \]
+        где $P_V$ и $P_W$ --- проекции из $V \setminus \{0\}$ и $W \setminus \{0\}$ в $\PP(V)$ и $\PP(W)$ соответственно.
+    \end{theorem}
+
+    \begin{proof}
+        Прообраз при $P_V$ всякой точки $a \in \PP(V)$ есть прямая в $V$, которая отображается при $L$ в прямую в $W$, а та при $P_W$ --- в точку в $\PP(W)$. Значит образ всякой точки $a$ при $F$ определён однозначно.
+    \end{proof}
+
+    \begin{definition}
+        Отображение $F$ из теоремы называется \emph{проективизацией} $L$ и обозначается $\PP(L)$.
+    \end{definition}
+
+    \begin{definition}
+        Пусть даны проективные пространства $X$ и $Y$. Отображение из $X$ в $Y$ называется \emph{проективным}, если оно является проективизацией некоторого линейного $L: V_X \to V_Y$.
+    \end{definition}
+
+    \begin{remark*}\ 
+        \begin{itemize}
+            \item Все проективные отображения инъективны и размерность пространства-образа не меньше размерности пространства-прообраза.
+            \item Линейное отображение, порождающее данное проективное, определено однозначно с точностью до гомотетии.
+        \end{itemize}
+    \end{remark*}
+
+    \begin{lemma}
+        Проективное отображение переводит проективные подпространства (в том числе всё пространства) в проективные подпространства тех же размерностей.
+    \end{lemma}
+
+    \begin{theorem}
+        Пусть $X$, $Y$ --- АП, $\widehat{X}$, $\widehat{Y}$ --- их проективные пополнения, $F: X \to Y$ --- инъективное аффинное отображение. Тогда
+        \begin{enumerate}
+            \item существует единственное проективное отображение $\widehat{F}: \widehat{X} \to \widehat{Y}$, что $\widehat{F}|_X = F$;
+            \item $\widehat{F}$ переводит бесконечно удалённые точки в бесконечно удалённые точки.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Пусть $\varphi_X$ и $\varphi_Y$ --- соответствующие вложения $X$ и $Y$ в их пополнения. Тогда мы хотим коммутативность следующей диаграммы
+                \[
+                    \xymatrix{
+                        X \ar[d]^{\varphi_X} \ar[r]^F & Y \ar[d]^{\varphi_Y}\\
+                        {\widehat{X}} \ar[r]^{\widehat{F}} & {\widehat{Y}}
+                    }
+                \]
+        
+                Вспомним, что $F$ задаётся линейным $\widetilde{F}$ и образом любой точки из $X$.
+        
+                Вспомним также, что $\widehat{F}$ проективно тогда и только тогда, когда является проективизацией некоторого линейного $L: \overrightarrow{X} \times K \to \overrightarrow{Y} \times K$. Поскольку $X$ и $Y$ находятся в них как гиперплоскости, у которых последняя координата --- $1$, то будем искать $L$ переводящую гиперплоскость $X$ в гиперплоскость $Y$. (Остальные пропорциональные $L$ отображения могли возникнуть, если бы мы брали не эти гиперплоскости, а параллельные им.)
+                
+                В таком случае $\varphi_X$ и $\varphi_Y$ тождественно отображают вектора $\overrightarrow{X}$ и $\overrightarrow{Y}$, значит $L$ суженное на $\overrightarrow{X}$ должно вести себя как $\widetilde{F}$. Таким образом мы определили образ почти всего $\overrightarrow{X} \times K$. Образ вектора $(\overrightarrow{0}, 1) \in \overrightarrow{X} \times K$ задаётся образом любой точки $X$.
+        
+                Таким образом $L$ задаётся строго единственным образом и инъективно. Значит $\widehat{F}$ существует и единственно.
+
+            \item Поскольку $L$ переводит подпространство, параллельное гиперплоскости $X$, в подпространство, параллельное гиперплоскости $Y$, то $\widehat{F}$ переводит бесконечно удалённые точки в бесконечно удалённые точки.
+        \end{enumerate}
+    \end{proof}
+    
+    \begin{theorem}
+        Пусть даны проективное пространство $X$, гиперплоскости $Y_1$ и $Y_2$ в нём и $p \in X \setminus (Y_1 \cup Y_2)$. Рассмотрим отображение $F: Y_1 \to Y_2$, переводящее всякую точку $y \in Y_1$ в точку пересечения прямой $\overline{yp}$ с гиперплоскостью $Y_2$.
+        \begin{enumerate}
+            \item $F$ корректно определено: существует и единственно.
+            \item $F$ проективно.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{definition}
+        Данное отображение называется \emph{центральной проекцией из $Y_1$ в $Y_2$ с центром $p$}.
+    \end{definition}
+
+    \begin{proof}
+        Пусть $X$, $Y_1$, $Y_2$ и $p$ являются проективизациями $V$, $U_1$, $U_2$ и $l$. Тогда рассмотрим отображение $L: U_1 \to U_2$, переводящее всякий вектор $u$ в пересечение $U_2$ и $u + l = \{u + \lambda v \mid v \in K\}$, где $l = \langle v \rangle$.
+
+        Покажем, что $L$ корректно определено. Для всякой точки $u$ есть ровно одна аффинная прямая $u + l$ в $V$. При этом $l$ тривиально пересекается с $U_2$, но дополняет его до $V$ (линейная оболочка их объединения даёт всё $V$), поэтому $u + l$ не параллельна $U_2$, а значит пересекается с ним ровно в одной точке. Таким образом $L$ существует и единственно.
+
+        По тем самым рассуждениям $L$ обратимо.
+
+        Покажем, что $L$ линейно. Пусть $E = \{e_i\}_{i \in I}$ --- базис $U_2$. Тогда $E \cup \{v\}$ --- базис $v$. Тогда по своей сути $L$ зануляет последнюю координату, поэтому является линейным.
+
+        Теперь покажем, что $F = \widehat{L}$. Рассмотрим любую точку $y \in Y_1$. Пусть $y$ является проективизацией прямой $m_1$ --- подпространства $U_1$. Тогда прямая $\overline{yp}$ есть проективизация плоскости $\alpha := \langle m_1, l\rangle$. При этом $\alpha$ содержит $l$, а значит для всякой точки $u \in m_1$ плоскость $\alpha$ содержит $u + l$, а следовательно и $L(u)$. Поэтому $F(y)$ является проективизацией $L(m_1)$.
+    \end{proof}
+
+    \begin{remark}\label{sympathetic-proj-basis-representation}
+        Аналогичное доказывается следующее утверждение. Пусть $Y_1$, $Y_2$ и $Z$ --- подпространства проективного пространства $X$, что $Z$ не пересекается с $Y_1$ и $Y_2$ и $\dim(X) - \dim(Z) = \dim(Y_1) = \dim(Y_2)$ (для конечномерных пространств; для бесконечномерных пространств нужно сказать, что проективные замыкания $Z \cup Y_1$ и $Z \cup Y_2$ совпадают с $X$). Тогда рассмотрим отображение $F: U_1 \to U_2$, переводящее всякую $u \in U_1$ в пересечение проективной оболочки $Z \cup \{u\}$ с $U_2$.
+        \begin{enumerate}
+            \item $F$ корректно определено: существует и единственно.
+            \item $F$ проективно.
+        \end{enumerate}
+    \end{remark}
+
+    \begin{remark}
+        Обратное отображение к $F$ является центральной проекцией из $H_2$ в $H_1$ с центром в $p$ ($Z$ соответственно).
+    \end{remark}
+
+    \begin{theorem}
+        Пусть $X$, $Y$ --- проективные пространства размерности $n$, а $\{p_i\}_{i=1}^{n+2}$ и $\{q_i\}_{i=1}^{n+2}$ --- базисы $X$ и $Y$. Тогда существует единственное проективное отображение $F: X \to Y$, переводящее $p_i$ в $q_i$ для всех $i$.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $X = \PP(V)$, $Y = \PP(W)$. По лемме \ref{sympathetic-proj-basis-representation} можно выбрать набор $\{v_i\}_{i=1}^{n+2}$ векторов $V$, порождающий $\{p_i\}_{i=1}^{n+2}$, и набор $\{w_i\}_{i=1}^{n+2}$ векторов $W$, порождающий $\{q_i\}_{i=1}^{n+2}$.
+
+        Нам нужно показать, что есть единственное проективное отображение $F: X \to Y$, переводящее $p_i$ в $q_i$. Заметим, что это равносильно существованию и единственности с точностью до гомотетии линейного отображения $L: V \to W$, что $L(v_i)$ коллинеарен $w_i$. Поэтому WLOG докажем единственность линейного отображения $L: V \to W$, что $L(v_i)$ коллинеарно $w_i$ для всех $i$, а $L(v_{n+2}) = w_{n+2}$.
+
+        Пусть $L(v_i) = \lambda_i w_i$. Заметим, что $\{v_i\}_{i=1}^{n+1}$ и $\{w_i\}_{i=1}^{n+1}$ являются базисами $V$ и $W$. Поэтому $L$ определяется набором констант $(\lambda_i)_{i=1}^{n+1}$. Но заметим, что при этом
+        \[\sum_{i=1}^{n+1} w_i = w_{n+2} = L(v_{n+2}) = L\left(\sum_{i=1}^{n+1} v_i\right) = \sum_{i=1}^{n+1} \lambda_i w_i\]
+        Поэтому есть ровно набор подходящих констант --- $\lambda_i = 1$ для всех $i$. Значит такое $L$ существует и единственно.
+    \end{proof}
+
+    \subsubsection{Практика.}
+
+    \begin{theorem}[\href{https://en.wikipedia.org/wiki/Pappus\%27s_hexagon_theorem}{Паппа}]
+        Пусть даны проективная плоскость $X$, ращличные прямые $l$, $l'$ на ней и точки $A, B, C \in l$ и $A', B', C' \in l'$. Обозначим $A'' := \overline{BC'} \cap \overline{B'C}$, $B'' := \overline{CA'} \cap \overline{C'A}$ и $C'' := \overline{AB'} \cap \overline{A'B}$. Тогда $A''$, $B''$ и $C''$ коллинеарны.
+    \end{theorem}
+
+    \begin{proof}
+        Точки $A'$, $B'$ и $C'$ определены по теореме \ref{proj-subspaces-intersection-theorem}.
+
+        Давайте зафиксируем $l$, $l'$, $A$, $B$, $C$, $A'$ и $C'$ и будем мысленно рассматривать все возможные положения точки $B'$ (на прямой $l'$). Тогда $B''$ зафиксирована, а точки $A''$ и $C''$ ``бегают'' по прямым $\overline{BC'}$ и $\overline{BA'}$ соответственно. При этом функции, переводящие $B'$ в $A''$ и $C''$ являются проективными преобразованиями из $l'$ в $\overline{BC'}$ и $\overline{BA'}$, так как являются проекциями через точку, а условие, что $A''$, $B''$ и $C''$ коллинеарны, равносильно тому, что $A''$ переходит в $C''$ при проекции через $B''$ --- проективном преобразовании из $\overline{BC'}$ в $\overline{BA'}$.
+
+        Таким образом у нас есть 3 проективных преобразования, и мы хотим показать, что композиция двух из них равно третьему. При этом проективное преобразование прямой определяется по 3 точкам. Значит нужно показать 3 положения $B''$, для которых понятно, что условие выполняется.
+        
+        \begin{itemize}
+            \item Пусть $B' = A'$. Тогда $C'' = A'$, а $A'' = \overline{A'C} \cap \overline{BC'}$. Таким образом все $A''$, $B''$ и $C''$ лежат на $A'C$, значит проекция через $B''$ переведёт $A''$ в $C''$.
+            \item Пусть $B' = C'$. Тогда аналогично предыдущему пункту.
+            \item Пусть $B' = l \cap l'$. Тогда $A'' = B = C''$. Тогда очевидно, что проекция через $B''$ переведёт $A''$ в $C''$.
+        \end{itemize}
+    \end{proof}
+
+    \begin{theorem}[\href{https://en.wikipedia.org/wiki/Desargues\%27s_theorem}{Дезарга}]
+        На проективной плоскости даны точки $A$, $B$, $C$, $A'$, $B'$ и $C'$. Обозначим $A'' := \overline{BC} \cap \overline{B'C'}$, $B'' := \overline{CA} \cap \overline{C'A'}$ и $C'' := \overline{AB} \cap \overline{A'B'}$. Тогда если $\overline{AA'}$, $\overline{BB'}$ и $\overline{CC'}$ конкурентны, то $A''$, $B''$ и $C''$ коллинеарны.
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим прямую $l$, проходящую через $A''$ и $B''$. Заметим, что $X := \RR P^2 \setminus l$ --- АП. Тогда в $X$ задача приобрела следующую формулировку:
+        \begin{quotation}
+            Известно, что $\overline{BC} \parallel \overline{B'C'}$ и $\overline{CA} \parallel \overline{C'A'}$. Тогда и $\overline{AB} \parallel \overline{A'B'}$.
+        \end{quotation}
+
+        Обозначим точку пересечения $\overline{AA'}$, $\overline{BB'}$ и $\overline{CC'}$ за $P$. Рассмотрим гомотетию $\pi$ с коэффициентом $\overrightarrow{PC'} / \overrightarrow{PC}$. Она переводит $C$ в $C'$ и не меняет направления прямых. Поэтому она переведёт $\overline{BC}$ в $\overline{B'C'}$ и $\overline{CA}$ в $\overline{C'A'}$. Значит $B$ перешло в $B'$, а $A$ в $A'$. Следовательно $\overline{AB}$ перешло в $\overline{A'B'}$, т.е. эти прямые параллельны.
+    \end{proof}
+
+    \subsection{Евклидовы пространства.}
+
+    \begin{definition}
+        Пусть $X$ --- векторное пространство над $\RR$. \emph{Скалярным произведением} называется всякая функция
+        \[\langle \cdot, \cdot \rangle: X \times X \to \RR\]
+        удовлетворяющая условиям:
+        \begin{enumerate}
+            \item \textbf{Симметричность.} $\forall x, y \in X \quad \langle x, y \rangle = \langle y, x \rangle$.
+            \item \textbf{Линейность по каждому аргументу.} $\forall x, y, z \in X, \lambda \in \RR$
+            \begin{align*}
+                \langle x, y + z \rangle &= \langle x, y \rangle + \langle x, z \rangle&
+                \langle x, \lambda y \rangle = \lambda \langle x, y \rangle\\
+                \langle x + z, y \rangle &= \langle x, y \rangle + \langle z, y \rangle&
+                \langle \lambda x, y \rangle = \lambda \langle x, y \rangle
+            \end{align*}
+            \item \textbf{Положительность.} $\forall x \in X \quad \langle x, x \rangle \geqslant 0$, и равенство достигается только при $x = \vec{0}$.
+        \end{enumerate}
+
+        \emph{Евклидово пространство (ЕП)} --- векторное пространство с заданным на нём скалярным произведением.
+    \end{definition}
+
+    \begin{example}
+        Пространство $\RR^n$. \emph{стандартное скалярное произведение}:
+        \[\langle x, y \rangle = \sum_{i=1}^n x_i y_i\]
+    \end{example}
+
+    \begin{definition}
+        Пусть $X$ --- евклидово пространство.
+
+        \emph{Длина (норма)} вектора $x \in X$ --- $|x| := \sqrt{\langle x, x \rangle}$.
+
+        \emph{Расстояние} вектора $x, y \in X$ --- $d(x, y) := |x - y|$.
+    \end{definition}
+
+    \begin{example}
+        Для $x, y \in \RR^n$:
+        \begin{gather*}
+            |x| = \sqrt{x_1^2 + \dots + x_n^2}\\
+            d(x, y) = \sqrt{(x_1 - y_1)^2 + \dots + (x_n - y_n)^2}
+        \end{gather*}
+    \end{example}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item Можно раскрывать скобки как обычно. Т.е. для любых
+                \[\{x_i\}_{i=1}^n, \{y_j\}_{j=1}^m \subseteq X, \{\alpha_i\}_{i=1}^n, \{\beta_j\}_{j=1}^m \subseteq \RR\]
+                верно
+                \[
+                    \left\langle \sum_{i} \alpha_i x_i, \sum_{j} \beta_j y_j \right\rangle
+                    = \sum_{i, j} \alpha_i \beta_j \langle x_i, y_j \rangle
+                \]
+            \item $|x + y|^2 = |x|^2 + |y|^2 + 2 \langle x, y \rangle$.
+            \item $|x| > 0$ при $x \neq 0$ и $|\vec{0}| = 0$.
+            \item $|\lambda x| = |\lambda| |x|$ для всякого $\lambda \in \RR$.
+            \item Расстояние сохраняется при параллельных переносах:
+                \[d(x, y) = d(x + z, y + z)\]
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{theorem}[неравенство Коши-Буняковского-Шварца aka неравенство КБШ, КБШ или НКБШ]
+        Для любых $x, y \in X$
+        \[|\langle x, y \rangle| \leqslant |x| |y|\]
+        Равенство достигается тогда и только тогда, когда $x$ и $y$ линейно зависимы.
+    \end{theorem}
+
+    \begin{proof}
+        Если $x = 0$ или $y = 0$, утверждение тривиально.
+
+        Заметим, что
+        \[0 \leqslant |x - \lambda y|^2 = \lambda^2 |y|^2 - 2 \lambda \langle x, y \rangle + |x|^2\]
+        При этом последнее есть многочлен от $\lambda$, а значит его дискриминант $\leqslant 0$. Т.е.
+        \begin{gather*}
+            \langle x, y \rangle^2 \leqslant |x|^2 |y|^2\\
+            |\langle x, y \rangle| \leqslant |x| |y|
+        \end{gather*}
+        При этом равенство достигается тогда и только тогда, когда дискриминант зануляется, тогда и только тогда, когда есть какой-нибудь корень $\lambda$, тогда и только тогда, когда $x$ и $y$ линейно зависимы.
+    \end{proof}
+
+    \begin{corollary}
+        Пусть даны $x, y \in X$, $x \neq \vec{0}$, $y \neq \vec{0}$.
+        \begin{enumerate}
+            \item $x$ и $y$ сонаправлены тогда и только тогда, когда $\langle x, y \rangle = |x||y|$.
+            \item $x$ и $y$ противонаправлены тогда и только тогда, когда $\langle x, y \rangle = -|x||y|$.
+        \end{enumerate}
+    \end{corollary}
+
+    \begin{corollary}
+        Для любых $x, y \in X$
+        \[|x + y| \leqslant |x| + |y|.\]
+        Равенсто достигается тогда и только тогда, когда $x$ и $y$ сонаправлены или один из них есть $\vec{0}$.
+    \end{corollary}
+
+    \begin{proof}
+        TFAE:
+        \begin{gather*}
+            |x + y| \leqslant |x| + |y|\\
+            |x + y|^2 \leqslant (|x| + |y|)^2\\
+            \langle x + y, x + y \rangle \leqslant |x|^2 + 2|x||y| + |y|^2\\
+            \langle x, x \rangle + 2\langle x, y \rangle + \langle y, y \rangle \leqslant \langle x, x \rangle + 2|x||y| + \langle y, y \rangle\\
+            \langle x, y \rangle \leqslant |x||y|\\
+        \end{gather*}
+        Последнее неравенсто выполняется по неравенству КБШ. При этом равенство достигается только когда $x$ и $y$ сонаправлены или один из них равен $\vec{0}$.
+    \end{proof}
+
+    \begin{corollary}
+        Для любых $x, y, z \in X$
+        \[d(x, z) \leqslant d(z, y) + d(y, z)\]
+        Равенство достигается тогда и только тогда, когда вектора $x - y$ и $y - z$ сонаправлены или один из них равен $\vec{0}$.
+    \end{corollary}
+
+    \subsubsection{Углы.}
+
+    \begin{definition}
+        Пусть $X$ --- евклидово пространство. \emph{Угол} между ненулевыми векторами $x$ и $y$ --- это
+        \[\angle(x, y) := \cos^{-1}\left(\frac{\langle x, y \rangle}{|x| |y|}\right)\]
+        (Определение корректно в силу неравенства КБШ.)
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item $\angle(x, y) \in [0; \pi]$.
+            \item $\langle x, y \rangle = |x| |y| \cos(\angle(x, y))$.
+            \item $\angle(x, y) = \angle(y, x)$.
+            \item $\angle(x, \lambda y) = \angle(x, y)$ для всякого $\lambda > 0$.
+            \item $\angle(x, \lambda y) = \pi - \angle(x, y)$ для всякого $\lambda < 0$.
+            \item \textbf{Теорема косинусов.} $|x-y|^2 = |x|^2 + |y|^2 - 2|x||y|\cos(\angle(x, y))$.
+            \item $\cos(\angle(x, y)) = \frac{|x+y|^2 - |x|^2 - |y|^2}{|x||y|} = \frac{|x|^2 + |y|^2 - |x-y|^2}{|x||y|}$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{theorem}
+        Для любых ненулевых $x, y, z \in X$
+        \[\angle(x, y) + \angle(y, z) \geqslant \angle(x, z)\]
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $\alpha := \angle(x, y)$, $\beta := \angle(y, z)$, $\gamma := \angle(x, z)$. Если $\alpha + \beta \geqslant \pi$, то неравенство очевидно; поэтому WLOG $\alpha + \beta < \pi$.
+
+        Отложим в (отдельной) плоскости $\RR^2$ вектора $x'$ и $z'$ той же длины, что и $x$ и $z$, с углом $\alpha + \beta$ между ними. Выберем на отрезке между $x'$ и $z'$ вектор $u'$, образующий с $x'$ угол $\alpha$ (а с $z'$ --- $\beta$). Рассмотрим в нашем изначальном пространстве вектор $u$ длины $|u'|$, сонаправленный $y$.
+
+        Тогда по теореме косинусов $|x - u| = |x' - u'|$, $|u - z| = |u' - z'|$. Тогда
+        \[|x - z| \leqslant |x - u| + |u - z| = |x' - u'| + |u' - z'| = |x' - z'|\]
+        Следовательно по теореме косинусов
+        \[\cos(\angle(x, z)) = \frac{|x|^2 + |y|^2 - |x-z|^2}{|x||z|} \geqslant \frac{|x'|^2 + |z'|^2 - |x'-z'|^2}{|x'||z'|} = \cos(\angle(x', z'))\]
+        а тогда
+        \[\gamma = \angle(x, z) \leqslant \angle(x', z') = \alpha + \beta\]
+    \end{proof}
+
+    \begin{corollary}
+        $\angle(x, z) = \angle(x, y) + \angle(y, z)$ тогда и только тогда, когда выполнен хотя бы один из следующих случаев:
+        \begin{itemize}
+            \item $y$ есть линейная комбинация $z$ с неотрицательными коэффициентами.
+        \end{itemize}
+    \end{corollary}
+
+    \begin{corollary}
+        $\angle(x, y) + \angle(y, z) + \angle(z, x) \leqslant 2 \pi$.
+    \end{corollary}
+
+    \begin{proof}
+        \[\angle(x, z) \leqslant \angle(x, -y) + \angle(-y, z) = \pi - \angle(x, y) + \pi - \angle(y, z)\]
+    \end{proof}
+
+    \subsubsection{Ортогональные векторы.}
+
+    \begin{definition}
+        Векторы $x, y \in X$ \emph{ортогональны}, если $\langle x, y \rangle = 0$. Обозначение: $x \perp y$.
+    \end{definition}
+
+    \begin{lemma}
+        \begin{enumerate}
+            \item $\vec{0}$ ортогонален любому.
+            \item Если $x$ ортогонален любому из $v_1$, \dots, $v_n$, то он ортогонален любой их линейной комбинации.
+            \item \textbf{Теорема Пифагора.} Если $x \perp y$, то $|x + y|^2 = |x|^2 + |y|^2$.
+            \item Если вектора $v_1$, \dots, $v_n$ попарно ортогональны, то
+                \[|v_1 + \dots + v_n|^2 = |v_1|^2 + \dots + |v_n|^2\]
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{definition}
+        \emph{Ортонормированный набор векторов} --- такой набор, в котором
+        \begin{itemize}
+            \item каждые два вектора ортогональны,
+            \item все вектора имеют длину $1$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{example}
+        В $\RR^n$ стандартный базис ортонормирован.
+    \end{example}
+
+    \begin{lemma}
+        Пусть $v_1, \dots, v_n$ --- ортонормированный набор,
+        \begin{align*}
+            &x = \sum_{i=1}^n \alpha_i v_i,&
+            &y = \sum_{i=1}^n \beta_i v_i.
+        \end{align*}
+        Тогда
+        \begin{align*}
+            &\langle x, y \rangle = \sum_{i=1}^n \alpha_i \beta_i,&
+            &|x|^2 = \sum_{i=1}^n \alpha_i^2.
+        \end{align*}
+    \end{lemma}
+
+    \begin{theorem}
+        Любой ортонормированный набор линейно независим.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $v_1, \dots, v_n$ --- ортонормированный набор, и линейная комбинация $\sum \alpha_i v_i$ равна $\vec{0}$. Тогда
+        \[0 = |\vec{0}|^2 = \sum \alpha_i^2\]
+        Следовательно все $\alpha_i = 0$.
+    \end{proof}
+
+    \begin{theorem}[ортогонализация по Граму-Шмидту]
+        Для любого линейно независимого набора векторов $v_1, \dots, v_n$ существует единственный ортонормированный набор $e_1, \dots, e_n$ такой, что для каждого $k \in \{1, \dots, n\}$:
+        \begin{itemize}
+            \item $\Lin(e_1, \dots, e_k) = \Lin(v_1, \dots, v_k)$;
+            \item $\langle v_k, e_k \rangle > 0$.
+        \end{itemize}
+    \end{theorem}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item \textbf{Построение.} Построим искомый набор по индукции по $n$.
+
+                \textbf{База.} $n = 1$. Полагаем $e_1 := \frac{v_1}{|v_1|}$. Очевидно, что $\Lin(e_1) = \Lin(v_1)$ и $\langle v_1, e_1 \rangle = |v| > 0$.
+
+                \textbf{Шаг.} Построим $e_1, \dots, e_{n-1}$ с требуемыми свойствами по предположению индукции. Рассмотрим
+                \[w := v_n - \sum_{i=1}^{n-1} \langle v_n, e_i \rangle e_i\]
+                Тогда
+                \begin{itemize}
+                    \item $w$ ортогонален $e_1, \dots, e_{n-1}$, так как
+                        \[\langle w, e_j \rangle = \langle v_n, e_j \rangle - \sum_{i=1}^{n-1} \langle v_n, e_i \rangle \langle e_i, e_j \rangle = 0\]
+                    \item $w \neq \vec{0}$, так как иначе $v_n \in \Lin(e_1, \dots, e_{n-1}) = \Lin(v_1, \dots, v_{n-1})$.
+                \end{itemize}
+                Определим $e_n := \frac{w}{|w|}$.
+                
+                Тогда $\{e_1, \dots, e_n\}$ --- ортонормированный набор. При этом:
+                \begin{itemize}
+                    \item $\Lin(e_1, \dots, e_{n-1}) = \Lin(v_1, \dots, v_{n-1})$ по предположению индукции. Следовательно
+                        \[\Lin(v_1, \dots, v_{n-1}, v_n) = \Lin(e_1, \dots, e_{n-1}, v_n) = \Lin(e_1, \dots, e_{n-1}, w) = \Lin(e_1, \dots, e_{n-1}, e_n)\]
+                    \item Заметим, что
+                        \[v_n = w + \sum_{i=1}^{n-1} \langle v_n, e_i \rangle e_i\]
+                        Следовательно
+                        \[\langle v_n, e_n \rangle = \langle w, e_n \rangle = |w| \langle e_n, e_n \rangle = |w| > 0\]
+                \end{itemize}
+            
+            \item \textbf{Единственность.} Докажим утверждение по индукции по $n$.
+                
+                \textbf{База.} $n=1$. Понятно, что $e_1$ коллинеарен $v_1$. Предполагая то, что $|e_1| = 1$, получаем, что таких векторов ровно два. Условие же $\langle e_1, v_1 \rangle$ оставит из них ровно один подходящий.
+
+                \textbf{Шаг.} По предположению индукции вектора $e_1, \dots, e_{n-1}$ определены однозначно. При этом $e_n$ есть линейная комбинация $e_1, \dots, e_{n-1}$ и $v_n$:
+                \[e_n = \alpha v_n + \sum_{i=1}^{n-1} \beta_i e_i\]
+                При этом $\alpha \neq 0$. Из условия $\langle e_n, e_j \rangle = 0$ мы получаем, что
+                \[\alpha \langle v_n, e_j \rangle + \alpha_j = 0\]
+                Таким образом каждое $\alpha_j$ выражается через $\alpha$, и сам вектор $e_n$ определён с точностью до пропорциональности. Значит есть два претендента, чьи длины равны $1$, и ровно один из них даёт положительное скалярное произведение с $v_n$.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $X$ --- конечномерное евклидово пространство. Тогда в $X$
+        \begin{enumerate}
+            \item существует ортонормированный базис;
+            \item любой ортонормированный набор можно дополнить до ортонормированного базиса.
+        \end{enumerate}
+    \end{corollary}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Выберем любой базис и ортогонализуем.
+            \item Дополним до произвольного базиса и ортогонализуем. Начальный ортонормированный набор не изменится.
+        \end{enumerate}
+    \end{proof}
+
+    \subsubsection{Изоморфность}
+
+    \begin{definition}
+        Пусть $X$ и $Y$ --- Евклидовы пространства. \emph{Изоморфизм} из $X$ в $Y$ --- линейная биекция $f: X \to Y$, сохраняющее скалярное произведение:
+        \[\langle f(v), f(w) \rangle_Y = \langle v, w \rangle_X\]
+        для любых $v, w \in X$.
+
+        $X$ и $Y$ \emph{изоморфны}, если существует изоморфизм между ними.
+    \end{definition}
+
+    \begin{remark}
+        Изоморфизм --- отношение эквивалентности.
+    \end{remark}
+
+    \begin{theorem}
+        Пусть $X$, $Y$ --- конечномерные евклидовы пространства равной размерности. Тогда они изоморфны.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть размерность пространств равна $n$. Выберем ортонормированные базисы $\{e_i\}_{i=1}^n$ и $\{g_j\}_{j=1}^n$ в $X$ и $Y$ соответственно. Рассмотрим линейное отображение $f: X \to Y$, переводящее $e_i$ в $g_i$. Очевидно, оно является биекцией. Осталось показать, что оно сохраняет скалярное проивзедение.
+
+        Пусть $v, w \in X$. Разложим эти вектора базису:
+        \begin{align*}
+            &v = \sum_{i=1}^n \alpha_i e_i,&
+            &w = \sum_{i=1}^n \beta_i g_i.
+        \end{align*}
+        Тогда
+        \[
+            \langle v, w \rangle
+            = \sum_{i=1}^n \alpha_i \beta_i
+            = \langle f(v), f(w) \rangle
+        \]
+    \end{proof}
+
+    \begin{corollary}
+        Любое евклидово пространство размерности $n$ изоморфно $\RR^n$.
+    \end{corollary}
+
+    \subsubsection{Ортогональное дополнение}
+
+    \begin{definition}
+        Пусть $X$ --- евклидово пространство, $A$ --- подмножество $X$. \emph{Ортогональное дополнение} множества $A$ --- это
+        \[A^\perp := \{x \in X \mid \forall v \in A\quad \langle x, v \rangle = 0 \}.\]
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item $A^\perp$ --- векторное подпространство.
+            \item $A \subseteq B \Longrightarrow B^\perp \subseteq A^\perp$.
+            \item $A^\perp = \Lin(A)^\perp$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{theorem}[об ортогональном дополнении]
+        Пусть $X$ --- конечномерное евклидово пространство, $V \subseteq X$ --- линейное подпространство. Тогда
+        \begin{enumerate}
+            \item $X \simeq V \oplus V^\perp$.
+            \item $(V^\perp)^\perp = V$.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $n := \dim(X)$, $k := \dim(V)$. Выберем ортонормированный базис $e_1, \dots, e_k$ в $V$ и дополним его до ортонормированного базиса $e_1, \dots, e_n$ в $X$. Тогда
+        \[V^\perp = \Lin(e_1, \dots, e_n).\]
+        Аналогично, $(V^\perp)^\perp = \Lin(e_1, \dots, e_n) = V$.
+    \end{proof}
+
+    \begin{corollary}
+        Всякий вектор $x$ единственным образом расскладывается в сумму $y$ и $z$, что
+        \begin{align*}
+            &y \in V,&
+            &z \in V^\perp.
+        \end{align*}
+    \end{corollary}
+
+    \begin{definition}
+        Вектор $y$ из разложения выше --- \emph{ортогональная проекция} $x$ на $V$. Обозначение: $y = \Pr_V(x)$.
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item $\Pr_V: X \to V$ --- линейная сюръекция.
+            \item $\Pr_V(x)$ --- ближайшая к $x$ точка из $V$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{definition}
+        \emph{Нормаль} векторной гиперплоскости $H$ --- любой ненулевой вектор $v \in H^\perp$.
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item Нормаль гиперплоскости существует. Она единственна с точностью до пропорциональности.
+            \item Если $v$ - нормаль $H$, то $H = v^\perp$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{theorem}[конечномерная лемма Рисса]
+        Пусть $X$ --- конечномерное евклидово пространство, $L: X \to \RR$ --- линейное отображение. Тогда существует единственный вектор $v \in X$ такой, что $L(x) = \langle v, x \rangle$ для всех $x \in X$.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $e_1, \dots, e_n$ --- ортонормированный базис. Рассмотрим вектор
+        \[v = \sum_{i=1}^n \alpha_i e_i\]
+        Заметим, что по линейности он является искомым тогда и только тогда, когда $\langle v, e_i \rangle = L(e_i)$ для всех $i \in \{1, \dots, n\}$. При этом $\langle v, e_i \rangle = \alpha_i$. Значит $\alpha_i = L(e_i)$, и поэтому $v$ может быть определён и единственен.
+    \end{proof}
+
+    \begin{theorem}\ 
+        \begin{enumerate}
+            \item Любая векторная гиперплоскость имеет вид $\Ker(L)$, где $L: X \to \RR$ --- нетривиальное линейное отображение.
+            \item $L$ определено одназначно с точностью до умножения на константу.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{theorem}
+        Пусть $H = v^\perp$. Тогда расстояние от $x$ до $H$ равно
+        \[d(x, H) = \frac{|\langle v, x \rangle|}{|v|}\]
+    \end{theorem}
+
+    \subsubsection{Ортогональные преобразования}
+
+    \begin{definition}
+        \emph{Изометрическое отображение (изометрическое вложение)} $X$ в $Y$ --- линейное отображение из $X$ в $Y$,сохраняющее скалярное произведение.
+        
+        \emph{Ортогональное преобразование} пространства $X$ --- изометрическое отображение из $X$ в себя.
+    \end{definition}
+
+    \begin{remark}
+        Изометрические отображения являются инъективными. Поэтому ортогональные преобразования являются биекциями. Поэтому ортогональные преобразования $X$ --- группа относительно композиции.
+    \end{remark}
+
+    \begin{definition}
+        \emph{Ортогональная группа} порядка $n$ --- группа ортогональных преобразований $\RR^n$. Обозначение: $O(n)$.
+    \end{definition}
+
+    \begin{lemma}
+        Пусть $f: X \to Y$ --- линейное отображение. Тогда $f$ изометрическое тогда и только тогда, когда
+        \begin{enumerate}
+            \item оно сохраняет длины векторов.
+            \item оно переводит ортонормированный базис в ортонормированный набор.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Из формулы
+                \[\langle x, y \rangle = \frac{|x+y|^2 - |x|^2 - |y|^2}{2}\]
+            \item \todo[inline]{Дописать.}
+        \end{enumerate}
+    \end{proof}
+
+    \begin{lemma}
+        Пусть $X$ --- евклидово пространство, а $f: X \to X$ сохраняет скалярное произведение. Тогда $f$ линейно. 
+    \end{lemma}
+
+    \begin{proof}
+        Нужно лишь показать.
+        \begin{enumerate}
+            \item Пусть $u, v \in X$. Обозначим $w := f(u + v) - f(u) - f(v)$. Тогда
+                \begin{align*}
+                    \langle w, w \rangle
+                    &= \langle f(u + v) - f(u) - f(v), f(u + v) - f(u) - f(v) \rangle\\
+                    &= \langle f(u + v), f(u + v) \rangle
+                        + \langle f(u), f(u) \rangle
+                        + \langle f(v), f(v) \rangle\\
+                        &\phantom{=} - 2\langle f(u + v), f(u) \rangle
+                        - 2\langle f(u + v), f(v) \rangle
+                        + 2\langle f(u), f(v) \rangle\\
+                    &= \langle u + v, u + v \rangle
+                        + \langle u, u \rangle
+                        + \langle v, v \rangle\\
+                        &\phantom{=} - 2\langle u + v, u \rangle
+                        - 2\langle u + v, v \rangle
+                        + 2\langle u, v \rangle\\
+                    &= 0
+                \end{align*}
+                Следовательно $w = 0$. Значит $f(u + v) = f(u) + f(v)$.
+            \item Пусть $v \in X$, $\lambda \in \RR$. Обозначим $w := f(\lambda v) - \lambda f(v)$. Тогда
+                \begin{align*}
+                    \langle w, w \rangle
+                    &= \langle f(\lambda v) - \lambda f(v), f(\lambda v) - \lambda f(v) \rangle\\
+                    &= \langle f(\lambda v), f(\lambda v) \rangle
+                        - 2\lambda \langle f(\lambda v), f(v) \rangle
+                        + \lambda^2 \langle f(v), f(v) \rangle\\
+                    &= \langle \lambda v, \lambda v \rangle
+                        - 2\lambda \langle \lambda v, v \rangle
+                        + \lambda^2 \langle v, v \rangle\\
+                    &= 0
+                \end{align*}
+                Следовательно $w = 0$. Значит $f(\lambda v) = \lambda f(v)$.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $f: X \to Y$ линейно, $A$ --- его матрица в ортонормированных базисах $X$ и $Y$. Тогда $f$ изометрическое тогда и только тогда, когда $A^T A = E$.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $\{e_i\}_{i=1}^n$ --- выбранный базис в $X$. Тогда $i$-ый столбец $A$ --- координаты образа $e_i$ в выбранном базисе $Y$. Тогда
+        \[(A^T A)_{i, j} = \langle f(e_i), f(e_j) \rangle.\]
+        При этом $f$ изометрическое тогда и только тогда, когда $\{f(e_i)\}_{i=1}^n$ --- ортонормированный набор, т.е.
+        \[\langle f(e_i), f(e_j) \rangle = \delta_{i, j}\footnote{Здесь под $\delta_{i, j}$ подразумевается \href{https://ru.wikipedia.org/wiki/\%D0\%A1\%D0\%B8\%D0\%BC\%D0\%B2\%D0\%BE\%D0\%BB_\%D0\%9A\%D1\%80\%D0\%BE\%D0\%BD\%D0\%B5\%D0\%BA\%D0\%B5\%D1\%80\%D0\%B0}{символ Кронекера}.}\]
+        что равносильно тому, что $A^T A = E$.
+    \end{proof}
+
+    \begin{corollary}
+        При $\dim(X) = \dim(Y)$ (и, в частности, для $X = Y$) это равносильно тому, что $AA^T = E$ или $A^{-1} = A^T$.
+    \end{corollary}
+
+    \begin{definition}
+        \emph{Ортогональная матрица} --- квадратная матрица $A$, для которой $A^T A = E$.
+    \end{definition}
+
+    \begin{lemma}
+        Пусть дана квадратная матрица $A$. TFAE
+        \begin{enumerate}
+            \item $A$ ортогональна, т.е. $A^T A = E$.
+            \item $A A^T = E$.
+            \item Столбцы ортонормированы.
+            \item Строки ортонормированы.
+            \item $A$ как оператор сохраняет многочлен $x_1^2 + \dots + x_n^2$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{theorem}
+        Если $A$ --- ортогональная матрица, то $\det(A) = \pm 1$.
+    \end{theorem}
+
+    \begin{proof}
+        \[\det(A)^2 = \det(A^T)\det(A) = \det(A^T A) = \det(E) = 1\]
+        Следовательно $\det(A) = \pm 1$.
+    \end{proof}
+
+    \begin{example}
+        Простыми примерами ортогональных матриц могут быть матрицы вида
+        \[
+            \begin{pmatrix}
+                \pm 1\\
+                & \pm 1\\
+                && \ddots\\
+                &&& \pm 1
+            \end{pmatrix}
+        \]
+        Понятно, что уже среди них половина имеет определитель $1$, а другая половина --- $-1$.
+    \end{example}
+
+    \begin{definition}
+        Специальная ортогональная группа $SO(n)$ --- группа ортогональных преобразований с определителем $1$.
+    \end{definition}
+
+    \begin{example}
+        Следующие преобразования ортогональны:
+        \begin{enumerate}
+            \item $\Id$.
+            \item $-\Id$ (центральная симметрия относительно $0$).
+            \item Поворот плоскости относительно $0$. Т.е. матрицы вида
+                \[
+                    \begin{pmatrix}
+                        \cos(\alpha)& -\sin(\alpha)\\
+                        \sin(\alpha)& \cos(\alpha)
+                    \end{pmatrix}
+                \]
+            \item Пусть $X$ разложено в ортогональную прямую сумму
+                \[X = X_1 \oplus \dots \oplus X_n\]
+                и на каждом $X_i$ задано ортогональное преобразование $f_i$. Тогда существует единственное ортогональное преобразование $f: X \to X$ такое, что $f|_{X_i} = f_i$.
+            \item Симметрия относительно линейного подпространства $Y$: порождённое $\Id$ на $Y$ и $-\Id$ на $Y^\perp$.
+        \end{enumerate}
+    \end{example}
+
+    \begin{example}[Ортогональные преобразования $\RR^2$]
+        Матрица имеет вид
+        \[
+            \begin{pmatrix}
+                \cos(\alpha)& -\sin(\alpha)\\
+                \sin(\alpha)& \cos(\alpha)
+            \end{pmatrix}
+            \qquad\text{ или }\qquad
+            \begin{pmatrix}
+                \cos(\alpha)& \sin(\alpha)\\
+                \sin(\alpha)& -\cos(\alpha)
+            \end{pmatrix}
+        \]
+        (других вариантов нет, так как столбцы должны быть ортонормированы). Первое из них --- поворот на угол $\alpha$, второе --- симметрия относительно прямой, образующей угол $\alpha/2$ с $e_1$ (т.е. симметрия относительно
+        \[\Lin(\ (\cos(\alpha/2),\, \sin(\alpha/2))\ )\]
+        ).
+    \end{example}
+
+    \begin{definition}
+        \emph{Инвариантное подпространство} линейного отображения $f: X \to X$ --- линейное подпространство $Y \subseteq X$ такое, что $f(Y) \subseteq Y$.
+    \end{definition}
+
+    \begin{remark}
+        Для биективных отображений это равносильно тому, что $f(Y) = Y$.
+    \end{remark}
+
+    \begin{lemma}
+        Если $V$ --- инвариантное подпространство ортогонального преобразования, то $V^\perp$ --- тоже инвариантное.
+    \end{lemma}
+
+    \begin{corollary}
+        $V$ является инвариантным относительно ортогонального преобразования тогда и только тогда, когда $V^\perp$ является.
+    \end{corollary}
+
+    \begin{theorem}
+        Пусть $f: X \to X$ --- ортогональное преобразование. Тогда существует разложение $X$ в ортогональную прямую сумму
+        \[X = X_+ \oplus X_- \oplus \Pi_1 \oplus \dots \oplus \Pi_m\]
+        инвариантных подпространств, так что
+        \begin{itemize}
+            \item $f|_{X_+} = \Id$,
+            \item $f|_{X_-} = -\Id$,
+            \item $\dim(\Pi_i) = 2$ и $f|_{\Pi_i}$ --- поворот.
+        \end{itemize}
+    \end{theorem}
+
+    \begin{proof}
+        Определим
+        \[X_+ := \{x \in X \mid f(x) = x\}\]
+        Это линейное подпространство. Теперь WLOG можно рассматривать в качестве $X$ пространство $X_+^\perp$. Аналогично выделяется $X_-$. Таким образом для всякого $x \in X \setminus \{\vec{0}\}$ имеем $f(x) \notin \{x; -x\}$.
+
+        Теперь осталось найти в $X$ инвариантную подплоскость. Как только мы это сделаем, можно будет применить индукцию по $\dim(X)$.
+
+        Рассмотрим на сфере $S := \{x \in X \mid |x| = 1\}$ функцию
+        \[\phi(v) := \angle(v, f(v))\]
+        По теореме Вейерштрасса, так как $\phi$ непрерывна, она принимает минимум в какой-то точке $v_0$. Пусть $v_1 := f(v_0)$, $v_2 := f(v_1)$, $\alpha := \angle(v_0, v_1)$. Тогда из ортогональности $f$ имеем, что $\angle(v_1, v_2) = \alpha$.
+        
+        Рассмотрим
+        \[w_1 := \frac{v_0 + v_1}{|v_0 + v_1|}\]
+        и $w_2 := f(w_1)$. $w_1$ --- биссетриса между $v_0$ и $v_1$, а $w_2$, из-за линейности и ортогональности, --- биссетриса между $v_1$ и $v_2$. Следовательно по определению $\alpha$
+        \[\angle(w_1, w_2) \geqslant \alpha\]
+        а по неравенству треугольника
+        \[\angle(w_1, w_2) \leqslant \angle(w_1, v_1) + \angle(v_1, w_2) = \frac{\alpha}{2} + \frac{\alpha}{2} = \alpha\]
+        Значит равенство в последнем неравенстве выполняется, а поэтому $w_1$, $v_1$, $w_2$ лежат в одной плоскости, следовательно и $v_0$, $v_1$, $v_2$ лежат в одной плоскости. Таким образом плоскость $\Lin(v_0, v_1)$ инвариантна.
+    \end{proof}
+
+    \begin{definition}
+        Два базиса \emph{одинаково ориентированы}, если матрица перехода между ними имеет положительный определитель.
+    \end{definition}
+
+    \begin{theorem}
+        Одинаковая ориентированность базисов --- отношениеэквивалентнтости. Классов эквивалентности ровно два (кроме случая $\dim(X) = 0$).
+    \end{theorem}
+
+    \begin{definition}
+        \emph{Ориентированное векторное пространство} --- векторное пространство, в котором выделен один из двух классов одинаково ориентированныхбазисов. Выделенные базисы --- \emph{положительно ориентированные} (\emph{положительные}), остальные --- \emph{отрицательно ориентированные} (\emph{отрицательно ориентированные}).
+    \end{definition}
+
+    \begin{example}
+        Стандартная ориентация $\RR^n$ --- та, в которой стандартный базис считается положительно ориентированным.
+    \end{example}
+
+    \begin{definition}
+        Пусть $X$ --- ориентированное евклидово пространство размерности $n$, $v_1, \dots, v_n$ --- вектора из $X$. Смешанное произведение $v_1, \dots, v_n$ --- определитель матрицы из координат $v_1, \dots,v_n$ в произвольном положительном ортонормированном базисе. Обозначение: $[v_1, \dots, v_n]$.
+    \end{definition}
+
+    \begin{remark}
+        Это ориентированный объем параллелепипеда.
+    \end{remark}
+
+    \begin{theorem}
+        Смешанное произведение корректно определено, т.е. не зависит от выбора базиса.
+    \end{theorem}
+
+    \begin{lemma}
+        Смешанное произведение:
+        \begin{enumerate}
+            \item линейно по каждому аргументу;
+            \item \textbf{(кососимметричность)} при перестановке любых двух аргументов меняет знак.
+            \item $[v_1, \dots, v_n] = 0$ тогда и только тогда, когда векторы $v_1, \dots, v_n$ линейно зависимы.
+            \item $[v_1, \dots, v_n] > 0$ тогда и только тогда, когда векторы $v_1, \dots, v_n$ образуют положительный базис.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{definition}
+        Пусть $X$ --- 3-мерное ориентированное евклидово пространство, $u, v \in X$. Их векторное произведение --- такой вектор $h \in X$, что $\langle h, x \rangle = [u, v, x]$ для любого $x \in X$. Обозначение: $h = u \times v$.
+    \end{definition}
+
+    \begin{remark}
+        Такой вектор существует и единственен по лемме Рисса.
+    \end{remark}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item $\langle u \times v, w \rangle = [u, v, w]$.
+            \item \textbf{Кососимметричность.} $u \times v = -(v \times u)$.
+            \item \textbf{Линейность по каждому аргументу.}
+                \begin{gather*}
+                    (u + v) \times w = u \times w + v \times w\\
+                    u \times (v + w) = u \times v + u \times w\\
+                    u \times (\lambda v) = \lambda (u \times v) = (\lambda u) \times v
+                \end{gather*}
+            \item $u \times v = 0$ тогда и только тогда, когда $u$ и $v$ коллинеарны.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{theorem}
+        Пусть $u$ и $v$ неколлинеарны. Тогда
+        \begin{enumerate}
+            \item $u \times v$ --- вектор, ортогональный $u$ и $v$.
+            \item $u, v, u \times v$ --- положительный базис.
+            \item $|u \times v|$ равно площади параллелограмма, образованного векторами $u$ и $v$.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{theorem}
+        Пусть $e_1, e_2, e_3$ --- положительный ортонормированный базис,
+        \begin{align*}
+            &x = x_1 e_1 + x_2 e_2 + x_3 e_3,&
+            &y = y_1 e_1 + y_2 e_2 + y_3 e_3.
+        \end{align*}
+        Тогда
+        \[x \times y = (x_2 y_3 - x_3 y_2) e_1 + (x_3 y_1 - x_1 y_3) e_2 + (x_1 y_2 - x_2 y_1) e_3\]
+        Или, в псевдо-матричной записи,
+        \[
+            x \times y =
+            \begin{vmatrix}
+                x_1& x_2& x_3\\
+                y_1& y_2& y_3\\
+                e_1& e_2& e_3
+            \end{vmatrix}
+        \]
+    \end{theorem}
+
+    \begin{proof}
+        Пусть определитель этой псевдо-матрицы равен $h(x, y)$. Заметим, что
+        \[\langle h(x, y), z \rangle\]
+        равен определителю изначальной псевдо-матрицы в $h$, где вместо $e_i$ подставляют $z_i$, т.е.
+        \[
+            \begin{vmatrix}
+                x_1& x_2& x_3\\
+                y_1& y_2& y_3\\
+                z_1& z_2& z_3
+            \end{vmatrix}
+        \]
+        Следовательно мы получаем $[x, y, z]$. Значит $h(x, y) = x \times y$.
+    \end{proof}
+
+    \begin{definition}
+        \emph{Евклидово аффинное пространство (ЕАП)} --- аффинное пространство $X$ с заданным на $\overrightarrow{X}$ скалярным произведением. Расстояние в таком пространстве: $d(x, y) = |x-y|$ ($|\cdot|$ определяется скалярным произведением).
+    \end{definition}
+
+    \begin{definition}
+        \emph{Движение} евклидова аффинного пространства $X$ --- отображение из $X$ в $X$, сохраняющее расстояния. Группа движений обозначается $\Iso(X)$.
+    \end{definition}
+
+    \begin{lemma}\label{parallelogram-equality-lemma}
+        Пусть даны точки $A$, $B$, $C$, $D$ в евклидовом аффинном пространстве $X$. Тогда
+        \[|AB|^2 + |BC|^2 + |CD|^2 + |DA|^2 = |AC|^2 + |BD|^2\]
+        тогда и только тогда, когда $ABCD$ --- параллелограмм (возможно, вырожденный), т.е. $\overrightarrow{AB} = \overrightarrow{DC}$.
+    \end{lemma}
+
+    \begin{proof}
+        Обозначим
+        \[
+            u := \overrightarrow{AB},
+            \qquad
+            v := \overrightarrow{BC}
+            \qquad \text{ и } \qquad
+            w := \overrightarrow{CD}.
+        \]
+        Тогда равенство выше равносильно
+        \begin{gather*}
+            |u|^2 + |v|^2 + |w|^2 + |u + v + w|^2 = |u + v|^2 + |v + w|^2\\
+            \langle u, u \rangle + \langle v, v \rangle + \langle w, w \rangle + \langle u + v + w, u + v + w \rangle = \langle u + v, u + v \rangle + \langle v + w, v + w \rangle\\
+            2\langle u, u \rangle + 2\langle v, v \rangle + 2\langle w, w \rangle + 2\langle u, v \rangle + 2\langle v, w \rangle + 2\langle w, u \rangle = \langle u, u \rangle + 2\langle v, v \rangle + \langle w, w \rangle + 2\langle u, v \rangle + 2\langle v, w \rangle\\
+            \langle u, u \rangle + \langle w, w \rangle + 2\langle w, u \rangle = 0\\
+            \langle u + w, u + w \rangle = 0\\
+            |u + w| = 0\\
+            u + w = \vec{0}\\
+            u = - w\\
+        \end{gather*}
+        Последнее равносильно тому, что $\overrightarrow{AB} = \overrightarrow{DC}$, т.е. что $ABCD$ --- параллелограмм.
+    \end{proof}
+
+    \begin{theorem}\ 
+        \begin{enumerate}
+            \item \label{motion-definition-equivakence-theorem-bijection-item} Движения суть биекции.
+            \item \label{motion-definition-equivakence-theorem-affine-item} Движения суть аффинные преобразования.
+            \item \label{motion-definition-equivakence-theorem-orthogonal-item} Линейные части движений ортогональны.
+            \item \label{motion-definition-equivakence-theorem-reverse-item} Аффинные преобразования, линейные части которых ортогональны, суть движения.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        Пусть дано движение $F: X \to X$.
+        \begin{enumerate}
+            \item Выделим любую точку $c \in X$ и сделаем её центром отсчёта. Тогда можно рассматривать отображение
+                \[L: \overrightarrow{X} \to \overrightarrow{X}, v \mapsto F(c + v) - F(c)\]
+                Таким образом мы хотим показать, что $L$ --- биекция. При этом мы знаем, что для всяких $u, v \in \overrightarrow{X}$
+                \[
+                    |u - v|
+                    = d(c + u, c + v)
+                    = d(F(c + u), F(c + v))
+                    = d(F(c) + L(u), F(c) + L(v))
+                    = |L(u) - L(v)|
+                \]
+                Пусть $u$ и $v$ --- вектора из $\overrightarrow{X}$. Тогда
+                \begin{multline*}
+                    \langle u, v \rangle\\
+                    = \frac{|u - \vec{0}|^2 + |v - \vec{0}|^2 - |u - v|^2}{2}\\
+                    = \frac{|L(u) - L(\vec{0})|^2 + |L(v) - L(\vec{0})|^2 - |L(u) - L(v)|^2}{2}\\
+                    = \langle L(u), L(v) \rangle
+                \end{multline*}
+                т.к. $L(\vec{0}) = \vec{0}$. Так мы доказали пункт \ref{motion-definition-equivakence-theorem-orthogonal-item}, но не показали его корректность.
+                
+                Теперь же легко заметить, что если $\{e_i\}_{i=1}^n$ --- ортонормированный базис $X$, то $\{L(e_i)\}_{i=0}^\infty$ --- ортонормированный базис $X$. Значит для всякого вектора
+                \[v = \sum_{i=1}^n \alpha_i e_i\]
+                верно, что
+                \[\langle L(v), L(e_i) \rangle = \langle v, e_i \rangle = \alpha_i,\]
+                следовательно
+                \[L(v) = \sum_{i=1}^n \alpha_i e_i\]
+                Таким образом понятно, что $L$ биективно.
+            
+            \item Поскольку $F$ сохраняет расстояния, то из-за леммы \ref{parallelogram-equality-lemma} оно сохраняет параллелограммы. Следовательно для всякого вектора $v \in \overrightarrow{X}$
+                \[F(c + v) - F(c)\]
+                не зависит от выбора точки $c$. Значит $\widetilde{F}$ определено. Очевидно, что
+                \[\widetilde{F} = \widetilde{F}_c = L,\]
+                где $L$ является линейным (так как линейно порождён образами ортонормированного базиса). Следовательно $F$ аффинно.
+
+            \item Как мы показали ранее $\widetilde{F} = L$, которое сохраняет скалярные произведения. Значит $\widetilde{F}$ ортогонально.
+            
+            \item Пусть $F$ --- аффинное преобразование $X$, а $L := \widetilde{F}$ --- ортогональное преобразование. Тогда для всяких точек $x, y \in X$
+                \[d(F(x), F(y)) = |F(x) - F(y)| = |L(x - y)| = |x - y| = d(x, y)\]
+                Отсюда следует, что $F$ --- движение.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{corollary}
+        Класс движений и класс аффинных преобразований, линейная часть которых --- ортогональное преобразование, совпадают.
+    \end{corollary}
+
+    \begin{lemma}
+        Пусть $X$ --- аффинное пространство, $F: X \to X$ --- аффинное отображение, и его линейная часть не имеет неподвижных ненулевых векторов, т.е. $\overrightarrow{F}(v) \neq v$ для всех $v \in \overrightarrow{X} \setminus \{\vec{0}\}$. Тогда $F$ имеет неподвижную точку, т.е. есть $p \in X$, что $F(p) = p$.
+    \end{lemma}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item Параллельные переносы суть движения. Так как их линейные части суть $\Id$, что и есть ортогональное преобразование.
+            \item Среди всех гомотетий только гомотетия с коэффициентом $-1$ является движением (так как мы запретили коэффициенту гомотетии равняться $0$ и $1$).
+            \item Ортогональная симметрия относительно аффинного подпространства тоже движение.
+        \end{enumerate}
+    \end{example}
+
+    \begin{proof}
+        Пусть $L = \overrightarrow{F}$. Выдерем какую-нибудь точку $x \in X$, обозначим $y := F(x)$. Тогда $F$ выражается как
+        \[
+            F(p) = y + L(\overrightarrow{xp})
+            \qquad \text{ или } \qquad
+            F(x + v) = y + L(v)
+        \]
+        Мы хотим найти решение уравнения $F(p) = p$. Подставляя $p = x + v$, получаем уравнение
+        \[x + v = y + L(v)\]
+        или, если сделать замену $w = y - x$,
+        \[(L - E)(v) = -w\]
+        Поскольку у $L$ нет неподвижных точек, то ядро $L-E$ тривиально. Значит у $-w$ есть прообраз, т.е. есть корень $p$. 
+    \end{proof}
+
+    \begin{corollary}
+        Если линейная часть движения плоскости --- поворот на ненулевой угол, то и само движение --- поворот на этот угол относительно некоторой точки.
+    \end{corollary}
+
+    \begin{corollary}
+        Композиция поворотов --- поворот или параллельный перенос.
+    \end{corollary}
+
+    \subsubsection{Классификация движений}
+
+    \begin{lemma}
+        Пусть $f$ --- ортогональное преобразование ЕП $X$. Обозначим $W := \Ker(f - \Id)$. Тогда
+        \[\Img(f - \Id) = W^\perp\]
+    \end{lemma}
+
+    \begin{proof}
+        Пусть $u \in \Ker(f - \Id)$ и $v \in \Img(f - \Id)$. Последнее значит, что есть $w \in X$, что
+        \[f(w) - w = v\]
+        При этом первое значит, что
+        \[f(u) = u\]
+        Следовательно
+        \[
+            \langle u, v \rangle
+            = \langle u, f(w) - w \rangle
+            = \langle u, f(w) \rangle - \langle u, w \rangle
+            = \langle f(u), f(w) \rangle - \langle u, w \rangle
+            = \langle u, w \rangle - \langle u, w \rangle
+            = 0
+        \]
+        Таким образом
+        \[\Img(f - \Id) \subseteq W^\perp\]
+
+        При этом заметим, что
+        \[
+            \dim(\Img(f - \Id))
+            = \dim(X) - \dim(\Ker(f - \Id))
+            = \dim(X) - \dim(W)
+            = \dim(W^\perp)
+        \]
+        Значит
+        \[\Img(f - \Id) = W^\perp\]
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $f$ --- ортогональное преобразование $f$ ЕП $X$. Тогда $f$ и $f - \Id$ --- линейные автоморфизмы $\Img(f - \Id)$.
+    \end{corollary}
+
+    \begin{lemma}
+        Пусть $F$ --- движение ЕАП $X$, а $W := \Ker(\widetilde{F} - \Id)$. Тогда существует вектор $u_F \in W$, что для всякой точки $p \in X$
+        \[\Pr_W(\overrightarrow{p F(p)}) = u_F\]
+    \end{lemma}
+
+    \begin{proof}
+        Рассмотрим случайные точки $p, q \in X$. Заметим, что
+        \[
+            \overrightarrow{pF(p)} - \overrightarrow{qF(q)}
+            = \overrightarrow{pq} - \overrightarrow{F(p)F(q)}
+            = (\widetilde{F} - \Id)(\overrightarrow{qp})
+            \in \Img(\widetilde{F} - \Id) = W^\perp
+        \]
+        Следовательно
+        \[\Pr_W(\overrightarrow{pF(p)}) = \Pr_W(\overrightarrow{qF(q)})\]
+        Таким образом можно зафиксировать точку $p$, определить
+        \[u_F := \Pr_W(\overrightarrow{pF(p)})\]
+        и тогда для любой точки $q \in X$ будет верно, что
+        \[\Pr_W(\overrightarrow{qF(q)}) = \Pr_W(\overrightarrow{pF(p)}) = u_F\]
+    \end{proof}
+
+    \begin{definition}
+        Вектор $u_F$ из леммы выше называется ``Glide vector''.
+    \end{definition}
+
+    \begin{theorem}[основная]
+        Пусть $F$ --- движение ЕАП $X$. Тогда
+        \[G := F \circ T_{-u_F}\]
+        будет движением с неподвижной точкой.
+    \end{theorem}
+
+    \begin{proof}
+        Зафиксируем $p \in X$. Тогда
+        \[\overrightarrow{p F(p)} = u_F + u,\]
+        где $u_F \in W$, $u \in W^\perp$. Значит есть такое $w \in \overrightarrow{X}$, что
+        \[u = (\widetilde{F} - \Id)(w) = \widetilde{F}(w) - w\]
+        Определим $q := p - w$. Тогда
+        \begin{multline*}
+            G(q)
+            = (F \circ T_{-u_F})(p - w)
+            = F(p - w - u_F)
+            = F(p) - \widetilde{F}(w + u_F)\\
+            = p + u_F + \widetilde{F}(w) - w - \widetilde{F}(w) - \widetilde{F}(u_F)
+            = p - w
+            = q
+        \end{multline*}
+        Следовательно $q$ --- неподвижная точка $G$.
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $v$ --- вектор из $\overrightarrow{X}$, и $F \circ T_v$ имеет неподвижную точку. Тогда $\Pr_W(v) = -u_F$.
+    \end{corollary}
+
+    \begin{proof}
+        Пусть $q$ --- неподвижная точка $F \circ T_v$. Пусть также
+        \[v = w + u\]
+        где $w \in W$ и $u \in W^\perp$. Тогда
+        \[
+            q
+            = (F \circ T_v)(q)
+            = F(q + w + u)
+            = F(q) + \widetilde{F}(w) + \widetilde{F}(u)
+            = F(q) + w + \widetilde{F}(u)
+        \]
+        При этом $\widetilde{F}(u) \in W^\perp$. Следовательно
+        \[u_F = \Pr_W(\overrightarrow{p F(p)}) = \Pr_W(-w - \widetilde{F}(u)) = -w\]
+        Таким образом $\Pr_W(v) = w = -u_F$.
+    \end{proof}
+
+    \begin{corollary}
+        Любое движение ЕАП есть композиция параллельного переноса и движения с неподвижной точкой.
+    \end{corollary}
+
+    \begin{corollary}
+        Любое движение плоскости есть одно из:
+        \begin{itemize}
+            \item параллельный перенос,
+            \item поворот (относительно некоторой точки),
+            \item скользящая симметрия (композиция осевой симметрии и параллельного переноса вдоль оси).
+        \end{itemize}
+    \end{corollary}
+
+    \subsection{Выпуклая геометрия}
+
+    \begin{definition}
+        Пусть $X$ --- АП, $x, y \in X$. \emph{Отрезок} между точками $x$ и $y$ --- это множество
+        \[[xy] := \{tx + (1-t)y \mid t \in [0; 1]\}\]
+        Другое обозначение $[x, y]$.
+    \end{definition}
+
+    \begin{remark}
+        $tx + (1-t)y$ --- барицентрическая комбинация $x$ и $y$. Следовательно, отрезок --- множество точек, не зависящее от начала отсчёта.
+    \end{remark}
+
+    \begin{definition}
+        Множество $A \subseteq X$ \emph{выпуклое}, если для любых $x, y \in A$ отрезок $[x, y]$ тоже содержится в $A$.
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{itemize}
+            \item Пустое множество, точка, аффинные подпространства --- выпуклые множества.
+            \item Образы и прообразы выпуклых множеств при аффинных отображениях выпуклы.
+                \begin{quotation}
+                    Это следует из того, что аффинное отображение сохраняет барицентрические комбинации, т.е. если $\sum t_i = 1$, то
+                    \[F\left(\sum t_i p_i\right) = \sum t_i F(p_i)\]
+                \end{quotation}
+            \item Шары евклидовой метрики выпуклы.
+                \begin{quotation}
+                    Например, для $B = \overline{B}_1(0)$:
+                    \[
+                        x, y \in B
+                        \quad \Longrightarrow \quad |x|, |y| \leqslant 1
+                        \quad \Longrightarrow \quad |tx + (1-t)y| \leqslant |tx| + |(1-t)y| \leqslant t|x| + (1-t)|y| \leqslant 1
+                    \]
+                \end{quotation}
+            \item Пересечение любого набора выпуклых множеств выпукло.
+        \end{itemize}
+    \end{example}
+
+    \begin{definition}
+        Пусть $A, B \subseteq X$. Их \emph{сумма по Минковскому} --- множество
+        \[A + B := \{a + b \mid a \in A, b \in B\}\]
+    \end{definition}
+
+    \begin{remark}
+        При замене начала отсчёта множество $A + B$ изменяется, но отличается от исходного только параллельным переносом.
+    \end{remark}
+
+    \begin{theorem}
+        Если $A$ и $B$ выпуклы, то $A + B$ тоже.
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим произвольные точки из $A + B$:
+        \[c_1 = a_1 + b_1, \qquad c_2 = a_2 + b_2,\]
+        где $a_1, a_2 \in A$, $b_1, b_2 \in B$. Для любого $t \in [0;1]$
+        \[
+            tc_1 + (1-t)c_2
+            = t(a_1 + b_1) + (1-t)(a_2 + b_2)
+            = (ta_1 + (1-t)a_2) + (tb_1 + (1-t)b_2)
+            \in A + B
+        \]
+    \end{proof}
+
+    \begin{definition}
+        \emph{Выпуклая оболочка} множества $A \subseteq X$ --- пересечение всех выпуклых множеств, содержащих $A$ (т.е. наименьшее из таких множеств). Обозначение: $\conv(A)$.
+    \end{definition}
+
+    \begin{definition}
+        Пусть $\{p_i\}_{i=1}^m$ --- набор точек в X. Выпуклой комбинацией точек $\{p_i\}_{i=1}^m$ называется любая барицентрическая комбинация вида
+        \[
+            \sum_{i=1}^m \lambda_i p_i,
+            \qquad \text{ где } \sum_{i=1}^m \lambda_i = 1 \text{ и } \lambda_i \geqslant 0.
+        \]
+    \end{definition}
+
+    \begin{remark}
+        Выпуклые комбинации --- частный случай барицентрических, поэтому это точки, не зависящие от начала отсчёта.
+    \end{remark}
+
+    \begin{remark}
+        Выпуклая комбинация двух точек --- точка на отрезке между ними.
+    \end{remark}
+
+    \begin{lemma}\label{main-convex-hull-theorem-lemma}
+        Если $A$ --- выпуклое множество, то оно содержит все выпуклые комбинации своих точек.
+    \end{lemma}
+
+    \begin{proof}
+        Докажем утверждение по индукции $m$.
+
+        \textbf{База.} Если $m=1$, то выпуклая комбинация есть точка $p_1$. Если $m=2$, то выпуклая комбинация лежит на отрезке $[p_1, p_2]$.
+
+        \textbf{Шаг.} Пусть дана выпуклая комбинация
+        \[p = \sum_{i=1}^m \lambda_i p_i\]
+        точек из $A$.
+        \begin{itemize}
+            \item Если $\lambda_m = 0$, то
+                \[p = \sum_{i=1}^{m-1} \lambda_i p_i\]
+                --- выпуклая комбинация, и по предположению индукции $p \in A$.
+            \item Если $\lambda_m = 1$, то $p = p_m \in A$.
+            \item Иначе $\lambda_m \in (0; 1)$. Обозначим
+                \[q := \sum_{i=1}^{m-1} \frac{\lambda_i}{1 - \lambda_m} p_i\]
+                Следовательно по предположению индукции $q \in A$. И поскольку
+                \[p = (1 - \lambda_m)q + \lambda_m p_m\]
+                --- выпуклая комбинация, то $p \in A$.
+        \end{itemize}
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $A$ --- произвольное подмножество $X$. Тогда $\conv(A)$ --- множество всех выпуклых комбинаций точек из $A$.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $C$ --- множество всех выпуклых комбинаций точек из $A$. Тогда по лемме \ref{main-convex-hull-theorem-lemma}
+        \[C \subseteq \conv(A).\]
+        
+        Покажем, что $C$ выпукло. Пусть $p, q \in C$. Тогда они представляются в виде выпуклых комбинаций
+        \[
+            p = \sum_{i=1}^m \alpha_i a_i,
+            \qquad
+            q = \sum_{i=1}^m \beta_i a_i
+        \]
+        точек из $A$ (общий набор точек $\{a_i\}_{i=1}^m$ можно получить, взяв какие-нибудь выпуклые комбинации $p$ и $q$, объединив точки в них и приписав нулевые коэффициенты, где нужно). Следовательно для всякого $\lambda \in [0; 1]$
+        \[\lambda p + (1 - \lambda) q = \sum_{i=1}^m (\lambda \alpha_i + (1 - \lambda) \beta_i) a_i\]
+        --- выпуклая комбинация, значит лежит в $C$.
+        
+        Значит $C$, действительно, выпукло. В таком случае $C \subseteq \conv(A)$. Поэтому $C = \conv(A)$.
+    \end{proof}
+
+    \begin{theorem}[Каратеодори]\label{Caratheodory-theorem}
+        Пусть $\dim(X) = n$, $A \subseteq X$, $p \in \conv(A)$. Тогда $p$ представима в виде выпуклой комбинации не более $n+1$ точек из $A$.
+    \end{theorem}
+
+    \begin{proof}
+        Поскольку $p$ лежит в выпуклой оболочке $A$, то представима в виде выпуклой комбинации
+        \[p = \sum_{i=1}^m \lambda_i p_i\]
+        точек из $A$. Пусть $m \geqslant n+2$; покажем, что $p$ представима в виде комбинации меньшего числа точек.
+
+        Поскольку $m \geqslant n + 2 > \dim(X) + 1$, то множество точек $\{p_i\}_{i=1}^m$ аффинно зависимо. Следовательно
+        \[\sum_{i=1}^m \alpha_i p_i = 0,\]
+        где $\sum_{i=1}^m \alpha_i = 0$, и не все $\alpha_i$ равны нулю. Тогда для всякого $t \in \RR$
+        \[p = \sum_{i=1}^m (\lambda_i - \alpha_i t) p_i\]
+        есть барицентрическая комбинация. Мы хотим подобрать довольно маленькое $t$, чтобы все коэффициенты были неотрицательно, но один занулился; тогда $p$ будет всё ещё представлено в виде выпуклой комбинации, но точку с нулевым коэффициентом можно будет выкинуть. Тогда в качестве искомого значения подойдёт
+        \[t := \min \left\{\frac{\lambda_i}{\alpha_i} \mid \alpha_i > 0\right\}\]
+
+        С помощью таких процедур можно запустить конечный процесс, в результате которого получится представление $p$ в виде выпуклой комбинации $m \leqslant n+1$ точек.
+    \end{proof}
+
+    \begin{definition}
+        \emph{$k$-мерный симплекс} --- выпуклая оболочка $k+1$ аффинно независимых точек $\{p_i\}_{i=0}^k$ или, говоря иначе,
+        \[\left\{\sum_{i=0}^k t_i p_i \mid \forall i \in \{0; \dots; k\} \quad t_i \in [0; 1] \wedge \sum_{i=0}^k t_i = 1 \right\}.\]
+        Точки $\{p_i\}_{i=0}^k$ называются \emph{вершинами симплекса}.
+    \end{definition}
+
+    \begin{corollary}
+        Для любого $A \subseteq X$, $\conv(A)$ --- объединение всех симплексов с вершинами в $A$.
+    \end{corollary}
+
+    \begin{proof}
+        Применяя процедуру из \hyperref[Caratheodory-theorem]{теоремы Каратеодори} можно получить представление $p$ в виде выпуклой комбинации аффинно независимых точек из $A$. Таким образом эти точки и будут вершинами симплекса, в котором находится $p$.
+    \end{proof}
+
+    \begin{lemma}\label{simplex-closure-and-interior-lemma}
+        Пусть $Y$ --- аффинная ($k$-мерная) оболочка $k+1$ симплекса $\Delta$ с вершинами $\{p_i\}_{i=0}^k$. Тогда $\Cl_Y(\Delta) = \Delta$, а
+        \[\Int_Y(\Delta) = \widetilde{\Delta} := \left\{\sum_{i=0}^k t_i p_i \mid \forall i \in \{0; \dots; k\} \quad t_i \in (0; 1) \wedge \sum_{i=0}^k t_i = 1 \right\}.\]
+    \end{lemma}
+
+    \begin{proof}
+        Вспомним, что $\{v_i\}_{i=1}^k := \{p_i - p_0\}_{i=1}^k$ --- базис в присоединённом векторном пространстве $Y$.
+
+        Заметим, что
+        \[\sum_{i=0}^k t_i p_i = p_0 + \sum_{i=1}^k t_i v_i\]
+        и на $t_i$ поставлены ``замкнутые условия'': $t_i \in [0; 1]$ и $\sum_{i=0}^k t_i = 1$. Следовательно $\Delta$ замкнуто, поэтому является собственным замыканием:
+        \[\Cl_Y(\Delta) = \Delta.\]
+        
+        Теперь определим внутренность $\Delta$. Точка $x \in \Delta$ будет внутренней точкой $\Delta$ тогда и только тогда, когда существует набор $\{\varepsilon_i\}_{i=1}^k$ положительных чисел, что любая точка вида
+        \[x + \sum_{i=1}^k \alpha_i v_i, \qquad \text{ где } \forall i \in \{1; \dots; k\}\quad |\alpha_i| < \varepsilon_i,\]
+        будет лежать в $\Delta$. При этом точка
+        \[x = p_0 + \sum_{i=1}^k \beta_i v_i\]
+        лежит в $\Delta$ тогда и только тогда, когда
+        \[\forall i \in \{1; \dots; k\} \quad \beta_i \in [0; 1] \wedge \sum_{i=1}^k \beta_i \leqslant 1.\]
+        
+        Таким образом если $\beta_i \in (0; 1)$ для каждого $i$ и $\sum_{i=0}^k < 1$, то, понятно, можно подобрать такие $\{\varepsilon_i\}_{i=1}^k$. Иначе:
+        \begin{enumerate}
+            \item Если $\beta_j = 0$ для некоторого $j$, то для всякого $\alpha_j \in (-\varepsilon_j; 0)$, а тогда $x + \alpha_j v_j$ не лежит в $\Delta$.
+            \item Если $\sum_{i=1}^k \beta_i = 1$, то для всякого $\alpha_1 \in (0; \varepsilon_1)$, что $x + \alpha_1 v_1$ не лежит в $\Delta$.
+        \end{enumerate}
+        Таким образом $x$ является внутренней тогда и только тогда, когда
+        \[\forall i \in \{1; \dots; k\} \quad \beta_i \in (0; 1) \wedge \sum_{i=1}^k \beta_i < 1,\]
+        что равносильно тому, что $x$ имеет вид
+        \[\sum_{i=0}^k t_i p_i, \qquad \text{ где } \forall i \in \{0; \dots; k\} \quad t_i \in (0; 1) \wedge \sum_{i=0}^k \beta_i = 1.\]
+        Это и значит, что
+        \[\Int_Y(\Delta) = \widetilde{\Delta}.\]
+    \end{proof}
+
+    \begin{theorem}[следствие {\hyperref[Caratheodory-theorem]{теоремы Каратеодори}}]
+        Если $A \subseteq \RR^n$ компактно, то $\conv(A)$ тоже компактно.
+    \end{theorem}
+
+    \begin{proof}
+        Определим множество
+        \[\Delta := \left\{(t_1, \dots, t_{n+1}) \in \RR^{n+1} \mid \forall i \in \{1; \dots; n+1\} \quad t_i \geqslant 0 \wedge \sum_{i=0}^m t_i = 1\right\}\]
+        Понятно, что $\Delta$ компакт. Также определим функцию
+        \[F: A^{n+1} \times \Delta \to \RR^n, \left((a_i)_{i=1}^{n+1}, (t_i)_{i=1}^{n+1}\right) \mapsto \sum_{i=1}^{n+1} t_i a_i\]
+        По \hyperref[Caratheodory-theorem]{теореме Каратеодори} $\conv(A)$ есть множество значений $F$. При этом $A^{n+1} \times \Delta$ есть компакт, а $F$ непрерывна (так как является полиномом). Следовательно $\conv(A)$, как образ компакта по непрерывной функции, компактен.
+    \end{proof}
+
+    \begin{theorem}[Радон]
+        Пусть $M$ --- подмножество АП $X$ размерности $n$, что $|M| \geqslant n+2$. Тогда $M$ можно разбить на два подмножества с пересекающимися выпуклыми оболочками.
+    \end{theorem}
+
+    \begin{proof}
+        Поскольку $|M| \geqslant \dim(X) + 2$, то $M$ аффинно зависимо. Значит в нём можно выделить подмножество $\{a_i\}_{i=1}^m$, что
+        \[\sum_{i=1}^m a_i \lambda_i = \vec{0}\]
+        --- нетривиальная сбалансированная комбинация (т.е. $\sum_{i=1}^m \lambda_i = 0$) без нулевых коэффициентов. Тогда некоторые из коэффициентов положительны, а некоторые отрицательны (причём есть оба вида). Значит эти точки можно разбить на два набора: $\{p_i\}_{i=1}^k$ и $\{q_j\}_{j=1}^l$, что
+        \[
+            \sum_{i=1}^k \alpha_i p_i = \sum_{j=1}^l \beta_j q_j,
+            \quad \text{ где } \sum_{i=1}^k \alpha_i = \sum_{j=1}^l \beta_j \text{ и все } \alpha_i > 0 \text{ и } \beta_j > 0.
+        \]
+        Обозначим
+        \[\gamma := \sum_{i=1}^k \alpha_i = \sum_{j=1}^l \beta_j\]
+        Тогда
+        \[\sum_{i=1}^k \frac{\alpha_i}{\gamma} p_i = \sum_{j=1}^l \frac{\beta_j}{\gamma} q_j = r\]
+        --- некоторая точка. При этом обе суммы являются выпуклыми комбинациями. Значит $r$ лежит в пересечении выпуклых оболочек $\conv\{p_i\}_{i=1}^k$ и $\conv\{q_j\}_{j=1}^l$.
+        
+        Таким образом мы разбили подмножество $M$ на два множества с пересекающимися выпуклыми оболочками. Остальные точки $M$ можно распределить между получившимися множествами как угодно.
+    \end{proof}
+
+    \begin{theorem}[Хелли]
+        Пусть $X$ --- АП размерности $n$, $\{C_i\}_{i=1}^m$ --- семейство выпуклых подмножеств $X$, что $m \geqslant n + 1$. Пусть также известно, что любые $n+1$ из этих множеств имеют непустое пересечение. 
+    \end{theorem}
+
+    \begin{proof}
+        Докажем утверждение индукцией по $m$.
+
+        \textbf{База.} Случай $m = n + 1$ очевиден.
+
+        \textbf{Шаг.} Имеем $m \geqslant n + 2$. По предположению индукции любое подсемейство из $m-1$ множества имеет непустое пересечение. Следовательно для всякого $k \in \{1; \dots; m\}$ есть точка $p_k$, лежащая во всех $C_i$, кроме, быть может, $C_k$. Определим множество $M = \{p_i\}_{i=1}^m$. Рассмотрим два случая:
+        \begin{itemize}
+            \item $|M| < m$. Тогда $p := p_i = p_j$ для каких-то различных $i$ и $j$. Тогда эта точка $p$ лежит во всех множествах, кроме, быть может, $C_i$, и во всех, кроме, быть может, $C_j$. То есть она лежит во всех множествах.
+            \item $|M| = m$. Тогда применяя теорему Радона к $M$ получаем, что можно разбить $\{1; \dots; m\}$ на два непустых подмножества $A$ и $B$, что
+                \[\conv \{p_i\}_{i \in A} \cap \conv \{p_j\}_{j \in B} \neq \varnothing\]
+                При этом
+                \[
+                    \conv \{p_i\}_{i \in A} \subseteq \bigcap_{j \in B} C_j
+                    \qquad \text{ и } \qquad
+                    \conv \{p_j\}_{j \in B} \subseteq \bigcap_{i \in A} C_i
+                \]
+                Таким образом
+                \[
+                    \bigcap_{k=1}^m C_k
+                    = \bigcap_{i \in A} C_i \cap \bigcap_{j \in B} C_j
+                    \supseteq \conv \{p_i\}_{i \in A} \cap \conv \{p_j\}_{j \in B}
+                    \neq \varnothing
+                \]
+                Значит и само семейство множеств имеет непустое пересечение.
+        \end{itemize}
+    \end{proof}
+
+    \begin{corollary}[aka ``теорема Хелли для бесконечного набора компактов'']
+        Пусть $\{C_i\}_{i \in I}$ --- семейство выпуклых компактов в $\RR^n$, что $|I| \geqslant n+1$. Пусть также известно, что любые $n+1$ из множеств $C_i$ имеют непустое пересечение. Тогда всё семейство имеет непустое пересечение.
+    \end{corollary}
+
+    \begin{remark}
+        Без компактности теорема неверна. Например, пусть $X = \RR$, $I = \NN$, $C_i = [i; +\infty)$.
+    \end{remark}
+
+    \begin{proof}
+        По теореме \ref{closed-compact-in-hausdorff-space} $\{C_i\}_{i \in I}$ является семейством замкнутым множеств. Из обычной теоремы Хелли следует, что $\{C_i\}_{i \in I}$ --- \hyperref[finite-intersection-property-definition]{центрированное семейство замкунтых множеств}. Тогда по следствию \ref{compactness-equivalence-closed-FIP-family-theorem-corollary-1} пересечение всего семейства множеств непусто.
+    \end{proof}
+
+    \begin{corollary}[aka ``теорема Юнга'']
+        Пусть $M \subseteq \RR^n$ такое, что любые $n+1$ точек из $M$ можно накрыть единичным шаром. Тогда и всё множество $M$.
+    \end{corollary}
+
+    \begin{proof}
+        \begin{thlemma}\label{young-theorem-transition-thlemma}
+            Для всякого $S \subseteq \RR^n$ TFAE:
+            \begin{itemize}
+                \item $S$ накрывается единичным шаром;
+                \item $\bigcap_{x \in S} \overline{B}_1(x) \neq \varnothing$.
+            \end{itemize}
+        \end{thlemma}
+
+        \begin{proof}
+            Действительно,
+            \begin{align*}
+                &\text{$S$ накрывается единичным шаром}\\
+                \Longleftrightarrow\; &\exists p \in \RR^n{:}\; \forall x \in S \quad x \in \overline{B}_1(p)\\
+                \Longleftrightarrow\; &\exists p \in \RR^n{:}\; \forall x \in S \quad d(p, x) \leqslant 1\\
+                \Longleftrightarrow\; &\exists p \in \RR^n{:}\; \forall x \in S \quad p \in \overline{B}_1(x)\\
+                \Longleftrightarrow\; &\bigcap_{x \in S} \overline{B}_1(x) \neq \varnothing
+            \end{align*}
+        \end{proof}
+
+        Применяя лемму \ref{young-theorem-transition-thlemma}, получаем, что нужно показать, что
+        \[\bigcap_{x \in M} \overline{B}_1(x) \neq \varnothing\]
+        При этом шары --- выпуклые компакты, поэтому по теореме Хелли для компактов достаточно показать, что любые $n+1$ из описанных шаров пересекаются:
+        \[\forall a, b, c \in M\quad \overline{B}_1(a) \cap \overline{B}_1(b) \cap \overline{B}_1(c) \neq \varnothing.\]
+        Применяя лемму \ref{young-theorem-transition-thlemma} второй раз, получаем, что нужно доказать лемму для всякого $S \subseteq M$ мощности $n+1$. Но он прямиком описан в условии, так что теорема доказана.
+    \end{proof}
+
+    \begin{lemma}\label{convex-set-closure-and-interior-convexity-lemma}
+        Пусть $A \subseteq \RR^n$ выпукло. Тогда $\Int(A)$ и $\Cl(A)$ тоже выпуклы.
+    \end{lemma}
+
+    \begin{proof}
+        \begin{itemize}
+            \item Докажем, что $\Int(A)$ выпукло. WLOG $\Int(A) \neq \varnothing$. Тогда пусть $p$ и $q$ --- случайные точки из $\Int(A)$. Следовательно есть $\varepsilon > 0$, что
+                \[
+                    B_\varepsilon(p) \subseteq A
+                    \qquad \text{ и } \qquad
+                    B_\varepsilon(q) \subseteq A.
+                \]
+                Зафиксируем любое $\alpha \in [0; 1]$. Обозначим $r = \alpha p + (1-\alpha) q$. Покажем, что 
+                \[B_\varepsilon(r) \subseteq A\]
+                Для всякой точки $t \in B_\varepsilon(r)$ обозначим
+                \[v := t - r\]
+                Поскольку $|v| < \varepsilon$, то
+                \[
+                    p + v \in B_\varepsilon(p) \subseteq A
+                    \qquad \text{ и } \qquad
+                    q + v \in B_\varepsilon(q) \subseteq A.
+                \]
+                Следовательно
+                \[r + v = \alpha (p + v) + (1-\alpha) (q + v) \in A\]
+                Таким образом $r \in \Int(A)$.
+
+            \item Докажем, что $\Cl(A)$ выпукло. WLOG $\Cl(A) \neq \varnothing$. Тогда пусть $p$ и $q$ --- случайные точки из $\Cl(A)$. Следовательно есть последовательности
+                \[
+                    \{p_i\}_{i=0}^\infty \to p
+                    \qquad \text{ и } \qquad
+                    \{q_i\}_{i=0}^\infty \to q
+                \]
+                точек из $A$. Зафиксируем $\alpha \in [0; 1]$. Понятно, что для всякого $i \in \NN$
+                \[\alpha p_i + (1-\alpha) q_i \in A.\]
+                Следовательно
+                \[\{\alpha p_i + (1-\alpha) q_i\}_{i=0}^\infty \to \alpha p + (1-\alpha) q\]
+                --- последовательность точек из $A$. Значит
+                \[\alpha p + (1-\alpha) q \in \Cl(A).\]
+        \end{itemize}
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $A \subseteq \RR^n$ --- выпуклый компакт с непустой внутренностью. Тогда $A$ гомеоморфно замкнутому шару $\overline{B}_1(0)$.
+    \end{theorem}
+
+    \begin{remark}
+        Условие $\Int(A) \neq \varnothing$ существенно. Пример: отрезок на плоскости.
+    \end{remark}
+
+    \begin{proof}
+        WLOG $0 \in \Int(A)$.
+        
+        Зафиксируем сферу
+        \[S := S_1(0)\]
+        Каждый вектор $v \in S$ задаёт луч
+        \[l(v) := \{\lambda v \mid \lambda \in [0; +\infty)\}\]
+        $l(v) \cap A$ --- отрезок. Действительно, $l(v) \cap A$ --- выпуклый компакт на прямой, следовательно является отрезком. При этом отрезок не является вырожденным, так как $A$ содержит некоторую окрестность нуля.
+
+        Определим
+        \[f: S \to \RR, v \mapsto \max \{t \mid t > 0 \wedge tv \in A\}\]
+        Иначе говоря, так как $l(v) \cap A$ --- невырожденный отрезок,
+        \[f(v) = \max_{u \in l(v) \cap A} |u|\]
+        Т.е. $f$ корректно определена.
+
+        \begin{thlemma}
+            $f$ непрерывна.
+        \end{thlemma}
+
+        \begin{proof}
+            Поскольку $0 \in \Int(A)$, то $\Int(A)$ содержит $r$-окрестность $0$ для некоторого $r > 0$.
+
+            Возьмем на сфере угловую метрику. Она задает ту же топологию,что и стандартная индуцированная топология на сфере.Пусть $v_0, v \in S$ ($v_0 \neq v$). Обозначения: $\delta$ --- уголмежду $v_0$ и $v$, $x = f(v_0) \cdot v_0$. Далее работаем в плоскости $\Pi$, натянутой на векторы $v_0$ и $v$. Тогда $x \in \Pi$.Через $0$ проведем прямую, перпендикулярно $v_0$. Её пересечения с $\Fr(\overline{B}_r(0))$ обозначим $y$ и $z$. Выпуклость $\Rightarrow$ $\triangle xyz \subseteq A$. Обозначим: $\alpha$ --- угол $0xy$, $b$ --- точка $l(v) \cap [x,y]$. $f(v) \geqslant |b|$, т.к. $b \in A$. По теореме синусов $|b| = \frac{f(v_0) \sin(\alpha)}{\sin(\alpha + \delta)}$. $c$ --- точка пересечения $l(v)$ с прямой $(xz)$ (угол $\delta$ мал). Тогда $f(v) \leqslant |c|$ (объяснить). По теореме синусов $|c| = \frac{f(v_0)\sin(\alpha)}{\sin(\alpha - \delta)}$. $\delta \to 0$ $\Rightarrow$ $f(v) \to f(v_0)$ $\Rightarrow$ $f$ непрерывна.
+
+            \todo[inline]{Переписать. Добавить картинку. См. \href{https://studentspburu.sharepoint.com/sites/a_1_40/Shared\%20Documents/General/\%D0\%A1\%D0\%BB\%D0\%B0\%D0\%B9\%D0\%B4\%D1\%8B\%20\%D0\%BB\%D0\%B5\%D0\%BA\%D1\%86\%D0\%B8\%D0\%B9\%20(\%D1\%81\%D0\%B5\%D0\%BC\%D0\%B5\%D1\%81\%D1\%82\%D1\%80\%202)/lecture09.pdf?CT=1620835625041&OR=ItemsView}{слайды, стр. 3}}
+        \end{proof}
+
+        Определим
+        \[
+            F: \RR^n \to \RR^n, x \mapsto
+            \begin{cases}
+                x \cdot f\left(\frac{x}{|x|}\right)& x \neq 0\\
+                0& x = 0
+            \end{cases}
+        \]
+
+        \begin{thlemma}
+            $F$ непрерывна.
+        \end{thlemma}
+
+        \begin{proof}
+            F непрерывна в нуле.
+            \begin{itemize}
+                \item $S$ --- компакт $\Rightarrow$ $\exists K > 0$ т.ч. $K = \max f(v)$.
+                \item $|F(x)| \leqslant K|x|$.
+                \item $\forall \varepsilon > 0 \exists \delta = \varepsilon/K: |x-0| \leqslant \delta \Rightarrow |F(x) - 0| < \varepsilon$.
+            \end{itemize}
+
+            \todo[inline]{Переписать. См. \href{https://studentspburu.sharepoint.com/sites/a_1_40/Shared\%20Documents/General/\%D0\%A1\%D0\%BB\%D0\%B0\%D0\%B9\%D0\%B4\%D1\%8B\%20\%D0\%BB\%D0\%B5\%D0\%BA\%D1\%86\%D0\%B8\%D0\%B9\%20(\%D1\%81\%D0\%B5\%D0\%BC\%D0\%B5\%D1\%81\%D1\%82\%D1\%80\%202)/lecture09.pdf?CT=1620835625041&OR=ItemsView}{слайды, стр. 4}}
+        \end{proof}
+
+        \todo[inline]{Почему $F^{-1}$ непрерывна?}
+
+        $F$ задаёт гомеоморфизм $\overline{B}_1(0) \to A$.
+        \todo[inline]{Почему?}
+    \end{proof}
+
+    \subsubsection{Относительная внутренность}
+
+    \begin{definition}
+        \emph{Размерностью} непустого выпуклого множества $A$ называется размерность его аффинной оболочки:
+        \[\dim(A) := \dim(\Aff(A)).\]
+    \end{definition}
+
+    \begin{definition}
+        \emph{Относительная внутренность} выпуклого множества $A \subseteq \RR^n$ --- его внутренность в индуцированной топологии его аффинной оболочки $\Aff(A)$. Обозначение: $\RelInt(A)$.
+    \end{definition}
+
+    \begin{example}
+        Отрезок на плоскости имеет пустую внутренность, но его относительная внутренность --- тот же отрезок без концов
+    \end{example}
+
+    \begin{theorem}
+        Если $A \subseteq \RR^n$ --- непустое выпуклое множество, то $\RelInt(A) \neq \varnothing$.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть
+        \[Y := \Aff(A), \quad k := \dim(Y).\]
+        Тогда $Y \simeq \RR^k$, и $\RelInt(A) = \Int_Y(A)$. При этом, так как $Y$ является аффинной оболочкой, в $A$ есть аффинно независимые точки $\{p_i\}_{i=0}^{k}$, значит $A$ содержит и $k$-мерный симплекс $\Delta$ с вершинами в этих точках. Следовательно
+        \[\RelInt(A) = \Int_Y(A) \supseteq \Int_Y(\Delta).\]
+        По лемме \ref{simplex-closure-and-interior-lemma} последнее непусто, значит и рассматриваемое множество непусто.
+    \end{proof}
+
+    \begin{corollary}
+        Любой непустой выпуклый компакт $A \subseteq \RR^n$ гомеоморфен $D^k$, где $k = \dim(A)$.
+    \end{corollary}
+
+    \begin{lemma}
+        Относительная внутренность выпуклого множества выпукла.
+    \end{lemma}
+
+    \begin{proof}
+        Применяя лемму \ref{convex-set-closure-and-interior-convexity-lemma} в аффинной оболочке множество, получаем требуемое.
+    \end{proof}
+
+    \begin{lemma}\label{convex-set-interior-belonging-criterion-lemma}
+        Пусть $A \subseteq \RR^n$ выпукло, $p \in \Int(A)$. Если $t > 0$ и $p + tv \in A$, то $p + t'v \in \Int(A)$ для всех $t' \in (0, t)$.
+    \end{lemma}
+
+    \begin{proof}
+        Поскольку $p \in \Int(A)$, то есть открытый шар с центром в $p$, содержащийся в $A$. Гомотетией с центром в $p + tv$ его можно перевести в открытый шар с центром в $p+t'v$. При этом из-за того что коэффициент гомотетии $\lambda \in (0; 1)$ и выпуклости $A$, данный шар тоже лежит в $A$: каждую его точку можно получить как выпуклую комбинацию прообраза этой точки и $p + tv$ с коэффициентами $\lambda$ и $1-\lambda$ соответственно, поэтому по выпуклости они лежат в $A$. Следовательно $p + t'v$ тоже лежит в $\Int(A)$.
+    \end{proof}
+
+    \begin{lemma}\label{convex-set-closure-belonging-criterion-lemma}
+        Пусть $A \subseteq \RR^n$ выпукло, $p \in \Int(A)$. Если $t > 0$ и $p + tv \notin A$, то $p + t'v \notin \Cl(A)$ для всех $t' > t$.
+    \end{lemma}
+
+    \begin{proof}
+        Поскольку $p \in \Int(A)$, то есть открытый шар с центром в $p$, содержащийся в $A$. Гомотетией с центром в $p + tv$ его можно перевести в открытый шар с центром в $p+t'v$. При этом из-за того что коэффициент гомотетии $\lambda < 0$ и выпуклости $A$, данный шар не пересекается с $A$: если какая-то его точка лежит в $A$, то $p + tv$ можно получить как выпуклую комбинацию этой точки и её прообраза с коэффициентами $1$ и $\lambda$ соответственно, поэтому по выпуклости и она окажется в $A$, что вызовет противоречие. Значит окрестность $p + t'v$ не пересекается с $A$, а значит $p + t'v$ не лежит в $A$.
+    \end{proof}
+
+    \begin{lemma}
+        Пусть $A \subseteq \RR^n$ выпукло, $p \in \Int(A)$, $l$ --- луч с началом в $p$, т.е. $l = \{ p + tv \mid t \geqslant 0\}$, где $v \in S^{n-1}$. Положим
+        \[t_0 = \sup \{t > 0 \mid p + tv \in A\}\]
+        (возможно, $t_0 = \infty$). Тогда
+        \begin{enumerate}
+            \item $p + tv \in \Int(A)$ при всех $t \in [0; t_0)$;
+            \item $p + tv \notin \Cl(A)$ при всех $t > t_0$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Легко следует из леммы \ref{convex-set-interior-belonging-criterion-lemma}.
+            \item Легко следует из леммы \ref{convex-set-closure-belonging-criterion-lemma}.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $A \subseteq \RR^n$ выпукло, $\Int(A) \neq \varnothing$. Тогда
+        \begin{enumerate}
+            \item $\Int(\Cl(A)) = \Int(A)$,
+            \item $\Cl(\Int(A)) = \Cl(A)$,
+            \item $\Fr(A) = \Fr(\Int(A)) = \Fr(\Cl(A))$.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Возьмём любую точку $p \in \Int(A)$. Пусть $q$ --- случайная точка (отличная от $p$; с $p$ всё и так ясно); проведём луч $l$ с началом в $p$ через $q$. Пусть также
+                \[r := p + t_0 \overrightarrow{pq}\]
+                где
+                \[t_0 := \sup \{t > 0 \mid p + t \overrightarrow{pq} \in A\}.\]
+                Тогда имеем, что
+                \[\Int(A) \cap l = [p;r), \qquad \Cl(A) \cap l = [p;r].\]
+                Значит если $q \in \Cl(A)$, то $q \in [p; r]$; значит если $q \in \Int(\Cl(A))$, то $q \in [p; r)$. Следовательно $q \in \Int(A)$. Следовательно
+                \[\Int(\Cl(A)) \subseteq \Int(A).\]
+                Обратная вложенность следует буквально из вложенности $A \subseteq \Cl(A)$.
+            \item Возьмём любую точку $p \in \Int(A)$. Пусть $q$ --- случайная точка (отличная от $p$; с $p$ всё и так ясно); проведём луч $l$ с началом в $p$ через $q$. Пусть также
+                \[r := p + t_0 \overrightarrow{pq}\]
+                где
+                \[t_0 := \sup \{t > 0 \mid p + t \overrightarrow{pq} \in A\}.\]
+                Тогда имеем, что
+                \[\Int(A) \cap l = [p;r), \qquad \Cl(A) \cap l = [p;r].\]
+                Значит если $q \in \Cl(A)$, то $q \in [p; r]$. Следовательно $q \in \Cl(\Int(A))$. Следовательно
+                \[\Cl(\Int(A)) \supseteq \Cl(A).\]
+                Обратная вложенность следует буквально из вложенности $A \supseteq \Int(A)$.
+            \item По первым двум пунктам имеем, что
+                \[\Fr(\Int(A)) = \Cl(\Int(A)) \setminus \Int(\Int(A)) = \Cl(A) \setminus \Int(A) = \Fr(A)\]
+                и
+                \[\Fr(\Cl(A)) = \Cl(\Cl(A)) \setminus \Int(\Cl(A)) = \Cl(A) \setminus \Int(A) = \Fr(A).\]
+        \end{enumerate}
+    \end{proof}
+
+    \begin{corollary}
+        Для любого выпуклого $A \subseteq \RR^n$,
+        \begin{enumerate}
+            \item $\RelInt(\Cl(A)) = \RelInt(A)$,
+            \item $\Cl(\RelInt(A)) = \Cl(A)$.
+        \end{enumerate}
+    \end{corollary}
+
+    \subsubsection{Полупространства}
+
+    \begin{definition}
+        
+    \end{definition}
 \end{document}
