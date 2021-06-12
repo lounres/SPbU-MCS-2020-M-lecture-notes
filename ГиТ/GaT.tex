@@ -32,6 +32,8 @@
 \newcommand{\FAC}{\ensuremath{\mathrm{FAC}}\xspace}
 \newcommand{\SAC}{\ensuremath{\mathrm{SAC}}\xspace}
 \newcommand{\T}{\ensuremath{\mathrm{T}}\xspace}
+\newcommand{\ex}{\ensuremath{\mathrm{ex}}\xspace}
+\newcommand{\ind}{\ensuremath{\mathrm{ind}}\xspace}
 
 \begin{document}
     \maketitle
@@ -50,6 +52,7 @@
         \item James Munkres, ``Topology''.
         \item Agusti Reventos i Tarrida, ``Affine maps, Euclidean motions and quadrics''.
         \item Винберг, ``Курс алгебры''.
+        \item Хатчер, ``Алгебраическая топология''. 
     \end{itemize}
 
     \section{Метрические и топологические пространства. Базовые понятия.}
@@ -1687,7 +1690,7 @@
         т.е. шар $B_r(y)$ является подмножеством некоторого элемента $\Sigma$. Поскольку утверждение не зависит от $y$, то $r$ является числом Лебега покрытия $\Sigma$.
     \end{proof}
 
-    \begin{corollary}
+    \begin{corollary}\label{Lebesgue-lemma-functional-corollary}
         Пусть даны компактное метрическое пространство $X$, топологическое пространство $Y$, непрерывное $f: X \to Y$ и открытое покрытие $\Sigma$ множества $Y$. Тогда существует $r > 0$, что для всякой точки $a$ из $X$ множество $f(B_r(a))$ содержится как подмножество в одном из элементов $\Sigma$.
     \end{corollary}
 
@@ -4062,7 +4065,7 @@
     \end{definition}
 
     \begin{theorem}
-        Одинаковая ориентированность базисов --- отношениеэквивалентнтости. Классов эквивалентности ровно два (кроме случая $\dim(X) = 0$).
+        Одинаковая ориентированность базисов --- отношение эквивалентнтости. Классов эквивалентности ровно два (кроме случая $\dim(X) = 0$).
     \end{theorem}
 
     \begin{definition}
@@ -5002,7 +5005,7 @@
         то пара точек $p$ и $q$ является искомой.
     \end{proof}
 
-    \begin{theorem}[о строгой отделимости]
+    \begin{theorem}[о строгой отделимости]\label{strict-separability-theorem}
         Пусть $A, B \subseteq \RR^n$ --- непустые замкнутые выпуклые множества, хотя бы одно из них компактно, $A \cap B = \varnothing$. Тогда существует гиперплоскость, строго разделяющая $A$ и $B$.
     \end{theorem}
 
@@ -5050,5 +5053,691 @@
         \[A = \Pi.\]
     \end{proof}
 
+    \begin{definition}
+        Пусть даны непустое подмножество $A \subseteq \RR^n$ и гиперплоскость $H$. $H$ называется \emph{опорной гиперплоскостью (ОГ)} $A$, если
+        \begin{enumerate}
+            \item $A$ (нестрого) лежит по одну сторону от $H$,
+            \item $H$ пересекается с замыканием $A$: $H \cap \Cl(A) = \varnothing$.
+        \end{enumerate}
+    \end{definition}
+
+    \begin{remark}
+        TFAE.
+        \begin{enumerate}
+            \item $H$ --- опорная гиперплоскость $A$.
+            \item $H$ --- опорная гиперплоскость $\Cl(A)$.
+        \end{enumerate}
+        Таким образом можно считать, что $A$ замкнуто.
+    \end{remark}
+
+    \begin{theorem}
+        Пусть дано непустое ограниченное $A \subseteq \RR^n$. Тогда для всякого направления есть опорная гиперплоскость $A$ данного направления, и таких гиперплоскостей не более двух.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть фиксировано направление (напомним, что это $n-1$ подпространство $\RR^n$). Рассмотрим всякую прямую $l$, в нём не лежащую и рассмотрим проекцию $A$ на $l$ параллельно данному направлению. Получим некоторое ограниченное множество $A'$ на прямой $l$. Значит у него есть верхняя и нижняя границы (крайние предельные точки $A'$). Тогда проведём гиперплоскость через одну из этих крайних точек в данном фиксированном направлении. Заметим, что поскольку эта крайняя точка есть замыкание $A'$, то бишь проекция $\Cl(A)$, то есть некоторая точка $\Cl(A)$, лежащая на данной гиперплоскости. При этом понятно, что $A$ (нестрого) лежит по одну сторону от данной гиперплоскости.
+
+        С другой стороны всякая подходящая гиперплоскость будет крайней точкой $\Cl(A')$, а таких не более двух. Значит и опорных гиперплоскостей данного направления не более двух.
+    \end{proof}
+
+    \begin{theorem}
+        Пусть дано непустое замкнутое выпуклое множество $A \subseteq \RR^n$ и точка $p \in \Fr(A)$. Тогда существует опорная гиперплоскость $H$ к $A$, проходящая через $p$.
+    \end{theorem}
+
+    \begin{proof}
+        WLOG будем считать, что $p$ --- начало координат. В таком случае есть последовательность точек $(p_i)_{i=0}^\infty$, сходящаяся к $0$. По \hyperref[strict-separability-theorem]{теореме о строгой отделимости} для всякой точки $p_i$ есть гиперплоскость $H_i$, строго разделяющая $p_i$ и $A$. Пусть также $v_i$ --- единичная нормаль к $H_i$ от нуля к $p_i$, т.е. $H_i$ задаётся формулой
+        \[\langle x, v_i \rangle + c_i = 0,\]
+        а на множестве $A$ выполняется неравенство
+        \[\langle x, v_i \rangle + c_i < 0.\]
+
+        Выделим подпоследовательность, что вектора $v_i$ сходятся к некоторому вектору $v$. При этом понятно, что $c_i \to 0$. Следовательно, устремляя в неравенстве
+        \[\langle x, v_i \rangle + c_i \leqslant 0\]
+        $i \to \infty$ получаем неравенство
+        \[\langle x, v \rangle \leqslant 0.\]
+        Тем самым получаем, что $A$ будет находиться по одну сторону относительно гиперплоскость $H := v^\perp$. И при этом $p \in H$. Значит $H$ --- опорная гиперплоскость $A$ в точке $p$.
+    \end{proof}
+
+    \subsubsection{Экстремальные точки}
+
+    \begin{definition}
+        Пусть дано выпуклое множество $A \subseteq \RR^n$. Точка $p \in \Cl(A)$ называется \emph{экстремальной} точкой $A$, если $A \setminus \{p\}$ выпукло.
+
+        Множество всех экстремальных точек $A$ обозначается $\ex(A)$.
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item Экстремальные точки могут не лежать в $A$.
+            \item $p$ не является экстремальной тогда и только тогда, когда есть точки $x, y \in A \setminus \{p\}$, что $p \in [x; y]$.
+            \item $\ex(A) \subseteq \Fr(A)$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{lemma}
+        Пусть дано выпуклое замкнутое множество $A$ и опорная гиперплоскость $H$ множества $A$. Тогда
+        \[\ex(A \cap H) \subseteq \ex(A).\]
+    \end{lemma}
+
+    \begin{proof}
+        Предположим противное, т.е. есть точка $p \in \ex(A \cap H) \setminus \ex(A)$. Поскольку $p \in \ex(A \cap H)$, то $p \in \Cl(A \cap H) = A \cap H$. Следовательно есть точки $x, y \in A \setminus \{p\}$, что $p \in [x; y]$.
+
+        Если $x \in H$, то $y \in H$, и наоборот. В случае $x, y \in H$ мы имеем, что $x, y \in (A \cap H) \setminus \{p\}$, значит $p \notin \ex(A \cap H)$. В ином случае мы имеем, что $x$ и $y$ находятся по разные стороны $H$, что противоречит с опорностью $H$.
+    \end{proof}
+
+    \begin{theorem}[Креймана-Мильмана]\label{Krein–Milman-theorem}
+        Пусть дан выпуклый компакт $A \subseteq \RR^n$. Тогда
+        \[A = \conv(\ex(A)).\]
+    \end{theorem}
+
+    \begin{proof}
+        Понятно, что
+        \[\exp(A) \subseteq A \qquad \Longrightarrow \qquad \conv(\exp(A)) \subseteq A.\]
+        Докажим обратное утверждение по индукции по $n$.
+
+        \textbf{База.} $n=0$, очевидно.
+
+        \textbf{Шаг.} Сначала покажем, что
+        \[\Fr(A) \subseteq \conv(\ex(A)).\]
+        Пусть $p$ --- какая-то точка $\Fr(A)$. Поскольку $A$ замкнуто и выпукло, а $p \in \Fr(A)$, то есть опорная плоскость $H$ множества $A$ в точке $p$. Следовательно $p \in A \cap H$. При этом $A \cap H$ --- замкнутое выпуклое множество. Значит по предположению индукции
+        \[p \in A \cap H = \conv(\ex(A \cap H)) \subseteq \conv(\ex(A)),\]
+        так как по лемме $\ex(A \cap H) \subseteq \ex(A)$. Отсюда сразу получаем, что
+        \[\Fr(A) \subseteq \conv(\ex(A)).\]
+
+        Теперь пусть $p \in \Int(A)$. Тогда пересекаю всякую прямую, проходящую через $p$, с множеством $A$, получаем отрезок $[x; y]$. Понятно, что $x, y \in \Fr(A)$, а значит $x, y \in \conv(\ex(A))$. Тогда по выпуклости
+        \[p \in [x; y] \subseteq \conv(\ex(A)).\]
+    \end{proof}
+
+    \subsubsection{Теорема Вейля-Минковского, часть 1}
+
+    \begin{definition}
+        \emph{Выпуклое полиэдральное множество (ВПМ)} --- пересечение конечного числа замкнутых полупространств.
+    \end{definition}
+
+    \begin{remark}
+        ВПМ --- множество решений системы линейных неравенств.
+    \end{remark}
+
+    \begin{theorem}[Вейля-Минковского]\label{Weyl-Minkowski-theorem}
+        Пусть дано $A \subseteq \RR^n$. TFAE.
+        \begin{enumerate}
+            \item $A$ --- ограниченное ВПМ.
+            \item $A$ --- выпуклая оболочка конечного множества.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}[Доказательство теоремы Вейля-Минковского, следствие $1 \Rightarrow 2$.]
+        Пусть $A$ --- ограниченное ВПМ. Тогда $A$ выпукло и компактно. По теореме \ref{Krein–Milman-theorem} имеем, что $A = \conv(\ex(A))$. Значит покажем, что $\ex(A)$ конечно; тогда теорема будет очевидна.
+
+        Пусть $A = \bigcap_{i=1}^m \overline{H}_i^+$. Тогда покажем, что всякая точка из $\ex(A)$ есть пересечение $n$ линейно независимых гиперплоскостей из множества $\{H_i\}_{i=1}^m$. Пусть есть некоторая точка $p \in \ex(A)$. Пусть для индексов $i$ из $S \subseteq \{1; \dots; m\}$ верно, что $p \in H_i$, а для остальных индексов $i$ (т.е. из $\overline{S} := \{1; \dots; m\} \setminus S$) верно, что $p \in H_i^+$. Тогда имеем, что
+        \[
+            p \in B \cap C, \text{ где } \qquad
+            B := \bigcap_{i \in S} H_i, \qquad
+            C := \bigcap_{j \in \overline{S}} H_j^+,
+        \]
+        где $B$ --- некоторое аффинное подпространство, а $C$ --- открытое множество. В таком случае понятно, что если $B$ не вырождено (т.е. имеет размерность хотя бы $1$), то в $B$ можно выделить отрезок, содержащий $p$ и лежащий в $C$. Значит $B$ вырождено. А в таком случае $B \cap C$ состоит только из $p$.
+        
+        Также понятно, что всякий максимальный поднабор линейно независимых гиперплоскостей из набора $\{H_i\}_{i \in S}$ в пересечении будет давать $B$ и будет иметь мощность $n-\dim(B)$. Таким образом всякая точка из $\ex(A)$ есть пересечение некоторого набора из $n$ линейно независимых гиперплоскостей из $\{H_i\}_{i = 1}^m$. Значит
+        \[|\ex(A)| \leqslant \binom{m}{n}.\]
+    \end{proof}
+
+    \subsubsection{Поляра}
+
+    \begin{definition}
+        \emph{Полярой} множества $A \subseteq \RR^n$ называется множество
+        \[A^\circ := \{x \in \RR^n \mid \forall a \in A \langle x, a \rangle \leqslant 1\}.\]
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item $\left(\overline{B}_r(0)\right)^\circ = \overline{B}_{1/r}(0)$.
+            \item $\{0\}^\circ = \RR^n$.
+            \item $\{p\}^\circ$ --- замкнутое полупространство, содержащее ноль, относительно гиперплоскости, перпендикулярной $p$ и проходящей через $p/|p|^2$ (инверсный образ...).
+            \item Пусть $A$ --- линейное подпространство. Тогда $A^\circ = A^\perp$.
+        \end{enumerate}
+    \end{example}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item $A \subseteq B \Longrightarrow A^\circ \supseteq B^\circ$.
+            \item Если $A$ ограничено, то $0 \in \Int(A^\circ)$.
+            \item Если $0 \in \Int(A)$, то $A^\circ$ ограниченно.
+            \item $\left(\bigcup_{i \in I} A_i\right)^\circ = \bigcap_{i \in I} A_i^\circ$.
+            \item $A^\circ$ замкнуто, выпукло и содержит $0$.
+            \item $(A \cup \{0\})^\circ = A^\circ$.
+            \item $(\conv(A))^\circ = A^\circ$.
+            \item $(\Cl(A))^\circ = A^\circ$.
+            \item $(\Cl(\conv(A \cup \{0\})))^\circ = A^\circ$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}\ 
+        \begin{enumerate}
+            \item Всякая точка, подходящая под условия $B^\circ$ подходит и под условия $A^\circ$. Значит $A^\circ \supseteq B^\circ$.
+            \item Есть такое $r > 0$, что $A \subseteq B_r(0)$, а тогда $B_{1/r}(0) \subseteq A^\circ$.
+            \item Есть такое $r > 0$, что $B_r(0) \subseteq A$, а тогда $A^\circ \subseteq B_{1/r}(0)$.
+            \item Все точки, подходящие под условие каждого $A_i^\circ$ --- точки, подходящие под условие $\left(\bigcup_{i \in I} A_i\right)^\circ$.
+            \item Поскольку
+                \[A^\circ = \left(\bigcup_{x \in A} \{x\}\right)^\circ = \bigcap_{x \in A} \{x\}^\circ,\]
+                а $x^\circ$ --- замкнутое полупространство (т.е. замкнуто выпукло и содержит $0$), то $A^\circ$ выпукло как пересечение выпуклых, замкнуто как пересечение замкнутых и содержит $0$ как пересечение содержащих ноль.
+            \item $(A \cup \{0\})^\circ = A^\circ \cap \{0\}^\circ = A^\circ \cap \RR^n = A^\circ$.
+            \item С одной стороны
+                \[A \subseteq \conv(A) \qquad \Longrightarrow \qquad (\conv(A))^\circ \subseteq A^\circ.\]
+                С другой стороны всякая точка $b \in \conv(A)$ представима в виде
+                \[b = \sum_{i=1}^m t_i a_i, \qquad t_i > 0, \sum_{i=1}^m t_i = 1,\]
+                где $a_i \in A$. Следовательно для всякой точки $x \in A^\circ$ верно
+                \[\langle x, b \rangle = \sum_{i=1}^m t_i \langle x, a_i \rangle \leqslant \sum_{i=1}^m t_1 = 1,\]
+                что значит, что $x \in (\conv(A))^\circ$, т.е.
+                \[A^\circ \subseteq (\conv(A))^\circ.\]
+            \item С одной стороны
+                \[A \subseteq \Cl(A) \qquad \Longrightarrow \qquad (\Cl(A))^\circ \subseteq A^\circ.\]
+                С другой стороны всякая точка $b \in \Cl(A)$ представима в виде
+                \[b = \lim_{i \to \infty} a_i,\]
+                где $a_i \in A$. Следовательно для всякой точки $x \in A^\circ$ верно
+                \[\langle x, b \rangle = \lim_{i \to \infty} \langle x, a_i \rangle \leqslant \lim_{i \to \infty} 1 = 1,\]
+                что значит, что $x \in (\Cl(A))^\circ$, т.е.
+                \[A^\circ \subseteq (\Cl(A))^\circ.\]
+            \item \[(\Cl(\conv(A \cup \{0\})))^\circ = (\conv(A \cup \{0\}))^\circ = (A \cup \{0\})^\circ = A^\circ.\]
+        \end{enumerate}
+    \end{proof}
+
+    \begin{example}
+        Поляра треугольника $abc$ есть поляра $\{a; b; c\}$.
+    \end{example}
+
+    \begin{remark*}
+        $\Cl(\conv(A \cup \{0\}))$ --- наименьшее замкнутое выпуклое множество, содержащее $A$ и $0$.
+    \end{remark*}
+
+    \begin{theorem}
+        Пусть дано множество $A \subseteq \RR^n$.
+        \begin{enumerate}
+            \item Если $A$ выпукло, замкнуто и содержит $\{0\}$, то $A^{\circ\circ} = A$.
+            \item $A^{\circ\circ} = \Cl(\conv(A \cup \{0\}))$.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}\ 
+        \begin{enumerate}
+            \item Понятно, что для всяких $a \in A$ и $b \in A^\circ$
+                \[\langle a, b \rangle \leqslant 1,\]
+                а значит $A \subseteq A^{\circ\circ}$.
+
+                Теперь покажем обратное. Пусть есть точка $p \in A^{\circ\circ} \setminus A$. Так как $A$ выпукло и замкнуто, то есть гиперплоскость $H$, строго их разделяющая. Пусть $v$ --- единичная нормаль к $H$, что
+                \[A \subseteq H^- \qquad \text{ и } \qquad p \in H^+.\]
+                Тогда уравнение $H$ есть
+                \[\langle x, v \rangle = c;\]
+                при этом $c \geqslant \langle 0, v \rangle = 0$. Пусть $h := v/c$. Тогда
+                \[H: \langle x, h \rangle = 1.\]
+                Поскольку $A \subseteq H^-$, то для всякой точки $a \in A$
+                \[\langle a, h \rangle < 1,\]
+                откуда следует, что $h \in A^\circ$. При этом $p \in H^+$, а
+                \[\langle p, h \rangle > 1,\]
+                откуда $p \notin A^{\circ\circ}$ --- противоречие.
+            \item
+                \[
+                    A^\circ = (\Cl(\conv(A \cup \{0\})))^\circ
+                    \qquad \Longrightarrow \qquad
+                    A^{\circ\circ} = (\Cl(\conv(A \cup \{0\})))^{\circ\circ} = \Cl(\conv(A \cup \{0\})).
+                \]
+        \end{enumerate}
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $\mathfrak{B}^n$ --- множество всех выпуклых, замкнутых, содержащих $0$ множеств в $\RR^n$. Тогда отображение $A \mapsto A^\circ$ есть инволюция на $\mathfrak{B}^n$.
+    \end{corollary}
+
+    \begin{corollary}
+        Пусть $\mathfrak{B}_0^n$ --- множество всех выпуклых, содержащих $0$ во внутренности компактов в $\RR^n$. Тогда отображение $A \mapsto A^\circ$ есть инволюция на $\mathfrak{B}_0^n$.
+    \end{corollary}
+
+    \begin{corollary}
+        Пусть $A, B \in \mathfrak{B}^n$. Тогда
+        \[(A \cap B)^\circ = \Cl(\conv(A^\circ \cup B^\circ)).\]
+    \end{corollary}
+
+    \begin{proof}
+        Поскольку множества с обеих сторон равенства лежат в $\mathfrak{B}^n$, то для доказательства равенства достаточно показать, что поляры этих множеств равны.
+
+        Действительно,
+        \[
+            (\Cl(\conv(A^\circ \cup B^\circ)))^\circ
+            = (A^\circ \cup B^\circ)^\circ
+            = A^{\circ\circ} \cap B^{\circ\circ}
+            = A \cap B
+            = (A \cap B)^{\circ\circ}.
+        \]
+    \end{proof}
+
+    \begin{proof}[Доказательство {\hyperref[Weyl-Minkowski-theorem]{теоремы Вейля-Минковского}}, следствие $2 \Rightarrow 1$.]
+        Пусть
+        \[A = \conv\{p_1; \dots; p_m\}.\]
+
+        Сначала предположим, что $\Int(A) \neq \varnothing$. Благодаря параллельному переносу WLOG можно считать, что $0 \in \Int(A)$. Рассмотрим $B := A^\circ$. Поскольку $A \in \mathfrak{B}_0^n$, то $B \in \mathfrak{B}_0^n$ тоже, т.е. ограничено. При этом
+        \[B = \bigcap_{i=1}^m \{p_i\}^\circ,\]
+        т.е. $B$ есть пересечение конечного набора замкнутых полупространств. Таким образом $B$ --- ограниченное ВПМ. Следовательно по первой части теоремы Вейля-Минковского $B$ есть выпуклая оболочка конечного множества. И поскольку $\Int(B) \neq \varnothing$ ($0 \in \Int(B)$), то можно повторить рассуждение для $B$ и показать, что $B^\circ = A$ --- ограниченное ВПМ.
+
+        Теперь если $\Int(A) = \varnothing$, то рассмотрим $Y := \Aff(A)$. Понятно, что $\RelInt(A) \neq \varnothing$, т.е. $\Int_Y(A) \neq \varnothing$. Тогда применяя первую часть доказательства, получаем, что $A$ есть пересечение замкнутых полупространств $\{\overline{G}^+_i\}_{i=1}^m$ в $Y$. Тогда для всякого $\overline{G}^+_i$ можно рассмотреть полупрочтанство $\overline{H}^+_i$, что
+        \[\overline{G}^+_i := Y \cap \overline{H}^+_i,\]
+        и тогда
+        \[A = \bigcap_{i=1}^m \overline{G}^+_i = Y \cap \bigcap_{i=1}^m \overline{H}^+_i = \overline{Y}^+ \cap \overline{Y}^- \cap \bigcap_{i=1}^m \overline{H}^+_i.\]
+    \end{proof}
+
+    \section{Фундаментальная группа}
+
+    \subsection{Гомотопия}
+
+    \begin{definition}
+        Пусть даны топологические пространства $X$ и $Y$ и непрерывные отображения $f, g: X \to Y$. $f$ и $g$ называются \emph{гомотопными} и обозначаются $f \sim g$, если существует непрерывное отображение $H: X \times [0; 1] \to Y$, что
+        \begin{enumerate}
+            \item $H(x, 0) = f(x)$ для всех $x \in X$,
+            \item $H(x, 1) = g(x)$ для всех $x \in X$.
+        \end{enumerate}
+        Отображение $H$ называется \emph{гомотопией} между $f$ и $g$.
+    \end{definition}
+
+    \begin{remark*}
+        Гомотопию можно рассматривать как ``непрерывное семейство'' отображений $\{h_t\}_{t \in [0; 1]}$, где
+        \[h_t: X \to Y, x \mapsto H(x,t),\]
+        с условием $h_0 = f$ и $h_1 = g$. ``Непрерывность'' семейства $\{h_t\}$ определяется как непрерывность соответствующего $H$.
+    \end{remark*}
+
+    \begin{example}
+        Любые два отображения $f, g: X \to R^n$ гомотопны. Они связаны, например, линейной гомотопией
+        \[H(x, t) := (1-t) f(x) + t g(x).\]
+    \end{example}
+
+    \begin{theorem}
+        Гомотопность --- отношение эквивалентности на множестве всехнепрерывных отображений из $X$ в $Y$.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $f, g, h: X \to Y$ --- непрерывные отображения.
+        \begin{itemize}
+            \item \textbf{Рефлексивность.} Возьмём $H(x, t) = f(x)$. $H$ непрерывно как композиция проекции $X \times [0; 1] \to X$ и функции $f$.
+            \item \textbf{Симметричность.} Если $H(x, t)$ --- гомотопия между $f$ и $g$, то $G(x,t) = H(x,1-t)$.
+            \item \textbf{Транзитивность.} Пусть $H1, H2: X \times [0,1] \to Y$ --- гомотопии между $f$ и $g$ и между $g$ и $h$,соответственно. Определяем гомотопию $H$ между $f$ и $h$ так:
+            \[
+                H(x,t)=
+                \begin{cases}
+                    H_1(x, 2t)& \text{ если } t \leqslant \frac{1}{2},\\
+                    H_2(x, 2t-1)& \text{ если } t \geqslant \frac{1}{2}.
+                \end{cases}
+            \]
+            Непрерывность $H$ следует из свойств фундаментальных покрытий.
+        \end{itemize}
+    \end{proof}
+
+    \begin{theorem}
+        Пусть даны топологические пространства $X$, $Y$ и $Z$, гомотопные непрерывные отображения $f_1, f_2: X \to Y$ и другие гомотопные непрерывные отображения $g_1, g_2: Y \to Z$. Тогда
+        \[g_1 \circ f_1 \sim g_2 \circ f_2.\]
+    \end{theorem}
+
+    \begin{proof}
+        Пусть
+        \[
+            H_1: X \times [0; 1] \to Y \text{ --- гомотопия между $f_1$ и $f_2$},
+            \qquad
+            H_2: Y \times [0; 1] \to Z \text{ --- гомотопия между $g_1$ и $g_2$}.
+        \]
+        Тогда $H(x, t) = H_2(H_1(x, t), t)$ --- необходимая гомотопия:
+        \[
+            H(x, 0) = H_2(H_1(x, 0), 0) = H_2(f_1(x), 0) = g_1(f_1(x)).
+            \qquad
+            H(x, 1) = H_2(H_1(x, 1), 1) = H_2(f_1(x), 1) = g_1(f_1(x)).
+        \]
+    \end{proof}
+
+    \begin{definition}
+        Пусть $A \subseteq X$. Говорят, что гомотопия $H: X \times [0; 1] \to Y$ \emph{связана на $A$}, если $H(x, t) = H(x, 0)$ для всех $x \in A$, $t \in [0; 1]$. Если хотят подчеркнуть, что никакого условия связанности не предполагается, то говорят, что рассматриваемая гомотопия является свободной.
+    \end{definition}
+
+    \begin{exercise}
+        Так же как и для обычной (свободной) гомотопии, отношение связанной на $A$ гомотопности отображений есть отношение эквивалентности.
+    \end{exercise}
+
+    \begin{definition}[гомотопия путей]
+        Два пути $\alpha, \beta: [0; 1] \to X$ \emph{гомотопны} ($\alpha \sim \beta$), если существует соединяющая их гомотопия, связанная на $\{0; 1\}$.
+    \end{definition}
+
+    \begin{remark*}
+        Если пути $\alpha$ и $\beta$ гомотопны, то $\alpha(0) = \beta(0)$, $\alpha(1) = \beta(1)$.
+    \end{remark*}
+
+    \begin{remark*}
+        Обычная (не связанная) гомотопия для путей никогда не рассматривается.
+    \end{remark*}
+
+    \begin{definition}
+        Пусть $\alpha, \beta: [0; 1] \to X$ --- пути, $\alpha(1) = \beta(0)$. Тогда определено \emph{произведение путей} $\alpha\beta$:
+        \[
+            (\alpha\beta)(t) :=
+            \begin{cases}
+                \alpha(2t)& \text{ если } t \leqslant \frac{1}{2},\\
+                \beta(2t-1)& \text{ если } t \geqslant \frac{1}{2}.
+            \end{cases}
+        \]
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item Если $\alpha_1 \sim \alpha_2$ и $\beta_1 \sim \beta_2$, то $\alpha_1 \beta_1 \sim \alpha_2 \beta_2$.
+            \item $(\alpha\beta)\gamma \sim \alpha(\beta\gamma)$.
+            \item Пусть $\varepsilon_p$ и $\varepsilon_q$ --- постоянные пути в начале $\alpha(0) = p$ и конце $\alpha(1) = q$ пути $\alpha$ (т.е. $\varepsilon_p(t) = p$, $\varepsilon_q(t) = q$). Тогда $\varepsilon_p \alpha \sim \alpha \varepsilon_q \sim \alpha$.
+            \item Пусть $\alpha'(t) := \alpha(1-t)$. Тогда $\alpha\alpha' \sim \varepsilon_p$. Обозначение: $\alpha^{-1} = \alpha'$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}\ 
+        \begin{enumerate}
+            \item Пусть $F$, $G$ --- гомотопии, реализующие $\alpha_1 \sim \alpha_2$ и $\beta_1 \sim \beta_2$. Тогда гомотопия $\alpha_1 \beta_1 \sim \alpha_2 \beta_2$ задаётся формулой
+                \[
+                    H(t, s) :=
+                    \begin{cases}
+                        F(2t, s)& \text{ если } t \leqslant \frac{1}{2},\\
+                        G(2t-1, s)& \text{ если } t \geqslant \frac{1}{2}.
+                    \end{cases}
+                \]
+            \item Заметим, что
+                \[
+                    ((\alpha\beta)\gamma)(t) =
+                    \begin{cases}
+                        \alpha(4t)& \text{ если } t \in \left[0; \frac{1}{4}\right],\\
+                        \alpha(4t-1)& \text{ если } t \in \left[\frac{1}{4}; \frac{1}{2}\right],\\
+                        \alpha(2t-1)& \text{ если } t \in \left[\frac{1}{2}; 1\right],
+                    \end{cases}
+                    \qquad
+                    (\alpha(\beta\gamma))(t) =
+                    \begin{cases}
+                        \alpha(2t)& \text{ если } t \in \left[0; \frac{1}{2}\right],\\
+                        \alpha(4t-2)& \text{ если } t \in \left[\frac{1}{2}; \frac{3}{4}\right],\\
+                        \alpha(4t-3)& \text{ если } t \in \left[\frac{3}{4}; 1\right].
+                    \end{cases}
+                \]
+                Тогда гомотопия задаётся формулой
+                \[
+                    H(t, s) :=
+                    \begin{cases}
+                        \alpha(4t/(s+1))& \text{ если } t \in \left[0; \frac{s+1}{4}\right],\\
+                        \alpha(4t-s-1)& \text{ если } t \in \left[\frac{s+1}{4}; \frac{s+2}{4}\right],\\
+                        \alpha((4t-s-2)/(2-s))& \text{ если } t \in \left[\frac{s+2}{4}; 1\right].
+                    \end{cases}
+                \]
+            \item Если
+                \[
+                    H(t, s) :=
+                    \begin{cases}
+                        p& \text{ если } t \in \left[0; \frac{1-s}{2}\right],\\
+                        \alpha((2t-1+s)/(1+s))& \text{ если } t \in \left[\frac{1-s}{2}; 1\right].
+                    \end{cases}
+                \]
+                Тогда $H(t, 0) = (\varepsilon_p \alpha)(t)$, $H(t, 1) = \alpha(t)$. Аналогично $\alpha \varepsilon_q \sim \alpha$.
+            \item Поскольку
+                \[
+                    (\alpha\alpha')(t) =
+                    \begin{cases}
+                        \alpha(2t)& \text{ если } t \in \left[0; \frac{1}{2}\right],\\
+                        \alpha(2-2t)& \text{ если } t \in \left[\frac{1}{2}; 1\right],
+                    \end{cases}
+                \]
+                то
+                \[
+                    H(t, s) :=
+                    \begin{cases}
+                        \alpha(2t(1-s))& \text{ если } t \in \left[0; \frac{1}{2}\right],\\
+                        \alpha((2-2t)(1-s))& \text{ если } t \in \left[\frac{1}{2}; 1\right],
+                    \end{cases}
+                \]
+                будет гомотопией между $\alpha\alpha'$ и $\varepsilon_p$.
+        \end{enumerate}
+    \end{proof}
+
+    \subsection{Фундаментальная группа}
+
+    \begin{definition}
+        \emph{Петля} --- путь, у которого конец совпадает с началом.
+        
+        $\Omega(X, x_0)$ --- множество петель в $X$ с началом и концом в $x_0$.
+    \end{definition}
+
+    \begin{definition}
+        Фундаментальная группа топологического пространства $X$ с отмеченной точкой $x_0$ (обозначение: $\pi_1(X, x_0)$) определяется так:
+        \begin{itemize}
+            \item множество элементов группы --- фактор-множество $\Omega(X, x_0)/\sim$, где $\sim$ --- гомотопность путей (с фиксированными концами в $x_0$).
+            \item Групповое произведение определяется формулой $[\alpha][\beta] = [\alpha \beta]$, где $[\cdot]$ --- класс эквивалентности, $\alpha, \beta \in \Omega(X, x_0)$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{theorem}\ 
+        \begin{enumerate}
+            \item Групповое произведение в $\pi_1(X, x_0)$ определено корректно.
+            \item $\pi_1(X, x_0)$ --- группа.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{example}[без доказательства/анонс]\ 
+        \begin{enumerate}
+            \item $\pi_1(\RR^n, x_0) = \{e\}$ для всякой точки $x_0$.
+            \item $\pi_1(S^1) \simeq \pi_1(\RR^2 \setminus \{0\}) \simeq \ZZ$.
+            \item При $n \geqslant 2$, $\pi_1(S^n) \simeq \{e\}$.
+            \item При $n \geqslant 2$, $\pi_1(\RR P^n) \simeq \ZZ_2$.
+            \item $\pi_1$ букета или более окружностей --- свободная группа (не коммутативная).
+        \end{enumerate}
+    \end{example}
     
+    \begin{theorem}
+        Пусть даны топологическое пространство $X$, $p, q \in X$ и путь $\gamma$ в $X$ из $p$ в $q$. Тогда отображение
+        \[T_\gamma: \pi_1(X, p) \to \pi_1(X, q), [\alpha] \mapsto [\gamma^{-1} \alpha \gamma]\]
+        есть изоморфизм между $\pi_1(X, p)$ и $\pi_1(X, q)$.
+    \end{theorem}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item \textbf{Корректность $T_\gamma$.} Если $\alpha \sim \beta$, то $\gamma^{-1} \alpha \gamma \sim \gamma^{-1} \beta \gamma$, откуда следует
+                \[[\gamma^{-1} \alpha \gamma] = [\gamma^{-1} \beta \gamma].\]
+            \item \textbf{$T_\gamma$ --- гомоморфизм.}
+                \[
+                    T_\gamma([\alpha][\beta])
+                    = T_\gamma([\alpha\beta])
+                    = [\gamma^{-1} \alpha \beta \gamma]
+                    = [\gamma^{-1} \alpha \gamma] [\gamma^{-1} \beta \gamma]
+                    = T_\gamma([\alpha]) T_\gamma([\beta]).
+                \]
+            \item \textbf{$T_\gamma$ --- биекция.} Несложно понять, что
+                \[T_{\gamma_1} \circ T_{\gamma_2} = T_{\gamma_1 \gamma_2}.\]
+                Следовательно
+                \[T_\gamma \circ T_{\gamma^{-1}} = \Id,\]
+                т.е. $T_\gamma$ обратимы.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{corollary}
+        Если $X$ линейно связно, то $\pi_1(X, x_0)$.
+    \end{corollary}
+
+    \begin{remark}
+        В таком случае вместо $\pi_1(X, x_0)$ пишут $\pi_1(X)$.
+    \end{remark}
+
+    \begin{remark}
+        Если $Y$ --- линейная компонента связности точки $x_0$ в пространстве $X$, то $\pi_1(X, x_0) = \pi_1(Y)$.
+    \end{remark}
+
+    \begin{theorem}
+        Пусть даны топологические пространства $X$, $Y$ и точки $x_0 \in X$ и $y_0 \in Y$. Тогда
+        \[\pi_1(X \times Y, (x_0, y_0)) \simeq \pi_1(X, x_0) \pi_1(Y, y_0).\]
+    \end{theorem}
+
+    \begin{proof}
+        Заметим, что отображение
+        \[f: \Omega(X, x_0) \times \Omega(Y, y_0) \to \Omega(X \times Y, (x_0, y_0)), (\alpha, \beta) \mapsto \gamma: \gamma|_X = \alpha, \gamma|_Y = \beta\]
+        задаёт биекцию (будет обозначать $\gamma$ как $(\alpha_1, \beta_1)$). При этом
+        \begin{itemize}
+            \item $(\alpha_1, \beta_1)(\alpha_2, \beta_2) = (\alpha_1\alpha_2, \beta_1\beta_2)$,
+            \item $\alpha_1 \sim \alpha_2 \wedge \beta_1 \sim \beta_2 \Longleftrightarrow (\alpha_1, \beta_1) \sim (\alpha_2, \beta_2)$.
+        \end{itemize}
+        Следовательно $f$ задаёт (и корректно) изоморфизм $\pi_1(X, x_0) \times \pi_1(Y, y_0) \to \pi_1(X \times Y, (x_0, y_0))$.
+    \end{proof}
+
+    \begin{definition}[гомоморфизм фундаментальных групп, индуцированны отображение]
+        Пусть даны топологические пространства $X$ и $Y$, точки $x_0 \in X$ и $y_0 \in Y$ и непрерывное отображение $f: X \to Y$. Тогда есть гомеоморфизм
+        \[f_\star: \pi_1(X, x_0) \to \pi_1(Y, y_0), [\alpha] \mapsto [f \circ \alpha].\]
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item Пусть даны непрерывные $f: X \to Y$, $g: Y \to Z$. Тогда
+                \[(g \circ f)_\star = g_\star \circ f_\star.\]
+            \item $\Id_\star = \Id$.
+            \item Если $f: X \to Y$ --- гомеоморфизм, то $f_\star: \pi_1(X, x_0) \to \pi_1(Y, y_0)$ --- изоморфизм.
+        \end{enumerate}
+    \end{lemma}
+
+    \subsection{Односвязность пространств}
+
+    \begin{definition}
+        Топологическое пространство $X$ называется \emph{односвязным}, если оно линейно связно и $\pi_1(X) = \{e\}$.
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item $\RR^n$ --- односвязно.
+            \item Любое выпуклое подмножество $\RR^n$ односвязно.
+        \end{enumerate}
+    \end{example}
+
+    \begin{theorem}
+        Для всякого $n \geqslant 2$ сфера $S^n$ односвязно.
+    \end{theorem}
+
+    \begin{proof}
+        Линейная связность очевидна. Следовательно необходимо показать, что всякая петля стягиваема.
+
+        Пусть дана петля $\alpha$. Пусть $p := \alpha(0) = \alpha(1)$, а $-p$ --- диаметрально противоположная к $p$. Рассмотрим окрестности $U$ и $V$ точек $-p$ и $p$ соответственно, что $\{U; V\}$ есть открытое покрытие $S^n$, но $p \notin U$ и $-p \notin V$. По \hyperref[Lebesgue-lemma-functional-corollary]{лемме Лебега для отображений} мы имеем, что есть $r > 0$, что для всякого $x \in [0; 1]$
+        \[\alpha(B_r(x)) \subseteq U \text{ или } \alpha(B_r(x)) \subseteq V.\]
+        Таким образом если мы возьмём разбиение $\{t_i\}_{i=0}^m$ с шагом меньше $r$ (т.е. $|t_{i+1} - t_i| < r$), то будет верно, что
+        \[\alpha([t_i; t_{i+1}]) \subseteq U \text{ или } \alpha([t_i; t_{i+1}]) \subseteq V.\]
+        Т.е. мы разбили петлю $\alpha$ в конкатенацию путей $\alpha_1 \dots \alpha_m$, что образ каждого пути лежит либо в $U$, либо в $V$.
+
+        В таком случае мы понимаем, что образ всякого пути $\alpha_i$ либо не содержит $-p$, либо полностью содержится в $U$. В первом случае заменим его на $\beta_i := \alpha_i$, откуда понятно, что $\alpha_i \sim \beta_i$. Во втором случае заменим его на всякий путь $\beta_i$ с теми же концами, что и $\alpha_i$, но не проходящий через $-p$ и лежащий в $U$ (например, на дугу). В таком случае $\alpha_i\beta_i^{-1}$ --- петля, лежащая в $U$. Но $U \simeq \RR^n$, т.е. $\alpha_i \beta_i^{-1}$ стягивается, следовательно \[\alpha_i \sim \alpha_i \beta_i^{-1} \beta_i \sim \beta_i.\]
+
+        Таким образом мы имеем
+        \[\beta := \beta_1 \dots \beta_m \sim \alpha_1 \dots \alpha_m \sim \alpha.\]
+        При этом образ пути $\beta$ не содержит $-p$. Значит $\beta([0; 1]) \subseteq S^n \setminus \{-p\} \simeq \RR^n$, т.е. $\beta$ стягиваемо. Следовательно и $\alpha$ стягиваемо.
+    \end{proof}
+
+    \begin{corollary}
+        Для всякого $n \geqslant 3$ $\RR^n$ односвязно.
+    \end{corollary}
+
+    \subsection{Накрытия. Постоянство числа листов}
+    
+    \begin{definition}
+        Пусть даны топологические пространства $X$ и $B$. Непрерывное отображение $p: X \to B$ называется \emph{накрытием}, если для всякой точки $y \in B$ есть её окрестность $U$, что
+        \[p^{-1}(U) = \bigsqcup_{i \in I} V_i,\]
+        где $V_i$ открыто в $X$ и $p|_{V_i}$ --- гомеоморфизм $V_i \to U$. $B$ называется \emph{базой накрытия} $p$, $X$ --- \emph{пространством накрытия (накрывающим пространством)}, а $U$ --- \emph{правильно накрываемой окрестностью}.
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item Гомеоморфизмы --- накрытия.
+            \item Отображение
+                \[p: \RR \to S^1, \alpha \mapsto (\cos(\alpha); \sin(\alpha)).\]
+                При этом правильно накрываемой окрестностью будет любая окрестность, отличная от $S^1$.
+            \item Отображение
+                \[p: S^1 \to S^1, (\cos(\alpha); \sin(\alpha)) \mapsto (\cos(n \alpha); \sin(n \alpha)).\]
+                При этом правильно накрываемой окретсностью будет любая окрестность, отличная от $S^1$.
+        \end{enumerate}
+    \end{example}
+
+    \begin{theorem}
+        Пусть дано накрытие $p: X \to B$, где $B$ связно. Тогда $|p^{-1}(b)|$ не зависит от $b$.
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим отображение
+        \[f: B \to ???, b \mapsto |p^{-1}(b)|.\]
+        (Формально, нет множества всех кардиналов. Но если хочется формальности, то можно взять какой-нибудь кардинал $\kappa$, больший $|p^{-1}(b)|$ для конкретной точки $b$, и рассматривать $f: B \to \kappa+1, b \mapsto \min(|p^{-1}(b)|, \kappa)$.) Покажем, что $f^{-1}(\alpha)$ открыто.
+
+        Для всякой точки $b \in f^{-1}(\alpha)$ имеем, что есть правильно накрываемая окретсность $U$ точки $b$. По определению
+        \[\bigsqcup_{i \in I} V_i,\]
+        где $V_i$ открыты и $\pi_i := p|_{V_i}$ --- гомеоморфизм $V_i \to U$. Следовательно для всякой точки $b' \in U$
+        \[p^{-1}(b') = \{\pi^{-1}(b')\}_{i \in I}.\]
+        Следовательно для всякой точки $b' \in U$
+        \[|p^{-1}(b')| = |\{\pi^{-1}(b')\}_{i \in I}| = |I| = |\{\pi^{-1}(b)\}_{i \in I}| = |p^{-1}(b)| = \alpha.\]
+        Таким образом $U \subseteq f^{-1}(\alpha)$.
+
+        Следовательно $B$ разбивается на открытые множества $\{f^{-1}(\alpha)\}_{\alpha \in f(B)}$. При этом по связности $B$ мы имеем, что таких множеств не более одного, т.е. $f$ константно. (Тут мы ещё можем добавить, что эта констанста в формальном случае $< \kappa$, так как есть точка, в которой $f$ меньше $\kappa$. Следовательно и $|p^{-1}|$ есть константная функция.)
+    \end{proof}
+
+    \begin{definition}
+        Число $|p^{-1}(b)|$ называется \emph{числом листов накрытия}.
+    \end{definition}
+
+    \begin{definition}
+        Пусть даны топологические пространства $X$, $Y$ и $B$, накрытие $p: X \to B$ и непрерывное отображение $f: Y \to B$. Всякое отображение $\tilde{f}: Y \to X$ называется \emph{поднятием $f$}, если $f = p \circ \tilde{f}$.
+    \end{definition}
+
+    \begin{theorem}
+        Пусть даны топологические пространства $X$ и $B$, накрытие $p: X \to B$, путь $\alpha$ в $B$ и точка $x_0$, что $p(x_0) = \alpha(0)$. Тогда существует и единственен путь $\tilde{\alpha}$ в $X$, что $p \circ \tilde{\alpha} = \alpha$, т.е. $\alpha$ поднимаемо и единственным образом.
+    \end{theorem}
+
+    \begin{proof}
+        Обозначим за $S$ множество всех точек $s \in [0; 1]$, что $\alpha|_{[0; s]}$ поднимаемо и единственным образом. Покажем, что $S = [0; 1]$, откуда будет следовать поднимаемость $\alpha$ и единственность его поднятия.
+
+        Предположим противное. Тогда $\overline{S} := [0; 1] \setminus S$ непусто. Значит есть $t := \inf(\overline{S})$.
+        
+        Покажем, что $t \in S$. Если $t = 0$, то поскольку $\alpha|_{[0;0]}$, очевидно, поднимаем единственным образом, $t \in S$. Если же $t > 0$, то рассмотрим правильно накрыавемую окрестность $U$ точки $\alpha(t)$. Поскольку для всякого $s \in [0; t)$ сужение $\alpha|_{[0; s]}$ поднимаемо единственным образом, то и $\alpha|_{[0; t)}$ поднимаемо единственным образом. Тогда есть некоторое $a \in [0; t)$, что $\alpha((a; t)) \subseteq U$. При этом
+        \[p^{-1}(U) = \bigsqcup_{i \in I} V_i,\]
+        где $V_i$ открыты. Следовательно $\tilde{\alpha}((a; t))$ является подмножеством строго одного конкретного $V_i$. При этом $\pi := p|_{V_i}$ --- гомеоморфизм $V_i \to U$. Следовательно $\pi^{-1} \circ \alpha$ есть непрерывное отображение на некоторой окрестности $t$ (и в частности на $(a; t]$), и при этом $\pi^{-1} \circ \alpha = \tilde{\alpha}$ на $(a; t)$. Отсюда понятным образом следует, что $t$ логично поднять только до $\pi^{-1}(\alpha(t))$, а значит $\alpha|_{[0; t]}$ поднимаемо единственным образом.
+
+        Теперь покажем, что некоторая окретсность $t$ поднимаема. Пусть $U$ --- некоторая правильно накрываемая окретсность $\alpha(t)$, а $W$ --- какая-то линейно связная окрестность $t$ (т.е. открытый интервал), что $\alpha(W) \subseteq U$. При этом
+        \[p^{-1}(U) := \bigsqcup_{i \in I} V_i,\]
+        где $V_i$ открыты. А $\alpha$ поднимаема в $t$ только до некоторой точки $x$ из какого-то конкретного $V_i$. Следовательно из-за линейной связности если $\alpha$ куда-то может быть поднята на $W$, так только в $V_i$. При этом $\pi := p|_{V_i}$ есть гомеоморфизм $V_i \to U$, а значит поднятие $\alpha$ на $W$ как $\pi^{-1} \circ \alpha$ подходит (в частности оно сочетается с определёнными поднятиями точек из $[0; t)$). Следовательно $t$ есть внутренняя точка $S$, а значит не может быть равна $\inf(\overline{S})$. Значит и $\overline{S}$ пусто.
+    \end{proof}
+
+    \begin{lemma}[о непрерывном аргументе]
+        Пусть дан путь $\gamma: [0; 1] \to \CC \setminus \{0\}$.
+        \begin{enumerate}
+            \item Существует непрерывная функция $\varphi: [0; 1] \to \RR$, что $\gamma(t) = |\gamma(t)| e^{\varphi(t)i}$.
+            \item Такая $\varphi$ единственна с точностью до аддитивной константы вида $2\pi n$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{definition}
+        Значение
+        \[\ind_0(\gamma) = \frac{\varphi(1) - \varphi(0)}{2\pi}\]
+        называется \emph{индексом кривой $\gamma$ относительно точки $0$}.
+    \end{definition}
+
+    \begin{theorem}
+        \todo[inline]{Тут должно быть что-то про обобщения теоремы о поднятиях путей до теоремы о поднятия ``гомотопий'' (здесь --- непрерывных отображений $[0; 1]^2 \to X$). Рассуждение в леции (через лемму Лебега) поднимается через теорему о поднятии пути. Моё рассуждение, кажется, поднимается до всякого связного пространства.}
+    \end{theorem}
+
+    \begin{corollary}
+        Если $\tilde{\alpha}$ и $\tilde{\beta}$ --- поднятия путей $\alpha$ и $\beta$, где $\alpha \sim \beta$. Тогда $\tilde{\alpha} \sim \tilde{\beta}$.
+    \end{corollary}
+
+    \begin{corollary}
+        Поднятие стягиваемой петли --- стягиваемая петля.
+    \end{corollary}
+
+    \begin{corollary}
+        Пусть даны накрытие $p: X \to B$ и точки $x_0 \in X$ и $b_0 := p(x_0)$. Тогда индуцируемый гомоморфизм
+        \[p_\star: \pi_1(X, x_0) \to \pi_1(B, b_0)\]
+        инъективен.
+    \end{corollary}
+
+    \begin{definition}
+        Образ $p_\star(\pi_1(X, x_0))$ называется группой накрытия.
+    \end{definition}
+
+    \begin{remark}
+        \[\pi_1(X, x_0) = p_\star(\pi_1(X, x_0)) \leqslant \pi_1(B, b_0).\]
+    \end{remark}
+
+    \subsection{Универсальные накрытия}
+
+    \begin{definition}
+        Накрытие $p: X \to B$ называется \emph{универсальным}, если $X$ односвязно.
+    \end{definition}
 \end{document}
