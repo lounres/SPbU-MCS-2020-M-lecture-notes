@@ -278,7 +278,7 @@ TSWLatexianTemp*
 
 ### User settings
 # my practices' answers
-/* прак/*-sol-*.*
-/* прак/*-solution-*.*
-/* прак/*-sols-*.*
-/* прак/*-solutions-*.*
+/* прак/*-sol*.*
+/* прак/*-solution*.*
+/* прак/*-sols*.*
+/* прак/*-solutions*.*
