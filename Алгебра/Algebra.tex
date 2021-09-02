@@ -1,25 +1,50 @@
 \documentclass[12pt,a4paper]{article}
-\usepackage{math-text}
+\usepackage{../.tex/mcs-notes}
+\usepackage{todonotes}
+\usepackage{multicol}
 \usepackage[all]{xy}
 \CompileMatrices
 
-\title{Алгебра. %\footnote{\textcolor{red}{\bfseries Этот текст содержит критические недочёты (см. с. \pageref{TODO-list}). Вы можете помочь исправить их, написав мне \href{mailto:minaevgleb@yandex.ru}{по почте} (minaevgleb@yandex.ru) или \href{https://vk.com/lounres}{в ВКонтакте} (@lounres).}}
-}
-\author{В. А. Петров\\lektorium.tv}
+\settitle
+{Алгебра.}
+{В. А. Петров}
+{\%D0\%90\%D0\%BB\%D0\%B3\%D0\%B5\%D0\%B1\%D1\%80\%D0\%B0/Algebra.pdf}
 \date{}
 
 \DeclareMathOperator{\Img}{Im}
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\Frac}{Frac}
+\newcommand{\A}{\ensuremath{\mathrm{A}}\xspace}
+\newcommand{\D}{\ensuremath{\mathrm{D}}\xspace}
+\newcommand{\M}{\ensuremath{\mathrm{M}}\xspace}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Mor}{\mathrm{Mor}}
+\newcommand{\dom}{\mathrm{dom}}
+\newcommand{\cod}{\mathrm{cod}}
+\newcommand{\Ob}{\mathrm{Ob}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Sets}{\mathrm{Sets}}
+\newcommand{\Ens}{\mathrm{Ens}}
+\newcommand{\Groups}{\mathrm{Groups}}
+\newcommand{\Rings}{\mathrm{Rings}}
+\newcommand{\CommRings}{\mathrm{CommRings}}
+\newcommand{\Vect}{\mathrm{Vect}}
+\newcommand{\Mod}{\mathrm{Mod}}
+\newcommand{\Top}{\mathrm{Top}}
+\newcommand{\HTop}{\mathrm{HTop}}
+\newcommand{\Rels}{\mathrm{Rels}}
 
-% \usepackage{todonotes}
 % \setlength{\marginparwidth}{2.5cm}
 % \setlength{\textwidth}{470 pt}
 
 \begin{document}
     \maketitle
 
-    Зарождение --- Аль Хорезин, ``Китхаб Альджебр валь мукабалт''. ``Альджебр'' значит ``перенос из одной части уравнения в другую'', а ``мукабалт'' --- ``приведение подобных''.
+    \listoftodos[TODOs]
+
+    \tableofcontents
+
+    \vspace{2em}
 
     Литература:
     \begin{itemize}
@@ -28,36 +53,42 @@
         \item Винберг ``Курс Алгебры''
     \end{itemize}
 
+    \subsection*{Немного истории}
+
+    Зарождение --- Аль Хорезин, ``Китхаб Альджебр валь мукабалт''. ``Альджебр'' значит ``перенос из одной части уравнения в другую'', а ``мукабалт'' --- ``приведение подобных''.
+
+    \section{Основные понятия.}
+
     \begin{definition}
         Алгебраическая структура --- это множество $M$ + заданные на нём операции + аксиомы на операциях.
     \end{definition}
 
     \begin{definition}
-        Абелева группа --- набор $(M, +: M^2 \to M, 0 \in M)$ с аксиомами:
+        Абелева группа --- набор $(M, +: M^2 \to M)$ с аксиомами:
         \begin{description}
-            \item[$A_1$)] $\forall a, b, c \in M: (a + b) + c = a + (b + c)$ --- ассоциативность сложения
-            \item[$A_2$)] $\forall a \in M: a + 0 = a = 0 + a$ --- нейтральный по сложению элемент
-            \item[$A_3$)] $\forall a, b \in M: a + b = b + a$ --- коммутативность сложения
-            \item[$A_4$)] $\forall a \in M: \exists -a: a + (-a) = 0 = (-a) + a$ --- существование противоположного
+            \item[$\A_1$)] $\forall a, b, c \in M: (a + b) + c = a + (b + c)$ --- ассоциативность сложения
+            \item[$\A_2$)] $\exists 0 \in M: \forall a \in M: a + 0 = a = 0 + a$ --- нейтральный по сложению элемент
+            \item[$\A_3$)] $\forall a, b \in M: a + b = b + a$ --- коммутативность сложения
+            \item[$\A_4$)] $\forall a \in M: \exists -a: a + (-a) = 0 = (-a) + a$ --- существование противоположного
         \end{description}
     \end{definition}
 
-    \begin{definition} Опишем следующие аксиомы на наборе $(M, +: M^2 \to M, \cdot: M^2 \to M, 0 \in M, 1 \in M)$:
+    \begin{definition} Опишем следующие аксиомы на наборе $(M, +: M^2 \to M, \cdot: M^2 \to M)$ в добавок к $\A_1$, \dots, $\A_4$:
         \begin{description}
-            \item[$D$)] $\forall a, b, k \in M: k(a + b) = ka + kb$, $(a + b)k = ak + bk$ --- дистрибутивность
-            \item[$M_1$)] $\forall a, b, c \in M: (a \cdot b) \cdot c = a \cdot (b \cdot c)$ --- ассоциативность умножения
-            \item[$M_2$)] $\forall a \in M: a \cdot 1 = a = 1 \cdot a$ --- нейтральный по умножению элемент
-            \item[$M_3$)] $\forall a, b \in M: a \cdot b = b \cdot a$ --- коммутативность умножения
-            \item[$M_4$)] $\forall a \in M \setminus \{0\}: \exists\, a^{-1}: a \cdot a^{-1} = 1 = a^{-1} \cdot a$ --- существование обратного
+            \item[$\D$)] $\forall a, b, k \in M: k(a + b) = ka + kb$, $(a + b)k = ak + bk$ --- дистрибутивность
+            \item[$\M_1$)] $\forall a, b, c \in M: (a \cdot b) \cdot c = a \cdot (b \cdot c)$ --- ассоциативность умножения
+            \item[$\M_2$)] $\exists 1 \in M: \forall a \in M: a \cdot 1 = a = 1 \cdot a$ --- нейтральный по умножению элемент
+            \item[$\M_3$)] $\forall a, b \in M: a \cdot b = b \cdot a$ --- коммутативность умножения
+            \item[$\M_4$)] $\forall a \in M \setminus \{0\}: \exists\, a^{-1}: a \cdot a^{-1} = 1 = a^{-1} \cdot a$ --- существование обратного
         \end{description}
         По этим аксиомам определим следующие понятия:
         \begin{description}
-            \item[\emph{Кольцо}] --- набор $(M, +, \cdot, 0)$, что верны $A_1$, $A_2$, $A_3$, $A_4$ и $D$.
-            \item[\emph{Ассоциативное кольцо}] --- кольцо с $M_1$.
-            \item[\emph{Кольцо с единицей}] --- кольцо с $M_2$.
-            \item[\emph{Тело}] --- кольцо с $M_1$, $M_2$.
-            \item[\emph{Поле}] --- кольцо с $M_1$, $M_2$, $M_3$, $M_4$.
-            \item[\emph{Полукольцо}] --- кольцо без $A_4$.
+            \item[\emph{Кольцо}] --- набор $(M, +, \cdot, 0)$, что верны $\A_1$, $\A_2$, $\A_3$, $\A_4$ и $\D$.
+            \item[\emph{Ассоциативное кольцо}] --- кольцо с $\M_1$.
+            \item[\emph{Кольцо с единицей}] --- кольцо с $\M_2$.
+            \item[\emph{Тело}] --- кольцо с $\M_1$, $\M_2$, $\M_4$.
+            \item[\emph{Поле}] --- кольцо с $\M_1$, $\M_2$, $\M_3$, $\M_4$.
+            \item[\emph{Полукольцо}] --- кольцо без $\A_4$.
         \end{description}
     \end{definition}
 
@@ -72,12 +103,12 @@
         Если взять $R^4 = R \times R^3$ и рассмотреть $\cdot: ((a; u); (b; v)) \mapsto (ab-u\cdot v; av + bu + u\times v)$ и $+: ((a; u); (b; v)) \mapsto (a + b, u + v)$, тогда получим $\HH$ --- ассоциативное некоммутативное тело кватернионов. Ассоциативность доказал Гамильтон.
     \end{example}
 
-    \begin{statement}
+    \begin{lemma}
         $0 \cdot a = 0$
-    \end{statement}
+    \end{lemma}
 
     \begin{definition}
-        Коммутативное кольцо без делителей нуля называетсся \emph{областью (целостности)}.
+        Коммутативное кольцо без делителей нуля называется \emph{областью (целостности)}.
     \end{definition}
 
     \begin{definition}
@@ -87,7 +118,7 @@
     \begin{definition}
         \emph{Подкольцо} --- это подмножество кольца, согласованное с его операциями.
 
-        Как следствие ноль и обратимость соглассуются автоматически.
+        Как следствие ноль и обратимость согласуются автоматически.
     \end{definition}
 
     \begin{statement}
@@ -123,7 +154,7 @@
     \end{statement}
 
     \begin{definition}
-        $a$ и $b$ \emph{ассоциативны}, если $a \mid b$ и $b \mid a$. Обозначение: $a \sim b$.
+        $a$ и $b$ \emph{ассоциированы}, если $a \mid b$ и $b \mid a$. Обозначение: $a \sim b$.
     \end{definition}
 
     \begin{statement}
@@ -190,7 +221,7 @@
             \item $a \in I \Rightarrow -a \in I$;
             \item $a \in I, r \in R \Rightarrow ar \in I$.
         \end{enumerate}
-        $I$ называется \emph{левым идеалом}, ессли аксиому 4 заменить на ``$a \in I, r \in R \Rightarrow ra \in I$''. Также $I$ называется \emph{двухсторонним идеалом}, если является левым и правым идеалом, и обозначается как $I \triangleleft P$.
+        $I$ называется \emph{левым идеалом}, если аксиому 4 заменить на ``$a \in I, r \in R \Rightarrow ra \in I$''. Также $I$ называется \emph{двухсторонним идеалом}, если является левым и правым идеалом, и обозначается как $I \triangleleft P$.
     \end{definition}
 
     \begin{remark}
@@ -198,7 +229,7 @@
     \end{remark}
 
     \begin{example}
-        Пусть дано кольцо $P$ и фиксированы $a_1, \dots, a_n \in P$. Тогда $a_1 P + \dots + a_n P = \{a_1 x_1 + \dots + a_n x_n \mid x_1, \dots, x_n \in P\}$ есть правый (конечнопорождённый) идеал, попрождённый элементами $a_1, \dots, a_n$. Аналогично $P a_1 + \dots + P a_n = \{x_1 a_1 + \dots + x_n a_n \mid x_1, \dots, x_n \in P\}$ --- левый (конечнопорождённый) идеал, попрождённый элементами $a_1, \dots, a_n$.
+        Пусть дано кольцо $P$ и фиксированы $a_1, \dots, a_n \in P$. Тогда $a_1 P + \dots + a_n P = \{a_1 x_1 + \dots + a_n x_n \mid x_1, \dots, x_n \in P\}$ есть правый (конечнопорождённый) идеал, порождённый элементами $a_1, \dots, a_n$. Аналогично $P a_1 + \dots + P a_n = \{x_1 a_1 + \dots + x_n a_n \mid x_1, \dots, x_n \in P\}$ --- левый (конечнопорождённый) идеал, порождённый элементами $a_1, \dots, a_n$.
     \end{example}
 
     \begin{definition}
@@ -229,7 +260,7 @@
     \begin{proof}
         Заметим, что $(a, b) = (a + bk, b)$.
         
-        Пусть даны $a$ и $b$. Предположим, что $\phi(a) \geqslant \phi(b)$, иначе поменяем их местами. Тем самым по аксиоме Евклида найдутся $q$ и $r$, что $a = bq + r$, а $\phi(r) < \phi(b) \leqslant \phi(a)$, значит $\phi(a) + \phi(b) > \phi(r) + \phi(b)$. При этом $(a, b) = (r, b)$. Значит бесконечно $\phi(a) + \phi(b)$ не может бесконечнго уменьшаться, так как натурально, значит за конечное кол-во переходов мы получим, что одно из чисел делит другое, а значит НОД стал определён.
+        Пусть даны $a$ и $b$. Предположим, что $\varphi(a) \geqslant \varphi(b)$, иначе поменяем их местами. Тем самым по аксиоме Евклида найдутся $q$ и $r$, что $a = bq + r$, а $\varphi(r) < \varphi(b) \leqslant \varphi(a)$, значит $\varphi(a) + \varphi(b) > \varphi(r) + \varphi(b)$. При этом $(a, b) = (r, b)$. Значит бесконечно $\varphi(a) + \varphi(b)$ не может бесконечного уменьшаться, так как натурально, значит за конечное кол-во переходов мы получим, что одно из чисел делит другое, а значит НОД стал определён.
     \end{proof}
 
     \begin{theorem}[линейное представление НОД]
@@ -245,11 +276,11 @@
     \end{proof}
 
     \begin{definition}
-        Элемент $p$ области целостности $R$ назвыается \emph{неприводимым}, если $\forall d \mid p$ либо $d \sim 1$, либо $d \sim p$.
+        Элемент $p$ области целостности $R$ называется \emph{неприводимым}, если $\forall d \mid p$ либо $d \sim 1$, либо $d \sim p$.
     \end{definition}
     
     \begin{definition}
-        Элемент $p$ области целостности $R$ назвыается \emph{простым}, если из условия $p \mid ab$ следует, что $p \mid a$ или $p \mid b$.
+        Элемент $p$ области целостности $R$ называется \emph{простым}, если из условия $p \mid ab$ следует, что $p \mid a$ или $p \mid b$.
     \end{definition}
 
     \begin{statement}
@@ -351,32 +382,32 @@
         \end{itemize}
         Покажем, что $R/I$ --- кольцо:
         \begin{description}
-            \item[$A_1$)] $\forall a, b, c \in R: ([a] + [b]) + [c] = [a + b] + [c] = [(a + b) + c] = [a + (b + c)] = [a] + [b + c] = [a] + ([b] + [c])$
-            \item[$A_2$)] $\forall a \in R: [a] + [0] = [a + 0] = a = [0 + a] = [0] + [a]$
-            \item[$A_3$)] $\forall a, b \in R: [a] + [b] = [a + b] = [b + a] = [b] + [a]$
-            \item[$A_4$)] $\forall a \in R: [a] + -[a] = [a] + [-a] = [a + (-a)] = [0] = [(-a) + a] = [-a] + [a] = -[a] + [a]$
-            \item[$D$)] $\forall a, b, k \in R: [k]([a] + [b]) = [k][a + b] = [k(a + b)] = [ka + kb] = [ka] + [kb] = [k][a] + [k][b]$, $([a] + [b])[k] = [a + b][k] = [(a + b)k] = [ak + bk] = [ak] + [bk] = [a][k] + [b][k]$
-            \item[$M_1$)] $\forall a, b, c \in R: ([a] \cdot [b]) \cdot [c] = [a \cdot b] \cdot [c] = [(a \cdot b) \cdot c] = [a \cdot (b \cdot c)] = [a] \cdot [b \cdot c] = [a] \cdot ([b] \cdot [c])$
-            \item[$M_2$)] $\forall a \in R: [a] \cdot [1] = [a \cdot 1] = [a] = [1 \cdot a] = [1] \cdot [a]$
-            \item[$M_3$)] $\forall a, b \in R: [a] \cdot [b] = [a \cdot b] = [b \cdot a] = [b] \cdot [a]$
-            \item[$M_4$)] $\forall a \in R \setminus \{0\}: [a] \cdot [a]^{-1} = [a] \cdot [a^{-1}] = [a \cdot a^{-1}] = [1] = [a^{-1} \cdot a] = [a^{-1}] \cdot [a] = [a]^{-1} \cdot [a]$
+            \item[$\A_1$)] $\forall a, b, c \in R: ([a] + [b]) + [c] = [a + b] + [c] = [(a + b) + c] = [a + (b + c)] = [a] + [b + c] = [a] + ([b] + [c])$
+            \item[$\A_2$)] $\forall a \in R: [a] + [0] = [a + 0] = a = [0 + a] = [0] + [a]$
+            \item[$\A_3$)] $\forall a, b \in R: [a] + [b] = [a + b] = [b + a] = [b] + [a]$
+            \item[$\A_4$)] $\forall a \in R: [a] + -[a] = [a] + [-a] = [a + (-a)] = [0] = [(-a) + a] = [-a] + [a] = -[a] + [a]$
+            \item[$\D$)] $\forall a, b, k \in R: [k]([a] + [b]) = [k][a + b] = [k(a + b)] = [ka + kb] = [ka] + [kb] = [k][a] + [k][b]$, $([a] + [b])[k] = [a + b][k] = [(a + b)k] = [ak + bk] = [ak] + [bk] = [a][k] + [b][k]$
+            \item[$\M_1$)] $\forall a, b, c \in R: ([a] \cdot [b]) \cdot [c] = [a \cdot b] \cdot [c] = [(a \cdot b) \cdot c] = [a \cdot (b \cdot c)] = [a] \cdot [b \cdot c] = [a] \cdot ([b] \cdot [c])$
+            \item[$\M_2$)] $\forall a \in R: [a] \cdot [1] = [a \cdot 1] = [a] = [1 \cdot a] = [1] \cdot [a]$
+            \item[$\M_3$)] $\forall a, b \in R: [a] \cdot [b] = [a \cdot b] = [b \cdot a] = [b] \cdot [a]$
+            \item[$\M_4$)] $\forall a \in R \setminus \{0\}: [a] \cdot [a]^{-1} = [a] \cdot [a^{-1}] = [a \cdot a^{-1}] = [1] = [a^{-1} \cdot a] = [a^{-1}] \cdot [a] = [a]^{-1} \cdot [a]$
         \end{description}
     \end{proof}
 
     \begin{remark}
-        Доказательство для классов эквивалентности каждой аксиомы основывалось только на соответсвующей аксиоме и определениях ранее.
+        Доказательство для классов эквивалентности каждой аксиомы основывалось только на соответствующей аксиоме и определениях ранее.
     \end{remark}
 
     \begin{definition}
-        \emph{Гомоморфизм} --- такое отображение $\phi: R \to S$ --- это отображение, сохраняющее операции:
+        \emph{Гомоморфизм} --- такое отображение $\varphi: R \to S$ --- это отображение, сохраняющее операции:
         \begin{itemize}
-            \item $\phi(a + b) = \phi(a) + \phi(b)$;
-            \item $\phi(a \cdot b) = \phi(a) \cdot \phi(b)$;
-            \item $\phi(0) = 0$;
-            \item $\phi(-a) = -\phi(a)$.
+            \item $\varphi(a + b) = \varphi(a) + \varphi(b)$;
+            \item $\varphi(a \cdot b) = \varphi(a) \cdot \varphi(b)$;
+            \item $\varphi(0) = 0$;
+            \item $\varphi(-a) = -\varphi(a)$.
         \end{itemize}
 
-        \emph{Гомоморфизм кольца с 1} --- гомоморфизм, что $\phi(1) = 1$.
+        \emph{Гомоморфизм кольца с 1} --- гомоморфизм, что $\varphi(1) = 1$.
     \end{definition}
 
     \begin{statement}
@@ -384,7 +415,7 @@
     \end{statement}
 
     \begin{definition}
-        Пусть $f: X \to Y$. Несложно видеть, что $f$ раскладывается в композицию сюръекции $f: X \to f(X)$ и инъекции $id: f(X) \to Y$. Тогда $\Img(f) = \{f(x) \mid x \in X\}$ --- \emph{множество значений} $f$, а классы значений $X$, переходящих в один $y\in Y$ суть \emph{слои} --- $f^{-1}(y) = \{x \mid f(x) = y\}$ для некоторого $y$.
+            Пусть $f: X \to Y$. Несложно видеть, что $f$ раскладывается в композицию сюръекции $f: X \to f(X)$ и инъекции $id: f(X) \to Y$. Тогда $\Img(f) = \{f(x) \mid x \in X\}$ --- \emph{множество значений} $f$, а классы значений $X$, переходящих в один $y\in Y$ суть \emph{слои} --- $f^{-1}(y) = \{x \mid f(x) = y\}$ для некоторого $y$.
         \[
             \xymatrix{
                 X \ar@{->>}[rd]^f \ar[rr]^f && Y\\
@@ -394,7 +425,7 @@
     \end{definition}
 
     \begin{definition}
-        Пусть $\phi: R \to S$ --- гомоморфизм. Тогда \emph{ядром} $\phi$ называется $\Ker(\phi) := \{r \in R \mid \phi(r) = 0\}$.
+        Пусть $\varphi: R \to S$ --- гомоморфизм. Тогда \emph{ядром} $\varphi$ называется $\Ker(\varphi) := \{r \in R \mid \varphi(r) = 0\}$.
     \end{definition}
 
     \begin{statement}
@@ -402,7 +433,7 @@
     \end{statement}
 
     \begin{definition}
-        $\phi: S \to R$ --- \emph{изоморфизм}, если это биективный гомоморфизм.
+        $\varphi: S \to R$ --- \emph{изоморфизм}, если это биективный гомоморфизм.
     \end{definition}
 
     \begin{definition}
@@ -413,7 +444,7 @@
         Пусть $R \cong S$. Тогда
         \begin{itemize}
             \item Если $R$ коммутативно, то и $S$ коммутативно.
-            \item Если $R$ --- облассть целостности, то и $S$ --- область целостности.
+            \item Если $R$ --- область целостности, то и $S$ --- область целостности.
             \item Если $R$ --- ОГИ, то и $S$ --- ОГИ.
         \end{itemize}
     \end{statement}
@@ -426,29 +457,29 @@
         \end{enumerate}
     \end{statement}
 
-    \begin{theorem}[теорема о гомоморфизме]
-        Пусть $\phi: R \to S$ --- гомоморфизм. (Вспомним, что $\Ker(\phi) \triangleleft R$, а $\Img(\phi) = \phi(R)$.) Тогда $R/\Ker(\phi) \cong \Img(\phi)$, где изоморфизм переводит $[a] \mapsto \phi(a)$.
+    \begin{theorem}[о гомоморфизме]
+        Пусть $\varphi: R \to S$ --- гомоморфизм. (Вспомним, что $\Ker(\varphi) \triangleleft R$, а $\Img(\varphi) = \varphi(R)$.) Тогда $R/\Ker(\varphi) \cong \Img(\varphi)$, где изоморфизм переводит $[a] \mapsto \varphi(a)$.
         \[
             \xymatrix{
-                R \ar@{->>}[d]_{r \mapsto [r]} \ar[rr]^\phi && S\\
-                R/\Ker(\phi) \ar[rr]^-\sim_-{[r] \mapsto \phi(r)} && \Img(\phi) \ar@{^{(}->}[u]_{id}
+                R \ar@{->>}[d]_{r \mapsto [r]} \ar[rr]^\varphi && S\\
+                R/\Ker(\varphi) \ar[rr]^-\sim_-{[r] \mapsto \varphi(r)} && \Img(\varphi) \ar@{^{(}->}[u]_{id}
             }
         \]
     \end{theorem}
 
     \begin{proof}\ 
         \begin{enumerate}
-            \item Корректность. $[a] = [a'] \Leftrightarrow a - a' \in \Ker(\phi) \Leftrightarrow \phi(a - a') = 0 \Leftrightarrow \phi(a) = \phi(a')$.
+            \item Корректность. $[a] = [a'] \Leftrightarrow a - a' \in \Ker(\varphi) \Leftrightarrow \varphi(a - a') = 0 \Leftrightarrow \varphi(a) = \varphi(a')$.
                 \begin{remark}
-                    Классы экввивалентности по $\Ker(\phi)$ как раз слои $\phi$.
+                    Классы эквивалентности по $\Ker(\varphi)$ как раз слои $\varphi$.
                 \end{remark}
             \item Заметим, что работают следующие операции:
                 \begin{itemize}
-                    \item $[a] + [b] = [a + b] \mapsto \phi(a) + \phi(b) = \phi(a + b)$;
-                    \item $[a] \cdot [b] = [a \cdot b] \mapsto \phi(a) \cdot \phi(b) = \phi(a \cdot b)$. 
+                    \item $[a] + [b] = [a + b] \mapsto \varphi(a) + \varphi(b) = \varphi(a + b)$;
+                    \item $[a] \cdot [b] = [a \cdot b] \mapsto \varphi(a) \cdot \varphi(b) = \varphi(a \cdot b)$. 
                 \end{itemize}
-            \item Сюръективность следует из того, что $\phi(a) = \phi(b) \Leftrightarrow [a] = [b]$.
-            \item Инъективность следует из того, что каждый элемент в $\Img(\phi)$ имеет прообраз.
+            \item Сюръективность следует из того, что $\varphi(a) = \varphi(b) \Leftrightarrow [a] = [b]$.
+            \item Инъективность следует из того, что каждый элемент в $\Img(\varphi)$ имеет прообраз.
         \end{enumerate}
     \end{proof}
 
@@ -457,7 +488,7 @@
     \end{theorem}
 
     \begin{proof}
-        Рассмотрим $\phi: \ZZ/mn\ZZ \to \ZZ/m\ZZ \times \ZZ/n\ZZ, [a]_{mn} \mapsto ([a]_m; [a]_n)$. Несложно заметить, что ядро $\phi$ тривиально, поэтому $\ZZ/mn\ZZ \cong \ZZ/mn\ZZ/\Ker(\phi) \cong \Img(\phi)$. Но в последнем элементов не менее $mn$, так как $\Img(\phi) \cong \ZZ/mn\ZZ$, но и не более, так как $|\ZZ/m\ZZ \times \ZZ/n\ZZ| = mn$, поэтому $\Img(\phi) = \ZZ/m\ZZ \times \ZZ/n\ZZ$, поэтому $\ZZ/mn\ZZ \cong \ZZ/m\ZZ \times \ZZ/n\ZZ$.
+        Рассмотрим $\varphi: \ZZ/mn\ZZ \to \ZZ/m\ZZ \times \ZZ/n\ZZ, [a]_{mn} \mapsto ([a]_m; [a]_n)$. Несложно заметить, что ядро $\varphi$ тривиально, поэтому $\ZZ/mn\ZZ \cong \ZZ/mn\ZZ/\Ker(\varphi) \cong \Img(\varphi)$. Но в последнем элементов не менее $mn$, так как $\Img(\varphi) \cong \ZZ/mn\ZZ$, но и не более, так как $|\ZZ/m\ZZ \times \ZZ/n\ZZ| = mn$, поэтому $\Img(\varphi) = \ZZ/m\ZZ \times \ZZ/n\ZZ$, поэтому $\ZZ/mn\ZZ \cong \ZZ/m\ZZ \times \ZZ/n\ZZ$.
     \end{proof}
 
     \begin{theorem}[КТО]
@@ -470,22 +501,22 @@
     \end{proof}
 
     \begin{theorem}[Универсальное свойтсво фактор-кольца]
-        Пусть есть $I \triangleleft R$ и гомоморфизмы $\pi: R \to R/I$ --- нативный гомоморфизм, и $\pi: R \to S$, что $\pi(I) = \{0\}$. Тогда существует и единственен гомоморфизм $\phi': R/I \to S$, что $\phi' \circ \pi = \phi$.
+        Пусть есть $I \triangleleft R$ и гомоморфизмы $\pi: R \to R/I$ --- нативный гомоморфизм, и $\varphi: R \to S$, что $\pi(I) = \{0\}$. Тогда существует и единственен гомоморфизм $\varphi': R/I \to S$, что $\varphi' \circ \pi = \varphi$.
         \[
             \xymatrix{
-                R \ar@{->>}[rd]_{\pi} \ar[rr]^\phi && S\\
-                & R/I \ar[ur]_{\phi'}
+                R \ar@{->>}[rd]_{\pi} \ar[rr]^\varphi && S\\
+                & R/I \ar[ur]_{\varphi'}
             }
         \]
     \end{theorem}
 
     \begin{proof}
-        $\phi'([a]) = (\phi' \circ \pi)(a) = \phi(a)$ --- это означает единственность; так функцию и определим. Осталось показать корректность.
+        $\varphi'([a]) = (\varphi' \circ \pi)(a) = \varphi(a)$ --- это означает единственность; так функцию и определим. Осталось показать корректность.
 
-        Несложно заметить, что если $[a] = [b]$, то $a - b \in I$, значит $\phi(a - b) = 0$, значит $\phi(a) = \phi(b)$. Теперь проверим операции:
+        Несложно заметить, что если $[a] = [b]$, то $a - b \in I$, значит $\varphi(a - b) = 0$, значит $\varphi(a) = \varphi(b)$. Теперь проверим операции:
         \begin{itemize}
-            \item $\phi'([a] + [b]) = \phi'([a + b]) = \phi(a + b) = \phi(a) + \phi(b) = \phi'([a]) + \phi'([b])$.
-            \item $\phi'([a] \cdot [b]) = \phi'([a \cdot b]) = \phi(a \cdot b) = \phi(a) \cdot \phi(b) = \phi'([a]) \cdot \phi'([b])$
+            \item $\varphi'([a] + [b]) = \varphi'([a + b]) = \varphi(a + b) = \varphi(a) + \varphi(b) = \varphi'([a]) + \varphi'([b])$.
+            \item $\varphi'([a] \cdot [b]) = \varphi'([a \cdot b]) = \varphi(a \cdot b) = \varphi(a) \cdot \varphi(b) = \varphi'([a]) \cdot \varphi'([b])$
         \end{itemize}
     \end{proof}
 
@@ -504,61 +535,262 @@
 
     \begin{remark}
         Есть нативный инъективный гомоморфизм из $R$ в $\Frac(R)$:
-        \[\phi: R \to \Frac(R), r \mapsto [(r; 1)]\]
+        \[\varphi: R \to \Frac(R), r \mapsto [(r; 1)]\]
     \end{remark}
 
     \begin{theorem}[Уникальное свойтсво поля частных]
-        Пусть $R$ --- область целостности, $F$ --- поле, $\phi: R \to F$ --- инъективный гомоморфизм, сохраняющий $1$, $\pi: R \to \Frac(R)$ --- нативный гомоморфизм. Тогда существует единственный гомоморфизм $\phi': \Frac(R) \to F$, что $\phi' \circ \pi = \phi$.
+        Пусть $R$ --- область целостности, $F$ --- поле, $\varphi: R \to F$ --- инъективный гомоморфизм, сохраняющий $1$, $\pi: R \to \Frac(R)$ --- нативный гомоморфизм. Тогда существует единственный гомоморфизм $\varphi': \Frac(R) \to F$, что $\varphi' \circ \pi = \varphi$.
         \[
             \xymatrix{
-                R \ar@{^{(}->}[rd]_{\pi} \ar@{^{(}->}[rr]^\phi && F\\
-                & \Frac(R) \ar[ur]_{\phi'}
+                R \ar@{^{(}->}[rd]_{\pi} \ar@{^{(}->}[rr]^\varphi && F\\
+                & \Frac(R) \ar[ur]_{\varphi'}
             }
         \]
     \end{theorem}
 
-    \begin{remark}
-        Если $\phi: E \to F$ --- гомоморфизм полей, сохраняющий $1$, то он инъективен. Действительно, $\Ker(\phi)$ --- идеал, значит ${0}$ или $E$, так как $E$ поле, но случай $E$ не подходит, так как не сохраняется $0$, значит $\Ker(\phi) = {0}$, значит $\phi$ инъективно.
+    \begin{remark}\label{field_homomorphism_remark}
+        Если $\varphi: E \to F$ --- гомоморфизм полей, сохраняющий $1$, то он инъективен. Действительно, $\Ker(\varphi)$ --- идеал, значит ${0}$ или $E$, так как $E$ поле, но случай $E$ не подходит, так как не сохраняется $0$, значит $\Ker(\varphi) = {0}$, значит $\varphi$ инъективно.
     \end{remark}
 
     \begin{proof}
         \begin{thlemma}
-            $\phi'(1/b) = 1/\phi'(b)$
+            $\varphi'(1/b) = 1/\varphi'(b)$
         \end{thlemma}
+
+        \begin{proof}
+            По замечанию \ref{field_homomorphism_remark} $\varphi'$ --- инъективен, но $\varphi'(0) = 0$, а тогда для всякого $a \neq 0$ верно, что $\varphi'(a) \neq 0$, значит $\varphi'(a) \cdot \varphi'(a^{-1}) = \varphi'(1) = 1$, значит $\varphi'(a)^{-1} = \varphi'(a^{-1})$.
+        \end{proof}
 
         \begin{thlemma}
-            $\phi'(a/b) = \phi'(a)/\phi'(b)$.
+            $\varphi'(a/b) = \varphi'(a)/\varphi'(b)$.
         \end{thlemma}
 
-        Заметим, что $\phi'(a) = \phi'(\pi(a)) = \phi(a)$, поэтому $\phi'(a/b) = \phi(a)/\phi(b)$ --- это означает единственность $\phi'$.
+        \begin{proof}
+            $\varphi'(a/b) = \varphi'(a) \cdot \varphi'(b^{-1}) = \varphi'(a) \cdot \varphi'(b)^{-1} = \varphi'(a)/\varphi'(b)$.
+        \end{proof}
 
-        Теперь рассмотрим соответсвующую $\phi': a/b \mapsto \phi(a)/\phi(b)$. Проверим корректность:
+        Заметим, что $\varphi'(a) = \varphi'(\pi(a)) = \varphi(a)$, поэтому $\varphi'(a/b) = \varphi(a)/\varphi(b)$ --- это означает единственность $\varphi'$.
+
+        Теперь рассмотрим соответствующую $\varphi': a/b \mapsto \varphi(a)/\varphi(b)$. Проверим корректность:
         \begin{align*}
             \frac{a}{b} &= \frac{c}{d}&
             &\Rightarrow&
             ad &= bc&
             &\Rightarrow&
-            \phi(ad) &= \phi(bc)&
+            \varphi(ad) &= \varphi(bc)&
             &\Rightarrow\\
-            \phi(a)\phi(d) &= \phi(b)\phi(c)&
+            \varphi(a)\varphi(d) &= \varphi(b)\varphi(c)&
             &\Rightarrow&
-            \frac{\phi(a)}{\phi(b)} &= \frac{\phi(c)}{\phi(d)}&
+            \frac{\varphi(a)}{\varphi(b)} &= \frac{\varphi(c)}{\varphi(d)}&
             &\Rightarrow&
-            \phi'\left(\frac{a}{b}\right) &= \phi'\left(\frac{c}{d}\right)
+            \varphi'\left(\frac{a}{b}\right) &= \varphi'\left(\frac{c}{d}\right)
         \end{align*}
         Теперь проверим согласованность с операциями:
         \begin{itemize}
-            \item \[\phi'\left(\frac{a}{b}\cdot \frac{c}{d}\right) = \frac{\phi(ac)}{\phi(bd)}=\frac{\phi(a)}{\phi(b)}\cdot\frac{\phi(c)}{\phi(d)}=\phi'\left(\frac{a}{b}\right)\cdot\phi'\left(\frac{c}{d}\right);\]
+            \item \[\varphi'\left(\frac{a}{b}\cdot \frac{c}{d}\right) = \frac{\varphi(ac)}{\varphi(bd)}=\frac{\varphi(a)}{\varphi(b)}\cdot\frac{\varphi(c)}{\varphi(d)}=\varphi'\left(\frac{a}{b}\right)\cdot\varphi'\left(\frac{c}{d}\right);\]
             \item
                 \begin{multline*}
-                    \phi'\left(\frac{a}{b} + \frac{c}{d}\right) = \phi'\left(\frac{ad + bc}{bd}\right) = \frac{\phi(ad + bc)}{\phi(bd)} = \\
-                    \frac{\phi(a)\phi(d) + \phi(b)\phi(c)}{\phi(b)\phi(d)} = \frac{\phi(a)}{\phi(b)} + \frac{\phi(c)}{\phi(d)} = \phi'\left(\frac{a}{b}\right) + \phi'\left(\frac{c}{d}\right)
+                    \varphi'\left(\frac{a}{b} + \frac{c}{d}\right) = \varphi'\left(\frac{ad + bc}{bd}\right) = \frac{\varphi(ad + bc)}{\varphi(bd)} = \\
+                    \frac{\varphi(a)\varphi(d) + \varphi(b)\varphi(c)}{\varphi(b)\varphi(d)} = \frac{\varphi(a)}{\varphi(b)} + \frac{\varphi(c)}{\varphi(d)} = \varphi'\left(\frac{a}{b}\right) + \varphi'\left(\frac{c}{d}\right)
                 \end{multline*}
         \end{itemize}
         
     \end{proof}
 
-    % \pagebreak
+    \section{Многочлены}
 
-    % \listoftodos\label{TODO-list}
+    \begin{theorem}
+        Пусть дано кольцо $R$. Рассмотрим множество $S$ финитных бесконечных последовательностей элементов из $R$; т.е. все такие последовательности $(a_n)_{n=0}^\infty$, что всякое $a_n \in R$ и есть такое $N$, что для всякого $n > N$ верно, что $a_n = 0_R$. Также рассмотрим операции сложения и умножения на $S$:
+        \begin{align*}
+            &{+}: S^2 \to S, ((a_n)_{n=0}^\infty, (b_n)_{n=0}^\infty) \mapsto (a_n + b_n)_{n=0}^\infty&
+            &{\cdot}: S^2 \to S, ((a_n)_{n=0}^\infty, (b_n)_{n=0}^\infty) \mapsto \left(\sum_{k=0}^n a_k \cdot b_{n-k}\right)_{n=0}^\infty
+        \end{align*}
+        Тогда
+        \begin{enumerate}
+            \item $S$ является кольцом, где $+$ --- операция сложения, $\cdot$ --- операция умножения, $(0_R)_{n=0}^\infty$ --- нейтральный по сложению элемент.
+            \item $S$ наследует от $R$ аксиомы $\M_1$, $\M_2$ и $\M_3$.
+            \item $R$ изоморфно подкольцу $S$, состоящему из элементов вида $(a, 0, 0 , \dots)$, где $a \in R$.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{definition}
+        Множество $S$ из прошлой теоремы называется \emph{кольцом многочленов над $R$} и обозначается $R[x]$. При этом всякий его элемент $(a_n)_{n=0}^\infty$ обозначается как $a_0 + \cdots + a_n x^n + \cdots = \sum_{n=0}^\infty a_n x^n$.
+    \end{definition}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Важно сказать, что из $\A_1$ следует корректность определения умножения. Проверим аксиомы:
+                \begin{description}
+                    \item[$\A_1$)] $\forall (a_n)_{n=0}^\infty, (b_n)_{n=0}^\infty, (c_n)_{n=0}^\infty \in S:$
+                        \begin{align*}
+                            ((a_n)_{n=0}^\infty + (b_n)_{n=0}^\infty) + (c_n)_{n=0}^\infty
+                            &= (a_n + b_n)_{n=0}^\infty + (c_n)_{n=0}^\infty\\
+                            &= ((a_n + b_n) + c_n)_{n=0}^\infty\\
+                            &= (a_n + (b_n + c_n))_{n=0}^\infty\\
+                            &= (a_n)_{n=0}^\infty + (b_n + c_n)_{n=0}^\infty\\
+                            &= (a_n)_{n=0}^\infty + ((b_n)_{n=0}^\infty + (c_n)_{n=0}^\infty)
+                        \end{align*}
+                    \item[$\A_2$)] $\forall (a_n)_{n=0}^\infty \in R:$
+                        \begin{align*}
+                            (a_n)_{n=0}^\infty + (0)_{n=0}^\infty
+                            &= (a_n + 0)_{n=0}^\infty\\
+                            &= (a_n)_{n=0}^\infty\\
+                            &= (0 + a_n)_{n=0}^\infty\\
+                            &= (0)_{n=0}^\infty + (a_n)_{n=0}^\infty
+                        \end{align*}
+                    \item[$\A_3$)] $\forall (a_n)_{n=0}^\infty, (b_n)_{n=0}^\infty \in R:$
+                        \begin{align*}
+                            (a_n)_{n=0}^\infty + (b_n)_{n=0}^\infty
+                            &= (a_n + b_n)_{n=0}^\infty\\
+                            &= (b_n + a_n)_{n=0}^\infty\\
+                            &= (b_n)_{n=0}^\infty + (a_n)_{n=0}^\infty
+                        \end{align*}
+                    \item[$\A_4$)] $\forall (a_n)_{n=0}^\infty \in R:$
+                        \begin{align*}
+                            (a_n)_{n=0}^\infty + (-a_n)_{n=0}^\infty
+                            &= (a_n + -a_n)_{n=0}^\infty\\
+                            &= (0)_{n=0}^\infty\\
+                            &= (-a_n + a_n)_{n=0}^\infty\\
+                            &= (-a_n)_{n=0}^\infty + (a_n)_{n=0}^\infty
+                        \end{align*}
+                    \item[$\D$)] $\forall (a_n)_{n=0}^\infty, (b_n)_{n=0}^\infty, (k_n)_{n=0}^\infty \in R:$
+                        \begin{align*}
+                            (k_n)_{n=0}^\infty((a_n)_{n=0}^\infty + (b_n)_{n=0}^\infty)
+                            &= (k_n)_{n=0}^\infty \cdot (a_n + b_n)_{n=0}^\infty\\
+                            &= \left(\sum_{t=0}^n k_t(a_{n-t} + b_{n-t})\right)_{n=0}^\infty\\
+                            &= \left(\sum_{t=0}^n k_t \cdot a_{n-t} + \sum_{t=0}^n k_t \cdot b_{n-t}\right)_{n=0}^\infty\\
+                            &= \left(\sum_{t=0}^n k_t \cdot a_{n-t}\right)_{n=0}^\infty + \left(\sum_{t=0}^n k_t \cdot b_{n-t}\right)_{n=0}^\infty\\
+                            &= (k_n)_{n=0}^\infty (a_n)_{n=0}^\infty + (k_n)_{n=0}^\infty (b_n)_{n=0}^\infty
+                        \end{align*}
+                        и
+                        \begin{align*}
+                            ((a_n)_{n=0}^\infty + (b_n)_{n=0}^\infty)(k_n)_{n=0}^\infty
+                            &= (a_n + b_n)_{n=0}^\infty \cdot (k_n)_{n=0}^\infty\\
+                            &= \left(\sum_{t=0}^n (a_{n-t} + b_{n-t})k_t\right)_{n=0}^\infty\\
+                            &= \left(\sum_{t=0}^n a_{n-t} \cdot k_t + \sum_{t=0}^n b_{n-t} \cdot k_t\right)_{n=0}^\infty\\
+                            &= \left(\sum_{t=0}^n a_{n-t} \cdot k_t\right)_{n=0}^\infty + \left(\sum_{t=0}^n b_{n-t} \cdot k_t\right)_{n=0}^\infty\\
+                            &= (a_n)_{n=0}^\infty (k_n)_{n=0}^\infty + (b_n)_{n=0}^\infty (k_n)_{n=0}^\infty
+                        \end{align*}
+                \end{description}
+            \item Проверим наследственность для каждой аксиомы:
+                \begin{description}
+                    \item[$\M_1$)] $\forall (a_n)_{n=0}^\infty, (b_n)_{n=0}^\infty, (c_n)_{n=0}^\infty \in R:$
+                        \begin{align*}
+                            ((a_n)_{n=0}^\infty \cdot (b_n)_{n=0}^\infty) \cdot (c_n)_{n=0}^\infty
+                            &= \left(\sum_{k=0}^n a_k \cdot b_{n-k}\right)_{n=0}^\infty \cdot (c_n)_{n=0}^\infty\\
+                            &= \left(\sum_{k=0}^n \left(\sum_{l=0}^k a_l \cdot b_{k-l}\right) \cdot c_{n-k}\right)_{n=0}^\infty\\
+                            &= \left(\sum_{\substack{0 \leqslant k\\ l \leqslant 0\\ k+l \leqslant n}} (a_k \cdot b_l) \cdot c_{n-k-l}\right)_{n=0}^\infty\\
+                            &= \left(\sum_{\substack{0 \leqslant k\\ l \leqslant 0\\ k+l \leqslant n}} a_k \cdot (b_l \cdot c_{n-k-l})\right)_{n=0}^\infty\\
+                            &= \left(\sum_{k=0}^n a_{n-k} \cdot \left(\sum_{l=0}^k b_l \cdot c_{k-l}\right)\right)_{n=0}^\infty\\
+                            &= (a_n)_{n=0}^\infty \cdot \left(\sum_{k=0}^n b_k \cdot c_{n-k}\right)_{n=0}^\infty\\
+                            &= (a_n)_{n=0}^\infty \cdot ((b_n)_{n=0}^\infty \cdot (c_n)_{n=0}^\infty)
+                        \end{align*}
+                    \item[$\M_2$)] Обозначим за $1$ в $S$ последовательность $(t_n)_{n=0}^\infty$, где $t_0 = 1$, а все остальные члены равны $0$. Тогда $\forall (a_n)_{n=0}^\infty \in R:$
+                        \begin{align*}
+                            (a_n)_{n=0}^\infty \cdot 1
+                            &= \left(\sum_{k=0}^n a_k \cdot t_{n-k}\right)_{n=0}^\infty\\
+                            &= (a_n)_{n=0}^\infty\\
+                            &= \left(\sum_{k=0}^n t_{n-k} \cdot a_k\right)_{n=0}^\infty\\
+                            &= 1 \cdot (a_n)_{n=0}^\infty
+                        \end{align*}
+                    \item[$\M_3$)] $\forall (a_n)_{n=0}^\infty, (b_n)_{n=0}^\infty \in R:$
+                        \begin{align*}
+                            (a_n)_{n=0}^\infty \cdot (b_n)_{n=0}^\infty
+                            &= \left(\sum_{k=0}^n a_k \cdot b_{n-k}\right)_{n=0}^\infty\\
+                            &= \left(\sum_{k=0}^n b_k \cdot a_{n-k}\right)_{n=0}^\infty\\
+                            &= (b_n)_{n=0}^\infty \cdot (a_n)_{n=0}^\infty
+                        \end{align*}
+                \end{description}
+            \item Рассмотрим отображение $\varphi: R \to S, a \mapsto (a, 0, 0, \dots)$. Тогда
+                \begin{itemize}
+                    \item $\varphi(a) + \varphi(b) = (a + b, 0, \dots) = \varphi(a + b)$
+                    \item $\varphi(a) \cdot \varphi(b) = (ab, 0, \dots) = \varphi(a \cdot b)$
+                    \item $\varphi(0) = (0, 0, \dots) = 0$
+                    \item (в случае $\M_2$) $\varphi(1) = (1, 0, \dots) = 1$
+                \end{itemize}
+                Значит $\Ker(\varphi) = \{0\}$, $R \cong \Img(\phi)$. При этом несложно видеть, что $\Img(\phi)$ и есть множество всех последовательностей вида $(a, 0, 0, \dots)$.
+        \end{enumerate}
+    \end{proof}
+
+    \newpage\null\thispagestyle{empty}\newpage
+    \section{Теория категорий}
+
+    \begin{definition}
+        \emph{Категория} $C$ есть совокупность семейства (не обязательно множества) объектов $\Ob(C)$ и семейства \emph{морфизмов} (также ``arrows''), что выполнены следующие условия.
+        \begin{enumerate}
+            \item У всякого морфизма $f$ есть прообраз (также ``начало'', ``source'', ``domain''; обозначение: $s(f)$ или $\dom(f)$) и образ (также ``конец'', ``target'', ``codomain''; обозначение: $t(f)$ или $\cod(f)$), являющиеся объектами из рассмотренного семейства. Семейства всех морфизмов из $X$ в $Y$ (т.е. с прообразом $X$ и образом $Y$) обозначается $\Hom(X, Y)$ или $\Mor(X, Y)$.
+            \item На семействе морфизмов введён не полностью определённый бинарный оператор $\circ$ (можно считать, функциональное отношение из $M \times M$ в $M$, где $M$ --- семейство морфизмов), что для всяких $X, Y, Z \in \Ob(C)$ и $f \in \Hom(X, Y)$, $g \in \Mor(Y, Z)$ значение $g \circ f$ определено и лежит в $\Hom(X, Z)$. Данный оператор называется \emph{композицией}, а $g \circ f$ --- композицией $g$ и $f$.
+            \item Операция композиции морфизмов ассоциативна: для всяких $X, Y, Z, T \in \Ob(C)$ и $f \in \Hom(X, Y)$, $g \in \Hom(Y, Z)$, $h \in \Hom(Z, T)$
+                \[(f \circ g) \circ h = f \circ (g \circ h).\]
+            \item Для всякого $X \in \Ob(C)$ есть выделенный морфизм $\id_X \in \Hom(X, X)$ (также $1_X$). Он называется тождественным морфизмом $X$.
+            \item Для всяких $X, Y \in \Ob(C)$ для всякого $f \in \Hom(X, Y)$ верно, что
+                \[f \circ \id_X = f = \id_Y \circ f.\]
+        \end{enumerate}
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item $\Sets$ ($\Ens$):
+                \begin{itemize}
+                    \item $\Ob(\Sets)$ --- все множества,
+                    \item $\Hom(X, Y)$ --- все отображения из $X$ в $Y$,
+                    \item $\circ$ --- обычная композиция отображений,
+                    \item $\id_X$ --- тождественное отображение $X \to X$.
+                \end{itemize}
+            \item $\Groups$:
+                \begin{itemize}
+                    \item $\Ob(\Groups)$ --- все группы,
+                    \item $\Hom(G, H)$ --- все гомоморфизмы $G \to H$,
+                    \item $\circ$ --- обычная композиция гомоморфизмов,
+                    \item $\id_G$ --- тождественный гомоморфизм $G \to G$.
+                \end{itemize}
+            \item Аналогично описываются категории $\Rings$ колец, $\CommRings$ коммутативных колец (если в случаях $\Rings$ и $\CommRings$ рассматриваются кольца с единицей, то надо требовать, чтобы гомоморфизмы переводили единицу в единицу), $\Vect_F$ векторных пространств над полем $F$, $R-\Mod$ $R$-модулей, и т.д. для всякой алгебраической структуры.
+            \item $\Top$:
+                \begin{itemize}
+                    \item $\Ob(\Top)$ --- все топологические пространства,
+                    \item $\Hom(G, H)$ --- все непрерывные отображения,
+                    \item $\circ$ --- обычная композиция отображений,
+                    \item $\id_G$ --- тождественное отображение $G \to G$.
+                \end{itemize}
+            \item $\HTop$:
+                \begin{itemize}
+                    \item $\Ob(\HTop)$ --- все ``хорошие'' (компактно порождённые) топологические пространства,
+                    \item $\Hom(G, H)$ --- все непрерывные отображения по модулю гомотопии,
+                    \item $\circ$ --- обычная композиция отображений,
+                    \item $\id_G$ --- тождественное отображение $G \to G$.
+                \end{itemize}
+            \item $\Ob(C) = \{X\}$. В таком случае мы получаем \emph{моноид} некоторых отображений $X$ на себя: у нас есть множество морфизмов $X$ на себя с операцией композиции (произведение в моноиде), которая ассоциативна и имеет нейтральный элемент (но не обязательно обратима).
+            \item Частичный предпорядок задаёт категорию:
+                \begin{itemize}
+                    \item $\Ob(C) = M$,
+                    \item
+                        $\Hom(x, y) = \begin{cases}
+                            \{\star_{x\to y}\} \text{ если } x \leqslant y,\\
+                            \varnothing \text{ иначе},
+                        \end{cases}$
+                    \item $\star_{y\to z} \circ \star_{x\to y} := \star_{x\to z}$,
+                    \item $\id_x := \star_{x\to x}$.
+                \end{itemize}
+            \item $\Rels$ --- категория отношений:
+                \begin{itemize}
+                    \item $\Ob(\Rels)$ --- все множества;
+                    \item $\Hom(X, Y)$ --- все подмножества $X \times Y$;
+                    \item для всяких $S \in \Hom(X, Y)$ и $R \in \Hom(Y, Z)$
+                        \[R \circ S := \{(x, z) \in X \times Z \mid \exists y \in Y: \qquad (x, y) \in S \wedge (y, z) \in R\};\]
+                    \item $\id_X := \{(x, x)\}_{x \in X}$. 
+                \end{itemize}
+            \item Пустая категория: нет объектов, нет морфизмов.
+            \item Категория с единственным объектом и единственным тождественным морфизмом на нём.
+            \item Дискретная категория: нет нетождественных морфизмов.
+        \end{enumerate}
+    \end{example}
+
+    \begin{definition}
+        $X, Y \in \Ob(C)$ называются \emph{изоморфными}, если есть $f \in \Hom(X, Y)$ и $g \in \Hom(Y, X)$, что
+        \[f \circ g = \id_Y \qquad \text{ и } \qquad g \circ f = \id_X.\]
+    \end{definition}
+
+    \begin{definition}
+        \emph{Подкатегория} $S$ категории $C$ --- категория, семейства объектов и морфизмов которой суть подсемейства объектов и морфизмов категории $C$ соответственно.
+    \end{definition}
 \end{document}
