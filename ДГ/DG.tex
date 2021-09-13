@@ -1,0 +1,361 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{../.tex/mcs-notes}
+\usepackage{todonotes}
+\usepackage{multicol}
+% \usepackage{inkscape}
+% \usepackage[all]{xy}
+% \CompileMatrices
+
+\settitle
+{Геометрия и топология.}
+{Евгений Анатольевич Фоминых}
+{\%D0\%93\%D0\%B8\%D0\%A2/GaT.pdf}
+\date{}
+
+\newcommand{\const}{\ensuremath{\mathrm{const}}\xspace}
+\newcommand{\Id}{\ensuremath{\mathrm{Id}}\xspace}
+\newcommand{\Ker}{\ensuremath{\mathrm{Ker}}\xspace}
+\newcommand{\Img}{\ensuremath{\mathrm{Im}}\xspace}
+\newcommand{\diam}{\ensuremath{\mathrm{diam}}\xspace}
+\newcommand{\Int}{\ensuremath{\mathrm{Int}}\xspace}
+\newcommand{\Ext}{\ensuremath{\mathrm{Ext}}\xspace}
+\newcommand{\Cl}{\ensuremath{\mathrm{Cl}}\xspace}
+\newcommand{\Fr}{\ensuremath{\mathrm{Fr}}\xspace}
+\newcommand{\SCl}{\ensuremath{\mathrm{SCl}}\xspace}
+\newcommand{\Lin}{\ensuremath{\mathrm{Lin}}\xspace}
+\newcommand{\Homeo}{\ensuremath{\mathrm{Homeo}}\xspace}
+\newcommand{\Aff}{\ensuremath{\mathrm{Aff}}\xspace}
+\newcommand{\Iso}{\ensuremath{\mathrm{Iso}}\xspace}
+\renewcommand{\Pr}{\ensuremath{\mathrm{Pr}}\xspace}
+\newcommand{\conv}{\ensuremath{\mathrm{conv}}\xspace}
+\newcommand{\RelInt}{\ensuremath{\mathrm{RelInt}}\xspace}
+\DeclareMathOperator*{\bigtimes}{\text{\raisebox{-6pt}{\scalebox{3}{$\times$}}}}
+\newcommand{\FAC}{\ensuremath{\mathrm{FAC}}\xspace}
+\newcommand{\SAC}{\ensuremath{\mathrm{SAC}}\xspace}
+\newcommand{\T}{\ensuremath{\mathrm{T}}\xspace}
+\newcommand{\ex}{\ensuremath{\mathrm{ex}}\xspace}
+\newcommand{\ind}{\ensuremath{\mathrm{ind}}\xspace}
+\newcommand{\incl}{\mathrm{in}}
+
+\begin{document}
+    \maketitle
+
+    \listoftodos[TODOs]
+
+    \tableofcontents
+
+    \vspace{2em}
+
+    Литература:
+    \begin{itemize}
+        \item Виро О.Я., Иванов О.А., Нецветаев Н.Ю., Харламов В.М., ``Элементарная топология'', М.:МЦНМО, 2012.
+        \item James Munkres, ``Topology''.
+    \end{itemize}
+
+    \section{Алгебраическая топология}
+
+    \subsection{Фундаментальная группа}
+
+    \begin{definition}
+        \emph{Ретракция} --- непрерывное отображение $f: X \to A$, где $A$ --- подпространство $X$, что $f|_A = \Id_A$.
+
+        Если существует ретракция $f: X \to A$, то $A$ называется \emph{ретрактом} пространства $X$.
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item Всякое одноточечное подмножество является ретрактом.
+            \item Никакое двухточечное подмножество прямой не является ретрактом.
+        \end{enumerate}
+    \end{example}
+
+    \begin{theorem}
+        Пусть дано подпространство $A$ пространства $X$. TFAE
+        \begin{enumerate}
+            \item $A$ --- ретракт $X$.
+            \item всякое непрерывное отображение $g: A \to Y$ продолжается до непрерывного отображения $X \to Y$.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $A$ --- ретракт. Тогда есть ретракция $\rho: X \to A$, а значит $g \circ \rho$ --- продолжение $g$ на $X$.
+
+        С другой стороны, если всякое непрерывное $g: A \to Y$ продолжимо до непрерывного $X \to Y$, то ретракцию $A$ можно получить как продолжение $\Id_A: A \to X$.
+    \end{proof}
+
+    \begin{lemma}\label{retraction-lemma}
+        Пусть дано подпространство $A$ пространства $X$ и точка $x \in A$. Если $\rho: X \to A$ --- ретракция, а $\incl: A \to X$ --- включение (тождественное отображение), то $\rho_\star: \pi_1(X, x) \to \pi_1(A, x)$ --- сюръекция, а $\incl_\star: \pi_1(A, x) \to \pi_1(X, x)$ --- инъекция.
+    \end{lemma}
+
+    \begin{proof}
+        $\rho \circ \incl = \Id_A$. Следовательно $(\rho \circ \incl)_\star = \rho_\star \circ \incl_\star = \Id_\star = \Id$, откуда следует, что $\rho_\star$ --- сюръекция, а $\incl_\star$ --- инъекция.
+    \end{proof}
+
+    \begin{theorem}[Борсука]
+        Не существует ретракции $D^n \to S^{n-1}$.
+    \end{theorem}
+
+    \begin{proof}[Доказательство в размерности 2]
+        Предположим противное. Пусть $\rho: D^2 \to S^1$ --- ретракция, $x \in S^1$. Из леммы \ref{retraction-lemma} следует, что $in_*: \pi_1(S^1) \to \pi_1(D^2)$ должно быть инъекцией. Но $\pi_1(S^1) = \ZZ$, а $\pi_1(D^2) = \{0\}$. А инъекции $\ZZ \to \{0\}$ не существует --- противоречие.
+    \end{proof}
+
+    \begin{remark}
+        На самом деле рассуждение работает в любой размерности. Только вместо $\pi_1$ надо взять $\pi_{n-1}$. Там опять же окажется, что лемма верна, $\pi_{n-1}(D^n)$ тривиальна, а $\pi_{n-1}(S^{n-1})$ --- содержит $\ZZ$ как подгруппу.
+    \end{remark}
+
+    \begin{definition}
+        Точка $a \in X$ называется \emph{неподвижной точкой} отображения $f: X \to X$, если $f(a) = a$.
+
+        Пространство $X$, говорят, \emph{обладает свойством неподвижной точки}, если всякое непрерывное отображение $f: X \to X$ имеет неподвижную точку.
+    \end{definition}
+
+    \begin{example}
+        $[a; b]$ обладает свойством неподвижной точки.
+    \end{example}
+
+    \begin{theorem}[Брауэра]
+        Любое непрерывное отображение $f: D^n \to D^n$ имеет неподвижную точку.
+    \end{theorem}
+
+    \begin{proof}[Доказательство в размерности 2]
+        Предположим противное, $f(x) \neq x$ для всех $x \in D^2$. Построим $g: D^2 \to S^1$ как пересечение открытого луча $(f(x); x; \infty)$ и $S^1$. Несложно удостовериться, что для всех точек $x$, что $f(x) \neq x$, функция $g$ определена и непрерывна в некоторой окрестности $x$. Это противоречит теореме Борсука.
+    \end{proof}
+
+    \begin{remark}
+        В точности также это можно доказать для любой размерности, но потребуется теорема Борсука большей размерности.
+    \end{remark}
+
+    \begin{definition}
+        $X$ и $Y$ называются \emph{гомотопически эквивалентными} (и пишут $X \sim Y$), если существуют непрерывные отображения $f: X \to Y$ и $g: Y \to X$ такие, что $g \circ f \sim \Id_X$ и $f \circ g \sim \Id_Y$.
+
+        Такие $f$ и $g$ называются \emph{гомотопически обратными} отображениями. При этом каждое из них называется \emph{гомотопической эквивалентностью}.
+    \end{definition}
+
+    \begin{example}
+        $\RR^n$ гомотопически эквивалентно $\{0\}$.
+    \end{example}
+
+    \begin{definition}
+        Ретракция $f: X \to A$ называется \emph{деформационной ретракцией}, если её композиция с включением $\incl: A \to X$ гомотопна тождественному отображению, т.е.
+        \[\incl \circ f \sim \Id_X.\]
+
+        Если существует деформационная ретракция $X$ на $A$, то $A$ называется \emph{деформационным ретрактом} пространства $X$.
+    \end{definition}
+
+    \begin{theorem}
+        Деформационная ретракция --- гомотопическая эквивалентность.
+    \end{theorem}
+
+    \begin{proof}
+        Действительно, если $f: X \to A$ --- деформационная ретракция, а $\incl: A \to X$ включение, то $f \circ \incl = \Id_A \sim \Id_A$ и
+        \[\incl \circ f \sim \Id_A\]
+        по оперделению деформационной ретракции. Следовательно $f$ и $\incl$ --- гомтопически обратные друг другу деформационные ретракции.
+    \end{proof}
+
+    \begin{corollary}
+        Деформационные ретракты гомотопически эквивалентны своим исходным пространствам.
+    \end{corollary}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item $S^{n-1}$ --- деформационный ретракт $\RR^n \setminus \{0\}$.
+            \item $S^1$ --- деформационный ретракт ленты Мёбиуса и кольца ($S^1 \times [0; 1]$).
+            \item Букет $n$ окружностей и окружность с $n$ радиусами --- деформационный ретракт плоскости без $n$ точек.
+            \item Букет двух окружностей --- деформационный ретракт тора с дыркой.
+        \end{enumerate}
+    \end{example}
+
+    \begin{theorem}
+        Гомотопическая эквивалентность --- ``отношение эквивалентности'' между топологическими пространствами.
+    \end{theorem}
+
+    \begin{proof}
+        \begin{itemize}
+            \item \textbf{Рефлексивность.} Очевидна, так как $\Id$ является деформационным ретрактом $X \to X$.
+            \item \textbf{Симметричность.} Если $X \sim Y$, то есть $f: X \to Y$ и $g: Y \to X$, что $g \circ f \sim \Id_X$ и $f \circ g \sim \Id_Y$. Тогда $Y \sim X$.
+            \item \textbf{Транзитивность.} Пусть $X \sim Y \sim Z$. Тогда имеются $f: X \to Y$, $g: Y \to X$, $h: Y \to Z$ и $i: Z \to Y$, что $g \circ f \sim \Id_X$, $f \circ g \sim \Id_Y$, $i \circ h \sim \Id_Y$, $h \circ i \sim \Id_Z$. Следовательно
+                \[
+                    (g \circ i) \circ (h \circ f)
+                    = g \circ (i \circ h) \circ f
+                    \sim g \circ \Id_Y \circ f
+                    = g \circ f
+                    \sim \Id_X
+                \]
+                и
+                \[
+                    (h \circ f) \circ (g \circ i)
+                    = h \circ (f \circ g) \circ i
+                    \sim h \circ \Id_Y \circ i
+                    = h \circ i
+                    \sim \Id_Z.
+                \]
+                Следовательно $(h \circ f)$ и $(g \circ i)$ --- гомотопически обратные гомотопические эквивалентности. Значит $X \sim Z$.
+        \end{itemize}
+    \end{proof}
+
+    \begin{definition}
+        Класс пространств, гомотопически эквивалентных данному $X$, называется \emph{гомотопическим типом}. Свойства (характеристики) топологических пространств, одинаковые у гомотопически эквивалентных, --- \emph{гомотопические свойства} (\emph{гомотопические инварианты}).
+    \end{definition}
+
+    \begin{exercise}
+        Число компонент (линейной) связности --- гомотопический инвариант.
+    \end{exercise}
+
+    \begin{theorem}
+        Пусть $X$ и $Y$ --- гомотопно эквивалентные поверхности, а $f: X \to Y$, $g: Y \to X$ --- гомотопически обратные гомотопические эквивалентности. Пусть также фиксирована $x_0 \in X$. Тогда
+        \[\pi_1(X, x_0) \simeq \pi_1(Y, f(x_0)).\]
+    \end{theorem}
+
+    \begin{proof}
+        \begin{thlemma}
+            Пусть $f, g: X \to Y$ --- непрерывные отображения, а $H: X \times [0; 1] \to Y$ --- гомотопия между $f$ и $g$. Пусть также даны $x_0 \in X$, $y_0 := f(x_0)$, $y_1 := g(x_0)$ и путь $\gamma(t) := H(x_0, t)$ из $y_0$ в $y_1$. Обозначим за $T_\gamma$ --- сопряжение по пути $\gamma$, т.е. $T_\gamma(\alpha) = \gamma^{-1} \alpha \gamma$. Тогда
+            \[f_\star = T_\gamma \circ g_\star.\]
+        \end{thlemma}
+
+        \begin{proof}
+            Условие равенства функций $f_\star = T_\gamma \circ g_\star$ означает, что для всякого $\alpha \in \pi_1(X, x_0)$
+            \[f_\star([\alpha]) = T_\gamma(g_\star([\alpha])).\]
+            Последнее значит, что
+            \[[f \circ \alpha] = [\gamma^{-1} (g \circ \alpha) \gamma],\]
+            или говоря иначе,
+            \[f \circ \alpha \sim \gamma^{-1} (g \circ \alpha) \gamma.\]
+            При этом заметим, что
+            \[f \circ \alpha = H(\alpha(s), 0), \qquad g \circ \alpha = H(\alpha(s), 1).\]
+
+            Рассмотрим
+            \[F: [0; 1]^2 \to X \times [0; 1], (s, t) \mapsto (\alpha(s), t).\]
+            Несложно видеть, что
+            \[
+                F(s, 0) = (\alpha(s), 0),
+                \qquad
+                F(s, 1) = (\alpha(s), 1),
+                \qquad
+                F(0, t) = F(1, t) = (x_0, t).
+            \]
+            Таким образом
+            \[
+                (H \circ F)(s, 0) = f \circ \alpha,
+                \qquad
+                (H \circ F)(s, 1) = g \circ \alpha,
+                \qquad
+                (H \circ F)(0, t) = F(1, t) = \gamma.
+            \]
+            
+            Зафиксируем в $[0; 1]^2$ линейные пути $\varphi: (0, 0) \mapsto (1, 0)$ и $\psi: (0, 0) \mapsto (0, 1) \mapsto (1, 1) \mapsto (1, 0)$. Несложно видеть, что
+            \[H \circ F \circ \varphi = f \circ \alpha, \qquad H \circ F \circ \psi = \gamma^{-1} (g \circ \alpha) \gamma.\]
+            При этом $[0; 1]^2$ выпукло, значит есть гомотопия $G$, переводящая $\varphi$ в $\gamma$. В таком случае $H \circ F \circ G$ --- гомотопия, переводящая $f \circ \alpha$ в $\gamma^{-1} (g \circ \alpha) \gamma$.
+        \end{proof}
+
+        Заметим, что $g \circ f$ гомотопно $\Id_X$. Значит в контексте $x_0$ и $\pi_1(X, x_0)$ есть некоторое сопряжение $T_\gamma$, что
+        \[T_\gamma \circ (g \circ f)_\star = (\Id_X)_\star = \Id.\]
+        При этом $T_\gamma$ есть изоморфизм групп (биекция). Это в частности означает, что $g_\star \circ f_\star$ является биекцией. Отсюда следует, что $g_\star$ инъективно, а $f_\star$ сюръективно.
+
+        Повторяя рассуждения в обратную сторону, получаем, что $f_\star$ и $g_\star$ являются биекциями. Поэтому
+        \[\pi_1(X, x_0) \simeq \pi_1(Y, f(x_0)).\]
+    \end{proof}
+
+    \begin{corollary}
+        $f_\star$ (кроме того, что индуцирует биекцию из множества фундаментальных групп компонент линейной связности $X$ в множества тех же у $Y$) индуцирует изоморфизмы фундаментальных групп компонент линейной связности $X$.
+    \end{corollary}
+
+    \begin{corollary}
+        Если $X$ линейно связно (а тогда $Y$ тоже), то $\pi_1(X) \simeq \pi_1(Y)$.
+    \end{corollary}
+
+    \begin{definition}
+        Топологическое пространство $X$ \emph{стягиваемо}, если гомотопически эквивалентно точке.
+    \end{definition}
+
+    \begin{lemma}
+        TFAE
+        \begin{enumerate}
+            \item $X$ стягиваемо.
+            \item $\Id_X$ гомотопно константному отображению.
+            \item Некоторая точка --- деформационный ретракт.
+            \item Всякая точка --- деформационный ретракт.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{example}
+        Например, стягиваемы следующие пространства.
+        \begin{enumerate}
+            \item $\RR^n$.
+            \item Выпуклые множества.
+            \item Звёздные множества.
+            \item Деревья.
+        \end{enumerate}
+    \end{example}
+
+    \begin{lemma}
+        Пусть $h: S^1 \to X$ --- непрерывное отображение. TFAE
+        \begin{enumerate}
+            \item $h$ гомотопно постоянному отображению.
+            \item $h$ продолжается до непрерывного отображения $D^2 \to X$.
+            \item $h_\star$ --- тривиальный гомоморфизм.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[$1 \Rightarrow 2$)] Существует гомотопия $H$ между $h$ и константным отображением. Это значит, что $H: S^1 \times [0; 1] \to X$ --- непрерывно, и $H(x, 1) = \const$. Это значит, что пространство $S^1 \times [0; 1]$ можно склеить по множеству $S^1 \times \{1\}$ (так как на нём $H$ константна) и $H$ переопределится в некоторую функцию $H'$. При этом множество-прообраз $H'$ гомеоморфно $D^2$. Следовательно можно считать, что $H': D^2 \to X$. При этом $H'$ является доопределением, так как $H'|_{S^1} = H|_{S^1 \times \{0\}} = h$.
+            \item[$2 \Rightarrow 1$)] Пусть $h$ продолжена до $H$ на $D^2$. Тогда определим
+                \[G: S^1 \times [0; 1] \to X, (\alpha, r) \mapsto H(r e^{\alpha i}).\]
+                Несложно видеть, что $G$ --- гомотопия между $h$ и константным отображением.
+            \item[$1 \Leftrightarrow 3$)] Если $h_\star$ является тривиальным гомоморфизмом фундаментальных групп, то $h = h \circ \alpha \sim \const$, где $\alpha$ --- один оборот по окружности, т.е. $h$ гомотопно константному отображению.
+
+                Если $h$ гомотопно постоянному отображению, то $\alpha \circ h = h \sim \const$, т.е. $f_\star([\alpha]) = e$. При этом $[\alpha]$ порождает группу $\pi_1(S^1)$. Следовательно, $h_\star$ --- тривиальный гомоморфизм.
+        \end{itemize}
+    \end{proof}
+
+    \begin{theorem}[основная теорема алгебры]
+        Всякий многочлен из $\CC[z]$ положительной степени имеет корень.
+    \end{theorem}
+
+    \begin{proof}
+        WLOG нам дан многочлен
+        \[z^n + a_{n-1} z^{n-1} + \dots + a_0 z^0.\]
+        Также WLOG $|a_{n-1}| + \dots + |a_0| < 1$, так как если сделать замену $z = y/c$, то задача сведётся к многочлену
+        \[y^n + c a_{n-1} y^{n-1} + \dots + c^n a_0.\]
+        В таком случае
+        \[|a_{n-1}| + \dots + |a_0| = |c| |a_{n-1}| + \dots + |c|^n |a_0|.\]
+        Значит можно взять достаточно маленькое значение $|c| > 0$, и тогда полученная сумма будет меньше $1$.
+
+        Предположим противное, т.е. у данного многочлена нет корней. Тогда функция
+        \[f: \CC \to \CC, z \mapsto z^n + a_{n-1} z^{n-1} + \dots + a_0 z^0\]
+        непрерывна и имеет область значений $\CC \setminus \{0\}$. Следовательно, поскольку $f$ определена $D^2$, то $f|_{S^1}$ гомотопна постоянному отображению.
+        
+        Определим функцию
+        \[g: S^1 \to \CC \setminus \{0\}, z \mapsto z^n\]
+        и функцию
+        \[H: S^1 \times [0; 1] \to \CC, z \mapsto z^n + t(a_{n-1} z^{n-1} + \dots + a_0 z^0).\]
+        Заметим, что
+        \[|H(z, t)| \geqslant |z^n| - |t|(|a_{n-1}| |z|^{n-1} + \dots + |a_0| |z|^0) \geqslant 1 - (|a_{n-1}| + \dots + |a_0|) > 0,\]
+        т.е. $H \neq 0$. Следовательно, $H$ является гомтопией между $f$ и $g$ в $\CC \setminus \{0\}$. Таким образом $f$ гомотопно $g$ и константной функции. При этом $g$ не гомотопно константной функции, так как определяет $n$ оборотов по окружности, что не является тривиальным гомоморфизмом $\pi_1(\CC \setminus \{0\}) \simeq \pi_1(S^1)$ на себя --- противоречие.
+    \end{proof}
+
+    \begin{theorem}[Борсука-Улама]
+        Для любой непрерывной функции $f: S^n \to \RR^n$ существует точка $x \in S^n$ такая, что $f(-x) = f(x)$.
+    \end{theorem}
+
+    \begin{proof}[Доказательство для размерности 1]
+        Функция $\varphi: S^1 \to \RR^1, x \mapsto f(x) - f(-x)$ определена на компакте, значит множество её значений есть отрезок. При этом $\varphi$ нечётна, значит это отрезок с серединой в $0$. Таким образом в какой-то точке $\varphi$ принимает $0$, т.е. в этой точке $f(x) = f(-x)$.
+    \end{proof}
+
+    \begin{proof}[Доказательство для размерности 2]
+        Предположим противное, т.е. $f(x) \neq f(-x)$ ни в какой точке. Тогда можно определить функцию
+        \[g: S^2 \to S^1, \frac{f(x) - f(-x)}{|f(x) - f(-x)|}.\]
+        Понятно, что $g$ нечётна и непрерывна.
+
+        Рассмотрим нативные проекции $p_1: S^1 \to \RR P^1$ и $p_2: S^2 \to \RR P^2$. Поскольку $g$ нечётна, то $p_1 \circ g$ чётна, а значит $\varphi := p_1 \circ g \circ p_2^{-1}$ определена. При этом $\pi_1(\RR P^2) = \ZZ_2$, а $\pi_1(\RR P^1) = \ZZ$. Т.е. не существует нетривиальных гомоморфизмов $\ZZ_2 \to \ZZ$. Таким образом $\varphi_\star$ тривиален.
+
+        Пусть $\alpha$ --- нетривиальная петля в $\RR P^2$. Тогда при помощи $p_2$ её можно поднять в путь $\widetilde{\alpha}$. При этом из нетривиальности $\alpha$ следует, что концы $\widetilde{\alpha}$ не совпадают, а являются противоположными. Следовательно $g \circ \widetilde{\alpha}$ --- путь с противоположными концами. Но в таком случае $p_1 \circ g \circ \widetilde{\alpha}$ является нетривиальной петлёй в $\RR P^1$. Т.е. $\varphi_\star$ отправил не нейтральный элемент в не нейтральный. Следовательно, $\varphi_\star$ нетривиален --- противоречие.
+    \end{proof}
+
+    % \subsection{Накрытия}
+    % \subsection{Приложения}
+    % \section{Дифференциальная геометрия}
+    % \subsection{Гладкие кривые и поверхности}
+    % \subsection{Гладкие многообразия}
+    % \subsection{Римановы многообразия}
+
+\end{document}
