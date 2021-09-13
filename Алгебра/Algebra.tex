@@ -18,6 +18,7 @@
 \newcommand{\D}{\ensuremath{\mathrm{D}}\xspace}
 \newcommand{\M}{\ensuremath{\mathrm{M}}\xspace}
 \DeclareMathOperator{\End}{End}
+\newcommand{\Id}{\mathrm{Id}}
 \newcommand{\op}{\mathrm{op}}
 \newcommand{\Hom}{\mathrm{Hom}}
 \newcommand{\Mor}{\mathrm{Mor}}
@@ -29,7 +30,7 @@
 \newcommand{\Ens}{\mathrm{Ens}}
 \newcommand{\Groups}{\mathrm{Groups}}
 \newcommand{\Rings}{\mathrm{Rings}}
-\newcommand{\CommRings}{\mathrm{CommRings}}
+\newcommand{\Comm}{\mathrm{Comm}}
 \newcommand{\Vect}{\mathrm{Vect}}
 \newcommand{\Mod}{\mathrm{Mod}}
 \newcommand{\Top}{\mathrm{Top}}
@@ -37,6 +38,10 @@
 \newcommand{\HTop}{\mathrm{HTop}}
 \newcommand{\Rels}{\mathrm{Rels}}
 \newcommand{\pr}{\mathrm{pr}}
+\newcommand{\Alg}{\mathrm{Alg}}
+\newcommand{\AbGroups}{\mathrm{AbGroups}}
+\newcommand{\Setsstar}{\mathrm{Sets_\star}}
+\newcommand{\Funct}{\mathrm{Funct}}
 
 % \setlength{\marginparwidth}{2.5cm}
 % \setlength{\textwidth}{470 pt}
@@ -52,9 +57,10 @@
 
     Литература:
     \begin{itemize}
-        \item Ван дер Варден ``Алгебра''
-        \item Лэнг ``Алгебра''
-        \item Винберг ``Курс Алгебры''
+        \item Ван дер Варден, ``Алгебра''.
+        \item Лэнг, ``Алгебра''.
+        \item Винберг, ``Курс Алгебры''.
+        \item Маклейн, ``Категории для работающего математика''.
     \end{itemize}
 
     \subsection*{Немного истории}
@@ -741,6 +747,13 @@
                     \item $\circ$ --- обычная композиция отображений,
                     \item $\id_X$ --- тождественное отображение $X \to X$.
                 \end{itemize}
+            \item $\Setsstar$:
+                \begin{itemize}
+                    \item $\Ob(\Setsstar)$ --- пары $(A, a)$, где $A$ --- любое множество, а $a \in A$,
+                    \item $\Hom((A, a), (B, b))$ --- все отображения из $A$ в $B$, переводящие $a$ в $b$,
+                    \item $\circ$ --- обычная композиция отображений,
+                    \item $\id_A$ --- тождественное отображение $A \to A$.
+                \end{itemize}
             \item $\Groups$:
                 \begin{itemize}
                     \item $\Ob(\Groups)$ --- все группы,
@@ -748,7 +761,7 @@
                     \item $\circ$ --- обычная композиция гомоморфизмов,
                     \item $\id_G$ --- тождественный гомоморфизм $G \to G$.
                 \end{itemize}
-            \item Аналогично описываются категории $\Rings$ колец, $\CommRings$ коммутативных колец (если в случаях $\Rings$ и $\CommRings$ рассматриваются кольца с единицей, то надо требовать, чтобы гомоморфизмы переводили единицу в единицу), $\Vect_F$ векторных пространств над полем $F$, $R-\Mod$ $R$-модулей, и т.д. для всякой алгебраической структуры.
+            \item Аналогично описываются категории $\Rings$ колец, $\Comm\Rings$ коммутативных колец (если в случаях $\Rings$ и $\Comm\Rings$ рассматриваются кольца с единицей, то надо требовать, чтобы гомоморфизмы переводили единицу в единицу), $\Vect_F$ векторных пространств над полем $F$, $R-\Mod$ $R$-модулей, и т.д. для всякой алгебраической структуры.
             \item $\Top$:
                 \begin{itemize}
                     \item $\Ob(\Top)$ --- все топологические пространства,
@@ -793,11 +806,12 @@
             \item Пустая категория: нет объектов, нет морфизмов.
             \item Категория с единственным объектом и единственным тождественным морфизмом на нём.
             \item Дискретная категория: нет нетождественных морфизмов.
+            \item \emph{Произведение} категорий $C$ и $D$ --- категория $H$, где $\Ob(H) = \Ob(C) \times \Ob(D)$, а для всяких $X = (X_C; X_D), Y = (Y_C, Y_D) \in H$ $\Hom(X, Y) = \Hom(X_C, Y_C) \times \Hom(X_D, Y_D)$. При этом $(f_C, f_D) \circ (g_C, g_D) := (f_C \circ g_C, f_D \circ g_D)$, а $\id_{(X_C, X_D)} := (\id_{X_C}, \id_{X_D})$.
         \end{enumerate}
     \end{example}
 
     \begin{definition}
-        $X, Y \in \Ob(C)$ называются \emph{изоморфными}, если есть $f \in \Hom(X, Y)$ и $g \in \Hom(Y, X)$, что
+        $X, Y \in \Ob(C)$ называются \emph{изоморфными} (и тогда пишут $X \simeq Y$), если есть $f \in \Hom(X, Y)$ и $g \in \Hom(Y, X)$, что
         \[f \circ g = \id_Y \qquad \text{ и } \qquad g \circ f = \id_X.\]
     \end{definition}
 
@@ -968,7 +982,7 @@
     \end{example}
 
     \begin{definition}
-        Пусть даны категории $C$ и $D$. \emph{Функтор} $F: C \to D$ --- совокупность ``функции'' $\Ob(C) \to \Ob(D)$ и ``функции'' из класса морфизмов $C$ в класс морфизмов $D$, что
+        Пусть даны категории $C$ и $D$. \emph{Функтор} (также ``ковариантный функтор'') $F: C \to D$ --- совокупность ``функции'' $\Ob(C) \to \Ob(D)$ и ``функции'' из класса морфизмов $C$ в класс морфизмов $D$, что
         \begin{itemize}
             \item для всякого морфизма $f \in \Hom(X, Y)$, где $X, Y \in \Ob(C)$, $F(f) \in \Hom(F(X), F(Y))$,
             \item для всяких морфизмов $f$ и $g$ в $C$ $F(f \circ g) = F(f) \circ F(g)$,
@@ -985,6 +999,126 @@
             \item Пусть имеется категория $S$, состоящая из одного объекта и одного морфизма, и любая категория $C$. Тогда всякий функтор $S \to C$ --- выбор объекта в $C$, а $C \to S$ --- отобразить всё в данный единственный объект.
             \item Функтор из категории с двумя объектами и двумя морфизмами в категорию $C$ --- выбор двух (не обязательно различных) объектов в $C$.
             \item Функтор из категории с двумя объектами и тремя морфизмами в категорию $C$ --- выбор двух (не обязательно различных) объектов в $C$ и морфизма между ними.
+            \item \emph{Забывающий функтор} $U: \Groups \to \Sets$ --- функтор, переводящий группу $G$ в множество $G$, а гомоморфизм $f$ в функцию $f$.
+            \item \emph{Свободный функтор} $F: \Sets \to \Groups$ --- функтор, где $F(X)$ --- свободная группа на образующих $X$, а $F(f)$ --- гомоморфизм, попрождённый соответствием образующих $f$.
+            \item \dots
+            \item \dots
+            \item В случае $\AbGroups$ и $\Groups$, то есть тривиальный \emph{забывающий функтор} $U: \AbGroups \to \Groups$ и функтор $F: \Groups \to \AbGroups, G \to G/[G, G]$.
+            \item Есть тривиальный забывающий функтор $U: \Setsstar \to \Sets, (A, a) \mapsto A, f \mapsto f$. При этом в обратную сторону есть функтор
+                \[
+                    F: \Sets \to \Setsstar, A \mapsto (A \sqcup \{\varnothing\}, \varnothing), f \mapsto f_\star :=
+                    \begin{cases}
+                        f(x),& \text{ если } x \in A,\\
+                        \varnothing,& \text{ если } x = \varnothing.
+                    \end{cases}
+                \]
+            \item Пусть имеется категория $C$ и фиксирован объект $A \in \Ob(C)$. Тогда можно определить функтор $F: C \to \Sets, X \mapsto \Hom(A, X), f \mapsto F(f) := f \circ \varphi$.
+                \[
+                    \xymatrix{
+                        X \ar[rr]^{f} && Y\\
+                        & A \ar[ul]^{\varphi} \ar[ur]_{F(f)(\varphi)}
+                    }
+                \]
+                Функтор $F$ называется \emph{копредставимым}.
+        \end{enumerate}
+    \end{example}
+
+    \begin{lemma}
+        Пусть дан функтор $F: C \to D$. Тогда если объекты $X$ и $Y$ категории $C$ изоморфны, то $F(X)$ и $F(Y)$ изоморфны.
+    \end{lemma}
+
+    \begin{definition}
+        \emph{Контрвариантный функтор} $F: C \to D$ --- это обычный функтор $C^{op} \to D$. Т.е. это совокупность ``функции'' $\Ob(C) \to \Ob(D)$ и ``функции'' из класса морфизмов $C$ в класс морфизмов $D$, что
+        \begin{itemize}
+            \item для всякого морфизма $f \in \Hom(X, Y)$, где $X, Y \in \Ob(C)$, $F(f) \in \Hom(F(Y), F(X))$,
+            \item для всяких морфизмов $f$ и $g$ в $C$ $F(f \circ g) = F(g) \circ F(f)$,
+            \item для всякого объекта $X \in \Ob(C)$ $F(\id_X) = \id_{F(X)}$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item Есть контравариантный функтор $F: \Top \to \CC{-}\Comm\Alg$, где $F(X) = C(X)$ --- множество комплекснозначных непрерывных функций на $X$, а $F(f)(\varphi) := \varphi \circ f$.
+            \item \emph{Представимые функторы}. Пусть дана категория $C$ и фиксирован объект $A \in \Ob(C)$. Тогда есть контравариантный функтор $h_A: C^{op} \to \Sets$, что $h_A(X) = \Hom(X, A)$, а $h_A(f)(\varphi) = \varphi \circ h$. 
+        \end{enumerate}
+    \end{example}
+
+    \subsection{Мономорфизмы и эпиморфизмы}
+
+    \begin{definition}
+        Морфизм $f$ называется
+        \begin{itemize}
+            \item \emph{мономорфизмом}, если для всяких морфизмов $g$ и $h$ будет верно $f \circ g = f \circ h \Rightarrow g = h$ (на $f$ можно сокращать слева).
+            \item \emph{расщепимым мономорфизмом}, если есть морфизм $r$, что $r \circ f = \id$ (у $f$ есть обратимый слева). $r$ называется \emph{ретракцией} $f$.
+            \item \emph{эпиморфизмом}, если для всяких морфизмов $g$ и $h$ будет верно $g \circ f = g \circ f \Rightarrow g = h$ (на $f$ можно сокращать справа).
+            \item \emph{расщепимым эпиморфизмом}, если есть морфизм $r$, что $f \circ r = \id$ (у $f$ есть обратимый справа).
+        \end{itemize}
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item В $\Sets$ (расщепимые) мономорфизмы --- инъективные отображения, (расщепимые) эпиморфизмы --- сюръективные отображения.
+            \item В $\Groups$ (расщепимые) мономорфизмы --- инъективные гомоморфизмы, (расщепимые) эпиморфизмы --- сюръективные гомоморфизмы.
+            \item В $\Rings$ так же как в $\Groups$.
+            \item \dots
+        \end{enumerate}
+    \end{example}
+
+    \begin{remark*}
+        Функторы совершенно не всегда сохраняют мономорфизмы и эпиморфизмы.
+    \end{remark*}
+
+    \begin{lemma}
+        Функторы сохраняют расщепимые мономорфизмы и расщепимые эпиморфизмы.
+    \end{lemma}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item Всякий морфизм, являющийся расщепимым мономорфизмом и эпиморфизмом, есть изоморфизм.
+            \item Всякий морфизм, являющийся расщепимым эпиморфизмом и мономорфизмом, есть изоморфизм.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{definition}
+        Пусть имеются морфизмы $F, G: C \to D$. \emph{Естественное преобразование} $\alpha: F \to G$ --- это совокупность морфизмов $\alpha_X \in \Hom(F(X), G(X))$ для всякого $X \in \Ob(C)$, что для всяких $A, B \in \Ob(C)$ и всякого морфизма $f \in \Hom(A, B)$ верно, что $G(f) \circ \alpha_A = \alpha_B \circ F(f)$.
+        \[
+            \xymatrix{
+                F(A) \ar[r]^{\alpha_A} \ar[d]^{F(f)} & G(A) \ar[d]^{G(f)}\\
+                F(B) \ar[r]^{\alpha_B} & G(B)\\
+            }
+        \]
+
+        \emph{Композицией (также вертикальной композицией) естественных преобразований} $\alpha: F \to G$ и $\beta: G \to H$, где $F, G, H: C \to D$ называется естественное преобразование $\beta \circ \alpha := \alpha: F \to H$, что $\gamma_X := \beta_X \circ \alpha_X$.
+        \[
+            \xymatrix{
+                F(A) \ar[r]_{\alpha_A} \ar[d]^{F(f)} \ar@/^1em/[rr]^{\gamma_A} & G(A) \ar[r]_{\beta_A} \ar[d]^{G(f)} & H(A) \ar[d]^{H(f)}\\
+                F(B) \ar[r]^{\alpha_B} \ar@/_1em/[rr]_{\gamma_B} & G(B) \ar[r]^{\beta_B} & H(B)\\
+            }
+        \]
+
+        \emph{Горизонтальной композицией естественных преобразований} $\alpha: F \to G$ и $\beta: H \to I$, где $F, G: C \to D$, $H, I: D \to E$ называется естественное преобразование $\beta \cdot \alpha := \gamma: H \circ F \to I \circ G$, где $\gamma_X := \beta_{G(X)} H(\alpha_X) = I(\beta_X) \alpha_{H(X)}$. (В равенстве и определённости композиции можно убедиться, если нарисовать диаграмму всех переходов для каких-нибудь объектов $A$ и $B$ и морфизма $f \in \Hom(A, B)$; но она будет большая: 14 узлов, 29 стрелок и абсолютная коммутативность.)
+        
+        Если $\alpha$ обратим, т.е. $\alpha_X$ обратим и его можно заменить на $\alpha_X^{-1}$, то $\alpha$ называется \emph{естественным изоморфизмом}, а $F$ и $G$ называются \emph{изоморфными}, и пишут $F \simeq G$.
+
+        Категории $C$ и $D$ называются эквивалентными, если есть функторы $F: C \to D$, $G: D \to C$ и естественные изоморфизмы $\alpha: \id_D \to F \circ G$ и $\beta: \id_C \to G \circ F$.
+    \end{definition}
+
+    \begin{remark}
+        Таким образом мы получили категорию $\Funct(C, D)$ функторов $C \to D$, где морфизмами являются естественные преобразования.
+    \end{remark}
+
+    \begin{lemma}
+        Зафиксируем категорию $I$ состоящую из объектов $0$ и $1$ и единственного нетождественного морфизма $0 \to 1$. Тогда для всяких функторов $F, G: C \to D$ задать естественное преобразование $F \to G$ --- всё равно, что задать функционал $H: C \times I \to D$, что $H({\cdot}, 0) = F$ и $H({\cdot}, 1) = G$.
+    \end{lemma}
+
+    \begin{lemma}
+        Горизонтальная и вертикальная композиции коммутируют.
+    \end{lemma}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item \dots
+            \item Назовём \emph{топологической группой} группу заданную на топологическом пространстве $G$, что сама операция группы есть непрерывное отображение $G \times G \to G$. Например, $\RR^+$ и $\RR^\cdot$ есть топологические группы на $\RR$ и $\RR \setminus \{0\}$ соответственно. Будем рассматривать категорию локально компактных (у всякой точки есть замкнутая окрестность, являющаяся компактной) топологических абелевых групп. Для всякой группы $A$ определим сопряжённую $A^* := \Hom(A, S^1)$ --- группа непрерывных гомоморфизмов $A \to S^1$ с некоторой топологией. Тогда есть тривиальный функтор $F$ и нетривиальный функтор $G$ из рассматриваемой категории в себя, где $G(A) = A^{**}$. При этом естественное преобразование $F \to G$ строится также как для векторных пространств.
         \end{enumerate}
     \end{example}
 \end{document}
