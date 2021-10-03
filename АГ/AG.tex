@@ -1,0 +1,421 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{../.tex/mcs-notes}
+\usepackage{todonotes}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage[all]{xy}
+\CompileMatrices
+
+\settitle
+{Алгебраическая геометрия.}
+{Иван Александрович Панин}
+{\%D0\%9C\%D0\%B0\%D1\%82\%D0\%90\%D0\%BD/MA.pdf}
+\date{}
+
+% \DeclareMathOperator{\Quot}{Quot}
+% \DeclareMathOperator*{\osc}{osc}
+% \DeclareMathOperator{\sign}{sign}
+% \DeclareMathOperator{\const}{const}
+% \DeclareMathOperator{\grad}{grad}
+% \newcommand{\eqdef}{\mathbin{\stackrel{\mathrm{def}}{=}}}
+% \newcommand{\True}{\mathrm{True}}
+% \newcommand{\False}{\mathrm{False}}
+% \newcommand{\Id}{\mathrm{Id}}
+% \renewcommand{\Re}{\mathrm{Re}}
+% \renewcommand{\Im}{\mathrm{Im}}
+\renewcommand{\mod}{\mathrm{mod}}
+\newcommand{\Max}{\mathrm{Max}}
+\newcommand{\Ker}{\mathrm{Ker}}
+
+\begin{document}
+    \maketitle
+
+    \listoftodos[TODOs]
+
+    \tableofcontents
+
+    \vspace{2em}
+    Литература:
+    \begin{itemize}
+        \item Хартсхорн, ``Алгебраическая геометрия''.
+        \item Атья, Макдональд, ``Введение в коммутативную алгебру''.
+    \end{itemize}
+
+    \begin{remark}
+        Все кольца ассоциативны, коммутативны и с единицей.
+    \end{remark}
+
+    \begin{definition}
+        Пусть $I$ --- частично упорядоченное по порядку $\leqslant$ множество, т.е.
+        \[a \leqslant b \leqslant c \quad \Longrightarrow \quad a \leqslant c.\]
+
+        ОВУ: всякая последовательности элементов $i_1 \leqslant i_2 \leqslant \dots$ стабилизируется с некоторого момента (т.е. последовательность имеет константный хвост).
+
+        \emph{Наличие минимального элемента}. Для всякого $J \subseteq I$ существует $j_{max} \in J$, что для всякого $j \in J$ имеет место следствие $j_{max} \leqslant j \Rightarrow j = j_{max}$.
+    \end{definition}
+
+    \begin{lemma}
+        $I$ удовлетворяет ОВУ тогда и только тогда, когда $I$ удовлетворяет наличию минимального элемента.
+    \end{lemma}
+    
+    \begin{proof}
+        \begin{itemize}
+            \item[$\Rightarrow$)] Предположим, что максимального элемента, т.е. для всякого элемента есть строго больший. Тогда мы можем построить строго возрастающую последовательность, что противоречит ОВУ.
+            \item[$\Leftarrow$)] Пусть дана нестрого возрастающая последовательность $(i_m)_{m=1}^\infty$. Тогда применяя свойство наличия максимального элемента для $J := \{i_m\}_{m=1}^\infty$, получаем, что есть $j_M \in J$ (для некоторого $M$), для которого нет строго большего в $J$. Значит после $j_M$ все элементы с ним совпадают. 
+        \end{itemize}
+    \end{proof}
+
+    \begin{definition}
+        Пусть $A$ --- кольцо, а $M$ --- $A$-модуль. Тогда $\mod(A)$ --- множество всех подмодулей в $M$, упорядоченных по включению ($(0), M \in \mod(M)$).
+
+        $M$ \emph{нётеров}, если $\mod(A)$ удовлетворяет ОВУ (или наличию максимального элемента).
+    \end{definition}
+
+    \begin{lemma}\ \label{neotherian-modules-lemma}
+        \begin{enumerate}
+            \item Если $M$ нётеров, то любой подмодуль $N \subseteq M$ конечнопорождён (как $A$-модуль).
+            \item Если любой подмодуль $M$ конечнопорождён, то $M$ нётеров.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[$1 \Rightarrow 2$)] Пусть $M$ нётеров, $N \subseteq M$ --- подмодуль. Пусть $I$ --- все конечнопорождённые модули в $N$.
+
+                $I$ непуст, так как $(0) \in I$. Следовательно, в $I$ есть максимальный элемент, пусть $N_{max}$. Если $N_{max} = N$, то $N$ конечнопорождён. Если $N_{max} \neq N$, то существует $x \in N \setminus N_{max}$, что $N_{max} \nsubseteq N_{max} + x \cdot A \subseteq N$ --- противоречие.
+            
+            \item[$2 \Rightarrow 1$)] Пусть имеется последовательность $M_1 \subseteq M_2 \subseteq \dots$ подмодулей $M$. Определим
+                \[M_\infty := \bigcup_{m=1}^\infty M_m.\]
+                $M_\infty$ тоже подмодуль $M$. Значит $M_\infty$ конечнопорождён. $x_1, \dots, x_n \in M_\infty$, значит есть $n_0$, что $x_1, \dots, x_n \in M_{n_0}$. Следовательно,
+                    \[M_{n_0} = M_{n_0 + 1} = M_{n_0 + 2} = \dots\]
+        \end{itemize}
+    \end{proof}
+
+    \begin{lemma}\label{factor-neotherianity-lemma}
+        $M'$ --- подмодуль $M$ и есть сюръективный гомоморфизм $\pi: M \to M/M' = M''$. Тогда $M$ нётеров тогда и только тогда, когда $M'$ и $M''$ нётеровы.
+    \end{lemma}
+
+    \begin{proof}
+        Пусть $M$ --- нётерово. Покажем, что $M'$ нётерово. Пусть есть цепочка $M'_1 \subseteq M'_2 \subseteq \dots$ подмодулей $M$. $M$ нётерово, значит цепочка стабилизируется, значит $M'$ нётерова.
+
+        Покажем, что $M''$ нётерово. Пусть есть цепочка подмодулей $M''_1 \subseteq M''_2 \subseteq \dots$. Следовательно $[\pi(\pi^{-1}(M''_1) \subseteq \pi^{-1}(M''_2) \subseteq \dots)] \subseteq M$. Значит цепочка стабилизируется. Значит стабилизируется изначальная цепочка, значит $M''$ нётерово.
+
+        Теперь предположим, что $M'$ и $M''$ нётеровы.
+        \todo[inline]{Дописать.}
+    \end{proof}
+
+    \begin{definition}
+        Кольцо $A$ \emph{нётерово}, если как модуль над собой нётерово.
+    \end{definition}
+
+    \begin{remark}
+        $1$ --- образующая $A$ как $A$-модуля. Всякий идеал $I$ является подмодулем $A$, но может не иметь одного образующего.
+    \end{remark}
+
+    \begin{definition}
+        \emph{Идеал} $I$ кольца $A$ --- непустое подмножество $A$, что для всяких $a, b \in I$ $a + b \in I$ и для всяких $a \in I$, $k \in A$ $ak \in I$.
+    \end{definition}
+
+    \begin{lemma} \label{neotherian-rings-and-finitely-generated-ideals-lemma}
+        Пусть дано кольцо $A$. TFAE
+        \begin{enumerate}
+            \item $A$ нётерово.
+            \item Любая цепочка идеалов $I_1 \subseteq I_2 \subseteq \dots$ стабилизируется.
+            \item Всякий идеал $I$ конечнопорождён.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[$1 \Leftrightarrow 2$)] По определению.
+            \item[$1 \Leftrightarrow 3$)] По лемме \ref{neotherian-modules-lemma}.  
+        \end{itemize}
+    \end{proof}
+
+    \begin{lemma}
+        Пусть дано нётерово кольцо $A$. Тогда для всякого $n \geqslant 0$ $A^n$ --- нётеров модуль.
+    \end{lemma}
+
+    \begin{proof}
+        $(0)$ --- нётеров. $A^1 = A$ --- нётеров. Далее легко провести по индукции, что $A^{n-1}$ нётерово и $A^n / A^{n-1} = A$ нётерово, а тогда $A^n$ нётерово.
+    \end{proof}
+
+    \begin{corollary}
+        Если $A$ --- нётерово кольцо, то всякий конечнопорождённый $A$-модуль $M$ нётеров.
+    \end{corollary}
+
+    \begin{proof}
+        Пусть $m_1, \dots, m_r \in M$ --- система порождающих модуля $M$. Тогда имеем сюръективный гомоморфизм $A^r \to M$, порождённый $e_i \mapsto m_i$. Следовательно, по лемме \ref{factor-neotherianity-lemma} из нётеровости $A^r$ следует нётеровость $M$.
+    \end{proof}
+
+    \begin{corollary}
+        Если $M$ --- конечнопорождённый модуль и $N$ --- подмодуль $M$, то $N$ конечнопорождён. В частности всякий подмодуль $N \subseteq A^r$ конечнопорождён.
+    \end{corollary}
+
+    \begin{proof}
+        \todo[inline]{Дописать.}
+    \end{proof}
+
+    \begin{theorem}[Гильберта]
+        Если кольцо $A$ нётерово, то $A[t]$ нётерово.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть фиксирован некоторый идеал $I$ в $A[t]$. Как только мы покажем, что $I$ конечнопорождён, то применяя лемму \ref{neotherian-rings-and-finitely-generated-ideals-lemma}, получим нётеровость $A[t]$.
+
+        Пусть $\mathcal{A} \subseteq A$ --- множество старших членов многочленов из $I$.
+
+        \begin{thlemma}
+            $\mathcal{A}$ --- идеал. И, следовательно, конечнопорождено.
+        \end{thlemma}
+
+        \begin{proof}
+            Действительно, для всяких $a, b \in \mathcal{A}$ есть многочлены $f_a, f_b \in I$ со старшими коэффициентами $a$ и $b$ соответственно. Следовательно $f_a t^{\deg(f_b)} + f_b t^{\deg(f_a))}$ лежит в $I$ и имеет старший коэффициент $a + b$ (если только $a + b \neq 0$; иначе очевидно). Также если $a \in \mathcal{A}$, а $k \in A$, то есть многочлен $f_a \in I$ с данным старшим коэффициентом. Но тогда $k f_a$ (если $ak \neq 0$; иначе очевидно) лежит в $I$ и имеет старший член $a k$.
+        \end{proof}
+
+        Рассмотрим $a_1$, \dots, $a_r$ --- система порождающих $\mathcal{A}$, а $f_1$, \dots, $f_r$ --- многочлены из $I$ с данными старшими коэффициентами.
+
+        Тогда всякий $f \in I$ порождается тогда и только тогда, когда порождается соответствующий ему $g \in I$ степени меньше $n := \max_k \deg(f_k)$, так как иначе с помощью старших членов $f_i$ можно породить старший член $f$, вычесть его из $f$ и тем самым понизить степень. Значит вопрос свёлся к порождаемости многочленов из $I$ степени не выше $n$.
+
+        Заметим, что описанные многочлены образуют модуль $I \cap (A \oplus A t \oplus \dots \oplus A t^{n-1})$ --- подмодуль $A^n$. Значит $I \cap (A \oplus A t \oplus \dots \oplus A t^{n-1})$ конечнопорождён, а отсюда $I$ конечнопорождён.
+    \end{proof}
+
+    \begin{lemma}
+        Если $B$ --- нётерово кольцо, $C$ --- кольцо, а $\varphi: B \to C$ --- гомоморфизм колец, то $\varphi(B)$ --- нётерово.
+    \end{lemma}
+
+    \begin{proof}
+        Пусть дана последовательность идеалов $I_1 \subseteq I_2 \subseteq \dots$ в $\varphi(B)$. Тогда $\varphi^{-1}(I_i)$ --- идеалы и
+        \[\varphi^{-1}(I_1) \subseteq \varphi^{-1}(I_2) \subseteq \dots.\]
+        Значит с какого-то момента эта цепочка стабилизируется, а значит стабилизируется образ этой цепочки по $\varphi$, т.е. изначальная цепочка.
+    \end{proof}
+
+    \begin{lemma}
+        Если $\psi: A \to C$ --- гомоморфизм колец, такой что $C$ --- конечная $A$-алгебра, порождённая элементами $x_1$, \dots, $x_n$. Тогда $C$ нётеров.
+    \end{lemma}
+
+    \begin{proof}
+        Мы можем рассмотреть нативное вложение $A$ в $A[t_1, \dots, t_n]$ и гомоморфизм $A$-алгебр $\varphi: A[t_1, \dots, t_n] \to C$, порождённый $\psi$ и соотношениями $\varphi(t_i) = x_i$.
+        \[
+            \xymatrix{
+                A \ar@{_{(}->}[rd] \ar[rr]^{\psi}&& C\\
+                & A[t_1, \dots, t_n] \ar@{->>}[ru]_{\varphi}
+            }
+        \]
+        $\varphi$ сюръективен, а $A[t_1, \dots, t_n]$ нётерово. Таким образом $\varphi(B) = C$ нётерово.
+    \end{proof}
+
+    \begin{remark}
+        Всякое поле нётерово.
+    \end{remark}
+
+    \begin{corollary}
+        Любая конечнопорождённая $F$-алгебра, где $F$ --- поле, нётерова.
+    \end{corollary}
+
+    \begin{remark}
+        \begin{itemize}
+            \item $\ZZ$ --- нётерово кольцо.
+            \item Всякое кольцо является $\ZZ$-кольцом.
+            \item Если кольцо $R$ --- конечнопорождённая $\ZZ$-алгебра, то оно нётерово.
+        \end{itemize}
+    \end{remark}
+
+    \begin{lemma}
+        Пусть $A$ --- нётерово кольцо, а $M''$ --- $A$-модуль. Тогда $M$ конечнопорождён тогда и только тогда, когда нётеров.
+    \end{lemma}
+
+    \begin{proof}
+        Если $M''$ нётеров, то уже доказано, что $M''$ конечнопорождён, так как является собственным подмодулем (см. лемму \todo{Ref}).
+
+        Если $M''$ конечнопорождено, то есть система порождающих $m_1$, \dots, $m_s$. Тогда есть сюръективный гомоморфизм
+        \[\varphi: A^s \to M'', e_i \mapsto m_i.\]
+        При этом $A^s$ нётеров, значит $M''$ нётеров.
+    \end{proof}
+
+    \begin{lemma}\label{horrible-lemma}
+        Пусть даны кольца $A \subseteq B \subseteq C$, что $A$ --- нётерово, $C$ --- конечнопорождённый $B$-модуль и конечнопорождённая $A$-алгебра. Тогда $B$ --- конечнопорождённая $A$-алгебра.
+    \end{lemma}
+
+    \begin{proof}
+        Пусть $y_1$, \dots, $y_n$ --- система порождающих $C$ как $A$-алгебру, а $x_1$, \dots, $x_m$ --- система порождающих $C$ как $B$-модуль. Тогда есть $b_{i, j} \in B$, что
+        \[y_i = \sum b_{i, j} x_j,\]
+        и $b_{i, j, k} \in B$, что
+        \[x_i x_j = \sum b_{i, j, k} x_k.\]
+        Пусть $B_0$ --- это $A$-подалгебра в $B$, порождённая всеми $b_{i, j}$ и $b_{i, j, k}$. Заметим, что количество перечисленных порождающих конечно, т.е. $B_0$ --- конечнопорождённая алгебра. Следовательно, $B_0$ нётерова.
+
+        Поймём, что $C$ порождается уже над $B_0$ элементами $x_1$, \dots, $x_n$. Действительно, для всякого $c \in C$ есть $F \in A[t_1, \dots, t_n]$, что $c = F(y_1, \dots, y_n)$. При этом $y_i = \sum b_{i, j} x_j$. Значит
+        \[c = G(x_1, \dots, x_m) \in B_0 x_1 + \dots + B_0 x_m,\]
+        так как при раскрытии скобок каждый квадратный $x_i x_j$ член заменяется на линейную сумму $\sum b_{i, j, k} x_k$, т.е. можно запустить банальный алгоритм понижения степени и получить линейное по $x_i$ выражение.
+
+        Таким образом $C$ как $B_0$-модуль конечнопорождён (а $B_0$ нётеров), значит всякий $B_0$-подмодуль в $C$ конечнопорождён, значит $B$ --- конечнопорождённый $B_0$-модуль. Поскольку $B_0 \subseteq B$, то $B$ --- конечнопорождённая $B_0$-алгебра. Следовательно, $B$ --- конечнопорождённая $B_0$-алгебра, а $B_0$ --- конечнопорождённая $A$-алгебра, и тогда $B$ --- конечнопорождённая $A$-алгебра.
+    \end{proof}
+
+    \subsection{Алгебраические и чисто трансцендентные расширения полей}
+
+    \begin{definition}
+        Пусть есть поле $F$, содержащееся в поле $E$. Элемент $x \in E$ называется \emph{алгебраическим над $F$}, если есть $g \in F[t]$, что $g(x) = 0 \in E$. Иначе $x$ называется \emph{трансцендентным над $F$}.
+    \end{definition}
+
+    \begin{lemma}
+        Если $x$ алгебраический над $F$, то рассмотрим $F$-подалгебру $F[x]$ в $E$, порождённую $x$, т.е. есть гомоморфизм алгебр $\varphi: F[t] \to E$, порождённый соотношением $\varphi(t) = x$, определяет алгебру $\varphi(F[t])$. Тогда существует неприводимый многочлен $f \in F[t]$, что $f(x) = 0$ и $F[x] = \varphi(F[t]) = F[t]/(f)$.
+    \end{lemma}
+
+    \begin{proof}
+        $\varphi$ --- гомоморфизм алгебр, а значит гомоморфизм колец, значит $\Ker(\varphi) \subseteq F[t]$ непуст (из-за алгебраичности $x$) и является идеалом. Но всякий идеал в $F[t]$ является главным, следовательно $\Ker(\varphi) = (f(t))$ для некоторого $f \in F[t]$. При этом, так как $E$ поле, $\Ker(\varphi)$ --- простой идеал, т.е. $f(t)$ неприводим. Отсюда получаем искомое.
+    \end{proof}
+
+    \begin{corollary}
+        Уже $F[x]$ является подполем в $E$.
+    \end{corollary}
+
+    \begin{corollary}\label{finitness-of-algebraic-field-corollary}
+        $\dim_F F[x] = \deg f(t) < \infty$.
+    \end{corollary}
+
+    \begin{corollary}\label{finite-generation-of-F[x]-corollary}
+        $F[x]$ порождается как векторное пространство над $F$ элементами (базисом) $1$, $x$, \dots, $x^d$ для некоторого $d \in \NN$.
+    \end{corollary}
+
+    \begin{definition}
+        Пусть $K \subseteq L$ --- поля. Если $y_1, ..., y_m \in L$ алгебраичны над $K$ и
+        \[K \subseteq K[y_1] \subseteq K[y_1][y_2] \subseteq \dots \subseteq K[y_1]\dots[y_m] = L,\]
+        то $L$ называется \emph{конечнопорождённым алгебраически порождённым алгебраическим расширением поля $K$}.
+    \end{definition}
+
+    \begin{lemma}\label{finite-gerenation-of-finite-algebraic-extension-lemma}
+        Если даны поля $K \subseteq L$, что $L$ --- конечнопорождённое алгебраическое расширение $K$, то $\dim_K L < \infty$.
+    \end{lemma}
+
+    \begin{proof}
+        Если $m = 1$, то утверждение превращается в следствие \ref{finitness-of-algebraic-field-corollary}.
+
+        По следствию \ref{finite-generation-of-F[x]-corollary} $1$, \dots, $y_2^{d_2}$ порождают $K[y_1][y_2]$ как векторное пространство над $K[y_1]$. При этом $K[y_1]$ порождается $1$, \dots, $y_1^{d_1}$ как векторное пространство над $K$. Следовательно, все элементы вида $y_1^{\alpha_1} y_2^{\alpha_2}$, $\alpha_1 \in \{0; \dots; d_1\}$, $\alpha_2 \in \{0; \dots; d_2\}$, порождают $K[y_1][y_2]$ как векторное пространство над $K$. Следовательно
+        \[\dim_K K[y_1][y_2] = \dim_K K[y_1] \cdot \dim_{K[y_1]} K[y_1][y_2] < \infty.\]
+    \end{proof}
+
+    \begin{exercise}
+        Верно и обратное: если $\dim_K L < \infty$, то $L$ --- конечнопорождённое алгебраическое расширение поля $K$.
+    \end{exercise}
+
+    \begin{definition}
+        Пусть даны поля $F \subseteq E$ и $x \in E$, трансцендентный в $F$. Тогда
+        \[F(x) := \{\frac{f(x)}{g(x)} \mid f, g \in F[t], g(t) \neq 0\}.\]
+    \end{definition}
+
+    \begin{lemma}
+        \begin{enumerate}
+            \item $F(x)$ корректно определено.
+            \item $F(x)$ --- поле.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Если $g(x) = 0$, то $x$ алгебраично. Значит $f(x)/g(x)$ определено.
+            \item Операции наследуются от поля. Несложно видеть, что $F(x)$ относительно них замкнуто.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{lemma}
+        $F(x) \cong F(t)$ как поля, где $F(t)$ --- поле рациональных функций.
+    \end{lemma}
+
+    \begin{proof}
+        Построим понятный гомоморфизм полей
+        \[\varphi: F(t) \to F(x), f/g \mapsto f(x)/g(x).\]
+        По построению $\varphi$ сюръективен. $\Ker(\varphi)$ --- идеал в поле, т.е. либо $(0)$, либо всё $F(t)$. Но $\varphi$ сохраняет $F$, значит $\Ker(\varphi) = 0$, т.е. $\varphi$ инъективен. Итого $\varphi$ --- изоморфизм.
+    \end{proof}
+
+    \begin{lemma}
+        Пусть $x$ трансцендентно. Тогда $1$, $x$, $x^2$, \dots линейно независимы.
+    \end{lemma}
+
+    \begin{proof}
+        В противном случае это означает, что есть некоторое $n \in \NN$ и $a_0, \dots, a_n \in F$, что
+        \[\sum_{k=0}^n a_k x^k = 0.\]
+        Тогда $f(x) = 0$, где
+        \[f(t) := \sum_{k=0}^n a_k t^k.\]
+        Это противоречит с трансцендентностью $x$.
+    \end{proof}
+
+    \begin{lemma}
+        Пусть даны поле $L$ и независимая переменная $t$. Тогда
+        \[L(t) := \{\frac{f(t)}{g(t)} \mid f(t), g(t) \in L[t], g(t) \neq 0\}\]
+        не является конечнопорождённой $L$-алгеброй.
+    \end{lemma}
+
+    \begin{proof}
+        Предположим противное. Пусть $L(t) = L[y_1, \dots, y_s]$ --- конечнопорождённая $L$-алгебра, где $y_i = \frac{f_i(t)}{g_i(t)}$. Тогда есть гомоморфизм
+        \[\varphi: L[T_1, \dots, T_s] \to L(t), T_i \mapsto y_i.\]
+        Понятно, что
+        \[L[y_1, \dots, y_s] = \varphi(L[T_1, \dots, T_s]).\]
+
+        Тогда рассмотрим $h(t)$ --- неприводимый делитель значения
+        \[1 - \prod_{i=1}^s q_i(t).\]
+        Поскольку $L = L[y_1, \dots, y_s]$, то $1/h(t) \in L[y_1, \dots, y_s]$, то есть $G(T_1, \dots, T_s) \in L[T_1, \dots, T_s]$, что $G(y_1, \dots, y_s) = \frac{1}{h(t)}$. Понятно, что есть некоторое $N \in \NN$, что
+        \[G(y_1, \dots, y_s) = \frac{F(t)}{(\prod q_i(t))^N}.\]
+        Тогда
+        \[\left(\prod q_i(t)\right)^N = h(t) F(t).\]
+
+        Вспомним, что
+        \begin{gather*}
+            \prod g_i(t) - 1 = h(t) \cdot h_1(t) \quad \Longrightarrow \quad \prod g_i(t) \equiv 1 \pmod{h(t)} \quad \Longrightarrow \quad \left(\prod g_i(t)\right)^N \equiv 1 \pmod{h(t)},\\
+            \left(\prod g_i(t)\right)^N = h(t) F(t) \quad \Longrightarrow \quad \left(\prod g_i(t)\right)^N \equiv 0 \pmod{h(t)},
+        \end{gather*}
+        т.е. $0 \equiv 1 \pmod{h(t)}$.
+    \end{proof}
+
+    \begin{lemma}
+        Пусть $F \subseteq E$ --- поля, и $E = F[x_1, \dots, x_n]$ конечнопорождёно как $F$-алгебра. Тогда $[x_1, \dots, x_n]$ алгебраичны над $F$ и $\dim_F E < \infty$.
+    \end{lemma}
+
+    \begin{proof}
+        Среди $x_1$, \dots, $x_n$ может оказаться элемент трансцендентный над $F$, WLOG $x_1$. Получим
+        \[F \subseteq F(x_1) \subseteq E.\]
+        Среди оставшихся может оказаться элемент, трансцендентный над $F(x_1)$, WLOG $x_2$. Получим
+        \[F \subseteq F(x_1) \subseteq F(x_1)(x_2) \subseteq E.\]
+        Будем повторять данную операцию до конца. Таким образом выделим $x_1$, \dots, $x_r$, получим
+        \[F \subseteq F(x_1) \subseteq F(x_1)(x_2) \subseteq \dots \subseteq \underbrace{F(x_1)\dots(x_r)}_{K} \subseteq E,\]
+        что все $x_{r+1}$, \dots, $x_n$ алгебраичны над $K$. Тогда $E$ как векторное пространство над $K$ конечномерно (лемма \ref{finite-gerenation-of-finite-algebraic-extension-lemma}).
+        
+        Тогда имеем, что
+        \[F \subseteq K \subseteq E,\]
+        где $E$ --- конечнопорождённый $K$-модуль и конечнопорождённая $F$-алгебра. Следовательно, по лемме \ref{horrible-lemma} $K$ --- конечнопорождённая $F$-алгебра.
+
+        Пусть $r \neq 0$. Пусть $L = F(x_1)\dots(x_{r-1})$. Тогда $L(x_r) = K$, где $x_r \in K$ трансцендентен над $L$. Следовательно, $L(x_r) \cong L(t)$, т.е. $K = L(x_r)$ --- не конечнопорожденная $L$-алгебра, и тем более не конечнопорождённая $F$-алгебра. Противоречие.
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $F \to A$ --- конечнопорождённая $F$-алгебра, а $\mathcal{M}$ --- максимальный идеал $A$. Тогда $F \hookrightarrow A/\mathcal{M}$ --- конечное алгебраическое расширение поля.
+    \end{corollary}
+
+    \begin{proof}
+        \todo[inline]{Дописать?}
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $F$ --- алгебраически замкнутое поле, а $F \to A$ --- конечнопорождённая $F$-алгебра. Тогда $F \to A/\mathcal{M}$ --- изоморфизм.
+    \end{corollary}
+
+    \begin{proof}
+        $A/\mathcal{M}$ --- конечное алгебраическое расширение поля $F$, т.е. совпадает с $F$.
+    \end{proof}
+
+    \begin{theorem}[Гильберта, анонс]
+        Пусть $F$ --- алгебраически замкнутое поле (например, $\CC$), $\mathcal{M} \subseteq F[t_1, \dots, t_n]$ --- максимальный идеал. Тогда $\mathcal{M} = (t_1-x_1, \dots, t_n-x_n)$, где $x_i \in F$.
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим рассмотрим последовательность отображений
+        % \[
+        %     \xy
+        % \]
+
+        \
+    \end{proof}
+
+    \begin{theorem}[Гильберта о нулях, анонс]
+        Пусть $K$ --- алгебраически замкнутое поле (например, $\CC$), тогда $\Max(K[t_1, \dots, t_n]) \leftrightarrow K^n$. Каждый идеал вида $(t_1 - x_1, \dots, t_n - x_n)$ максимален, других максимальных нет и все описанные идеалы попарно различны.
+    \end{theorem}
+\end{document}
