@@ -26,6 +26,7 @@
 \renewcommand{\mod}{\mathrm{mod}}
 \newcommand{\Max}{\mathrm{Max}}
 \newcommand{\Ker}{\mathrm{Ker}}
+\renewcommand{\AA}{\ensuremath{\mathbb{A}}\xspace}
 
 \begin{document}
     \maketitle
@@ -402,20 +403,162 @@
         $A/\mathcal{M}$ --- конечное алгебраическое расширение поля $F$, т.е. совпадает с $F$.
     \end{proof}
 
-    \begin{theorem}[Гильберта, анонс]
-        Пусть $F$ --- алгебраически замкнутое поле (например, $\CC$), $\mathcal{M} \subseteq F[t_1, \dots, t_n]$ --- максимальный идеал. Тогда $\mathcal{M} = (t_1-x_1, \dots, t_n-x_n)$, где $x_i \in F$.
+    \begin{exercise}
+        Пусть $R$ --- кольцо, $I \subseteq J \subseteq R$ --- два иделала в $R$. Тогда TFAE.
+        \begin{enumerate}
+            \item $I = J$.
+            \item $\overline{\varphi}: R/I \to R/J, r \mathbin{\mod} I \mapsto r \mathbin{\mod} J$ --- изоморфизм колец.
+        \end{enumerate}
+    \end{exercise}
+
+    \begin{proof}
+        Если $I = J$, то очевидно что $r \mathbin{\mod} I = r \mathbin{\mod} J$, а $R/I = R/J$, а тогда $\overline{\varphi}$, являясь тождественным отображением, является изоморфизмом колец.
+
+        Пусть $\overline{\varphi}$ --- изоморфизм колец. Рассмотрим вложения $\pi_I: R \to R/I, r \mapsto r \mathbin{\mod} I$ и $\pi_J: R \to R/J, r \mapsto r \mathbin{\mod} J$. Следовательно, имеем коммутативность диаграммы
+        \[
+            \xymatrix{
+                & R \ar[dl]_{p_I} \ar[dr]^{p_J} &\\
+                R/I \ar[rr]^{\sim}_{\overline{\varphi}} && R/J
+            }
+        \]
+        Следовательно,
+        \[
+            r \in I
+            \quad \Leftrightarrow \quad
+            r \in \Ker(p_I)
+            \quad \Leftrightarrow \quad
+            p_I(r) = 0
+            \quad \Leftrightarrow \quad
+            p_J(r) = 0
+            \quad \Leftrightarrow \quad
+            r \in \Ker(p_J)
+            \quad \Leftrightarrow \quad
+            r \in J,
+        \]
+        т.е. $I=J$.
+    \end{proof}
+
+    \begin{exercise}
+        Пусть $\mathcal{M} \subseteq R$ --- идеал. Тогда TFAE.
+        \begin{enumerate}
+            \item $\mathcal{M}$ максимален.
+            \item $R/\mathcal{M}$ --- поле.
+        \end{enumerate}
+    \end{exercise}
+
+    \begin{theorem}[Гильберта о нулях, Nullstellensatz]
+        Пусть $K$ --- алгебраически замкнутое поле (например, $\CC$), $\mathcal{M} \subseteq K[t_1, \dots, t_n]$ --- максимальный идеал. Тогда $\mathcal{M} = (t_1-x_1, \dots, t_n-x_n)$, где $x_i \in F$.
     \end{theorem}
 
     \begin{proof}
-        Рассмотрим рассмотрим последовательность отображений
-        % \[
-        %     \xy
-        % \]
+        Зафиксируем некоторые значения $x_1, \dots, x_n \in K$ и рассмотрим идеал $I := (t_1 - x_1, \dots, t_n - x_n)$. Также рассмотрим следующие гомоморфизмы:
+        \begin{gather*}
+            in: K \to K[t_1, \dots, t_n], r \mapsto r,\\
+            \pi_\mathcal{M}: K[t_1, \dots, t_n] \to K[t_1, \dots, t_n]/\mathcal{M}, r \mapsto r \mathbin{\mod} \mathcal{M}, \qquad i_\mathcal{M} := \pi_\mathcal{M} \circ in,\\
+            \pi_I: K[t_1, \dots, t_n] \to K[t_1, \dots, t_n]/I, r \mapsto r \mathbin{\mod} I, \qquad i_I := \pi_I \circ in.
+        \end{gather*}
+        \[
+            \xymatrix{
+                && K[t_1, \dots, t_n]/\mathcal{M} \ar@{-->}[dd]^\varphi\\
+                K \ar[r]|(0.3){in} \ar@(ur, l)[rru]^(0.4){i_\mathcal{M}}_(0.4){\sim} \ar@(dr, l)[rrd]_(0.4){i_I}^(0.4){\sim} & K[t_1, \dots, t_n] \ar[ur]_{\pi_\mathcal{M}} \ar[dr]^{\pi_I}\\
+                && K[t_1, \dots, t_n]/I &
+            }
+        \]
+        Заметим, что $i_\mathcal{M}$ --- изоморфизм колец, так как $\mathcal{M}$ максимален. При этом для всякого многочлена $F \in K[t_1, \dots, t_n]$ по теореме Безу $F(t_1, \dots, t_n) \equiv F(x_1, \dots, x_n) \pmod{I}$, а значит $i_I$ инъективен, так как $K$ поле, и сюръективен, так как $[F]_I = [F(x_1, \dots, x_n)]_I = i_I(F(x_1, \dots, x_n))$. Следовательно $i_I$ тоже изоморфизм колец. Следовательно есть изоморфизм колец $\varphi = i_\mathcal{M}^{-1} \circ i_I$, т.е. для всякого $r \in K$
+        \[\varphi(r \mathbin{\mod} \mathcal{M}) = r \mathbin{\mod} I.\]
+        Осталось показать, что $\varphi \circ \pi_\mathcal{M} = \pi_I$, т.е. для всякого $F \in K[t_1, \dots, t_n]$ $\varphi: F \mathbin{\mod} \mathcal{M} \mapsto F \mathbin{\mod} I$.
 
-        \
+        На деле для случайных $x_1$, \dots, $x_n$ это не верно. Поэтому возьмём $x_k := i_\mathcal{M}^{-1}(t_k \mathbin{\mod} \mathcal{M})$, т.е. чтобы $t_k - x_k \in \mathcal{M}$. Тогда получим, что
+        \[\varphi(t_k \mathbin{\mod} \mathcal{M}) = \varphi(x_k \mathbin{\mod} \mathcal{M}) = x_k \mathbin{\mod} I = t_k \mathbin{\mod} I.\]
+        Поскольку $\varphi$ --- гомоморфизм колец, а всякий многочлен представляется в виду суммы произведений элементов $K$ и $t_1$, \dots, $t_n$, то теперь это верно для всех многочленов. Значит $\mathcal{M} = I$.
+
+        % Рассмотрим рассмотрим последовательность отображений
+        % \[
+        %     \xymatrix{
+        %         & K[t_1, \dots, t_n] \ar[rd]^{\varphi}&\\
+        %         K \ar[ur] \ar[rr]_(0.4){\sim}&& K[t_1, \dots, t_n]/\mathcal{M}
+        %     }
+        % \]
+        % где $\varphi: \mathcal{M} \mapsto 0$. Поскольку $\mathcal{M}$ максимален, $K[t_1, \dots, t_n]/\mathcal{M}$ --- поле, т.е. $K$. Тогда $x_i := \varphi(t_i)$. Значит $\varphi(t_i - x_i) = 0$, т.е. $t_i - x_i \in \Ker(\varphi) = \mathcal{M}$. Таким образом
+        % \[(t_1 - x_1, \dots, t_n - x_n) \subseteq \mathcal{M}.\]
+        % Обозначим $R = K[t_1, \dots, t_n]$. При этом по определению
+        % \[(t_1 - x_1, \dots, t_n - x_n) = (t_1 - x_1) \cdot R + \dots + (t_n - x_n) \cdot R.\]
+        % Следовательно остлось показать, что
+        % \[\mathcal{M} \subseteq (t_1 - x_1) \cdot R + \dots + (t_n - x_n) \cdot R.\]
+
+        % Рассмотрим гомоморфизм колец $\psi: K \to K[t_1 - x_1, \dots, t_n - x_n]/(t_1 - x_1, \dots, t_n - x_n)$. Покажем, что это изоморфизм колец. Поскольку $K$ --- поле, $\psi$ инъективен. Рассмотрим любой $F \in K[t_1 - x_1, \dots, t_n - x_n]$. Тогда его можно разложить по степеням: $F = F_0 + \dots + F_d$ ($\deg(F_k) = k$). Тогда
+        % \[F \equiv F_0 \pmod{(t_1 - x_1, \dots, t_n - x_n)}.\]
+        % Значит $[F] = [F_0] = \psi(F_0)$. Т.е. $\psi$ сюръективен. Вот $\psi$ и изоморфизм колец (а следовательно).
+
+        % Значит у нас есть изоморфизмы колец из $K$ в $K[t_1-x_1, \dots, t_n-x_n]/\mathcal{M}$ и $K[t_1-x_1, \dots, t_n-x_n]/(t_1-x_1, \dots, t_n-x_n)$. Таким образом их ядра совпали (упражнение выше), т.е. $(t_1-x_1,\dots,t_n-x_n) = \mathcal{M}$.
     \end{proof}
 
-    \begin{theorem}[Гильберта о нулях, анонс]
-        Пусть $K$ --- алгебраически замкнутое поле (например, $\CC$), тогда $\Max(K[t_1, \dots, t_n]) \leftrightarrow K^n$. Каждый идеал вида $(t_1 - x_1, \dots, t_n - x_n)$ максимален, других максимальных нет и все описанные идеалы попарно различны.
-    \end{theorem}
+    \begin{definition}
+        Пусть фиксировано поле $k$. \emph{Аффинное пространство} над полем $k$ размерности $n$ --- есть пространство
+        \[\AA^n = \AA_k^n := \{x = (x_1, \dots, x_n) \mid x_i \in k\} = k^n.\]
+
+        Пусть $A := k[T_1, \dots, T_n]$, $f \in A$. Тогда $f$ --- отображение $\AA^n \to k$. Пусть фиксировано $S \subseteq A$. Тогда \emph{множеством общих нулей многочленов из $S$} (также ``общие нули многочленов из $S$'' или ``нули $S$'') --- это множество
+        \[Z(S) := \{x \in \AA^n \mid \forall f \in S\; f(x) = 0\}.\]
+        Все подмножества $Z(S)$ называются \emph{замкнутыми подмножествами в $\AA^n$} или \emph{аффинными подмножествами в $\AA^n$}.
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item $\varnothing = Z(\{a\}_{a \in k}) = Z(A)$.
+            \item $\AA^n = Z(\varnothing) = Z(\{0\})$.
+            \item $\{(x_1, \dots, x_n)\} = Z(\{T_1 - x_1, \dots, T_n - x_n\})$.
+            \item Замкнутые подмножества в $\AA^1$ --- это $\AA$, $\varnothing$ и любое конечное подмножество.
+            \item Если $n = 2$, то $Z(f)$ называется \emph{плоской кривой}.
+        \end{enumerate}
+    \end{example}
+
+    \begin{definition}
+        Пусть $I$ --- некоторый идеал. \emph{Радикал из иделала $I$} --- $\sqrt{I} := \{h \in A \mid \exists N \colon \; h^N \in I\}$.
+    \end{definition}
+
+    \begin{lemma}
+        $\sqrt{I}$ --- идеал.
+    \end{lemma}
+
+    \begin{proof}
+        Пусть $h \in \sqrt{I}$. Тогда есть $N$, что $h^N \in I$. Значит для всякого $f \in A$
+        \[(hf)^N = h^n f^n \in I A \subseteq I.\]
+        Т.е. $hf \in \sqrt{I}$. Значит $hA \subseteq \sqrt{I}$.
+
+        Пусть $h_1, h_2 \in \sqrt{I}$. Тогда есть $N_1$ и $N_2$, что $h_1^{N_1}, h_2^{N_2} \in I$. Тогда
+        \[(h_1 + h_2)^{N_1 + N_2} = \sum_{k=0}^{N_1 + N_2} h_1^k h_2^{N_1 + N_2 - k} \binom{N_1 + N_2}{N_1}.\]
+        При этом при $k \leqslant N_1$
+        \[
+            h_2^{N_2} \in I,
+            \qquad
+            h_1^k h_2^{N_1 - k} \binom{N_1 + N_2}{N_1} \in A,
+            \qquad \Longrightarrow \qquad
+            h_1^k h_2^{N_1 + N_2 - k} \binom{N_1 + N_2}{N_1} \in I;
+        \]
+        аналогично для $k \geqslant N_1$.
+    \end{proof}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item Если $S \subseteq S'$, то $Z(S') \subseteq Z(S')$.
+            \item Пусть $I$ --- идеал, порождённый многочленами из $S$. Тогда $Z(I) = Z(S)$.
+            \item $Z(\sqrt{I}) = Z(I)$.
+            \item Для всякого $S$ есть конечное $S'$, что $Z(S) = Z(S')$.
+            \item Пусть есть семейство $\{S_i\}_{i \in I}$. Тогда
+                \[Z\left(\bigcup_{i \in I} S_i\right) = \bigcap_{i \in I} Z(S_i).\]
+            \item Пусть дано семейство $\{S_i\}_{i=1}^n$. $S' := S_1 S_2 \dots S_n = \{f_1 \dots f_n \mid f_1 \in S_1 \wedge \dots \wedge f_n \in S_n\}$. Тогда
+                \[Z(S') = \bigcup_{i = 1}^n Z(S_i).\]
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Действительно, для всякой точки $x \in Z(S')$ верно, что для всякого $f \in S'$ $f(x) = 0$, а значит то же верно для всякого $f \in S$ (так как $S \subseteq S'$), т.е. $x \in Z(S)$.
+            \item Поскольку $S \subseteq I$, то $Z(I) \subseteq Z(S)$. При этом для всякого $x \in Z(S)$ верно, что для всякого $f \in S$ $f(x) = 0$, а значит то же верно для всех $f \in I$ (так как $I$ --- идеал, порождённый $S$), т.е. $x \in Z(I)$. Т.е. $Z(S) \subseteq Z(I)$. Следовательно, $Z(S) = Z(I)$.
+            \item Поскольку $I \subseteq \sqrt{I}$, то $Z(\sqrt{I}) \subseteq Z(I)$. При этом для всякого $x \in Z(I)$ верно, что для всякого $f \in S$ $f(x) = 0$, а значит для всякого $f \in \sqrt{I}$ есть $N$, что $f^N(x) = 0$, а тогда $f(x) = 0$, т.е. $x \in Z(\sqrt{I})$. Т.е. $Z(I) \subseteq Z(\sqrt{I})$. Следовательно, $Z(\sqrt{I}) = Z(I)$.
+            \item Если известно, что $S$ и $S'$ порождают одинаковые идеалы, то $Z(S) = Z(S')$. Но всякий идеал в $k[T_1, \dots, T_n]$ конечнопорождён, а значит у идеала, порождённого $S$, есть конечное порождающее множество $S'$ --- искомое $S'$.
+            \item Заметим, что $x \in Z(\bigcup_{i \in I} S_i)$ тогда и только тогда, когда на $x$ зануляются все многочлены из $\bigcup_{i \in I} S_i$, что равносильно тому, что на $x$ зануляются все многочлены из каждого $S_i$, что равносильно тому, что $x$ лежит в каждом $Z(S_i)$, что равносильно тому, что $x \in \bigcap_{i \in I} Z(S_i)$. Отсюда следует требуемое.
+            \item Покажем утверждение для $n = 2$. Заметим, что если $x \in Z(S_1)$, то на $x$ зануляются все многочлены из $S_1$, а значит и из $S_1 \cdot S_2$, т.е. $x \in Z(S_1 S_2)$. Следовательно $Z(S_1) \subseteq Z(S_1 S_2)$. Из аналогичного утверждения получаем, что $Z(S_1) \cup Z(S_2) \subseteq Z(S_1 S_2)$. При этом если $x \in Z(S_1 S_2) \setminus Z(S_1)$, то есть многочлен $f \in S_1$, что $f(x) \neq 0$. Но для всякого $g \in S_2$ верно $fg \in S_1 S_2$, а значит $f(x)g(x) = 0$, а тогда $g(x) = 0$, т.е. $x \in Z(S_2)$. Итого $Z(S_1 S_2) = Z(S_1) \cup Z(S_2)$. Утверждение для всякого $n$ получается по индукции с помощью данного.
+        \end{enumerate}
+    \end{proof}
 \end{document}
