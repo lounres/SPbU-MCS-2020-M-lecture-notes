@@ -446,7 +446,7 @@
         \end{enumerate}
     \end{exercise}
 
-    \begin{theorem}[Гильберта о нулях, Nullstellensatz]
+    \begin{theorem}[Гильберта о нулях (слабая), Nullstellensatz]
         Пусть $K$ --- алгебраически замкнутое поле (например, $\CC$), $\mathcal{M} \subseteq K[t_1, \dots, t_n]$ --- максимальный идеал. Тогда $\mathcal{M} = (t_1-x_1, \dots, t_n-x_n)$, где $x_i \in F$.
     \end{theorem}
 
@@ -492,6 +492,11 @@
 
         % Значит у нас есть изоморфизмы колец из $K$ в $K[t_1-x_1, \dots, t_n-x_n]/\mathcal{M}$ и $K[t_1-x_1, \dots, t_n-x_n]/(t_1-x_1, \dots, t_n-x_n)$. Таким образом их ядра совпали (упражнение выше), т.е. $(t_1-x_1,\dots,t_n-x_n) = \mathcal{M}$.
     \end{proof}
+    
+    \begin{remark*}
+        Глава I. \S 1. Замкнутые подмножества $A_k^n$.
+        \todo[inline]{Обозначить это по-нормальному.}
+    \end{remark*}
 
     \begin{definition}
         Пусть фиксировано поле $k$. \emph{Аффинное пространство} над полем $k$ размерности $n$ --- есть пространство
@@ -546,19 +551,90 @@
             \item Для всякого $S$ есть конечное $S'$, что $Z(S) = Z(S')$.
             \item Пусть есть семейство $\{S_i\}_{i \in I}$. Тогда
                 \[Z\left(\bigcup_{i \in I} S_i\right) = \bigcap_{i \in I} Z(S_i).\]
+            \item Пусть дано семейство идеалов $\{I_j\}_{j \in J}$. Тогда
+                \[Z\left(\sum_{j \in J} I_j\right) = \bigcap_{j \in J} Z(I_j).\]
             \item Пусть дано семейство $\{S_i\}_{i=1}^n$. $S' := S_1 S_2 \dots S_n = \{f_1 \dots f_n \mid f_1 \in S_1 \wedge \dots \wedge f_n \in S_n\}$. Тогда
                 \[Z(S') = \bigcup_{i = 1}^n Z(S_i).\]
+            \item Пусть дано семейство идеалов $\{I_j\}_{j=1}^n$. Тогда
+                \[Z\left(\bigcap_{j=1}^n I_j\right) = \bigcup_{j=1}^n Z(I_j).\]
         \end{enumerate}
     \end{lemma}
 
     \begin{proof}
         \begin{enumerate}
             \item Действительно, для всякой точки $x \in Z(S')$ верно, что для всякого $f \in S'$ $f(x) = 0$, а значит то же верно для всякого $f \in S$ (так как $S \subseteq S'$), т.е. $x \in Z(S)$.
+
             \item Поскольку $S \subseteq I$, то $Z(I) \subseteq Z(S)$. При этом для всякого $x \in Z(S)$ верно, что для всякого $f \in S$ $f(x) = 0$, а значит то же верно для всех $f \in I$ (так как $I$ --- идеал, порождённый $S$), т.е. $x \in Z(I)$. Т.е. $Z(S) \subseteq Z(I)$. Следовательно, $Z(S) = Z(I)$.
+
             \item Поскольку $I \subseteq \sqrt{I}$, то $Z(\sqrt{I}) \subseteq Z(I)$. При этом для всякого $x \in Z(I)$ верно, что для всякого $f \in S$ $f(x) = 0$, а значит для всякого $f \in \sqrt{I}$ есть $N$, что $f^N(x) = 0$, а тогда $f(x) = 0$, т.е. $x \in Z(\sqrt{I})$. Т.е. $Z(I) \subseteq Z(\sqrt{I})$. Следовательно, $Z(\sqrt{I}) = Z(I)$.
+
             \item Если известно, что $S$ и $S'$ порождают одинаковые идеалы, то $Z(S) = Z(S')$. Но всякий идеал в $k[T_1, \dots, T_n]$ конечнопорождён, а значит у идеала, порождённого $S$, есть конечное порождающее множество $S'$ --- искомое $S'$.
+
             \item Заметим, что $x \in Z(\bigcup_{i \in I} S_i)$ тогда и только тогда, когда на $x$ зануляются все многочлены из $\bigcup_{i \in I} S_i$, что равносильно тому, что на $x$ зануляются все многочлены из каждого $S_i$, что равносильно тому, что $x$ лежит в каждом $Z(S_i)$, что равносильно тому, что $x \in \bigcap_{i \in I} Z(S_i)$. Отсюда следует требуемое.
+
+            \item По прошлому пункту.
+                \[Z\left(\bigcup_{j \in J} I_j\right) = \bigcap_{j \in J} Z(I_j).\]
+                Но также несложно видеть, что идеал, порождённый $\bigcup_{j \in J} I_j$, есть $\sum_{j \in J} I_j$. Отсюда сиюминутно следует искомое (по ранее доказанному пункту).
+
             \item Покажем утверждение для $n = 2$. Заметим, что если $x \in Z(S_1)$, то на $x$ зануляются все многочлены из $S_1$, а значит и из $S_1 \cdot S_2$, т.е. $x \in Z(S_1 S_2)$. Следовательно $Z(S_1) \subseteq Z(S_1 S_2)$. Из аналогичного утверждения получаем, что $Z(S_1) \cup Z(S_2) \subseteq Z(S_1 S_2)$. При этом если $x \in Z(S_1 S_2) \setminus Z(S_1)$, то есть многочлен $f \in S_1$, что $f(x) \neq 0$. Но для всякого $g \in S_2$ верно $fg \in S_1 S_2$, а значит $f(x)g(x) = 0$, а тогда $g(x) = 0$, т.е. $x \in Z(S_2)$. Итого $Z(S_1 S_2) = Z(S_1) \cup Z(S_2)$. Утверждение для всякого $n$ получается по индукции с помощью данного.
+
+            \item Покажем для $n=2$; общий случай получается по индукции. Пусть даны идеалы $I$ и $J$. Имеем по прошлому пункту
+                \[Z(I \cdot J) = Z(I) \cup Z(J).\]
+                При этом $I \cdot J \subseteq I \cap J$, а $I \cap J \subseteq I$, $I \cap J \subseteq J$. Следовательно
+                $Z(I \cdot J) \supseteq Z(I \cap J)$, $Z(I \cap J) \supseteq Z(I)$, $Z(I \cap J) \supseteq Z(J)$. Итого
+                \[Z(I \cdot J) \supseteq Z(I \cap J) \supseteq Z(I) \cup Z(J),\]
+                откуда
+                \[Z(I \cdot J) = Z(I \cap J) = Z(I) \cup Z(J).\]
         \end{enumerate}
     \end{proof}
+
+    \begin{corollary}
+        Мораль такова.
+        \begin{enumerate}
+            \item Замкнутые идеалы образуют топологию, где они являются замкнутыми. Т.е. их дополнения образуют топологию (являясь открытыми).
+            \item Каждое замкнутое подмножество имеет вид $Z(I)$, где $I$ --- идеал.
+            \item Сумма идеалов соответствует пересечению замкнутых множеств (и наоборот). Т.е. для всякого семейства идеалов $\{I_j\}_{j \in J}$ верно, что
+                \[\bigcap_{j \in J} Z(I_j) = Z\left(\sum_{j \in J} I_j\right).\]
+            \item Конечные пересечения идеалов соответствуют конечным объединениям замкнутых множеств. Т.е. для всякого семейства идеалов $\{I_j\}_{j=1}^n$ верно, что
+                \[\bigcup_{j=1}^n Z(I_j) = Z\left(\bigcap_{j=1}^n I_j\right).\]
+        \end{enumerate}
+    \end{corollary}
+    
+    \begin{definition}
+        Идеал $I$ называется \emph{радикальным} тогда и только тогда, когда для всякого $g \in A$, что есть $m \geqslant 1$, что $g^m \in I$ верно, что $g \in I$.
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item Идеал $I$ радикален тогда и только тогда, когда $\sqrt{I} \subseteq I$.
+            \item $\sqrt{I}$ радикален.
+            \item Пусть $X$ --- подмножество $A$. Тогда множество
+                \[I(X) := \{f \in A \mid \forall x \in X\; f(x) = 0\}\]
+                будет радикальным идеалом.
+            \item Пусть даны подмножества $X$ и $Y$ пространства $\AA_k^n$, что $X \subseteq Y$. Тогда $I(X) \supseteq I(Y)$.
+            \item Если $X \subseteq Y$, то $ZI(X) \subseteq ZI(Y)$.
+            \item Для всякого подмножества $X$ $ZI(X) \supseteq X$.
+            \item Для всякого подмножества $S$ $IZ(S) \supseteq S$.
+            \item Если $X$ замкнуто, то $ZI(X) = X$.
+            \item $ZI(X) = \overline{X}$ ($\overline{X}$ --- замыкание $X$ в смысле рассмотренной топологии).
+            \item $IZ(S) = \sqrt{I_S}$. 
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Определение по-другому написанное.
+            \item Несложно видеть, что $\sqrt{\sqrt{I}} = \sqrt{I}$ по определению радикала. Значит $\sqrt{\sqrt{I}} \subseteq \sqrt{I}$, т.е. $\sqrt{I}$ радикален.
+            \item $I(X)$ --- максимальный идеал, что $X \subseteq Z(I(X))$. При этом $Z(\sqrt{I(X)}) = Z(I(X))$, значит $\sqrt{I} \subseteq I$. Таким образом $I$ максимален.
+            \item Если $f \in I(Y)$, то $f(Y) = 0$, значит $f(X) = 0$, тогда $f \in I(X)$.
+            \item $X \subseteq Y \Rightarrow I(X) \supseteq I(Y) \Rightarrow ZI(X) \subseteq ZI(Y)$.
+            \item Поскольку $I(X)$ --- множество всех многочленов, зануляющихся на $X$, то всё $I(X)$ зануляется на $X$, т.е. $ZI(X) \supseteq X$. 
+            \item Поскольку $Z(S)$ --- множество всех точек, на которых зануляется $S$, то $S$ на нём зануляется, а тогда $IZ(S) \supseteq S$.
+            \item \dots
+        \end{enumerate}
+    \end{proof}
+
+    \begin{theorem}[Гильберта о нулях (сильная)]
+        $IZ(S) = \sqrt{I_S}$.
+    \end{theorem}
 \end{document}
