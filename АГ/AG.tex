@@ -523,7 +523,7 @@
 
     \begin{lemma}\ 
         \begin{enumerate}
-            \item Если $S \subseteq S'$, то $Z(S') \subseteq Z(S')$.
+            \item Если $S \subseteq S'$, то $Z(S') \subseteq Z(S)$.
             \item Пусть $I$ --- идеал, порождённый многочленами из $S$. Тогда $Z(I) = Z(S)$.
             \item Для всякого $S$ есть конечное $S'$, что $Z(S) = Z(S')$.
             \item Пусть есть семейство $\{S_i\}_{i \in I}$. Тогда
@@ -584,7 +584,9 @@
         \begin{enumerate}
             \item $I(X)$ --- идеал.
             \item Если $X \subseteq Y$, то $I(X) \supseteq I(Y)$.
+            \item $I(X) = I(\overline{X})$ ($\overline{X}$ --- замыкание $X$ в смысле рассмотренной топологии).
             \item Если $X \subseteq Y$, то $ZI(X) \subseteq ZI(Y)$.
+            \item Если $S \subseteq T$, то $IZ(S) \subseteq IZ(T)$.
             \item $ZI(X) \supseteq X$.
             \item $IZ(S) \supseteq S$.
         \end{enumerate}
@@ -594,7 +596,10 @@
         \begin{enumerate}
             \item Если $f, g \in I(X)$, то для всякой точки $x \in X$ верно $f(x) = g(x) = 0$, а тогда $(f+g)(x) = 0$, т.е. $f+g \in I(X)$. Если же $f \in I(X)$, $g \in A$, то для всякой точки $x \in X$ верно $f(x) = 0$, а значит $(fg)(x) = 0$, т.е. $fg \in I(X)$.
             \item Если $f \in I(Y)$, то $f(Y) = 0$, значит $f(X) = 0$, тогда $f \in I(X)$.
+            \item Понятно, что $X \subseteq \overline{X}$, а значит $I(\overline{X}) \subseteq I(X)$. Покажем обратное.
+                \todo[inline]{Дописать.}
             \item $X \subseteq Y \Rightarrow I(X) \supseteq I(Y) \Rightarrow ZI(X) \subseteq ZI(Y)$.
+            \item $S \subseteq T \Rightarrow Z(S) \supseteq Z(T) \Rightarrow IZ(S) \subseteq IZ(T)$.
             \item Поскольку $I(X)$ --- множество всех многочленов, зануляющихся на $X$, то всё $I(X)$ зануляется на $X$, т.е. $ZI(X) \supseteq X$. 
             \item Поскольку $Z(S)$ --- множество всех точек, на которых зануляется $S$, то $S$ на нём зануляется, а тогда $IZ(S) \supseteq S$.
         \end{enumerate}
@@ -644,11 +649,152 @@
         \end{enumerate}
     \end{proof}
 
+    \begin{lemma}
+        Если $X$ замкнуто, то $ZI(X) = X$.
+    \end{lemma}
+
+    \begin{proof}
+        Как мы уже знаем, $X \subseteq ZI(X)$; покажем обратное. Заметим, что $X = Z(S)$. Тогда $I(X) = IZ(X) \supseteq S$. Тогда $ZI(X) \subseteq Z(S) = X$.
+    \end{proof}
+
     \begin{theorem}[Гильберта о нулях, Nullstellensatz]
-        $IZ(S) = \sqrt{I_S}$.
+        Если $I$ --- радикальный идеал, то $IZ(I) = I$.
     \end{theorem}
 
+    \begin{corollary}
+        $I$ и $Z$ --- биекции из множества замкнутых множеств в $A$ и обратно. При этом $Z \circ I$ и $I \circ Z$ --- тождественные отображения.
+    \end{corollary}
+
+    \begin{proof}
+        Как мы уже знаем, $I$ --- функция из множества замкнутых множеств в $A$, а $Z$ --- наоборот. При этом по следствию двух предыдущих утверждений $ZI$ и $IZ$ --- тождественные функции из множества замкнутых функций в себя и из $A$ в себя. Из первого следует, что $I$ инъективно, а $Z$ сюръективно; из второго следует, что $Z$ инъективно, а $I$ сюръективно. Т.е. $I$ и $Z$ --- биекции.
+    \end{proof}
+
+    \begin{corollary}\ 
+        \begin{enumerate}
+            \item $ZI(X) = \overline{X}$.
+            \item $IZ(I) = \sqrt{I}$.
+        \end{enumerate}
+    \end{corollary}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item $ZI(X) = ZI(\overline{X}) = \overline{X}$.
+            \item $IZ(I) = IZ(\sqrt{I}) = \sqrt{I}$.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{remark}
+        Точки в $\AA^n$ находятся во взаимнооднозначном соответствии с максимальными идеалами в $A$ --- это говорит слабая теорема Гильберта о нулях. Т.е. всякой точке $x \in \AA^n$ сопоставляется $I(x)$, а максимальному идеалу $\mathcal{M}$ сопоставляется $Z(\mathcal{M})$, которое является точкой, так как $\mathcal{M} = (T_1 - x_1, \dots, T_n - x_n)$, а значит подходит только точка $(x_1; \dots; x_n)$.
+    \end{remark}
+
+    \begin{definition}
+        Пусть $X$ замкнуто. Тогда $k[X] := A/I(X)$ --- \emph{кольцо регулярных функций на $X$}.
+    \end{definition}
+
+    \begin{lemma}
+        Пусть $X_1$ и $X_2$ замкнуты.
+        \begin{enumerate}
+            \item $X := X_1 \sqcup X_2$ замкнуто.
+            \item Отображение
+                \[\varphi: k[X] \to k[X_1] \times k[X_2], F \mathop{\mod} I(X) \mapsto (F \mathop{\mod} I(X_1), F \mathop{\mod} I(X_2))\]
+                задаёт изоморфизм колец.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{definition}
+        Пусть $X$ --- замкнутое множество. Функция $f: X \to k$ называется \emph{регулярной}, если есть $F \in A$, что $f = F|_X$.
+    \end{definition}
+
+    \begin{remark}
+        Множество $k[X]$ регулярных функций на $X$ является кольцом и даже $k$-алгеброй.
+        
+        При этом $T_i \in A = k[T_1, \dots, T_n]$ образуют $A$, значит функции $t_i: X \to k, x \mapsto T_i(x)$ образуют $k[X]$. Значит получается сюръективный гомоморфизм $\varphi: A \to k[X], F \mapsto F|_X$, который на деле порождается соотношениями $T_i \mapsto t_i$. 
+    \end{remark}
+
+    \begin{lemma}
+        Рассмотрим гомоморфизм $\varphi: A \to k[X], F \to F|_X$.
+        \begin{enumerate}
+            \item $\Ker(\varphi) = I(X)$.
+            \item $A/I(X) \underset{\sim}{\overset{\varphi}{\to}} k[X]$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item $\varphi(F) = 0$ iff $F|_{X} \equiv 0$, iff $F(X) = 0$, iff $F \in I(X)$.
+            \item $\varphi$, очевидно, сюръективно. Следовательно, $\varphi$ индуцирует изоморфизм
+                \[A/I(X) = A/\Ker(\varphi) \to k[X].\]
+        \end{enumerate}
+    \end{proof}
+
+    \begin{lemma}
+        Пусть даны замкнутые множества $X_1$ и $X_2$. Тогда $X_1 \cap X_2 = \varnothing$ равносильно $I(X_1) + I(X_2) = A$.
+    \end{lemma}
+
+    \begin{proof}
+        Понятно, что если $X_1 \cap X_2 = \varnothing$
+        \[A = I(\varnothing) = I(X_1 \cap X_2) = I(ZI(X_1) \cap ZI(X_2)) = IZ(I(X_1) + I(X_2)) = I(X_1) + I(X_2).\]
+        А если $A = I(X_1) + I(X_2)$, то
+        \[X_1 \cap X_2 = ZI(X_1) \cap ZI(X_2) = Z(I(X_1) + I(X_2)) = Z(A) = \varnothing.\]
+    \end{proof}
+
     \begin{theorem}
-        $ZI(X) = \overline{X}$ (где $\overline{X}$ --- замыкание в смысле рассмотренной топологии).
+        Пусть $X_1$, $X_2$ --- замкнутые множества, $X_1 \cap X_2 = \varnothing$, а $X := X_1 \sqcup X_2$. $\psi: k[X] \to k[X_1] \times k[X_2], f \mapsto (f|_{X_1}, f|_{X_2})$ --- изоморфизм колец (и даже алгебр).
     \end{theorem}
+
+    \begin{proof}
+        Понятно, что $\psi$ определено корректно и является гомоморфизмом алгебр. Также понятно, что $\psi$ инъективно, так как всякая функция $f$, зануляющаяся на $X_1$ и $X_2$, зануляется на $X$, т.е. ядро $\psi$ тривиально.
+
+        Покажем, что $\psi$ сюръективно. Пусть $(f_1, f_2) \in k[X_1] \times k[X_2]$. Тогда есть $F_1, F_2 \in A$, что $f_1 = F_1|_{X_1}$, $f_2 = F_2|_{X_2}$. Мы знаем, что $I(X_1) + I(X_2) = A$. Тогда $F_1 - F_2 = H_1 - H_2$, где $H_1 \in I(X_1)$, $H_2 \in I(X_2)$. Тогда $F_1 - H_1 = F_2 - H_2 =: F$. Имеем, что $F|_{X_1} = (F_1 - H_1)|_{X_1} = f_1 - 0 = f_1$; аналогично $F|_{X_2} = f_2$.
+    \end{proof}
+
+    \begin{definition}
+        Кольцо $R$ называется \emph{редуцированным}, если для всякого $a \in R$ и всякого $m \geqslant 1$ из того, что $a^m = 0$ следует, что $a = 0$.
+    \end{definition}
+
+    \begin{remark*}
+        $k[X]$ редуцированно.
+    \end{remark*}
+
+    \begin{lemma}
+        Любая конечнопорождённая редуцируемая $k$-алгебра $B$ изоморфна $k$-алгебра $k[X]$ регулярных функций для некоторых замкнутого подмножества $X \subseteq A$.
+    \end{lemma}
+
+    \begin{proof}
+        Пусть $B = k[t_1, \dots, t_m]$, где $t_1, \dots, t_m = B$ (они порождают $B$ над $k$). Рассмотрим гомоморфизм $\varphi: k[T_1, \dots, T_m] \to B, T_i \mapsto t_i$ алгебр. Понятно, что $\varphi$ сюръективен. Пусть $I := \Ker(\varphi)$. Тогда есть изоморфизм $\overline{\varphi}: A/I \to B$. Поскольку $B$ редуцированно, то $I$ радикален:
+        \[
+            f^m \in I
+            \qquad \Longrightarrow \qquad
+            \varphi(f)^m = \varphi(f^m) = 0
+            \qquad \Longrightarrow \qquad
+            \varphi(f) = 0
+            \qquad \Longrightarrow \qquad
+            f \in I.
+        \]
+        Тогда пусть $X := Z(I)$. Следовательно $I = I(X)$, а тогда $B \cong A/I = A/I(X) = k[X]$.
+    \end{proof}
+
+    \begin{lemma}
+        Пусть $R$ --- кольцо, $I$ --- радикальный идеал в $R$, $\pi: R \to \overline{R} := R/I, f \mapsto f \pmod{I}$. Тогда имеется взаимнооднозначное соответствие между множеством радикальных идеалов $J \supseteq I$ в $R$ и множеством радикальных идеалов $\mathfrak{A}$ в $\overline{R}$, заданное отображениями $J \mapsto \overline{J} := J/I$ и $\mathfrak{A} \mapsto \pi^{-1}(\mathfrak{A})$.
+    \end{lemma}
+
+    \begin{proof}
+        \todo[inline,color=blue]{``Легкое упражнение.''}
+    \end{proof}
+
+    \begin{definition}
+        Пусть $X$ --- замкнутое множество в $\AA^n$. \emph{Замкнутые подмножества в $X$} --- это множества вида $Z' \cap X$, где $Z'$ --- замкнутое в $\AA^n$. 
+    \end{definition}
+
+    \begin{remark*}
+        Сравнить с топологией, индуцированной на (замкнутом) подмножестве.
+    \end{remark*}
+
+    \begin{remark*}
+        Замкнутые подмножества в $X$ --- замкнутые подмножества $Z$ в $\AA^n$, что $Z \subseteq X$.
+    \end{remark*}
+
+    \begin{corollary}
+        Пусть $X$ замкнуто в $\AA^n$. Тогда имеется взаимнооднозначное соответствие между множеством замкнутых $Z \subseteq X$ и радикальными идеалами $\overline{J}$ в $A/I(X)$, заданное отображениями $Z \mapsto \overline{I(Z)}$ и $\mathfrak{B} \mapsto Z(\pi^{-1}(\mathfrak{B}))$.
+    \end{corollary}
 \end{document}
