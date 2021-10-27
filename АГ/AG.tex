@@ -585,6 +585,11 @@
             \item $I(X)$ --- идеал.
             \item Если $X \subseteq Y$, то $I(X) \supseteq I(Y)$.
             \item $I(X) = I(\overline{X})$ ($\overline{X}$ --- замыкание $X$ в смысле рассмотренной топологии).
+            \item \todo[inline,caption={Написать леммы про пересечения и объединения $I(X)$}]{Написать леммы про пересечения и объединения $I(X)$:
+            \begin{enumerate}
+                \item $\sum_{j \in J} I(X_j) = I(\bigcap_{j \in J} X_j)$?
+                \item $\bigcap_{j \in J} I(X_j) = I(\bigcup_{j \in J} X_j)$?
+            \end{enumerate}}
             \item Если $X \subseteq Y$, то $ZI(X) \subseteq ZI(Y)$.
             \item Если $S \subseteq T$, то $IZ(S) \subseteq IZ(T)$.
             \item $ZI(X) \supseteq X$.
@@ -596,8 +601,7 @@
         \begin{enumerate}
             \item Если $f, g \in I(X)$, то для всякой точки $x \in X$ верно $f(x) = g(x) = 0$, а тогда $(f+g)(x) = 0$, т.е. $f+g \in I(X)$. Если же $f \in I(X)$, $g \in A$, то для всякой точки $x \in X$ верно $f(x) = 0$, а значит $(fg)(x) = 0$, т.е. $fg \in I(X)$.
             \item Если $f \in I(Y)$, то $f(Y) = 0$, значит $f(X) = 0$, тогда $f \in I(X)$.
-            \item Понятно, что $X \subseteq \overline{X}$, а значит $I(\overline{X}) \subseteq I(X)$. Покажем обратное.
-                \todo[inline]{Дописать.}
+            \item Понятно, что $X \subseteq \overline{X}$, а значит $I(\overline{X}) \subseteq I(X)$. Покажем обратное. Пусть есть $x \in \overline{X} \setminus X$. Если есть какой-то многочлен $f \in A$, что $f$ зануляется на $X$, но не на $x$, то $Y := Z(f)$ является замкнутым, $X \subseteq Y$, а $x \notin Y$. Следовательно, так как $\overline{X} \subseteq Y$, то $x \notin \overline{X}$ --- противоречие. Это значит, что всякий многочлен, зануляющийся на $X$, зануляется на всякой точке из $\overline{X} \setminus X$, а значит на всём $\overline{X}$. Следовательно $I(X) \subseteq I(\overline{X})$.
             \item $X \subseteq Y \Rightarrow I(X) \supseteq I(Y) \Rightarrow ZI(X) \subseteq ZI(Y)$.
             \item $S \subseteq T \Rightarrow Z(S) \supseteq Z(T) \Rightarrow IZ(S) \subseteq IZ(T)$.
             \item Поскольку $I(X)$ --- множество всех многочленов, зануляющихся на $X$, то всё $I(X)$ зануляется на $X$, т.е. $ZI(X) \supseteq X$. 
@@ -775,11 +779,26 @@
     \end{proof}
 
     \begin{lemma}
-        Пусть $R$ --- кольцо, $I$ --- радикальный идеал в $R$, $\pi: R \to \overline{R} := R/I, f \mapsto f \pmod{I}$. Тогда имеется взаимнооднозначное соответствие между множеством радикальных идеалов $J \supseteq I$ в $R$ и множеством радикальных идеалов $\mathfrak{A}$ в $\overline{R}$, заданное отображениями $J \mapsto \overline{J} := J/I$ и $\mathfrak{A} \mapsto \pi^{-1}(\mathfrak{A})$.
+        Пусть $R$ --- кольцо, $I$ --- радикальный идеал в $R$,
+        \[\pi: R \to \overline{R} := R/I, f \mapsto f \pmod{I}.\]
+        Тогда имеется взаимнооднозначное соответствие между множеством радикальных идеалов $J \supseteq I$ в $R$ и множеством радикальных идеалов $\mathfrak{A}$ в $\overline{R}$, заданное отображениями $J \mapsto \overline{J} := J/I$ и $\mathfrak{A} \mapsto \pi^{-1}(\mathfrak{A})$.
     \end{lemma}
 
     \begin{proof}
-        \todo[inline,color=blue]{``Легкое упражнение.''}
+        Обозначим
+        \begin{itemize}
+            \item множество радикальных идеалов $J \supseteq I$ в $R$ за $D_R$,
+            \item множество радикальных идеалов $\mathfrak{A}$ в $\overline{R}$ за $D_{\overline{R}}$.
+        \end{itemize}
+        Тогда заданные в условии отображения $D_R \to D_{\overline{R}}$ и $D_{\overline{R}} \to D_R$ индуцируются $\pi$ и $\pi^{-1}$. Но непонятна их корректность и биективность; это и обсудим.
+
+        Пусть $J \supseteq I$ --- радикальный идеал в $R$. Тогда $\pi(J) = J/I$. При этом если $\overline{f}^m \in J/I$ в $\overline{R}$, где $\overline{f} = f \pmod{I}$, то $(f+I)^m \subseteq J$. При этом $f^m \in (f+I)^m \subseteq J$, т.е. $f^m \in J$, значит $f \in J$. Следовательно $f + I \subseteq J$. Тогда $\overline{f} \in J/I$. Таким образом $J/I$ радикален в $\overline{R}$.
+
+        Пусть $\mathfrak{A}$ --- радикальный идеал в $\overline{R}$. Тогда $J := \pi^{-1}(\mathfrak{A})$. Следовательно, $\mathfrak{A} = J/I$. Если $f^m \in J$, то $\overline{f}^m \in \mathfrak{A}$. Тогда $\overline{f} \in J/I$. Следовательно, $f + I \subseteq J$, т.е. $f \in J$. Следовательно $J$ радикален.
+
+        Таким образом $\pi$ и $\pi^{-1}$ индуцируют корректные отображения $D_R \to D_{\overline{R}}$ и $D_{\overline{R}} \to D_R$. Таким образом осталось показать, что они образуют взаимнооднозначное соответствие.
+
+        Заметим, что $\pi$ и $\pi^{-1}$ образуют взаимнооднозначное соответствие между $\{f + I \mid f \in R\}$ и $\overline{R}$. Так как $\pi$ переводит идеал, содержащий $I$, в идеал, а $\pi^{-1}$ идеал в идеал, содержащий $I$, то $\pi$ и $\pi^{-1}$ образует взаимнооднозначное соответствие между идеалами $J \supseteq I$ в $R$ и идеалами $\mathfrak{A}$ в $\overline{R}$. Значит, аналогично, они образуют взаимнооднозначное соответствие между $D_R$ и $D_{\overline{R}}$.
     \end{proof}
 
     \begin{definition}
