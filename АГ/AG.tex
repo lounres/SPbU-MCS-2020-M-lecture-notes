@@ -20,13 +20,16 @@
 % \newcommand{\eqdef}{\mathbin{\stackrel{\mathrm{def}}{=}}}
 % \newcommand{\True}{\mathrm{True}}
 % \newcommand{\False}{\mathrm{False}}
-% \newcommand{\Id}{\mathrm{Id}}
+\newcommand{\Id}{\mathrm{Id}}
 % \renewcommand{\Re}{\mathrm{Re}}
 % \renewcommand{\Im}{\mathrm{Im}}
 \renewcommand{\mod}{\mathrm{mod}}
 \newcommand{\Max}{\mathrm{Max}}
 \newcommand{\Ker}{\mathrm{Ker}}
 \renewcommand{\AA}{\ensuremath{\mathbb{A}}\xspace}
+\newcommand{\Func}{\mathrm{Func}}
+\newcommand{\Aff}{\mathrm{Aff}}
+\newcommand{\Mor}{\mathrm{Mor}}
 
 \begin{document}
     \maketitle
@@ -753,7 +756,7 @@
     \end{proof}
 
     \begin{definition}
-        Кольцо $R$ называется \emph{редуцированным}, если для всякого $a \in R$ и всякого $m \geqslant 1$ из того, что $a^m = 0$ следует, что $a = 0$.
+        Кольцо $R$ называется \emph{редуцированным}, если для всякого $a \in R$ и всякого $m \geqslant 1$ из того, что $a^m = 0$ следует, что $a = 0$ (т.е. в $R$ нет нильпотентов).
     \end{definition}
 
     \begin{remark*}
@@ -816,4 +819,90 @@
     \begin{corollary}
         Пусть $X$ замкнуто в $\AA^n$. Тогда имеется взаимнооднозначное соответствие между множеством замкнутых $Z \subseteq X$ и радикальными идеалами $\overline{J}$ в $A/I(X)$, заданное отображениями $Z \mapsto \overline{I(Z)}$ и $\mathfrak{B} \mapsto Z(\pi^{-1}(\mathfrak{B}))$.
     \end{corollary}
+
+    \begin{definition}
+        Пусть $X \subseteq \AA^n$ и $Y \subseteq \AA^m$ --- замкнутые подмножества. Временно обозначим $t_i := T_i|_X \in k[X]$ --- координатная функция на $X$. Отображение $\varphi: Y \to X$ называется \emph{регулярной}, если $t_i \circ \varphi \in k[Y]$ (т.е. каждая координата $\varphi$ как отображение является регулярной).
+    \end{definition}
+
+    \begin{remark}
+        Пусть $B$ --- $k$-алгебра. Пусть $f_1, \dots, f_n \in B$ и $F(T_1, \dots, T_n) \in k[T_1, \dots, T_n]$. Тогда $F(f_1, \dots, f_n) \in B$.
+
+        В частности, если даны $B = k[Y]$, $f_1, \dots, f_n \in B$, $F \in k[T_1, \dots, T_n]$, то $F(f_1, \dots, f_n) \in B = k[Y]$. Более того, $F(f_1, \dots, f_n)(y) = F(f_1(y), \dots, f_n(y))$.
+    \end{remark}
+
+    \begin{lemma}[следствие замечания]
+        Пусть дано некоторое отображение $\varphi: Y \to X$. TFAE
+        \begin{enumerate}
+            \item $\varphi$ --- регулярно.
+            \item Для всякого $f \in k[X]$ функция $f \circ \varphi: Y \to k$ регулярна.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[$2 \Rightarrow 1$)] $t_i \circ \varphi$ регулярно для всякого $i = 1, \dots, n$. Следовательно, $\varphi$ регулярно.
+            \item[$1 \Rightarrow 2$)] $t_i \circ \varphi$ регулярно для всякого $i = 1, \dots, n$ по определению. При этом $k[X]$ --- $k$-алгебра, порождённая $t_1$, \dots, $t_n$ (как элементы $k[X]$). Следовательно, есть $F(T_1, \dots, T_n) \in k[T_1, \dots, T_n]$, что $F(t_1, \dots, t_n) = f$. Тогда
+                \[f \circ \varphi = F(t_1, \dots, t_n) \circ \varphi = F(t_1 \circ \varphi, \dots, t_n \circ \varphi).\]
+                Поскольку $t_i \circ \varphi$ --- элементы $k$-алгебры $k[Y]$, то и $F(t_1 \circ \varphi, \dots, t_n \circ \varphi) \in k[Y]$.
+        \end{itemize}
+    \end{proof}
+
+    \begin{definition}
+        Отображение $\varphi: Y \to X$ называется \emph{регулярным}, если для всякого $f \in k[X]$ функция $f \circ \varphi \in k[Y]$. Словами говоря, $\varphi$ --- регулярно, если она регулярные функции над $X$ переводит в регулярные функции над $Y$.
+
+        Часто пишут $\varphi^*(f)$ вместо $f \circ \varphi$, а функцию $\varphi^*(f): Y \to k$ называют переносом функции $f: X \to k$ на $Y$ посредством $\varphi$.
+
+        Ещё другими словами,
+        \[
+            \xymatrix{
+                \mathrm{Func(X, k)} \ar[r]^{\varphi^*}_{g \mapsto g \circ \varphi}& \mathrm{Func(Y, k)}\\
+                k[X] \ar@{^(->}[u] \ar@{-->}@(ur, ul)[r]& k[Y] \ar@{^(->}[u]
+            }
+        \]
+        Т.е. $\varphi$ регулярно тогда и только тогда, когда $\varphi^*(k[X]) \subseteq k[Y]$.
+    \end{definition}
+
+    \begin{lemma}
+        Пусть $X$, $Y$, $Z$ --- аффинные \todo{Видимо, замкнутые?} множества, а $\varphi: Y \to X$ и $\psi: X \to Z$ регулярны. Тогда $\psi \circ \varphi: Y \to Z$ регулярны.
+    \end{lemma}
+
+    \begin{proof}
+        Для всякого $f \in k[Z]$ верно $f \circ \psi \in k[X]$, а тогда $f \circ (\psi \circ \varphi) = (f \circ \psi) \circ \varphi \in k[Y]$. Таким образом $\psi \circ \varphi$ регулярно по второму определению.
+    \end{proof}
+
+    \begin{remark*}
+        $(\psi \circ \varphi)^* = \varphi^* \circ \psi^*$.
+    \end{remark*}
+
+    \begin{remark}
+        Пусть $B$ --- конечно порождённая редуцированная $k$-алгебра. Тогда есть некоторая система порождающих $t_1, \dots, t_n \in B$, можно построить
+        \[\psi: k[T_1, \dots, T_n] \to k[t_1, \dots, t_n] = B, T_i \mapsto t_i.\]
+        Следовательно, $B \cong A/\Ker(\psi) = k[X]$, где $X = Z(\Ker(\psi))$.
+
+        Тогда можно наблюдать, что
+        \[\Max(B) = \Max(k[X]) = \text{точки из $X$} = X.\]
+        Формальнее, $\Max(k[X]) = \{I(\{x\})\}_{x \in X}$. Тогда мы можем рассмотреть $i_X: k \to k[X], a \mapsto (x \mapsto a)$ и для всякого $x^*: k[X] \to k, f \mapsto f(x)$. Тогда $x^* \circ i_X = \Id_k$.
+
+        Назовём гомоморфизм $s: k[X] \to k$ $k$-алгебр \emph{сечением} вложения $i_X$, если $s \circ i_X = \Id_k$. Тогда $\Ker(s) \in \Max(k[X]) = \{\mathcal{M}_x\}_{x \in X}$. Тогда у нас есть биекция между сечениями вложений $i_X$ и точками $X$.
+    \end{remark}
+
+    Рассмотрим следующую конструкцию. Пусть $\varphi: X' \to X$ --- регулярное отображение. Тогда есть $\psi: X' \to X$, которое переводит $x'$ в такое $x$, что $\varphi^*(s) = s'$, где $s$ и $s'$ --- сечения, соответствующие $x$ и $x'$.
+
+    \begin{lemma}[пока без доказательства]
+        $\psi = \varphi$.
+    \end{lemma}
+
+    \begin{remark}
+        Пусть $B$ --- конечно порождённая редуцированная $k$-алгебра. Тогда у нас есть взаимнооднозначное соответствие между $\Max(B)$ и сечениями вложения $i: k \to B$.
+
+        \todo[inline]{Дописать?}
+    \end{remark}
+
+    \begin{remark}
+        Поскольку $\Max(B)$ --- то же, что и множество сечений в $B$. Значит можно рассмотреть включение $B \to \Func(\Max(B), k), b \mapsto (\mathcal{M} \mapsto s_{\mathcal{M}}(b))$
+    \end{remark}
+
+    \begin{definition}
+        \emph{Категория $\Aff$} --- категория, чьи объекты есть пары $(B, \Max(B))$, а морфизмы $\Mor((B, \Max(B)), (B', \Max(B')))$ есть отображения $\varphi: \Max(B') \to \Max(B)$, что $\varphi^*(B) \subseteq B'$, т.е. $B \subseteq \Func(\Max(B), k)$ и то же для $B'$, $\varphi$ индуцирует $\varphi^*: \Func(\Max(B), k) \to \Func(\Max(B'), k)$ и мы хотим, чтобы $B$ переходило в $B'$ по $\varphi$.
+    \end{definition}
 \end{document}
