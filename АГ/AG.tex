@@ -15,7 +15,7 @@
 % \DeclareMathOperator{\Quot}{Quot}
 % \DeclareMathOperator*{\osc}{osc}
 % \DeclareMathOperator{\sign}{sign}
-% \DeclareMathOperator{\const}{const}
+\DeclareMathOperator{\const}{const}
 % \DeclareMathOperator{\grad}{grad}
 % \newcommand{\eqdef}{\mathbin{\stackrel{\mathrm{def}}{=}}}
 % \newcommand{\True}{\mathrm{True}}
@@ -30,6 +30,9 @@
 \newcommand{\Func}{\mathrm{Func}}
 \newcommand{\Aff}{\mathrm{Aff}}
 \newcommand{\Mor}{\mathrm{Mor}}
+\newcommand{\Sect}{\mathrm{Sect}}
+\newcommand{\can}{\mathrm{can}}
+\newcommand{\fgrkalg}[1][k]{\text{f.g.r.$#1$-alg.}}
 
 \begin{document}
     \maketitle
@@ -821,7 +824,7 @@
     \end{corollary}
 
     \begin{definition}
-        Пусть $X \subseteq \AA^n$ и $Y \subseteq \AA^m$ --- замкнутые подмножества. Временно обозначим $t_i := T_i|_X \in k[X]$ --- координатная функция на $X$. Отображение $\varphi: Y \to X$ называется \emph{регулярной}, если $t_i \circ \varphi \in k[Y]$ (т.е. каждая координата $\varphi$ как отображение является регулярной).
+        Пусть $X \subseteq \AA^n$ и $Y \subseteq \AA^m$ --- замкнутые подмножества. Временно обозначим $t_i := T_i|_X \in k[X]$ --- координатная функция на $X$. Отображение $\varphi: Y \to X$ называется \emph{регулярным}, если $t_i \circ \varphi \in k[Y]$ (т.е. каждая координата $\varphi$ как отображение является регулярной).
     \end{definition}
 
     \begin{remark}
@@ -847,6 +850,10 @@
         \end{itemize}
     \end{proof}
 
+    \begin{remark}
+        Это означает, что отображение $\varphi: Y \to X$ регулярно тогда и только тогда, когда $\varphi^*: \Func(X, k) \to \Func(Y, k), f \mapsto f \circ \varphi$ переводит $k[X]$ в $k[Y]$.
+    \end{remark}
+
     \begin{definition}
         Отображение $\varphi: Y \to X$ называется \emph{регулярным}, если для всякого $f \in k[X]$ функция $f \circ \varphi \in k[Y]$. Словами говоря, $\varphi$ --- регулярно, если она регулярные функции над $X$ переводит в регулярные функции над $Y$.
 
@@ -862,8 +869,12 @@
         Т.е. $\varphi$ регулярно тогда и только тогда, когда $\varphi^*(k[X]) \subseteq k[Y]$.
     \end{definition}
 
+    \begin{remark*}
+        В этот момент Иван Александрович начинает по ошибке постоянно называть замкнутые множества \emph{аффинными множествами}.
+    \end{remark*}
+
     \begin{lemma}
-        Пусть $X$, $Y$, $Z$ --- аффинные \todo{Видимо, замкнутые?} множества, а $\varphi: Y \to X$ и $\psi: X \to Z$ регулярны. Тогда $\psi \circ \varphi: Y \to Z$ регулярны.
+        Пусть $X$, $Y$, $Z$ --- аффинные множества, а $\varphi: Y \to X$ и $\psi: X \to Z$ регулярны. Тогда $\psi \circ \varphi: Y \to Z$ регулярны.
     \end{lemma}
 
     \begin{proof}
@@ -880,16 +891,25 @@
         Следовательно, $B \cong A/\Ker(\psi) = k[X]$, где $X = Z(\Ker(\psi))$.
 
         Тогда можно наблюдать, что
-        \[\Max(B) = \Max(k[X]) = \text{точки из $X$} = X.\]
-        Формальнее, $\Max(k[X]) = \{I(\{x\})\}_{x \in X}$. Тогда мы можем рассмотреть $i_X: k \to k[X], a \mapsto (x \mapsto a)$ и для всякого $x^*: k[X] \to k, f \mapsto f(x)$. Тогда $x^* \circ i_X = \Id_k$.
-
-        Назовём гомоморфизм $s: k[X] \to k$ $k$-алгебр \emph{сечением} вложения $i_X$, если $s \circ i_X = \Id_k$. Тогда $\Ker(s) \in \Max(k[X]) = \{\mathcal{M}_x\}_{x \in X}$. Тогда у нас есть биекция между сечениями вложений $i_X$ и точками $X$.
+        \[\Max(B) \cong \Max(k[X]) \cong \text{точки из $X$} = X.\]
+        Формальнее, $\Max(k[X]) = \{I(\{x\})\}_{x \in X}$. Тогда мы можем рассмотреть гомоморфизм $i_X: k \to k[X], a \mapsto \const_a$ ($\const_a$ --- константная функция со значением $a$) и для всякого $x \in X$ гомоморфизм $x^*: k[X] \to k, f \mapsto f(x)$. Тогда $x^* \circ i_X = \Id_k$.
     \end{remark}
 
-    Рассмотрим следующую конструкцию. Пусть $\varphi: X' \to X$ --- регулярное отображение. Тогда есть $\psi: X' \to X$, которое переводит $x'$ в такое $x$, что $\varphi^*(s) = s'$, где $s$ и $s'$ --- сечения, соответствующие $x$ и $x'$.
+    \begin{definition}
+        Назовём гомоморфизм $s: k[X] \to k$ $k$-алгебр \emph{сечением}, если $s \circ i_X = \Id_k$. Тогда $\Ker(s) \in \Max(k[X]) = \{\mathcal{M}_x\}_{x \in X}$. Тогда у нас есть биекция между сечениями $k[X]$ и точками $X$.
+
+        Множество сечений из $B$ обозначается $\Sect(B, k)$. Также назовём отображение $\can_X: X \to \Sect(k[X], k), x \mapsto x^*$ \emph{каноническим}.
+    \end{definition}
 
     \begin{lemma}[пока без доказательства]
-        $\psi = \varphi$.
+        Пусть $\varphi: X' \to X$ --- регулярное отображение. Тогда есть $\psi: X' \to X$, которое переводит каждое $x'$ в такое $x$, что $\varphi^*(s) = s'$, где $s$ и $s'$ --- сечения, соответствующие $x$ и $x'$.
+        \[
+            \xymatrix{
+                X' \ar[d]_{\psi} \ar[r]^(0.35){\can_{X'}}& \Sect(X', k)& X' \ar[d]^{\varphi}\\
+                X \ar[r]_(0.35){\can_{X}}& \Sect(X, k) \ar[u]_{\varphi^*}& X\\
+            }
+        \]
+        Тогда $\psi = \varphi$.
     \end{lemma}
 
     \begin{remark}
@@ -905,4 +925,87 @@
     \begin{definition}
         \emph{Категория $\Aff$} --- категория, чьи объекты есть пары $(B, \Max(B))$, а морфизмы $\Mor((B, \Max(B)), (B', \Max(B')))$ есть отображения $\varphi: \Max(B') \to \Max(B)$, что $\varphi^*(B) \subseteq B'$, т.е. $B \subseteq \Func(\Max(B), k)$ и то же для $B'$, $\varphi$ индуцирует $\varphi^*: \Func(\Max(B), k) \to \Func(\Max(B'), k)$ и мы хотим, чтобы $B$ переходило в $B'$ по $\varphi$.
     \end{definition}
+
+    \begin{remark}
+        Мы знаем, что кончено порождённые редуцированные $k$-алгебры изоморфны $k$-алгебрам $k[X]$
+
+        \textbf{Локальная цель.} У нас есть категория $\Aff$ аффинных множеств и регулярных отображений между ними и категория $\fgrkalg$ конечно порождённых $k$-алгебр и гомоморфизмов $k$-алгебр между ними. Хотим показать, что они контравариантно изоморфны, где $X \in C_1 \mapsto k[X]$, $C_2 \ni B \cong k[Y] \mapsto Y$.
+    \end{remark}
+
+    \begin{lemma}
+        Пусть $X$ --- аффинное множество, $k[X]$ --- $k$-алгебра его регулярных функций. Тогда имеется биекция между $X$ и $\Sect(k[X], k)$.
+    \end{lemma}
+
+    \begin{definition}
+        Будем обозначать такие отображения $\can_X: X \to \Sect(k[X], k)$ и называть \emph{каноническими}.
+    \end{definition}
+    
+    \todo[inline, caption={Надо как-то разобраться с повторами}]{Надо как-то разобраться с повторами определений и утверждений между двумя лекциями}
+
+    \begin{proof}
+        Давайте рассмотрим $\varphi(x) := s_x$, где $s_x: k[X] \to k, f \mapsto f(x)$. Понятно, что $s_x \circ i = \Id_k$. Т.е. $\varphi$ --- инъекция.
+
+        Теперь в обратную сторону. Пусть имеется сечение $s$. $s$ --- сюръекция, $\mathcal{M} := \Ker(s)$. Тогда $k[X]/\mathcal{M} = k$, т.е. $\mathcal{M}$ максимален, а значит есть $x \in X$, что $\mathcal{M} = \mathcal{M}_x := \{f \in k[X] \mid f(x) = 0\}$.
+    \end{proof}
+
+    \begin{exercise}
+        Проверить, что это взаимно обратные биекции.
+    \end{exercise}
+
+    \begin{lemma}
+        Пусть $\varphi: X' \to X$ --- регулярное отображение. Пусть тогда $\varphi^*$ --- отображение, переводящее $k[X] \to k[X']$ по правилу $f \mapsto f \circ \varphi$. Также определим $\varphi_*: \Sect(k[X'], k) \to \Sect(k[X], k)$ по правилу $s' \mapsto s' \circ \varphi^*$. Тогда следующая диаграмма коммутативна.
+        \[
+            \xymatrix{
+                X' \ar[r]^\varphi \ar[d]_{\can_{X'}}& X \ar[d]^{\can_{X}}\\
+                \Sect(k[X'], k) \ar[r]_{\varphi_*}& \Sect(k[X], k)
+            }
+        \]
+    \end{lemma}
+
+    \begin{proof}
+        $\varphi_* \circ \can_{X'} = \can_X \circ \varphi$ тогда и только тогда, когда для всякого $x' \in X'$ верно
+        \[\varphi_*(\can_{X'}(x')) = \can_X(\varphi(x)),\]
+        что верно тогда и только тогда, когда для всякого $f \in k[X]$
+        \[\varphi_*(\can_{X'}(x'))(f) = \can_X(\varphi(x))(f).\]
+        При этом
+        \[
+            \varphi_*(\can_{X'}(x'))(f)
+            = \can_{X'}(x')(\varphi^*(f))
+            = \varphi^*(f)(x')
+            = f(\varphi(x))
+            = \can_X(\varphi(x))(f).
+        \]
+    \end{proof}
+
+    \begin{definition}
+        Пусть $R$ --- конечно порождённая редуцированная $k$-алгебра и $i: k \hookrightarrow R$ (константы). (Модельный случай: $R = k[X]$.) Тогда будем обозначать $X(R) := \Sect(R, k)$. (Оно будет напоминать нам множество замкнутых множеств.)
+
+        Рассмотрим пару $(R, X(R))$. Тогда у нас есть простые отображения забывания $(R, X(R)) \mapsto R$ и восстановления $R \mapsto (R, X(R))$. Так мы распрощались с понятием аффинных множеств в категории аффинных пространств и регулярных отображений между ними.
+
+        Так переопределим категорию $\Aff$ как категорию, где множество объектов --- это пары $(R, X(R))$, где $R$ --- конечно порождённая редуцированная $k$-алгебра, а морфизмы $\Mor((R', X(R')), (R, X(R))$) --- отображения $\varphi: X(R') \to X(R)$, что $\varphi^*: \Func(X(R), k) \to \Func(X(R'), k), f \mapsto f \circ \varphi$ переводит $R$ в $R'$ ($\varphi^*(R) \subseteq R'$).
+
+        Тут $R$ играет роль $k[X]$, а $X(R)$ --- роль $X$. В этом же случае вычисление $f \in R$ на точке $x \in X(R)$ происходит по правилу $x(f)$ (ср. с модельным случаем).
+
+        Категории конечно порождённых редуцированных $k$-алгебр (category of finitely generated reduced $k$-algebras) за $\fgrkalg$.
+    \end{definition}
+
+    \begin{theorem}
+        $\Aff$ и $\fgrkalg$ контравариантно эквивалентны.
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим функтор $\Phi: \Aff \to \fgrkalg$, определённый по правилу $(R, X(R)) \mapsto R$, а $\varphi: (R', X(R')) \to (R, X(R))$ переводится в $\varphi^*|_R: R \to R'$. Понятно, что $\Phi$ контравариантен. Теперь функтор $\Psi: \fgrkalg \to \Aff$, определённый по правилу $R \mapsto (R, X(R))$, а гомоморфизм $\alpha: R \to R'$ переводится в морфизм $\varphi: (R', X(R')) \to (R, X(R))$, т.е. отображение $\varphi: X(R') \to X(R)$, что $\varphi(s) := s \circ \alpha$. Для корректности нужно понять, почему $\varphi^*(R) \subseteq R'$.
+
+        \todo[inline]{Обещанно рассказать на следующей лекции.}
+    \end{proof}
+
+    \begin{definition}
+        \emph{Аффинное многообразие} --- это объект категории $\Aff$, т.е. пара $(R, X(R))$. \emph{Множество регулярных отображений $(R', X(R'))$ в $(R, X(R))$} --- множество морфизмов $\Mor((R', X(R')), (R, X(R)))$.
+    \end{definition}
+
+    \begin{example}[нетривиальные]\ 
+        \begin{enumerate}
+            \item Пусть $R$ --- f.g.r. $k$-algebra, а $f \in R$, что $f \neq 0$. Кольцо $R_f := \{g/f^n \mid g \in R \wedge n \in \NN\}$ (т.е. пары $(g, f^n)$ по модулю отношения эквивалентности $(g, f^n) \sim (g', f^{n'}) \Leftrightarrow g \cdot f^{n'} = g' \cdot f^n$) --- конечно порождённая $k$-алгебра. Это верно, потому что нужно рассмотреть $R[t]/(ft - 1)$, где обратным к (образу) $f$ будет (образ) $t$, а тогда $R[t] \overset{\sim}{\to} R_f$.
+        \end{enumerate}
+    \end{example}
 \end{document}
