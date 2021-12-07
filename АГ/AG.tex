@@ -33,6 +33,7 @@
 \newcommand{\Sect}{\mathrm{Sect}}
 \newcommand{\can}{\mathrm{can}}
 \newcommand{\fgrkalg}[1][k]{\text{f.g.r.$#1$-alg.}}
+\newcommand{\Hom}{\mathrm{Hom}}
 
 \begin{document}
     \maketitle
@@ -989,16 +990,6 @@
         Категории конечно порождённых редуцированных $k$-алгебр (category of finitely generated reduced $k$-algebras) за $\fgrkalg$.
     \end{definition}
 
-    \begin{theorem}
-        $\Aff$ и $\fgrkalg$ контравариантно эквивалентны.
-    \end{theorem}
-
-    \begin{proof}
-        Рассмотрим функтор $\Phi: \Aff \to \fgrkalg$, определённый по правилу $(R, X(R)) \mapsto R$, а $\varphi: (R', X(R')) \to (R, X(R))$ переводится в $\varphi^*|_R: R \to R'$. Понятно, что $\Phi$ контравариантен. Теперь функтор $\Psi: \fgrkalg \to \Aff$, определённый по правилу $R \mapsto (R, X(R))$, а гомоморфизм $\alpha: R \to R'$ переводится в морфизм $\varphi: (R', X(R')) \to (R, X(R))$, т.е. отображение $\varphi: X(R') \to X(R)$, что $\varphi(s) := s \circ \alpha$. Для корректности нужно понять, почему $\varphi^*(R) \subseteq R'$.
-
-        \todo[inline]{Обещанно рассказать на следующей лекции.}
-    \end{proof}
-
     \begin{definition}
         \emph{Аффинное многообразие} --- это объект категории $\Aff$, т.е. пара $(R, X(R))$. \emph{Множество регулярных отображений $(R', X(R'))$ в $(R, X(R))$} --- множество морфизмов $\Mor((R', X(R')), (R, X(R)))$.
     \end{definition}
@@ -1008,4 +999,65 @@
             \item Пусть $R$ --- f.g.r. $k$-algebra, а $f \in R$, что $f \neq 0$. Кольцо $R_f := \{g/f^n \mid g \in R \wedge n \in \NN\}$ (т.е. пары $(g, f^n)$ по модулю отношения эквивалентности $(g, f^n) \sim (g', f^{n'}) \Leftrightarrow g \cdot f^{n'} = g' \cdot f^n$) --- конечно порождённая $k$-алгебра. Это верно, потому что нужно рассмотреть $R[t]/(ft - 1)$, где обратным к (образу) $f$ будет (образ) $t$, а тогда $R[t] \overset{\sim}{\to} R_f$.
         \end{enumerate}
     \end{example}
+
+    \begin{definition}
+        Пусть $\varphi: Y' \to Y$ --- отображение множеств, $k$ --- наше поле. Зададим отображение $\varphi^*: \Func(Y, k) \to \Func(Y', k), f \mapsto f \circ \varphi$. $\varphi^*(f)$ называется \emph{переносом функции $f$ с $Y$ на $Y'$ посредством $\varphi$}.
+    \end{definition}
+
+    \begin{remark*}
+        После некоторых обсуждений выяснилось, что $\Sect(R, k)$ ничем не отличаются от $\Hom_{\text{$k$-alg.}}(R, k)$ --- множества гомоморфизмов $k$-алгебр $R \to k$.
+    \end{remark*}
+
+    \begin{definition}
+        Пусть $R$ --- конечнопорождённая редуцированная $k$-алгебра. Определим
+        \begin{gather*}
+            i: R \to \Func(X(R), k), f \mapsto i(f)\\
+            i(f)(x) := x(f).
+        \end{gather*}
+    \end{definition}
+
+    \begin{lemma}
+        Отображение $i$ инъективно, и кроме того есть гомоморфизм $k$-алгебр.
+    \end{lemma}
+
+    \begin{proof}
+        Как мы помним, $R \cong k[X]$ для некоторого замкнутого множества $X \subseteq \AA^n$. В этом случае $X$ находится в биективном соответствии с $\Hom(k[X], k) = X(k[X])$, а именно в соответствии $\pi: x \mapsto [f \mapsto f(x)]$. Тогда $\pi^{-1} \circ i$ выглядит просто как вложение.\todo{Этот переход непонятно написан, нужно переписать.} Отсюда и следует инъективность $i$.
+    \end{proof}
+
+    \begin{corollary}
+        Если $g \in R$ и $i(g)(x) = 0$ для всякого $x \in X(R)$, то $g = 0$.
+    \end{corollary}
+
+    \begin{proof}
+        $i: R \to \Func(X(R), k)$ --- инъективно, а тогда для вского $x \in X(R)$
+        \[i(0)(x) = x(0) = 0 = i(g)(x),\]
+        т.е. $i(0) = i(g)$, значит $0 = g$.
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $g_1, g_2 \in R$ тогда $g_1 = g_2$ тогда и только тогда, когда для всякого $x \in X(R)$ $i(g_1)(x) = i(g_2)(x)$.
+    \end{corollary}
+
+    \begin{lemma}
+        Понятно, что гомоморфизм $k$-алгебр $\varphi: R \to R'$ порождает $\varphi^*: X(R') \to X(R)$ и $\varphi^{**}: \Func(X(R), k) \to \Func(X(R'), k)$. При этом имеются вложения $i: R \to \Func(X(R), k)$ и аналогичное $i'$. Тогда
+        \[\varphi^{**}(i(R)) \subseteq i'(R').\]
+    \end{lemma}
+
+    \begin{proof}
+        Мы докажем, что $\varphi^{**} \circ i = i \circ \varphi$, т.е. неформально $\varphi^{**}|_R = \varphi$. Достаточно доказать, что для всяких $f \in R$ и $x' \in X(R')$ выполняется равенство
+        \[\varphi^{**}(i(f))(x') = i'(\varphi(f))(x').\]
+        Имеем по определениям
+        \[\varphi^{**}(i(f))(x') = i(f)(\varphi^*(x')) = \varphi^*(x')(f) = (x' \circ \varphi)(f) = x'(\varphi(f)) = i'(\varphi(f))(x').\]
+        Отсюда следует требуемое утверждение.
+    \end{proof}
+
+    \begin{theorem}
+        $\Aff$ и $\fgrkalg$ контравариантно эквивалентны.
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим функтор $\Phi: \Aff \to \fgrkalg$, определённый по правилу $(R, X(R)) \mapsto R$, а $\varphi: (R', X(R')) \to (R, X(R))$ переводится в $\varphi^*|_R: R \to R'$. Понятно, что $\Phi$ контравариантен. Теперь функтор $\Psi: \fgrkalg \to \Aff$, определённый по правилу $R \mapsto (R, X(R))$, а гомоморфизм $\alpha: R \to R'$ переводится в морфизм $\varphi: (R', X(R')) \to (R, X(R))$, т.е. отображение $\varphi: X(R') \to X(R)$, что $\varphi(s) := s \circ \alpha$.
+
+        Несложно понять с помощью доказанной леммы, что $\Phi$ --- функтор, и $\Phi$ обратим, т.е. $\Psi$ корректно определён. Тут как раз $\Psi(\alpha)$ можно переопределить как $\alpha^*|_{R'}$. Следовательно, категории контравариантно эквивалентны.
+    \end{proof}
 \end{document}
