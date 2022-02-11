@@ -1,0 +1,516 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+\usepackage{multicol}
+
+\title{Листочек 5. Многомерный.\\Математический анализ. 1 курс.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\grad}{grad}
+\renewcommand{\Re}{\qopname\relax o{Re}}
+\renewcommand{\Im}{\qopname\relax o{Im}}
+
+\begin{document}
+    \maketitle
+
+    \begin{multicols}{2}
+        \tableofcontents
+    \end{multicols}
+
+    \section*{Базовые задачи}
+    \addcontentsline{toc}{section}{Базовые задачи}
+
+    \begin{enumproblem}TBP
+        % Будем считать, что наши функции определены не на $\RR^n$, а на замыкании шара $B$ (обозначим его за $\overline{B}$), так как не даны и не требуются никакие условия (не считая бесконечной дифференцируемости) на точки вне этого шара.
+
+        % \begin{definition}
+        %     Пусть дана $h: \RR^n \to \RR$. Тогда определим
+        %     \[\lim_{x \to K} a(x) = A\]
+        %     как факт того, что предел по любой последовательности $\{x_n\}_{n=0}^\infty$, где
+        %     \[\lim_{n \to \infty} \dist(x_n, K) = 0,\]
+        %     равен $A$.
+        % \end{definition}
+
+        % \begin{lemma}
+        %     Пусть дана $h \in C^\infty(\RR^n)$. Тогда $h$ плоская на $K$ тогда и только тогда, когда
+        %     \[\lim_{x \to K} \frac{\ln(\dist(x, K))}{\ln|h(x)|} = 0\]
+        % \end{lemma}
+
+        % \begin{proof}
+        %     Заметим равносильную форму неравенства из определения плоскости функции на $K$:
+        %     \begin{align*}
+        %         |f(x)| \leqslant C_M \cdot \dist(x, K)^M
+        %         &\quad \Longleftrightarrow \quad
+        %         \ln|f(x)| \leqslant \ln(C_M) + M \cdot \ln(\dist(x, K))\\
+        %         &\quad \Longleftrightarrow \quad
+        %         -\ln|f(x)| \geqslant -\ln(C_M) + M \cdot -\ln(\dist(x, K));
+        %     \end{align*}
+        %     при этом оно верно как формальное неравенство, если разрешить $\ln$ принимать значение $-\infty$. Также заметим, что $|f|$ и $\dist(x, K)$ ограничены на $\overline{B}$, поэтому $\ln|f(x)|$ и $\ln(\dist(x, K))$ ограничены сверху. $\ln(C_M)$ при этом может принимать любые значения из $\RR$.
+
+        %     Таким образом мы имеем функции
+        %     \[
+        %         \varphi: \overline{B} \to \RR \cup \{+\infty\}, x \mapsto -\ln|f(x)| + A
+        %         \qquad \text{и} \qquad
+        %         \delta: \overline{B} \to \RR \cup \{+\infty\}, x \mapsto -\ln(\dist(x, K)) + B
+        %     \]
+        %     где константы $A$ и $B$ подобраны так, чтобы $\varphi$ и $\delta$ были больше некоторой положительной константы. Значит $f$ плоская тогда и только тогда, когда для всякого $M \in \NN$ есть $C_M > 0$, что для всякой точки $x \in B$
+        %     \[\varphi(x) \geqslant (-\ln(C_M) + A - M \cdot B) + M \cdot \delta(x)\]
+        %     или, иначе говоря, есть константа $D_M > 0$, что для всякой точки $x \in B$
+        %     \[\varphi(x) \geqslant D_M + M \cdot \delta(x)\]
+        %     т.е. $\varphi - M\delta$ ограничена снизу на $B$.
+
+        %     С другой стороны
+        %     \begin{align*}
+        %         \lim_{x \to K} \frac{\ln(\dist(x, K))}{\ln|h(x)|} = 0
+        %         &\quad \Longleftrightarrow \quad
+        %         \lim_{x \to K} \frac{-\ln(\dist(x, K)) + A - A}{-\ln|h(x)| + B - B} = 0\\
+        %         &\quad \Longleftrightarrow \quad
+        %         \lim_{x \to K} \frac{\delta(x) - A}{\varphi(x) - B} = 0\\
+        %         &\quad \Longleftrightarrow \quad
+        %         \lim_{\delta(x) \to +\infty} \frac{\delta(x)}{\varphi(x)} = 0\\
+        %     \end{align*}
+
+        %     Пусть $f$ плоская на $K$. Фиксируем какое-нибудь $M \in \NN$. Тогда
+        %     \begin{align*}
+        %         \varphi(x) \geqslant D_M + M \cdot \delta(x)
+        %         &\quad \Longleftrightarrow \quad
+        %         \frac{1}{M} \geqslant \frac{D_M}{M\varphi(x)} + \frac{\delta(x)}{\varphi(x)}\\
+        %     \end{align*}
+        %     Заметим, что $\delta/\varphi$ всегда положительно на $\overline{B}$ (так как $\delta$ и $\varphi$ положительны), а $D_M/(M\varphi)$ положительно, ограничено сверху константой и сходится к $+\infty$, когда $\varphi$ сходится к нулю. Значит
+        %     \[\lim_{\delta(x) \to +\infty} \frac{\delta(x)}{\varphi(x)} \in \left[0; \frac{1}{M}\right]\]
+        %     Следовательно
+        %     \[\lim_{\delta(x) \to +\infty} \frac{\delta(x)}{\varphi(x)} = 0\]
+
+        %     Теперь пойдём в обратную сторону. Пусть
+        %     \[\lim_{\delta(x) \to +\infty} \frac{\delta(x)}{\varphi(x)} = 0\]
+        %     Зафиксируем любое $M \in \NN$. Мы хотим подобрать такую константу $D_M$, что
+        %     \[\frac{1}{M} - \frac{D_M}{M\varphi(x)} \geqslant \frac{\delta(x)}{\varphi(x)}\]
+        %     Условимся, что будем брать $D_M \leqslant 0$. Поймём, что тогда в некоторой окрестности $U$ компакта $K$ верно
+        %     \[\frac{\delta(x)}{\varphi(x)} \leqslant \frac{1}{M} \leqslant \frac{1}{M} - \frac{D_M}{M \varphi(x)}\]
+        %     Поэтому осталось подобрать константу, опираясь лишь на $S := \overline{B} \setminus U$. Заметим, что $S$ компакт. Поэтому $\varphi$ и $\delta$ на нём принимают значения из некоторых соответствующих отрезков положительных чисел, поэтому на $S$
+        %     \[\frac{1}{M} - \frac{\delta}{\varphi}\]
+        %     ограничено, а
+        %     \[\frac{1}{M \varphi}\]
+        %     ограничено снизу положительной константой. Отсюда очевидно следует, что такая константа $D_M \leqslant 0$ существует.
+        % \end{proof}
+
+        % \begin{lemma}
+        %     Первые частные производные $f$ плоски на $\{k\}$ для любой точки $k \in K$.
+        % \end{lemma}
+
+        % \begin{proof}
+        %     Предположим противное. Тогда есть точка $k \in K$, что $a := (\grad f)(k)$ не равен нулю. Тогда
+        %     \[f(x) = f(k) + \sum_{i=1}^n a_i(x_i - k_i) + o(\dist(x, k))\]
+        %     Но мы знаем, что
+        %     \[
+        %         |f(k)| \leqslant C_1 \cdot \dist(k, K) = C_1 \cdot 0 = 0
+        %         \quad \Rightarrow \quad
+        %         f(k) = 0
+        %     \]
+        %     и для любого $M \in \NN$
+        %     \[
+        %         |f(x)| \leqslant C_M \cdot \dist(x, K)^M \leqslant C_M \cdot \dist(x, k)^M
+        %     \]
+        %     Таким образом
+        %     \begin{align*}
+        %         f(k + \lambda a)
+        %         &= f(k) + \sum_{i=1}^n a_i(k_i + \lambda a_i - k_i) + o(\dist(k + a, k))\\
+        %         &= 0 + \lambda \sum_{i=1}^n a_i^2 + o(\lambda|a|)\\
+        %         &= \lambda |a|^2 + o(\lambda)\\
+        %     \end{align*}
+        %     и при этом для любого $M \in \NN$
+        %     \begin{align*}
+        %         |f(k + \lambda a)|
+        %         &\leqslant C_M \cdot \dist(k + \lambda a, k)^M\\
+        %         &= C_M \cdot (|\lambda| |a|)^M\\
+        %         &= (C_M |a|^M) \cdot |\lambda|^M\\
+        %     \end{align*}
+        %     Т.е. для любого $M \in \NN$
+        %     \[||a| \lambda + o(\lambda)| \leqslant (C_M |a|^M) \cdot |\lambda|^M\]
+        %     что конечно неверно для $M \geqslant 2$.
+
+        %     Значит $\grad f$ зануляется на $K$.
+        % \end{proof}
+
+        % \begin{lemma}
+        %     Все частные производные 
+        % \end{lemma}
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Давайте введём на плоскости два направления:
+        \[\overrightarrow{u} := \overrightarrow{x} + \overrightarrow{y} \quad \text{ и } \quad \overrightarrow{v} := \overrightarrow{x} - \overrightarrow{y}\]
+        Они образуют базис, координаты по ним пересчитываются по правилам
+        \begin{align*}
+            u &= \frac{x + y}{2}&
+            v &= \frac{x - y}{2}\\
+            x &= u + v&
+            y &= u - v
+        \end{align*}
+        а дифференциалы ---
+        \begin{align*}
+            du &= dx + dy&
+            dv &= dx - dy\\
+            dx &= \frac{du + dv}{2}&
+            dy &= \frac{du - dv}{2}
+        \end{align*}
+        Тогда мы имеем, что
+        \begin{align*}
+            &\left|\frac{\partial f}{\partial u} + \frac{\partial f}{\partial v}\right|(u, v) = 2\left|\frac{\partial f}{\partial x}\right| (x, y) \leqslant 4|x-y| = 8|v|\\
+            &\left|\frac{\partial f}{\partial u} - \frac{\partial f}{\partial v}\right|(u, v) = 2\left|\frac{\partial f}{\partial y}\right| (x, y) \leqslant 4|x-y| = 8|v|
+        \end{align*}
+        При этом для любых вещественных $a$, $b$ и $c$ верно
+        \[
+            \left\{
+                \begin{aligned}
+                    &|a + b| \leqslant c\\
+                    &|a - b| \leqslant c\\
+                \end{aligned}
+            \right.
+            \qquad \Longleftrightarrow \qquad
+            |a| + |b| \leqslant c
+        \]
+        Поэтому мы получаем, что условие задачи равносильно тому, что
+        \[\left|\frac{\partial f}{\partial u}\right|(u, v) + \left|\frac{\partial f}{\partial v}\right|(u, v) \leqslant 8|v|\]
+        
+        В таком случае заметим, что
+        \begin{align*}
+            |f(x, y)|
+            &= |f(u, v) - f(0, 0)|&
+            &\leqslant |f(u, v) - f(u, 0)| + |f(u, 0) - f(0, 0)|\\
+            &= \left|\int_{0}^v \frac{\partial f}{\partial v} (u, t) dt\right| + \left|\int_{0}^u \frac{\partial f}{\partial v} (s, 0) ds\right|&
+            &\leqslant \int_{0}^v \left|\frac{\partial f}{\partial v}\right| (u, t) dt + \int_{0}^u \left|\frac{\partial f}{\partial v}\right| (s, 0) ds\\
+            &\leqslant \int_{0}^v 8t dt + \int_{0}^u 0 ds&
+            &= 4v^2 = (x-y)^2
+        \end{align*}
+        Следовательно $|f(5, 4)| \leqslant (5 - 4)^2 = 1$, а значит $f(5, 4) \leqslant 1$.
+
+        При этом равенство достигается. Действительно, возьмём $f(x, y) = (x-y)^2$. Тогда
+        \[
+            \left|\frac{\partial f}{\partial x}\right| (x, y) = |2(x-y)| = 2|x-y|
+            \quad \text{ и } \quad
+            \left|\frac{\partial f}{\partial y}\right| (x, y) = |-2(x-y)| = 2|x-y|
+        \]
+    \end{enumproblem}
+
+    \begin{enumproblem}\ItemedProblem\ 
+        \begin{enumerate}
+            \item Вспомним, что для всякой строго монотонной функции $f$ на $[p; q]$ верно, что
+                \[\int_p^q f + \int_{f(p)}^{f(q)} f^{-1} = q f(q) - p f(p)\]
+                Действительно,
+                \begin{multline*}
+                    \frac{d}{dq}\left(\int_p^q f + \int_{f(p)}^{f(q)} f^{-1}\right)\\
+                    = \frac{d}{dq}\left(\left.\left(\int f\right)\right|_p^q + \left.\left(\left(\int f^{-1}\right) \circ f\right)\right|_p^q\right)\\
+                    = \left(\int f\right)' + \left(\left(\int f^{-1}\right) \circ f\right)'\\
+                    = f + f' \cdot (f^{-1} \circ f)\\
+                    = f + f' \cdot q\\
+                    = \frac{d}{dq} (q f(q))
+                \end{multline*}
+                а отсюда и следует заявленное утверждение.
+
+                Тогда
+                \[
+                    \int_{-a}^{a} \frac{dx}{\sqrt{a^2 + 2bx + b^2}}
+                    = a \int_{-a}^{a} \frac{d(x/a)}{\sqrt{a^2 + 2ab(x/a) + b^2}}
+                    = a \int_{-1}^{1} \frac{dt}{\sqrt{a^2 + 2abt + b^2}}
+                \]
+                При этом функция $f(t) = 1/\sqrt{a^2 + 2abt + b^2}$ строго монотонна, а обратная равна $f^{-1}(s) = (1/s^2 - a^2 - b^2) / 2ab$.
+                Следовательно
+                \begin{align*}
+                    \int_{-1}^{1} \frac{dt}{\sqrt{a^2 + 2abt + b^2}}
+                    &= \left. x f(x) \right|_{-1}^{1} - \int_{f(-1)}^{f(1)} \left(\frac{1}{2ab s^2} - \frac{a^2 + b^2}{2ab}\right)ds\\
+                    &= f(1) + f(-1) + (f(1) - f(-1))\frac{a^2 + b^2}{2ab} - \frac{1}{2ab} \int_{f(-1)}^{f(1)} \frac{ds}{s^2}\\
+                    &= f(1) + f(-1) + (f(1) - f(-1))\frac{a^2 + b^2}{2ab} + \left.\frac{1}{2ab} \frac{1}{s} \right|_{f(-1)}^{f(1)}\\
+                \end{align*}
+                Заметим, что $f(1) = 1/(a+b)$, а $f(-1) = 1/|a-b|$. Следовательно
+                \begin{align*}
+                    &f(1) + f(-1) + (f(1) - f(-1))\frac{a^2 + b^2}{2ab} + \left.\frac{1}{2ab} \frac{1}{s} \right|_{f(-1)}^{f(1)}\\
+                    = &\frac{1}{a+b} + \frac{1}{|a-b|} + \left(\frac{1}{a+b} - \frac{1}{|a-b|}\right) \frac{a^2 + b^2}{2ab} + \frac{(a+b) - |a-b|}{2ab}\\
+                    = &\frac{(a+b)^2}{2ab(a+b)} - \frac{(a-b)^2}{2ab|a-b|} + \frac{(a+b) - |a-b|}{2ab}\\
+                    = &\frac{(a+b) - |a-b|}{ab} = \frac{2\min(a, b)}{ab} = \frac{2}{\max(a, b)}
+                \end{align*}
+
+                Таким образом ответ: $2a/\max(a, b)$.
+            
+            \item TBP
+        \end{enumerate}
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Давайте возьмём функцию тождественно равную нулю и будем рассматривать только квадрант $\{x \geqslant 0 \wedge y \geqslant 0\}$; если мы испортим её на данном квадранте, что все условия выполнятся, тогда функция и на всей плоскости подойдёт.
+
+        Рассмотрим кривые $y = e^{-1/x}$ и $y = 2e^{-1/x}$. Они пересекаются только в нуле. Поэтому давайте в пространстве между ними будем выделим последовательность окрестностей, сходящуюся к $(0; 0)$, и в каждой из этих окрестностей заменим нашу функцию на что угодно непрерывное, достигающее по модулю $1$ и равное на границе $0$ (чтобы ``вклеивалась'' в оставшуюся функцию): например, можно вклеить конусы высоты $1$.
+        
+        Покажем, что всякая кривая $c_1 x^m = c_2 y^n$ (из условия) в некоторой окрестности $(0; 0)$ не попадает в область между $y = e^{-1/x}$ и $y = 2e^{-1/x}$. Действительно, если $c_1$ или $c_2$ равно $0$, то мы получаем ось абсцисс или ординат, которая по понятным причинам не лежит в области между экспоненциальными графиками. Если же они оба не равны $0$, то мы имеем дело с кривой $y = \lambda x^\alpha$, где $\lambda$ и $\alpha$ --- положительные константы. Тогда при $x \to 0$
+        \[2 e^{-1/x} = o(\lambda x^\alpha)\]
+        что и означает, что в некоторой окрестности $(0; 0)$ рассматриваемая кривая лежит вне выделенной области.
+
+        В таком случае на рассматриваемой кривой функция тождественно равна $0$, а тогда и предел по ней в $(0; 0)$ равен $0$. При этом во всякой окретсности $(0; 0)$ будут точки вылетающие за $1$-окрестность $0$, да и в целом принимающие все значения либо из $(0; 1)$, либо $(0; -1)$, поэтому никакой сходимости в $(0; 0)$ быть не может.
+
+        Ну и напоследок, очевидно, что полученная функция непрерывна везде кроме $(0; 0)$, так как мы постарались и вклеили функции с нулём на краю.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Давайте обозначим $\alpha := 1 + \frac{1}{n^2}$ и $m = n^3$. Тогда от нас требуют найти асимптотику
+        \[\sum_{k=1}^m \alpha^{-k^2}\]
+        Заметим, что $\alpha > 1$, а следовательно функция $\alpha^{-x^2}$ убывает. Значит
+        \begin{gather*}
+            \sum_{k=1}^m \int_{k-1}^k \alpha^{-x^2} dx
+            \geqslant \sum_{k=1}^m \alpha^{-k^2} \geqslant
+            \sum_{k=1}^m \int_k^{k+1} \alpha^{-x^2} dx\\
+            \int_0^m \alpha^{-x^2} dx
+            \geqslant \sum_{k=1}^m \alpha^{-k^2} \geqslant
+            \int_1^{m+1} \alpha^{-x^2} dx\\
+        \end{gather*}
+        При этом
+        \[
+            \int_a^b \alpha^{-x^2} dx
+            = \int_a^b e^{-\left(\sqrt{\ln(\alpha)}x\right)^2} dx
+            = \frac{1}{\sqrt{\ln(\alpha)}} \int_a^b e^{-\left(\sqrt{\ln(\alpha)}x\right)^2} d\left(\sqrt{\ln(\alpha)}x\right)
+            = \frac{1}{\sqrt{\ln(\alpha)}} \int_{a\sqrt{\ln(\alpha)}}^{b\sqrt{\ln(\alpha)}} e^{-t^2} dt
+        \]
+        Следовательно
+        \[
+            \frac{1}{\sqrt{\ln(\alpha)}} \int_0^{m\sqrt{\ln(\alpha)}} e^{-x^2} dx
+            \geqslant \sum_{k=1}^m \alpha^{-k^2} \geqslant
+            \frac{1}{\sqrt{\ln(\alpha)}} \int_{\sqrt{\ln(\alpha)}}^{(m+1)\sqrt{\ln(\alpha)}} e^{-x^2} dx\\  
+        \]
+
+        Заметим теперь, что
+        \[
+            \sqrt{\ln(\alpha)}
+            = \sqrt{\ln\left(1 + \frac{1}{n^2}\right)}
+            \approx \sqrt{\frac{1}{n^2}}
+            = \frac{1}{n}
+        \]
+        Следовательно $\alpha \to 0^+$, а
+        \[
+            m \alpha \approx n^3 \frac{1}{n} = n^2 \to +\infty
+        \]
+        Значит
+        \[
+            \int_0^{m\sqrt{\ln(\alpha)}} e^{-x^2} dx = \frac{\sqrt{\pi}}{2} + o(1)
+            \qquad \text{ и } \qquad
+            \int_{\sqrt{\ln(\alpha)}}^{(m+1)\sqrt{\ln(\alpha)}} e^{-x^2} dx = \frac{\sqrt{\pi}}{2} + o(1)
+        \]
+        Таким образом
+        \[
+            \sum_{k=1}^m \alpha^{-k^2}
+            \approx \frac{\sqrt{\pi}}{2} \cdot \frac{1}{\sqrt{\ln(\alpha)}}
+            \approx \frac{\sqrt{\pi}}{2} n
+        \]
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Для начала будем считать, что количество переменных равно $n$, а не $d$.
+
+        Давайте попробуем посмотреть на локальные изменения максимизируемой функции в точке искомого максимума. Заметим, что
+        \[\grad\left(\sum_{l=1}^{n-1} x_l x_{l+1}\right) = (x_{l-1} + x_{l+1})_{l=1}^n\]
+        где под $x_0$ и $x_{n+1}$ подразумеваются нули, а
+        \[\grad\left(\sum_{l=1}^{n-1} x_l^2\right) = (x_l)_{l=1}^n\]
+        При этом если эти градиенты не будут сонаправлены, то можно будет ``сдвинуться'' по сфере немного в сторону первого градиента и тогда значение увеличится. Значит мы получаем, что эти два вектора сонаправлены. Повторим, что это вектора
+        \[
+            (x_1, \dots, x_n)
+            \quad \text{ и } \quad
+            (x_2, x_3 + x_1, \dots, x_n + x_{n-2}, x_{n-1})
+        \]
+        Причём про первый мы знаем, что он ненулевой (это буквально совпадает с условием нахождения на единичной сфере), поэтому
+        \[(x_2, x_3 + x_1, \dots, x_n + x_{n-2}, x_{n-1}) = \lambda (x_1, \dots, x_n)\]
+        для некоторого $\lambda \in \RR$. Тогда мы получаем, что $x_2 = \lambda x_1$, $x_{n-1} = \lambda x_n$ и для всякого $k \in \{3; \dots; n\}$ верно
+        \[x_n + x_{n-2} = \lambda x_{n-1}\]
+        Последнее значит, что мы получили линейную рекуренту на $x_l$, и следовательно
+        \[x_l = a \alpha^{l-1} + b \beta^{l-1}\]
+        где $\alpha$ и $\beta$ --- корни (возможно, комплексные) многочлена $t^2 - \lambda t + 1$ (пока будем считать, что $\alpha \neq \beta$), а $a$ и $b$ --- некоторые комплексные числа. Тогда по теореме безу мы имеем, что $\alpha \beta = 1$, а $\alpha + \beta = \lambda$. При этом из первых двух условий мы имеем, что
+        \[
+            a \alpha + b \beta = \lambda(a + b)
+            \quad \text{ и } \quad
+            a \alpha^{n-2} + \beta \alpha^{n-2} = \lambda(a \alpha^{n-1} + b \beta^{n-1})
+        \]
+        Следовательно
+        \begin{align*}
+            &\left\{
+                \begin{aligned}
+                    &a(\lambda - \alpha) + b(\lambda - \beta) = 0\\
+                    &a(\lambda \alpha^{n-1} - \alpha^{n-2}) + b(\lambda \beta^{n-1} - \beta^{n-2}) = 0
+                \end{aligned}
+            \right.&
+            &\left\{
+                \begin{aligned}
+                    &a\beta + b\alpha = 0\\
+                    &a\alpha^{n-1}(\lambda - \beta) + b\beta^{n-1}(\lambda - \alpha) = 0
+                \end{aligned}
+            \right.\\
+            &\left\{
+                \begin{aligned}
+                    &a\beta + b\alpha = 0\\
+                    &a\alpha^n + b\beta^n = 0
+                \end{aligned}
+            \right.&
+            &\left\{
+                \begin{aligned}
+                    &a + b\alpha^2 = 0\\
+                    &a\alpha^{2n} + b = 0
+                \end{aligned}
+            \right.\\
+            &\begin{pmatrix}
+                1& \alpha^2\\
+                \alpha^{2n}& 1
+            \end{pmatrix}
+            \begin{pmatrix}
+                a\\b
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                0\\0
+            \end{pmatrix}&
+        \end{align*}
+        Но $(\begin{smallmatrix}a\\b\end{smallmatrix}) \neq \overrightarrow{0}$ (так как иначе все $x_l = 0$), следовательно
+        \[
+            0
+            =
+            \begin{vmatrix}
+                1& \alpha^2\\
+                \alpha^{2n}& 1
+            \end{vmatrix}
+            =
+            1 - \alpha^{2(n+1)}
+        \]
+        Значит $\alpha$ является корнем степени $2(n+1)$ из $1$. Но $\alpha$ является корнем $t^2 - \lambda t + 1$ --- многочлена с вещественными коэффициентами, следовательно $\alpha$ имеет вид либо $r$, либо $ri$, где $r \in \RR$, а $i$ --- мнимая единица. Значит $\alpha \in \{1; -1; i; -i\}$.
+        
+        Пусть $\alpha = i$ (случай $\alpha = -i$ аналогичен), тогда $\beta = -i$, $\lambda = 0$, $n+1 \divided 2$ и $a + b = 0$. И тогда
+        \[x_l = a i^{l-1} - a (-i)^{l-1} = a i^{l-1} (1 - (-1)^{l-1})\]
+        Тогда при чётных $l$ мы имеем $x_l = 0$, что значит, что
+        \[\sum_{l=1}^{n-1} x_l x_{l+1} = 0\]
+
+        Теперь осталось рассмотреть случаи когда $\alpha = \beta = \pm 1$, т.е.
+        \[x_l = (a + (l-1)b) (\pm 1)^{l-1}\]
+        для некоторых вещественных $a$ и $b$. Но заметим общий факт, что
+        \[
+            \sum_{l=1}^{n-1} x_l x_{l+1}
+            \leqslant \left|\sum_{l=1}^{n-1} x_l x_{l+1}\right|
+            \leqslant \sum_{l=1}^{n-1} |x_l x_{l+1}|
+            = \sum_{l=1}^{n-1} |x_l| |x_{l+1}|
+        \]
+        Поэтому если максимум достижим, то он достижим набором неотрицательных чисел, что значит, что нужно считать $x_l$ положительными. Но тогда случай $\lambda = -1$ отпадает, так как оба вектора-градиента содержат неотрицательные значения, и следовательно
+        \[x_l = a + (l-1)b\]
+
+        Тогда
+        \[
+            1
+            = \sum_{l=1}^n x_l^2
+            = \sum_{l=1}^n (a + (l-1)b)^2
+            = a^2 n + 2ab \frac{(n-1)n}{2} + d^2 \frac{(n-1)n(2n-1)}{6}
+        \]
+        а
+        \begin{align*}
+            S
+            &= \sum_{l=1}^{n-1} x_l x_{l+1}&
+            &= \sum_{l=1}^{n-1} (a + (l-1)b)(a + lb)\\
+            &= \sum_{l=1}^{n-1} (a + lb)^2 - b(a + lb)&
+            &= \sum_{l=1}^n (a + (l-1)b)^2 - a^2 - ab (n-1) - b^2 \frac{(n-1)n}{2}\\
+            &= 1 - a^2 - ab (n-1) - b^2 \frac{(n-1)n}{2}&
+        \end{align*}
+        Но также заметим, что
+        \[
+            \frac{1}{n}
+            = \frac{1}{n} \left(a^2 n + 2ab \frac{(n-1)n}{2} + d^2 \frac{(n-1)n(2n-1)}{6}\right)
+            = a^2 + ab (n-1) + d^2 \frac{(n-1)(2n-1)}{6}
+        \]
+        Следовательно
+        \begin{align*}
+            S
+            &= 1 - a^2 - ab (n-1) - b^2 \frac{(n-1)3n}{6}\\
+            &= 1 - \left(a^2 + ab (n-1) + d^2 \frac{(n-1)(2n-1)}{6}\right) - b^2 \frac{(n-1)(n+1)}{6}\\
+            &= 1 - \frac{1}{n} - b^2 \frac{(n-1)(n+1)}{6} \geqslant \frac{n-1}{n}\\
+        \end{align*}
+        И по данной формуле мы, действительно, сразу получаем пример: если $x_l = 1/\sqrt{n}$, то
+        \[
+            \sum_{l=1}^n x_l^2 = \sum_{l=1}^n \frac{1}{n} = 1
+            \qquad \text{ и } \qquad
+            \sum_{l=1}^{n-1} x_l x_{l+1} = \sum_{l=1}^{n-1} \frac{1}{n} = \frac{n-1}{n}
+        \]
+
+        Таким образом ответ: $1 - 1/n$.
+
+        P.S. Мы несколько раз пользовались тем, что $n \geqslant 2$ и один раз, что $n \geqslant 3$, но для них задача решается очевидно. Если $n = 1$, то задачи нет, так как
+        \[\sum_{l=1}^{n-1} x_l x_{l+1} = 0\]
+        Если же $n = 2$, то
+        \[
+            \frac{1}{2} - \sum_{l=1}^{n-1} x_l x_{l+1}
+            = \frac{x_1^2 + x_2^2}{2} - x_1x_2
+            = \frac{(x_1 - x_2)^2}{2} \geqslant 0
+        \]
+        т.е. $\frac{1}{2} \geqslant \sum_{l=1}^{n-1} x_l x_{l+1}$; и тот же пример $x_l = 1/\sqrt{n}$ подходит, и получается ответ $1/2$. Значит $1 - 1/n$ верен для всех $n$.
+    \end{enumproblem}
+
+    \section*{Рейтинговые задачи}
+    \addcontentsline{toc}{section}{Рейтинговые задачи}
+
+    \begin{enumproblem}
+        \begin{lemma}
+            Пусть дан отрезок $[a; b]$ и непрерывная функция $g: [a; b] \to \RR_{\geqslant 0}$. Тогда для всякого $\varepsilon > 0$ есть такая непрерывная функция $f: [a; b] \to \CC$, что
+            \begin{itemize}
+                \item $|f(x)| = g(x)$ для всех $x \in [a; b]$,
+                \item $|\int_a^b f(x) dx| \leqslant \varepsilon$
+                \item и $f(a) = g(a)$, $f(b) = g(b)$, т.е. $f(a)$ и $f(b)$ вещественны и положительны.
+            \end{itemize}
+        \end{lemma}
+
+        \begin{proof}
+            Пусть $A := \int_a^b g(x) dx$. Тогда разделим наш отрезок на отрезки $[a; a_1]$, $[a_1; b_1]$ и $[b_1; b]$, что
+            \[
+                \int_a^{a_1} g(x) dx = \int_{b_1}^b g(x) dx = \frac{A}{4}
+                \quad \text{ и } \quad
+                \int_{a_1}^{b_1} g(x) dx = \frac{A}{2}
+            \]
+            Тогда рассмотрим в $a_1$ и $b_1$ по таким окрестностям, что
+            \begin{itemize}
+                \item эти окрестности находятся полностью внутри $[a; b]$,
+                \item эти окрестности не пересекаются
+                \item и интеграл $g$ на каждой из этих окрестностей не больше $\varepsilon/4$.
+            \end{itemize}
+            Тогда давайте зададим функцию на этих отрезках без выбранных окрестностей так: на $[a; a_1]$ и на $[b_1; b]$ $f$ будет равна $g$, а на $[a_1; b_2]$ --- $-g$. Если не учитывать окрестности, то суммарный интеграл на всём отрезке $[a; b]$ будет равен $0$, но функция может быть разрывной в $a_1$ и $b_1$.
+            
+            Мы же заберём окрестностями немного у отрезков и сделаем непрерывное соединение между ними. Если просто вырезать интервалы, то суммарный интеграл $f$ на всех трёх получившихся отрезках будет в $\varepsilon/2$-окрестности $0$, а значит, как бы мы ни задали $f$ на этих окрестностях, интеграл $f$ на всём $[a; b]$ будет в $\varepsilon$-окрестности $0$. Поэтому зададим $f$ на вырезанных окрестностях как угодно непрерывно, чтобы соединить отрезки; например, если нужно задать её на интервале $(s; t)$, то можно воспользоваться формулой
+            \[\pm g(x) e^{\frac{x-s}{t-s}\pi i}\]
+
+            В итоге функция построена.
+        \end{proof}
+
+        Будем подразумевать под $g$ функцию $|g|$; тогда нам ставится условие, что $|f| = g$, как в лемме. Заметим, что если $\int_0^1 g(x) dx$ конечен, то и $\int_0^1 f(x) dx$ сойдётся, какой бы $f$ не была (непрерывности хватит). Поэтому будем рассматривать случай $\int_0^1 g(x) dx = +\infty$.
+
+        Тогда давайте со стороны $1$ отрезать от $(0; 1]$ по полуинтервалу так, что интеграл $g$ на первом равен $1$, на втором равен $1/2$, на третьем --- $1/3$, и т.д. Заметим, что процесс не прерывается, так как интеграл $g$ на всём отрезке бесконечен, и при этом концы данных полуинтервалов сойдутся (так как это убывающая ограниченная последовательность) и сойдутся к $0$ (так как иначе они сойдутся к $a \in (0; 1)$, а тогда $\int_a^1 g(x) dx$ конечен, а сумма $1 + 1/2 + 1/3 + \dots$ бесконечна и когда-нибудь мы перепрыгнем $a$). Значит мы разбили весь полинтервал $(0; 1]$ на полинтервалы, и чем ближе к нулю, тем меньше интегралы $g$ на них.
+        
+        Тогда давайте определим функцию $f$ на каждом интервале № $n$ так, как указано в лемме выше, но в качестве $\varepsilon$ возьмём $1/2^n$. Тогда сумма интегралов $f$ на всех полинтервалах сойдётся (пусть к $z$), и тогда для всякого $a$ на полуинтервале № $n$ будет верно, что
+        \[\left|\int_a^1 f(x) dx - z\right| \leqslant \frac{1}{2^{n-1}} + \frac{1}{n}\]
+        т.е. интеграл $\int_0^1 f(x) dx$ сойдётся.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+    
+\end{document}

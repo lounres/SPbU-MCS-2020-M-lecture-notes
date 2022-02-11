@@ -1,0 +1,1440 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{../.tex/mcs-notes}
+\usepackage{todonotes}
+\usepackage{multicol}
+\usepackage[all]{xy}
+\CompileMatrices
+
+\settitle
+{Алгебра.}
+{В. А. Петров}
+{algebra/main.pdf}
+\date{}
+
+\DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Frac}{Frac}
+\newcommand{\A}{\ensuremath{\mathrm{A}}\xspace}
+\newcommand{\D}{\ensuremath{\mathrm{D}}\xspace}
+\newcommand{\M}{\ensuremath{\mathrm{M}}\xspace}
+\newcommand{\const}{\mathrm{const}}
+\DeclareMathOperator{\End}{End}
+\newcommand{\Id}{\mathrm{Id}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Mor}{\mathrm{Mor}}
+\newcommand{\dom}{\mathrm{dom}}
+\newcommand{\cod}{\mathrm{cod}}
+\newcommand{\Ob}{\mathrm{Ob}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Sets}{\mathrm{Sets}}
+\newcommand{\Ens}{\mathrm{Ens}}
+\newcommand{\Groups}{\mathrm{Groups}}
+\newcommand{\Rings}{\mathrm{Rings}}
+\newcommand{\Comm}{\mathrm{Comm}}
+\newcommand{\Vect}{\mathrm{Vect}}
+\newcommand{\Mod}{\mathrm{Mod}}
+\newcommand{\Top}{\mathrm{Top}}
+\newcommand{\Topstar}{\mathrm{Top\star}}
+\newcommand{\HTop}{\mathrm{HTop}}
+\newcommand{\Rels}{\mathrm{Rels}}
+\newcommand{\pr}{\mathrm{pr}}
+\newcommand{\Alg}{\mathrm{Alg}}
+\newcommand{\AbGroups}{\mathrm{AbGroups}}
+\newcommand{\Setsstar}{\mathrm{Sets_\star}}
+\newcommand{\Funct}{\mathrm{Funct}}
+\newcommand{\Nat}{\mathrm{Nat}}
+\newcommand{\LocCompAbGroups}{\ensuremath{\mathrm{LocCompAbGroups}}\xspace}
+\newcommand{\CompAbGroups}{\ensuremath{\mathrm{CompAbGroups}}\xspace}
+\newcommand{\CompTop}{\ensuremath{\mathrm{CompTop}}\xspace}
+
+% \setlength{\marginparwidth}{2.5cm}
+% \setlength{\textwidth}{470 pt}
+
+\begin{document}
+    \maketitle
+
+    \listoftodos[TODOs]
+
+    \tableofcontents
+
+    \vspace{2em}
+
+    Литература:
+    \begin{itemize}
+        \item Ван дер Варден, ``Алгебра''.
+        \item Лэнг, ``Алгебра''.
+        \item Винберг, ``Курс Алгебры''.
+        \item Маклейн, ``Категории для работающего математика''.
+    \end{itemize}
+
+    \subsection*{Немного истории}
+
+    Зарождение --- Аль Хорезин, ``Китхаб Альджебр валь мукабалт''. ``Альджебр'' значит ``перенос из одной части уравнения в другую'', а ``мукабалт'' --- ``приведение подобных''.
+
+    \section{Основные понятия.}
+
+    \begin{definition}
+        Алгебраическая структура --- это множество $M$ + заданные на нём операции + аксиомы на операциях.
+    \end{definition}
+
+    \begin{definition}
+        Абелева группа --- набор $(M, +: M^2 \to M)$ с аксиомами:
+        \begin{description}
+            \item[$\A_1$)] $\forall a, b, c \in M: (a + b) + c = a + (b + c)$ --- ассоциативность сложения
+            \item[$\A_2$)] $\exists 0 \in M: \forall a \in M: a + 0 = a = 0 + a$ --- нейтральный по сложению элемент
+            \item[$\A_3$)] $\forall a, b \in M: a + b = b + a$ --- коммутативность сложения
+            \item[$\A_4$)] $\forall a \in M: \exists -a: a + (-a) = 0 = (-a) + a$ --- существование противоположного
+        \end{description}
+    \end{definition}
+
+    \begin{definition} Опишем следующие аксиомы на наборе $(M, +: M^2 \to M, \cdot: M^2 \to M)$ в добавок к $\A_1$, \dots, $\A_4$:
+        \begin{description}
+            \item[$\D$)] $\forall a, b, k \in M: k(a + b) = ka + kb$, $(a + b)k = ak + bk$ --- дистрибутивность
+            \item[$\M_1$)] $\forall a, b, c \in M: (a \cdot b) \cdot c = a \cdot (b \cdot c)$ --- ассоциативность умножения
+            \item[$\M_2$)] $\exists 1 \in M: \forall a \in M: a \cdot 1 = a = 1 \cdot a$ --- нейтральный по умножению элемент
+            \item[$\M_3$)] $\forall a, b \in M: a \cdot b = b \cdot a$ --- коммутативность умножения
+            \item[$\M_4$)] $\forall a \in M \setminus \{0\}: \exists\, a^{-1}: a \cdot a^{-1} = 1 = a^{-1} \cdot a$ --- существование обратного
+        \end{description}
+        По этим аксиомам определим следующие понятия:
+        \begin{description}
+            \item[\emph{Кольцо}] --- набор $(M, +, \cdot, 0)$, что верны $\A_1$, $\A_2$, $\A_3$, $\A_4$ и $\D$.
+            \item[\emph{Ассоциативное кольцо}] --- кольцо с $\M_1$.
+            \item[\emph{Кольцо с единицей}] --- кольцо с $\M_2$.
+            \item[\emph{Тело}] --- кольцо с $\M_1$, $\M_2$, $\M_4$.
+            \item[\emph{Поле}] --- кольцо с $\M_1$, $\M_2$, $\M_3$, $\M_4$.
+            \item[\emph{Полукольцо}] --- кольцо без $\A_4$.
+        \end{description}
+    \end{definition}
+
+    \begin{example}
+        Если взять $\RR^3$, то векторное произведение в нём неассоциативно и антикоммутативно. Но есть
+        \begin{lemma*}[Тождество Якоби]
+            $u\times (v\times w) + v\times (w\times u) + w\times (u\times v) = 0$
+        \end{lemma*}
+    \end{example}
+
+    \begin{example}
+        Если взять $R^4 = R \times R^3$ и рассмотреть $\cdot: ((a; u); (b; v)) \mapsto (ab-u\cdot v; av + bu + u\times v)$ и $+: ((a; u); (b; v)) \mapsto (a + b, u + v)$, тогда получим $\HH$ --- ассоциативное некоммутативное тело кватернионов. Ассоциативность доказал Гамильтон.
+    \end{example}
+
+    \begin{lemma}
+        $0 \cdot a = 0$
+    \end{lemma}
+
+    \begin{definition}
+        Коммутативное кольцо без делителей нуля называется \emph{областью (целостности)}.
+    \end{definition}
+
+    \begin{definition}
+        Пусть $m\in\NN$. Тогда \emph{множество остатков при делении на $m$} или $\ZZ/m\ZZ$ --- это фактор-множество по отношению эквивалентности $a\sim b \Leftrightarrow (a-b) \mid m$.
+    \end{definition}
+
+    \begin{definition}
+        \emph{Подкольцо} --- это подмножество кольца, согласованное с его операциями.
+
+        Как следствие ноль и обратимость согласуются автоматически.
+    \end{definition}
+
+    \begin{statement}
+        Если $R$ --- подкольцо области целостности $S$, то $R$ --- область целостности.
+    \end{statement}
+
+    \begin{definition}
+        \emph{Целые Гауссовы числа} или $\ZZ{}[i]$ --- это $\{a + bi \mid a, b \in \ZZ\}$.
+    \end{definition}
+
+    \begin{definition}
+        Некоторое подмножество $R$ кольца $S$ \emph{замкнуто относительно сложения (умножения)}, если $\forall a, b \in R: a + b \in R$ ($ab \in R$ соответственно).
+    \end{definition}
+
+    \begin{remark}
+        Замкнутое относительно сложения \textbf{И} умножения подмножество --- подкольцо.
+    \end{remark}
+
+    \begin{example}
+        Пусть $d$ --- целое, не квадрат. Тогда $\ZZ{}[\sqrt{d}]$ --- область целостности.
+    \end{example}
+
+    \section{Теория делимости}
+
+    Пусть $R$ --- область целостности.
+
+    \begin{definition}
+        ``$a$ \emph{делит} $b$'' или же $a \mid b$ значит, что $\exists c \in R: b = ac$.
+    \end{definition}
+
+    \begin{statement}
+        Отношение ``$\mid$'' рефлексивно и транзитивно.
+    \end{statement}
+
+    \begin{definition}
+        $a$ и $b$ \emph{ассоциированы}, если $a \mid b$ и $b \mid a$. Обозначение: $a \sim b$.
+    \end{definition}
+
+    \begin{statement}
+        ``$\sim$'' --- отношение эквивалентности.
+    \end{statement}
+
+    \begin{statement}
+        $a \sim b \Leftrightarrow \exists \text{ обратимый } \varepsilon: a = \varepsilon b$.
+    \end{statement}
+
+    \begin{proof}
+        Пусть $a \sim b$. Тогда $\exists c, d: ac = b, bd = a$. Тогда $a(1-cd) = a - acd = a - bd = a - a = 0$, значит либо $a = 0$, либо $cd = 1$. В первом случае $b = ac = 0c = 0$, значит можно просто взять $\varepsilon = 1$. Во втором случае, $cd = 1$, значит $c$ и $d$ обратимы, тогда можно взять $\varepsilon = d$. следствие в одну сторону доказано.
+
+        Пусть $a = \varepsilon b$, где $\varepsilon$ обратим. Значит:
+        \begin{enumerate}
+            \item $b\mid a$;
+            \item $\exists \delta: \delta\varepsilon = 1$, значит $\delta a = \delta \varepsilon b = b$, значит $a \mid b$.
+        \end{enumerate}
+        Таким образом $a \sim b$.
+    \end{proof}
+
+    \begin{example}
+        В $\ZZ{}[i]$ есть только следующие обратимые элементы: $1$, $-1$, $i$ и $-i$. Поэтому все ассоциативные элементы получаются друг из друга домножением на один из $1$, $-1$, $i$, $-i$ и вместе образуют квадрат (на \href{https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BC%D0%BF%D0%BB%D0%B5%D0%BA%D1%81%D0%BD%D0%B0%D1%8F_%D0%BF%D0%BB%D0%BE%D1%81%D0%BA%D0%BE%D1%81%D1%82%D1%8C}{комплексной плоскоти}) с центром в нуле.
+    \end{example}
+
+    \begin{definition}
+        \emph{Главным идеалом} элемента $a$ называется множество $M := \{ak \mid k \in R\} = \{b \mid a \text{ делит } b\}$. Обозначение: $(a)$ или $aR$.
+    \end{definition}
+
+    \begin{statement}
+        $a \mid b \Leftrightarrow b \in aR \Leftrightarrow bR \subseteq aR$. 
+    \end{statement}
+
+    \begin{statement}
+        $a \sim b \Leftrightarrow aR = bR$.
+    \end{statement}
+
+    \begin{statement}$\forall a \in R$
+        \begin{enumerate}
+            \item $0 \in aR$
+            \item $x \in aR \Rightarrow -x \in aR$
+            \item $x, y \in aR \Rightarrow x + y \in aR$
+            \item $x \in aR, r \in R \Rightarrow xr \in aR$
+        \end{enumerate}
+    \end{statement}
+
+    \begin{remark}
+        То же верно и в некоммутативном $R$.
+    \end{remark}
+
+    \begin{example}
+        В поле есть только $0R$ и $1R$.
+    \end{example}
+
+    \begin{example}
+        В $\ZZ$ есть только $m\ZZ$ для каждого $m \in \NN \cup \{0\}$.
+    \end{example}
+
+    \begin{definition}
+        Пусть $P$ --- кольцо. $I\subseteq P$ называется \emph{правым идеалом}, если
+        \begin{enumerate}
+            \item $0 \in I$;
+            \item $a, b \in I \Rightarrow a + b \in I$;
+            \item $a \in I \Rightarrow -a \in I$;
+            \item $a \in I, r \in R \Rightarrow ar \in I$.
+        \end{enumerate}
+        $I$ называется \emph{левым идеалом}, если аксиому 4 заменить на ``$a \in I, r \in R \Rightarrow ra \in I$''. Также $I$ называется \emph{двухсторонним идеалом}, если является левым и правым идеалом, и обозначается как $I \triangleleft P$.
+    \end{definition}
+
+    \begin{remark}
+        В коммутативном кольце (и в частности в области целостности) все идеалы двухсторонние.
+    \end{remark}
+
+    \begin{example}
+        Пусть дано кольцо $P$ и фиксированы $a_1, \dots, a_n \in P$. Тогда $a_1 P + \dots + a_n P = \{a_1 x_1 + \dots + a_n x_n \mid x_1, \dots, x_n \in P\}$ есть правый (конечнопорождённый) идеал, порождённый элементами $a_1, \dots, a_n$. Аналогично $P a_1 + \dots + P a_n = \{x_1 a_1 + \dots + x_n a_n \mid x_1, \dots, x_n \in P\}$ --- левый (конечнопорождённый) идеал, порождённый элементами $a_1, \dots, a_n$.
+    \end{example}
+
+    \begin{definition}
+        \emph{Область главных идеалов (ОГИ)} --- область целостности, где все идеалы главные.
+    \end{definition}
+
+    \begin{definition}
+        Область целостности $R$ называется \emph{Евклидовой}, если существует функция (``Евклидова норма'') $N: R\setminus\{0\} \to \NN$, что
+        \[\forall a, b \neq 0\; \exists q, r: a = bq + r \wedge (r = 0 \vee N(r) < N(b))\]
+    \end{definition}
+
+    \begin{theorem}
+        Евклидово кольцо --- область главных идеалов.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть наше кольцо --- $R$. Если $I = \{0\}$, то $I = 0R$. Иначе возьмём $d \in I \setminus \{0\}$ с минимальной Евклидовой нормой. Тогда $\forall a \in I$ либо $d \mid a$, либо $\exists q, r: a = dq - r$. Во втором случае $dq \in I$, $r = a - dq \in I$, но $N(r) < N(d)$ --- противоречие. Значит $I = dR$.
+    \end{proof}
+
+    \begin{definition}
+        \emph{Общим делителем} $a$ и $b$ называется $c$, что $c \mid a$ и $c \mid b$. \emph{Наибольшим общим делителем (НОД)} $a$ и $b$ называется общий делитель $a$ и $b$, делящийся на все другие общие делители $a$ и $b$.
+    \end{definition}
+
+    \begin{theorem}[алгоритм Евклида]
+        В Евклидовом кольце у любых двух чисел есть НОД.
+    \end{theorem}
+
+    \begin{proof}
+        Заметим, что $(a, b) = (a + bk, b)$.
+        
+        Пусть даны $a$ и $b$. Предположим, что $\varphi(a) \geqslant \varphi(b)$, иначе поменяем их местами. Тем самым по аксиоме Евклида найдутся $q$ и $r$, что $a = bq + r$, а $\varphi(r) < \varphi(b) \leqslant \varphi(a)$, значит $\varphi(a) + \varphi(b) > \varphi(r) + \varphi(b)$. При этом $(a, b) = (r, b)$. Значит бесконечно $\varphi(a) + \varphi(b)$ не может бесконечного уменьшаться, так как натурально, значит за конечное кол-во переходов мы получим, что одно из чисел делит другое, а значит НОД стал определён.
+    \end{proof}
+
+    \begin{theorem}[линейное представление НОД]
+        $\forall a, b \in R\; \exists p, q \in R: ap + bq = (a, b)$.
+    \end{theorem}
+
+    \begin{proof}
+        Докажем по индукции по $N(a) + N(b)$.
+
+        \textbf{База.} $N(a) + N(b)=0$. Значит $N(a)=N(b)=0$, а тогда $a$ и $b$ не могут не делиться друг на друга, значит НОД --- любой из них. А в этом случае разложение очевидно.
+        
+        \textbf{Шаг.} WLOG $N(a) \geqslant N(b)$. Если $b \mid a$, то $b$ --- НОД, а тогда разложение очевидно. Иначе по аксиоме Евклида $\exists q, r: a = bq + r$. Заметим, что $(a, b) = (b, r) = d$, но $N(a) + N(b) \geqslant N(b) + N(b) > N(b) + N(r)$. Таким образом по предположению индукции для $b$ и $r$ получаем, что $d = bk + rl$ для некоторых $k$ и $l$, значит $d = bk + (a - bq)l = al + b(k - ql)$.
+    \end{proof}
+
+    \begin{definition}
+        Элемент $p$ области целостности $R$ называется \emph{неприводимым}, если $\forall d \mid p$ либо $d \sim 1$, либо $d \sim p$.
+    \end{definition}
+    
+    \begin{definition}
+        Элемент $p$ области целостности $R$ называется \emph{простым}, если из условия $p \mid ab$ следует, что $p \mid a$ или $p \mid b$.
+    \end{definition}
+
+    \begin{statement}
+        Любое простое неприводимо.
+    \end{statement}
+
+    \begin{proof}
+        Предположим противное, т.е. некоторое простое $p$ представляется в виде произведения неделителей единицы $a$ и $b$. Тогда WLOG $p \mid a$. Значит $p\sim a$, а $b \sim 1$ --- противоречие.
+    \end{proof}
+
+    \begin{statement}
+        В области главных идеалов неприводимые просты.
+    \end{statement}
+
+    \begin{proof}
+        Пусть неприводимое $p$ делит $ab$. Пусть тогда $pR + aR = dR$. В таком случае $d \sim p$, значит либо $d \sim p$, либо $d \sim 1$. Если $d \sim p$, то $p \mid a$. Иначе $px + ay = 1$, значит $pxb + aby = b$. Но $p \mid pxb$ и $p \mid aby$, значит $p \mid b$. Поскольку рассуждение не зависит от $a$ и $b$, то $p$ просто.  
+    \end{proof}
+
+    \begin{definition}
+        Область целостности $R$ \emph{удовлетворяет условию обрыва возрастающих цепей главных идеалов (APCC)}, если не существует последовательности $d_0 R \subsetneq d_1 R \subsetneq \dots$. Такое кольцо область целостности называют нётеровой.
+    \end{definition}
+
+    \begin{theorem}
+        ОГИ нётерова.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть наша область --- $R$. Предположим противное, т.е. существует последовательность $\{a_n\}_{n=0}^\infty$, что $a_{n+1}$ --- собственный делитель $a_n$ (т.е. $a_{n+1} \mid a_n \wedge a_n \nsim a_{n+1}$). Тогда $a_0 R \subsetneq a_1 R \subsetneq a_2 R \subsetneq \dots$. Тогда $\exists x: xR = \bigcup_{n=0}^\infty a_n R$, так как  это объединение --- идеал. Но тогда $x \in a_j R$ для некоторого $j$, а значит $x R \subseteq a_j R$, а тогда $a_{j+1} R \subseteq a_j R$ --- противоречие.
+    \end{proof}
+
+    \begin{definition}
+        Область целостности называется \emph{факториальной областью}, если в нём все неприводимые просты и оно нётерово.
+    \end{definition}
+
+    \begin{example}
+        ОГИ факториальна.
+    \end{example}
+
+    \begin{theorem}[основная теорема арифметики]
+        Пусть $R$ факториально. Тогда любое число представимо единственным образом в виде произведения простых с точностью до перестановки множителей и ассоциированности.
+    \end{theorem}
+
+    \begin{proof}
+        \begin{thlemma}
+            У каждого числа есть неприводимый делитель.
+        \end{thlemma}
+
+        \begin{proof}
+            Пусть это не так. Тогда есть подъём идеалов: $a_0 = a_1 b_1$, $a_1 = a_2 b_2$ и т.д., значит $a_0 R \subsetneq a_1 R \subsetneq a_2 R \subsetneq \dots$ --- противоречие.
+        \end{proof}
+
+        \begin{thlemma}
+            Каждое число представимо в виде произведения простых.
+        \end{thlemma}
+
+        \begin{proof}
+            Пусть это не так. Тогда есть подъём идеалов: $a_0 = p_1 a_1$, где $p_1$ прост, $a_1 = p_2 a_2$, где $p_2$ прост, и т.д., значит $a_0 R \subsetneq a_1 R \subsetneq a_2 R \subsetneq \dots$ --- противоречие.
+        \end{proof}
+
+        Это доказывает существование разложения.
+
+        \begin{thlemma}
+            Если $p_1 \cdot \dots p_n = q_1 \cdot \dots \cdot q_m$ для простых $p_1$, \dots, $p_n$, $q_1$, \dots, $q_m$, то эти два набора совпадают с точностью до перестановки и ассоциированности.
+        \end{thlemma}
+
+        \begin{proof}
+            Докажем индукцией по $n$.
+
+            \textbf{База:} Для $n=0$ утверждение очевидно, так как тогда $1 = q_1 \cdot \dots \cdot q_m$, значит $m=0$.
+
+            \textbf{Шаг:} Несложно видеть, что $p_n \mid q_1 \cdot \dots \cdot q_m$, значит $p_n \mid q_i$ для некоторого $i$, значит $p_n \sim q_i$. Переставим $q_k$, что $q'_m = q_i$. Значит $p_1 \cdot \dots \cdot p_{n-1} = q'_1 \cdot \dots \cdot q'_{m-1}$. По предположению индукции эти два набора совпадают с точностью до перестановки и ассоциированности, значит таковы и начальные наборы.
+        \end{proof}
+
+        Это доказывает единственность разложения.
+    \end{proof}
+
+    \section{Идеалы и морфизмы}
+
+    \begin{theorem}
+        Пусть даны $I \triangleleft R$ и $a \sim b \Leftrightarrow a-b \in I$. Тогда $\sim$ --- отношение эквивалентности, а $R/I:=R/\sim$ --- кольцо. 
+    \end{theorem}
+
+    \begin{proof}
+        Проверим, что $\sim$ --- отношение эквивалентности:
+        \begin{itemize}
+            \item $a - a = 0 \in I$, значит $a \sim a$;
+            \item $a\sim b$, значит $a - b \in I$, значит $b-a = -(a - b) \in I$, значит $a \sim a$;
+            \item $a\sim b$, $b\sim c$, значит $a-b \in I$, $b - c \in I$, значит $a-c = (a-b) + (b-c) \in I$, значит $a \sim c$.
+        \end{itemize}
+
+        Определим на $R/I$ операции сложения и умножения, нуля, противоположного, единицы и обратного:
+        \begin{itemize}
+            \item $[a] + [b] := [a + b]$;
+            \item $[a] \cdot [b] := [a \cdot b]$;
+            \item $0 := [0] = I$;
+            \item $-[a] := [-a]$;
+            \item $1 := [1]$;
+            \item $[a]^{-1} := [a^{-1}]$.
+        \end{itemize}
+        Покажем, что $R/I$ --- кольцо:
+        \begin{description}
+            \item[$\A_1$)] $\forall a, b, c \in R: ([a] + [b]) + [c] = [a + b] + [c] = [(a + b) + c] = [a + (b + c)] = [a] + [b + c] = [a] + ([b] + [c])$
+            \item[$\A_2$)] $\forall a \in R: [a] + [0] = [a + 0] = a = [0 + a] = [0] + [a]$
+            \item[$\A_3$)] $\forall a, b \in R: [a] + [b] = [a + b] = [b + a] = [b] + [a]$
+            \item[$\A_4$)] $\forall a \in R: [a] + -[a] = [a] + [-a] = [a + (-a)] = [0] = [(-a) + a] = [-a] + [a] = -[a] + [a]$
+            \item[$\D$)] $\forall a, b, k \in R: [k]([a] + [b]) = [k][a + b] = [k(a + b)] = [ka + kb] = [ka] + [kb] = [k][a] + [k][b]$, $([a] + [b])[k] = [a + b][k] = [(a + b)k] = [ak + bk] = [ak] + [bk] = [a][k] + [b][k]$
+            \item[$\M_1$)] $\forall a, b, c \in R: ([a] \cdot [b]) \cdot [c] = [a \cdot b] \cdot [c] = [(a \cdot b) \cdot c] = [a \cdot (b \cdot c)] = [a] \cdot [b \cdot c] = [a] \cdot ([b] \cdot [c])$
+            \item[$\M_2$)] $\forall a \in R: [a] \cdot [1] = [a \cdot 1] = [a] = [1 \cdot a] = [1] \cdot [a]$
+            \item[$\M_3$)] $\forall a, b \in R: [a] \cdot [b] = [a \cdot b] = [b \cdot a] = [b] \cdot [a]$
+            \item[$\M_4$)] $\forall a \in R \setminus \{0\}: [a] \cdot [a]^{-1} = [a] \cdot [a^{-1}] = [a \cdot a^{-1}] = [1] = [a^{-1} \cdot a] = [a^{-1}] \cdot [a] = [a]^{-1} \cdot [a]$
+        \end{description}
+    \end{proof}
+
+    \begin{remark}
+        Доказательство для классов эквивалентности каждой аксиомы основывалось только на соответствующей аксиоме и определениях ранее.
+    \end{remark}
+
+    \begin{definition}
+        \emph{Гомоморфизм} --- такое отображение $\varphi: R \to S$ --- это отображение, сохраняющее операции:
+        \begin{itemize}
+            \item $\varphi(a + b) = \varphi(a) + \varphi(b)$;
+            \item $\varphi(a \cdot b) = \varphi(a) \cdot \varphi(b)$;
+            \item $\varphi(0) = 0$;
+            \item $\varphi(-a) = -\varphi(a)$.
+        \end{itemize}
+
+        \emph{Гомоморфизм кольца с 1} --- гомоморфизм, что $\varphi(1) = 1$.
+    \end{definition}
+
+    \begin{statement}
+        Композиция гомоморфизмов --- гомоморфизм.
+    \end{statement}
+
+    \begin{definition}
+            Пусть $f: X \to Y$. Несложно видеть, что $f$ раскладывается в композицию сюръекции $f: X \to f(X)$ и инъекции $id: f(X) \to Y$. Тогда $\Img(f) = \{f(x) \mid x \in X\}$ --- \emph{множество значений} $f$, а классы значений $X$, переходящих в один $y\in Y$ суть \emph{слои} --- $f^{-1}(y) = \{x \mid f(x) = y\}$ для некоторого $y$.
+        \[
+            \xymatrix{
+                X \ar@{->>}[rd]^f \ar[rr]^f && Y\\
+                & f(X) = \Img(f) \ar@{^{(}->}[ur]^{id}
+            }
+        \]
+    \end{definition}
+
+    \begin{definition}
+        Пусть $\varphi: R \to S$ --- гомоморфизм. Тогда \emph{ядром} $\varphi$ называется $\Ker(\varphi) := \{r \in R \mid \varphi(r) = 0\}$.
+    \end{definition}
+
+    \begin{statement}
+        Ядро гомоморфизма --- двусторонний идеал.
+    \end{statement}
+
+    \begin{definition}
+        $\varphi: S \to R$ --- \emph{изоморфизм}, если это биективный гомоморфизм.
+    \end{definition}
+
+    \begin{definition}
+        Два кольца называются изоморфными, если между ними есть изоморфизм. Обозначение: $R \cong S$.
+    \end{definition}
+
+    \begin{statement}
+        Пусть $R \cong S$. Тогда
+        \begin{itemize}
+            \item Если $R$ коммутативно, то и $S$ коммутативно.
+            \item Если $R$ --- область целостности, то и $S$ --- область целостности.
+            \item Если $R$ --- ОГИ, то и $S$ --- ОГИ.
+        \end{itemize}
+    \end{statement}
+
+    \begin{statement}\ 
+        \begin{enumerate}
+            \item $R \cong R$.
+            \item $R \cong S \Leftrightarrow S \cong R$.
+            \item $R \cong S \cong T \Rightarrow R \cong T$.
+        \end{enumerate}
+    \end{statement}
+
+    \begin{theorem}[о гомоморфизме]
+        Пусть $\varphi: R \to S$ --- гомоморфизм. (Вспомним, что $\Ker(\varphi) \triangleleft R$, а $\Img(\varphi) = \varphi(R)$.) Тогда $R/\Ker(\varphi) \cong \Img(\varphi)$, где изоморфизм переводит $[a] \mapsto \varphi(a)$.
+        \[
+            \xymatrix{
+                R \ar@{->>}[d]_{r \mapsto [r]} \ar[rr]^\varphi && S\\
+                R/\Ker(\varphi) \ar[rr]^-\sim_-{[r] \mapsto \varphi(r)} && \Img(\varphi) \ar@{^{(}->}[u]_{id}
+            }
+        \]
+    \end{theorem}
+
+    \begin{proof}\ 
+        \begin{enumerate}
+            \item Корректность. $[a] = [a'] \Leftrightarrow a - a' \in \Ker(\varphi) \Leftrightarrow \varphi(a - a') = 0 \Leftrightarrow \varphi(a) = \varphi(a')$.
+                \begin{remark}
+                    Классы эквивалентности по $\Ker(\varphi)$ как раз слои $\varphi$.
+                \end{remark}
+            \item Заметим, что работают следующие операции:
+                \begin{itemize}
+                    \item $[a] + [b] = [a + b] \mapsto \varphi(a) + \varphi(b) = \varphi(a + b)$;
+                    \item $[a] \cdot [b] = [a \cdot b] \mapsto \varphi(a) \cdot \varphi(b) = \varphi(a \cdot b)$. 
+                \end{itemize}
+            \item Сюръективность следует из того, что $\varphi(a) = \varphi(b) \Leftrightarrow [a] = [b]$.
+            \item Инъективность следует из того, что каждый элемент в $\Img(\varphi)$ имеет прообраз.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{theorem}[китайская теорема об остатках (КТО) для двух чисел]
+        Пусть $m$ и $n$ взаимно просты. Тогда $\ZZ/mn\ZZ \cong \ZZ/m\ZZ \times \ZZ/n\ZZ$.
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим $\varphi: \ZZ/mn\ZZ \to \ZZ/m\ZZ \times \ZZ/n\ZZ, [a]_{mn} \mapsto ([a]_m; [a]_n)$. Несложно заметить, что ядро $\varphi$ тривиально, поэтому $\ZZ/mn\ZZ \cong \ZZ/mn\ZZ/\Ker(\varphi) \cong \Img(\varphi)$. Но в последнем элементов не менее $mn$, так как $\Img(\varphi) \cong \ZZ/mn\ZZ$, но и не более, так как $|\ZZ/m\ZZ \times \ZZ/n\ZZ| = mn$, поэтому $\Img(\varphi) = \ZZ/m\ZZ \times \ZZ/n\ZZ$, поэтому $\ZZ/mn\ZZ \cong \ZZ/m\ZZ \times \ZZ/n\ZZ$.
+    \end{proof}
+
+    \begin{theorem}[КТО]
+        Пусть $m_1, \dots, m_k$ --- попарно взаимно простые числа. Тогда
+        \[\ZZ/m_1\dots m_k \cong \ZZ/m_1\ZZ \times \dots \times \ZZ/m_k\ZZ\]
+    \end{theorem}
+
+    \begin{proof}
+        По индукции по $k$ с помощью КТО для двух чисел.
+    \end{proof}
+
+    \begin{theorem}[Универсальное свойтсво фактор-кольца]
+        Пусть есть $I \triangleleft R$ и гомоморфизмы $\pi: R \to R/I$ --- нативный гомоморфизм, и $\varphi: R \to S$, что $\pi(I) = \{0\}$. Тогда существует и единственен гомоморфизм $\varphi': R/I \to S$, что $\varphi' \circ \pi = \varphi$.
+        \[
+            \xymatrix{
+                R \ar@{->>}[rd]_{\pi} \ar[rr]^\varphi && S\\
+                & R/I \ar[ur]_{\varphi'}
+            }
+        \]
+    \end{theorem}
+
+    \begin{proof}
+        $\varphi'([a]) = (\varphi' \circ \pi)(a) = \varphi(a)$ --- это означает единственность; так функцию и определим. Осталось показать корректность.
+
+        Несложно заметить, что если $[a] = [b]$, то $a - b \in I$, значит $\varphi(a - b) = 0$, значит $\varphi(a) = \varphi(b)$. Теперь проверим операции:
+        \begin{itemize}
+            \item $\varphi'([a] + [b]) = \varphi'([a + b]) = \varphi(a + b) = \varphi(a) + \varphi(b) = \varphi'([a]) + \varphi'([b])$.
+            \item $\varphi'([a] \cdot [b]) = \varphi'([a \cdot b]) = \varphi(a \cdot b) = \varphi(a) \cdot \varphi(b) = \varphi'([a]) \cdot \varphi'([b])$
+        \end{itemize}
+    \end{proof}
+
+    \begin{definition}
+        Пусть $R$ --- область целостности. Тогда рассмотрим $Q = R \times (R \setminus \{0\})$ и отношение $\sim$ на $Q$, что $(a; b) \sim (c; d) \Leftrightarrow ad = bc$. Несложно видеть, что $\sim$ --- отношение эквивалентности. Тогда \emph{полем частных} области целостности $R$ называется $\Frac(R) = Q/\sim$, где операции:
+        \begin{itemize}
+            \item $[(a; b)] + [(c; d)] := [(ad + bc; bd)]$;
+            \item $[(a; b)] \cdot [(c; d)] := [(ac; bd)]$;
+            \item $0 := [(0; 1)]$;
+            \item $- [(a; b)] := [(-a; b)]$;
+            \item $1 := [(1; 1)]$;
+            \item $[(a; b)]^{-1} = [(b; a)]$.
+        \end{itemize}
+        Несложно видеть, что все операции корректны, а поле частных --- поле.
+    \end{definition}
+
+    \begin{remark}
+        Есть нативный инъективный гомоморфизм из $R$ в $\Frac(R)$:
+        \[\varphi: R \to \Frac(R), r \mapsto [(r; 1)]\]
+    \end{remark}
+
+    \begin{theorem}[Уникальное свойтсво поля частных]
+        Пусть $R$ --- область целостности, $F$ --- поле, $\varphi: R \to F$ --- инъективный гомоморфизм, сохраняющий $1$, $\pi: R \to \Frac(R)$ --- нативный гомоморфизм. Тогда существует единственный гомоморфизм $\varphi': \Frac(R) \to F$, что $\varphi' \circ \pi = \varphi$.
+        \[
+            \xymatrix{
+                R \ar@{^{(}->}[rd]_{\pi} \ar@{^{(}->}[rr]^\varphi && F\\
+                & \Frac(R) \ar[ur]_{\varphi'}
+            }
+        \]
+    \end{theorem}
+
+    \begin{remark}\label{field_homomorphism_remark}
+        Если $\varphi: E \to F$ --- гомоморфизм полей, сохраняющий $1$, то он инъективен. Действительно, $\Ker(\varphi)$ --- идеал, значит ${0}$ или $E$, так как $E$ поле, но случай $E$ не подходит, так как не сохраняется $0$, значит $\Ker(\varphi) = {0}$, значит $\varphi$ инъективно.
+    \end{remark}
+
+    \begin{proof}
+        \begin{thlemma}
+            $\varphi'(1/b) = 1/\varphi'(b)$
+        \end{thlemma}
+
+        \begin{proof}
+            По замечанию \ref{field_homomorphism_remark} $\varphi'$ --- инъективен, но $\varphi'(0) = 0$, а тогда для всякого $a \neq 0$ верно, что $\varphi'(a) \neq 0$, значит $\varphi'(a) \cdot \varphi'(a^{-1}) = \varphi'(1) = 1$, значит $\varphi'(a)^{-1} = \varphi'(a^{-1})$.
+        \end{proof}
+
+        \begin{thlemma}
+            $\varphi'(a/b) = \varphi'(a)/\varphi'(b)$.
+        \end{thlemma}
+
+        \begin{proof}
+            $\varphi'(a/b) = \varphi'(a) \cdot \varphi'(b^{-1}) = \varphi'(a) \cdot \varphi'(b)^{-1} = \varphi'(a)/\varphi'(b)$.
+        \end{proof}
+
+        Заметим, что $\varphi'(a) = \varphi'(\pi(a)) = \varphi(a)$, поэтому $\varphi'(a/b) = \varphi(a)/\varphi(b)$ --- это означает единственность $\varphi'$.
+
+        Теперь рассмотрим соответствующую $\varphi': a/b \mapsto \varphi(a)/\varphi(b)$. Проверим корректность:
+        \begin{align*}
+            \frac{a}{b} &= \frac{c}{d}&
+            &\Rightarrow&
+            ad &= bc&
+            &\Rightarrow&
+            \varphi(ad) &= \varphi(bc)&
+            &\Rightarrow\\
+            \varphi(a)\varphi(d) &= \varphi(b)\varphi(c)&
+            &\Rightarrow&
+            \frac{\varphi(a)}{\varphi(b)} &= \frac{\varphi(c)}{\varphi(d)}&
+            &\Rightarrow&
+            \varphi'\left(\frac{a}{b}\right) &= \varphi'\left(\frac{c}{d}\right)
+        \end{align*}
+        Теперь проверим согласованность с операциями:
+        \begin{itemize}
+            \item \[\varphi'\left(\frac{a}{b}\cdot \frac{c}{d}\right) = \frac{\varphi(ac)}{\varphi(bd)}=\frac{\varphi(a)}{\varphi(b)}\cdot\frac{\varphi(c)}{\varphi(d)}=\varphi'\left(\frac{a}{b}\right)\cdot\varphi'\left(\frac{c}{d}\right);\]
+            \item
+                \begin{multline*}
+                    \varphi'\left(\frac{a}{b} + \frac{c}{d}\right) = \varphi'\left(\frac{ad + bc}{bd}\right) = \frac{\varphi(ad + bc)}{\varphi(bd)} = \\
+                    \frac{\varphi(a)\varphi(d) + \varphi(b)\varphi(c)}{\varphi(b)\varphi(d)} = \frac{\varphi(a)}{\varphi(b)} + \frac{\varphi(c)}{\varphi(d)} = \varphi'\left(\frac{a}{b}\right) + \varphi'\left(\frac{c}{d}\right)
+                \end{multline*}
+        \end{itemize}
+        
+    \end{proof}
+
+    \section{Многочлены}
+
+    \begin{theorem}
+        Пусть дано кольцо $R$. Рассмотрим множество $S$ финитных бесконечных последовательностей элементов из $R$; т.е. все такие последовательности $(a_n)_{n=0}^\infty$, что всякое $a_n \in R$ и есть такое $N$, что для всякого $n > N$ верно, что $a_n = 0_R$. Также рассмотрим операции сложения и умножения на $S$:
+        \begin{align*}
+            &{+}: S^2 \to S, ((a_n)_{n=0}^\infty, (b_n)_{n=0}^\infty) \mapsto (a_n + b_n)_{n=0}^\infty&
+            &{\cdot}: S^2 \to S, ((a_n)_{n=0}^\infty, (b_n)_{n=0}^\infty) \mapsto \left(\sum_{k=0}^n a_k \cdot b_{n-k}\right)_{n=0}^\infty
+        \end{align*}
+        Тогда
+        \begin{enumerate}
+            \item $S$ является кольцом, где $+$ --- операция сложения, $\cdot$ --- операция умножения, $(0_R)_{n=0}^\infty$ --- нейтральный по сложению элемент.
+            \item $S$ наследует от $R$ аксиомы $\M_1$, $\M_2$ и $\M_3$.
+            \item $R$ изоморфно подкольцу $S$, состоящему из элементов вида $(a, 0, 0 , \dots)$, где $a \in R$.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{definition}
+        Множество $S$ из прошлой теоремы называется \emph{кольцом многочленов над $R$} и обозначается $R[x]$. При этом всякий его элемент $(a_n)_{n=0}^\infty$ обозначается как $a_0 + \cdots + a_n x^n + \cdots = \sum_{n=0}^\infty a_n x^n$.
+    \end{definition}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Важно сказать, что из $\A_1$ следует корректность определения умножения. Проверим аксиомы:
+                \begin{description}
+                    \item[$\A_1$)] $\forall (a_n)_{n=0}^\infty, (b_n)_{n=0}^\infty, (c_n)_{n=0}^\infty \in S:$
+                        \begin{align*}
+                            ((a_n)_{n=0}^\infty + (b_n)_{n=0}^\infty) + (c_n)_{n=0}^\infty
+                            &= (a_n + b_n)_{n=0}^\infty + (c_n)_{n=0}^\infty\\
+                            &= ((a_n + b_n) + c_n)_{n=0}^\infty\\
+                            &= (a_n + (b_n + c_n))_{n=0}^\infty\\
+                            &= (a_n)_{n=0}^\infty + (b_n + c_n)_{n=0}^\infty\\
+                            &= (a_n)_{n=0}^\infty + ((b_n)_{n=0}^\infty + (c_n)_{n=0}^\infty)
+                        \end{align*}
+                    \item[$\A_2$)] $\forall (a_n)_{n=0}^\infty \in R:$
+                        \begin{align*}
+                            (a_n)_{n=0}^\infty + (0)_{n=0}^\infty
+                            &= (a_n + 0)_{n=0}^\infty\\
+                            &= (a_n)_{n=0}^\infty\\
+                            &= (0 + a_n)_{n=0}^\infty\\
+                            &= (0)_{n=0}^\infty + (a_n)_{n=0}^\infty
+                        \end{align*}
+                    \item[$\A_3$)] $\forall (a_n)_{n=0}^\infty, (b_n)_{n=0}^\infty \in R:$
+                        \begin{align*}
+                            (a_n)_{n=0}^\infty + (b_n)_{n=0}^\infty
+                            &= (a_n + b_n)_{n=0}^\infty\\
+                            &= (b_n + a_n)_{n=0}^\infty\\
+                            &= (b_n)_{n=0}^\infty + (a_n)_{n=0}^\infty
+                        \end{align*}
+                    \item[$\A_4$)] $\forall (a_n)_{n=0}^\infty \in R:$
+                        \begin{align*}
+                            (a_n)_{n=0}^\infty + (-a_n)_{n=0}^\infty
+                            &= (a_n + -a_n)_{n=0}^\infty\\
+                            &= (0)_{n=0}^\infty\\
+                            &= (-a_n + a_n)_{n=0}^\infty\\
+                            &= (-a_n)_{n=0}^\infty + (a_n)_{n=0}^\infty
+                        \end{align*}
+                    \item[$\D$)] $\forall (a_n)_{n=0}^\infty, (b_n)_{n=0}^\infty, (k_n)_{n=0}^\infty \in R:$
+                        \begin{align*}
+                            (k_n)_{n=0}^\infty((a_n)_{n=0}^\infty + (b_n)_{n=0}^\infty)
+                            &= (k_n)_{n=0}^\infty \cdot (a_n + b_n)_{n=0}^\infty\\
+                            &= \left(\sum_{t=0}^n k_t(a_{n-t} + b_{n-t})\right)_{n=0}^\infty\\
+                            &= \left(\sum_{t=0}^n k_t \cdot a_{n-t} + \sum_{t=0}^n k_t \cdot b_{n-t}\right)_{n=0}^\infty\\
+                            &= \left(\sum_{t=0}^n k_t \cdot a_{n-t}\right)_{n=0}^\infty + \left(\sum_{t=0}^n k_t \cdot b_{n-t}\right)_{n=0}^\infty\\
+                            &= (k_n)_{n=0}^\infty (a_n)_{n=0}^\infty + (k_n)_{n=0}^\infty (b_n)_{n=0}^\infty
+                        \end{align*}
+                        и
+                        \begin{align*}
+                            ((a_n)_{n=0}^\infty + (b_n)_{n=0}^\infty)(k_n)_{n=0}^\infty
+                            &= (a_n + b_n)_{n=0}^\infty \cdot (k_n)_{n=0}^\infty\\
+                            &= \left(\sum_{t=0}^n (a_{n-t} + b_{n-t})k_t\right)_{n=0}^\infty\\
+                            &= \left(\sum_{t=0}^n a_{n-t} \cdot k_t + \sum_{t=0}^n b_{n-t} \cdot k_t\right)_{n=0}^\infty\\
+                            &= \left(\sum_{t=0}^n a_{n-t} \cdot k_t\right)_{n=0}^\infty + \left(\sum_{t=0}^n b_{n-t} \cdot k_t\right)_{n=0}^\infty\\
+                            &= (a_n)_{n=0}^\infty (k_n)_{n=0}^\infty + (b_n)_{n=0}^\infty (k_n)_{n=0}^\infty
+                        \end{align*}
+                \end{description}
+            \item Проверим наследственность для каждой аксиомы:
+                \begin{description}
+                    \item[$\M_1$)] $\forall (a_n)_{n=0}^\infty, (b_n)_{n=0}^\infty, (c_n)_{n=0}^\infty \in R:$
+                        \begin{align*}
+                            ((a_n)_{n=0}^\infty \cdot (b_n)_{n=0}^\infty) \cdot (c_n)_{n=0}^\infty
+                            &= \left(\sum_{k=0}^n a_k \cdot b_{n-k}\right)_{n=0}^\infty \cdot (c_n)_{n=0}^\infty\\
+                            &= \left(\sum_{k=0}^n \left(\sum_{l=0}^k a_l \cdot b_{k-l}\right) \cdot c_{n-k}\right)_{n=0}^\infty\\
+                            &= \left(\sum_{\substack{0 \leqslant k\\ l \leqslant 0\\ k+l \leqslant n}} (a_k \cdot b_l) \cdot c_{n-k-l}\right)_{n=0}^\infty\\
+                            &= \left(\sum_{\substack{0 \leqslant k\\ l \leqslant 0\\ k+l \leqslant n}} a_k \cdot (b_l \cdot c_{n-k-l})\right)_{n=0}^\infty\\
+                            &= \left(\sum_{k=0}^n a_{n-k} \cdot \left(\sum_{l=0}^k b_l \cdot c_{k-l}\right)\right)_{n=0}^\infty\\
+                            &= (a_n)_{n=0}^\infty \cdot \left(\sum_{k=0}^n b_k \cdot c_{n-k}\right)_{n=0}^\infty\\
+                            &= (a_n)_{n=0}^\infty \cdot ((b_n)_{n=0}^\infty \cdot (c_n)_{n=0}^\infty)
+                        \end{align*}
+                    \item[$\M_2$)] Обозначим за $1$ в $S$ последовательность $(t_n)_{n=0}^\infty$, где $t_0 = 1$, а все остальные члены равны $0$. Тогда $\forall (a_n)_{n=0}^\infty \in R:$
+                        \begin{align*}
+                            (a_n)_{n=0}^\infty \cdot 1
+                            &= \left(\sum_{k=0}^n a_k \cdot t_{n-k}\right)_{n=0}^\infty\\
+                            &= (a_n)_{n=0}^\infty\\
+                            &= \left(\sum_{k=0}^n t_{n-k} \cdot a_k\right)_{n=0}^\infty\\
+                            &= 1 \cdot (a_n)_{n=0}^\infty
+                        \end{align*}
+                    \item[$\M_3$)] $\forall (a_n)_{n=0}^\infty, (b_n)_{n=0}^\infty \in R:$
+                        \begin{align*}
+                            (a_n)_{n=0}^\infty \cdot (b_n)_{n=0}^\infty
+                            &= \left(\sum_{k=0}^n a_k \cdot b_{n-k}\right)_{n=0}^\infty\\
+                            &= \left(\sum_{k=0}^n b_k \cdot a_{n-k}\right)_{n=0}^\infty\\
+                            &= (b_n)_{n=0}^\infty \cdot (a_n)_{n=0}^\infty
+                        \end{align*}
+                \end{description}
+            \item Рассмотрим отображение $\varphi: R \to S, a \mapsto (a, 0, 0, \dots)$. Тогда
+                \begin{itemize}
+                    \item $\varphi(a) + \varphi(b) = (a + b, 0, \dots) = \varphi(a + b)$
+                    \item $\varphi(a) \cdot \varphi(b) = (ab, 0, \dots) = \varphi(a \cdot b)$
+                    \item $\varphi(0) = (0, 0, \dots) = 0$
+                    \item (в случае $\M_2$) $\varphi(1) = (1, 0, \dots) = 1$
+                \end{itemize}
+                Значит $\Ker(\varphi) = \{0\}$, $R \cong \Img(\phi)$. При этом несложно видеть, что $\Img(\phi)$ и есть множество всех последовательностей вида $(a, 0, 0, \dots)$.
+        \end{enumerate}
+    \end{proof}
+
+    \newpage\null\thispagestyle{empty}\newpage
+    \section{Теория категорий}
+
+    \begin{definition}
+        \emph{Категория} $C$ есть совокупность семейства (не обязательно множества) объектов $\Ob(C)$ и семейства \emph{морфизмов} (также ``стрелки''), что выполнены следующие условия.
+        \begin{enumerate}
+            \item У всякого морфизма $f$ есть прообраз (также ``начало'', ``source'', ``domain''; обозначение: $s(f)$ или $\dom(f)$) и образ (также ``конец'', ``target'', ``codomain''; обозначение: $t(f)$ или $\cod(f)$), являющиеся объектами из рассмотренного семейства. Семейства всех морфизмов из $X$ в $Y$ (т.е. с прообразом $X$ и образом $Y$) обозначается $\Hom(X, Y)$ или $\Mor(X, Y)$.
+            \item На семействе морфизмов введён не полностью определённый бинарный оператор $\circ$ (можно считать, функциональное отношение из $M \times M$ в $M$, где $M$ --- семейство морфизмов), что для всяких $X, Y, Z \in \Ob(C)$ и $f \in \Hom(X, Y)$, $g \in \Mor(Y, Z)$ значение $g \circ f$ определено и лежит в $\Hom(X, Z)$. Данный оператор называется \emph{композицией}, а $g \circ f$ --- композицией $g$ и $f$.
+            \item Операция композиции морфизмов ассоциативна: для всяких $X, Y, Z, T \in \Ob(C)$ и $f \in \Hom(X, Y)$, $g \in \Hom(Y, Z)$, $h \in \Hom(Z, T)$
+                \[(f \circ g) \circ h = f \circ (g \circ h).\]
+            \item Для всякого $X \in \Ob(C)$ есть выделенный морфизм $\id_X \in \Hom(X, X)$ (также $1_X$). Он называется тождественным морфизмом $X$.
+            \item Для всяких $X, Y \in \Ob(C)$ для всякого $f \in \Hom(X, Y)$ верно, что
+                \[f \circ \id_X = f = \id_Y \circ f.\]
+        \end{enumerate}
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item $\Sets$ ($\Ens$):
+                \begin{itemize}
+                    \item $\Ob(\Sets)$ --- все множества,
+                    \item $\Hom(X, Y)$ --- все отображения из $X$ в $Y$,
+                    \item $\circ$ --- обычная композиция отображений,
+                    \item $\id_X$ --- тождественное отображение $X \to X$.
+                \end{itemize}
+            \item $\Setsstar$:
+                \begin{itemize}
+                    \item $\Ob(\Setsstar)$ --- пары $(A, a)$, где $A$ --- любое множество, а $a \in A$,
+                    \item $\Hom((A, a), (B, b))$ --- все отображения из $A$ в $B$, переводящие $a$ в $b$,
+                    \item $\circ$ --- обычная композиция отображений,
+                    \item $\id_A$ --- тождественное отображение $A \to A$.
+                \end{itemize}
+            \item $\Groups$:
+                \begin{itemize}
+                    \item $\Ob(\Groups)$ --- все группы,
+                    \item $\Hom(G, H)$ --- все гомоморфизмы $G \to H$,
+                    \item $\circ$ --- обычная композиция гомоморфизмов,
+                    \item $\id_G$ --- тождественный гомоморфизм $G \to G$.
+                \end{itemize}
+            \item Аналогично описываются категории $\Rings$ колец, $\Comm\Rings$ коммутативных колец (если в случаях $\Rings$ и $\Comm\Rings$ рассматриваются кольца с единицей, то надо требовать, чтобы гомоморфизмы переводили единицу в единицу), $\Vect_F$ векторных пространств над полем $F$, $R-\Mod$ $R$-модулей, и т.д. для всякой алгебраической структуры.
+            \item $\Top$:
+                \begin{itemize}
+                    \item $\Ob(\Top)$ --- все топологические пространства,
+                    \item $\Hom(X, Y)$ --- все непрерывные отображения $X \to Y$,
+                    \item $\circ$ --- обычная композиция отображений,
+                    \item $\id_X$ --- тождественное отображение $X \to X$.
+                \end{itemize}
+            \item $\Topstar$:
+                \begin{itemize}
+                    \item $\Ob(\Topstar)$ --- пары вида $(X, x)$, где $X$ --- топологическое пространство, а $x \in X$,
+                    \item $\Hom((X, x), (Y, y))$ --- все непрерывные отображения $X \to Y$, переводящие $x$ в $y$,
+                    \item $\circ$ --- обычная композиция отображений,
+                    \item $\id_{(X, x)}$ --- тождественное отображение $X \to X$.
+                \end{itemize}
+            \item $\HTop$:
+                \begin{itemize}
+                    \item $\Ob(\HTop)$ --- все ``хорошие'' (компактно порождённые) топологические пространства,
+                    \item $\Hom(X, Y)$ --- все непрерывные отображения по модулю гомотопии,
+                    \item $\circ$ --- обычная композиция отображений,
+                    \item $\id_X$ --- тождественное отображение $X \to X$.
+                \end{itemize}
+            \item $\Ob(C) = \{X\}$. В таком случае мы получаем \emph{моноид} некоторых отображений $X$ на себя: у нас есть множество морфизмов $X$ на себя с операцией композиции (произведение в моноиде), которая ассоциативна и имеет нейтральный элемент (но не обязательно обратима).
+            \item Частичный предпорядок задаёт категорию:
+                \begin{itemize}
+                    \item $\Ob(C) = M$,
+                    \item
+                        $\Hom(x, y) = \begin{cases}
+                            \{\star_{x\to y}\} \text{ если } x \leqslant y,\\
+                            \varnothing \text{ иначе},
+                        \end{cases}$
+                    \item $\star_{y\to z} \circ \star_{x\to y} := \star_{x\to z}$,
+                    \item $\id_x := \star_{x\to x}$.
+                \end{itemize}
+            \item $\Rels$ --- категория отношений:
+                \begin{itemize}
+                    \item $\Ob(\Rels)$ --- все множества;
+                    \item $\Hom(X, Y)$ --- все подмножества $X \times Y$;
+                    \item для всяких $S \in \Hom(X, Y)$ и $R \in \Hom(Y, Z)$
+                        \[R \circ S := \{(x, z) \in X \times Z \mid \exists y \in Y: \qquad (x, y) \in S \wedge (y, z) \in R\};\]
+                    \item $\id_X := \{(x, x)\}_{x \in X}$. 
+                \end{itemize}
+            \item Пустая категория: нет объектов, нет морфизмов.
+            \item Категория с единственным объектом и единственным тождественным морфизмом на нём.
+            \item Дискретная категория: нет нетождественных морфизмов.
+            \item \emph{Произведение} категорий $C$ и $D$ --- категория $H$, где $\Ob(H) = \Ob(C) \times \Ob(D)$, а для всяких $X = (X_C; X_D), Y = (Y_C, Y_D) \in H$ $\Hom(X, Y) = \Hom(X_C, Y_C) \times \Hom(X_D, Y_D)$. При этом $(f_C, f_D) \circ (g_C, g_D) := (f_C \circ g_C, f_D \circ g_D)$, а $\id_{(X_C, X_D)} := (\id_{X_C}, \id_{X_D})$.
+        \end{enumerate}
+    \end{example}
+
+    \begin{definition}
+        $X, Y \in \Ob(C)$ называются \emph{изоморфными} (и тогда пишут $X \simeq Y$), если есть $f \in \Hom(X, Y)$ и $g \in \Hom(Y, X)$, что
+        \[f \circ g = \id_Y \qquad \text{ и } \qquad g \circ f = \id_X.\]
+    \end{definition}
+
+    \begin{definition}
+        \emph{Подкатегория} $S$ категории $C$ --- категория, семейства объектов и морфизмов которой суть подсемейства объектов и морфизмов категории $C$ соответственно.
+    \end{definition}
+
+    \begin{definition}
+        Объект $A$ категории $C$ называется
+        \begin{itemize}
+            \item \emph{инициальным}, если для всякого $X \in \Ob(C)$ существует единственный морфизм $A \to X$,
+            \item \emph{терминальный}, если для всякого $X \in \Ob(C)$ существует единственный морфизм $X \to A$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{lemma}
+        Инициальный и терминальный объекты не более чем единственны с точностью до изоморфизма (даже, точнее говоря, с точностью до единственного изоморфизма).
+    \end{lemma}
+
+    \begin{proof}
+        Пусть $A$ и $B$ являются инициальными объектами. Тогда $\id_A$ --- единственный морфизм $A \to A$ (по инициальности $A$), а $\id_B$ --- единственный морфизм $B \to B$. Также по инициальности $A$ и $B$ есть морфизмы $f \in \Hom(A, B)$ и $g \in \Hom(B, A)$. При этом $g \circ f$ --- морфизм $A$, т.е. $g \circ f = \id_A$, и по аналогии $f \circ g = \id_B$. Следовательно $A$ и $B$ изоморфны по определению. Значит все инициальные объекты изоморфны.
+        \[
+            \xymatrix{
+                A \ar@(dl,ul)[]^{\id_A} \ar@<0.5ex>[r]^{f} & B \ar@(dr,ur)[]_{\id_B} \ar@<0.5ex>[l]^{g}
+            }
+        \]
+        Причём изоморфизм единственен. Так как если есть два изоморфизма: один образован $f_1$ и $g_1$, а второй --- $f_2$ и $g_2$, то $f_2 \circ g_1$ --- морфизм $A \to A$, а значит равен $\id_A$. Следовательно
+        \[f_2 = f_2 \circ \id_B = f_2 \circ (g_1 \circ f_1) = (f_2 \circ g_1) \circ f_1 = \id_A \circ f_1 = f_1;\]
+        аналогично $g_1 = g_2$.
+
+        Утверждение для терминальных объектов доказывается аналогично.
+    \end{proof}
+
+    \begin{definition}
+        \emph{Противоположная (двойственная) категория} категории $C$ --- категория $C^\op$, где
+        \begin{itemize}
+            \item $\Ob(C^\op) := \Ob(C)$,
+            \item $\Hom_{C^\op}(X, Y) := \Hom_C(X, Y)$,
+            \item $\dom_{C^\op}(f) := \cod_C(f)$, $\cod_{C^\op}(f) := \dom_C(f)$,
+            \item $f \circ_{C^\op} g := g \circ f$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{remark*}
+        Инициальные объекты суть двойственны терминальным объектам в двойственном пространстве.
+        
+        Существование двойственных категорий значит, что всякая теорема без условий, зависимых от инициальности (терминальности) объектов, и верная для инициальных объектов, верна и для терминальных объектов (и наоборот).
+    \end{remark*}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item В $\Sets$ инициальным является только пустое множество, а терминальным --- любое одноэлементное множество.
+            \item В $\Vect_F$ единственным инициальным и единственным терминальным является $0$-мерное пространство.
+            \item В $\Top$ --- тоже самое, что и для $\Sets$.
+            \item В $\Topstar$ инициальные и терминальные объекты --- одноточечные пространства.
+            \item В категории порождённой частичным предпорядком инициальный и терминальный объекты --- наименьший и наибольший элементы соответственно (если существуют).
+        \end{enumerate}
+    \end{example}
+
+    \begin{definition}
+        Пусть фиксированы объекты $X$ и $Y$ категории $C$.
+        \begin{itemize}
+            \item \emph{Произведением} (также ``product'') объектов $X$ и $Y$ называется объект $X \times Y \in \Ob(C)$ и морфизмы $\pr_X \in \Hom(X \times Y, X)$ и $\pr_Y \in \Hom(X \times Y, Y)$, что для всякого объекта $Z \in \Ob(C)$, у которого есть морфизмы $f \in \Hom(Z, X)$ и $g \in \Hom(Z, Y)$, существует единственный морфизм $h \in \Hom(Z, X \times Y)$, что $f = \pr_X \circ h$ и $g = \pr_Y \circ h$.
+                \[
+                    \xymatrix{
+                        Z \ar[rd]_{f} \ar@{-->}[rr]^{\exists!\; h} \ar@/_/[rrrd]^(.7){g} && X \times Y \ar[dl]_(0.4){\pr_X} \ar[dr]^{\pr_Y}\\
+                        & X && Y
+                    }
+                \]
+            \item \emph{Копроизведением} (также ``coproduct'' или ``categorical sum'') объектов $X$ и $Y$ называется объект $X \amalg Y \in \Ob(C)$ (или также обозначается $X \oplus Y$) и морфизмы $i_X \in \Hom(X, X \amalg Y)$ и $i_Y \in \Hom(Y, X \amalg Y)$, что для всякого объекта $Z \in \Ob(C)$, у которого есть морфизмы $f \in \Hom(X, Z)$ и $g \in \Hom(Y, Z)$, существует единственный морфизм $h \in \Hom(X \amalg Y, Z)$, что $f = h \circ i_X$ и $g = h \circ i_Y$.
+                \[
+                    \xymatrix{
+                        Z && X \amalg Y \ar@{-->}[ll]_{\exists!\; h}\\
+                        & X \ar[lu]^{f} \ar[ur]^(0.6){i_X} && Y \ar@/^/[lllu]_(.3){g} \ar[ul]_{i_Y}
+                    }
+                \]
+        \end{itemize}
+    \end{definition}
+
+    \begin{lemma}
+        Для всяких $X, Y \in \Ob(C)$ их произведение и копроизведение не более чем единственны с точностью до изоморфизма.
+    \end{lemma}
+
+    \begin{proof}
+        Пусть $A$ и $B$ суть произведения $X$ и $Y$. Так как $A$ --- произведение $X$ и $Y$, то значит есть единственный морфизм $h \in \Hom(A, A)$, что $\pr_{X, A} = h \circ \pr_{X, A}$ и $\pr_{X, B} = h \circ \pr_{X, B}$; и этот морфизм --- $\id_A$. При этом $f \circ \pr_{X, B} = \pr_{X, A}$, а $g \circ \pr_{X, A} = \pr_{X, B}$, следовательно
+        \[
+            \pr_{X, A} = f \circ \pr_{X, B} = (f \circ g) \circ \pr_{X, A};
+            \qquad \text{ аналогично } \qquad
+            \pr_{Y, A} = (f \circ g) \circ \pr_{Y, A}.
+        \]
+        Следовательно $f \circ g = \id_A$. Аналогично $g \circ f = \id_B$.
+        \[
+            \xymatrix{
+                &A \ar@(dl,ul)[]^{\id_A} \ar[ddl]_{\pr_{X, A}} \ar[ddrrr]_(.66){\pr_{Y, A}} \ar@<0.5ex>[rr]^{f} && B \ar@(dr,ur)[]_{\id_B} \ar[ddlll]^(.66){\pr_{X, B}} \ar[ddr]^{\pr_{Y, B}} \ar@<0.5ex>[ll]^{g}\\\\
+                X &&&& Y
+            }
+        \]
+
+        Утверждение для копроизведений доказывается аналогично.
+    \end{proof}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item В $\Sets$ $X \times Y$ --- декартово произведение (где $\pr_X$ и $\pr_Y$ --- извлечения первого и второго элемента пары соответственно), а $X \amalg Y$ --- дизъюнктное объединение (где $i_X$ и $i_Y$ --- нативные вложения).
+            \item В $\Groups$ $G \times H$ --- декартово произведение групп, а $G \amalg H$ --- свободное произведение.
+            \item В $\Top$ так же, как в $\Sets$.
+            \item В $\Topstar$ $(X, x) \times (Y, y) = (X \times Y, (x, y))$, а $(X, x) \amalg (Y, y)$ --- упражнение.
+            \item В категории, порождённой частичным предпорядком, $x \times y = \min(x, y)$, а $x \amalg y = \max(x, y)$.
+        \end{enumerate}
+    \end{example}
+
+    \begin{definition}[категория стрелки]
+        Пусть даны категория $C$ и объект $A \in \Ob(C)$. Тогда $C/A$ обозначается категория, где
+        \begin{itemize}
+            \item $\Ob(C/A)$ --- пары вида $(X, f)$, где $X \in \Ob(C)$, а $f \in \Hom(X, A)$,
+            \item $\Hom((X, f), (Y, g))$ --- морфизмы $s \in \Hom(X, Y)$, что $f = s \circ g$ (осторожно: одно и тоже $s$ может быть (и будет) использовано как сразу несколько разных морфизмов в $C/A$, так как всё зависит от начала и конца морфизма),
+                \[
+                    \xymatrix{
+                        X \ar[rd]_{f} \ar[rr]^{s} && Y \ar[ld]^{g}\\
+                        & A
+                    }
+                \]
+            \item $s \circ_{C/A} t := s \circ_C t$,
+            \item $\id_{X}$ --- $\id_X$ из $C$.
+        \end{itemize}
+        С другой стороны $C\backslash A$ обозначается категория, где
+        \begin{itemize}
+            \item $\Ob(C\backslash A)$ --- пары вида $(X, f)$, где $X \in \Ob(C)$, а $f \in \Hom(A, X)$,
+            \item $\Hom((X, f), (Y, g))$ --- морфизмы $s \in \Hom(X, Y)$, что $g = f \circ s$ (осторожно: одно и тоже $s$ может быть (и будет) использовано как сразу несколько разных морфизмов в $C/A$, так как всё зависит от начала и конца морфизма),
+                \[
+                    \xymatrix{
+                        X \ar[rr]^{s} && Y\\
+                        & A \ar[lu]^{f} \ar[ru]_{g}
+                    }
+                \]
+            \item $s \circ_{C\backslash A} t := s \circ_C t$,
+            \item $\id_{X}$ --- $\id_X$ из $C$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{example}
+        В $C/A$ терминальным объектом будет $(A, \id_A)$.
+    \end{example}
+
+    \begin{definition}
+        Пусть даны $X, Y, A \in \Ob(C)$ и фиксированы морфизмы $f \in \Hom(X, A)$ и $g \in \Hom(Y, A)$. Тогда если $(X, f) \times (Y, g)$ определено в $\Ob(C)$ и равно $(Z, h)$, то $Z$ называется \emph{расслоёным произведением} $X \times_A Y$.
+        \[
+            \xymatrix{
+                &&& X \ar[rd]^{f}\\
+                T \ar@/^1em/[rrru]^{s} \ar@/_/[rrrd]_{t} \ar@{-->}[rr]|(0.4){\,\exists!\; u\,} && X \times_A Y \ar[ru]^{\pr_X} \ar[rd]_{\pr_Y} && A\\
+                &&& Y \ar[ru]_{g}
+            }
+        \]
+        Таким образом $X \times_A Y$ --- это такой объект в категории $C$ вместе с $\pr_X \in \Hom(X \times_A Y, X)$ и $\pr_Y \in \Hom(X \times_A Y, Y)$, образующие с $f$ и $g$ коммутативный квадрат (так называемый ``декартов квадрат''), что для всякого объекта $T \in \Ob(C)$ и морфизмов $s \in \Hom(T, X)$ и $t \in \Hom(T, Y)$, что $s \circ f = t \circ g$, есть единственный морфизм $u \in \Hom(T, X \times_A Y)$, что $s = u \circ \pr_X$ и $t = u \circ \pr_Y$.
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item В $\Sets$ для множеств $X, Y, A$ и отображений $f: X \to A$ и $g: Y \to A$ расслоёное произведение
+                \[X \times_A Y = \{(x, y) \in X \times Y \mid f(x) = g(y)\}.\]
+            \item В $\Sets^\op$
+                \[X \amalg_A Y = (X \sqcup Y) / {\sim},\]
+                где $\sim$ --- отношение эквивалентности, порождённое соотношениями $f(a) \sim g(a)$.
+                
+                Фактически это работает как склейка в топологии.
+            \item В $\Groups$ $G \times_K H$ --- также как в $\Sets$, а $G \amalg_K H$ --- свободное произведение с объединённой подгруппой.
+        \end{enumerate}
+    \end{example}
+
+    \begin{definition}
+        Пусть даны категории $C$ и $D$. \emph{Функтор} (также ``ковариантный функтор'') $F: C \to D$ --- совокупность ``функции'' $\Ob(C) \to \Ob(D)$ и ``функции'' из класса морфизмов $C$ в класс морфизмов $D$, что
+        \begin{itemize}
+            \item для всякого морфизма $f \in \Hom(X, Y)$, где $X, Y \in \Ob(C)$, $F(f) \in \Hom(F(X), F(Y))$,
+            \item для всяких морфизмов $f$ и $g$ в $C$ $F(f \circ g) = F(f) \circ F(g)$,
+            \item для всякого объекта $X \in \Ob(C)$ $F(\id_X) = \id_{F(X)}$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item Взятие фундаментальной группы топологического порождает функтор $\pi_1: \Top\star \to \Groups$.
+            \item Пусть $M_1$ и $M_2$ --- моноиды как категории. Тогда всякий функтор $M_1 \to M_2$ --- гомоморфизм моноидов.
+            \item Пусть $M$ --- моноид как категория. Тогда всякий функтор $M \to \Vect_K$ выглядит так: единственному элементу категории $M$ сопоставляется некоторое векторное пространство $V$, а функтор отображает сам моноид $M$ в $\End(V)$ (моноид по умножению) как гомоморфизм моноидов.
+            \item Всякий функтор между классами, порождёнными частичными предпорядками, --- монотонная функция.
+            \item Пусть имеется категория $S$, состоящая из одного объекта и одного морфизма, и любая категория $C$. Тогда всякий функтор $S \to C$ --- выбор объекта в $C$, а $C \to S$ --- отобразить всё в данный единственный объект.
+            \item Функтор из категории с двумя объектами и двумя морфизмами в категорию $C$ --- выбор двух (не обязательно различных) объектов в $C$.
+            \item Функтор из категории с двумя объектами и тремя морфизмами в категорию $C$ --- выбор двух (не обязательно различных) объектов в $C$ и морфизма между ними.
+            \item \emph{Забывающий функтор} $U: \Groups \to \Sets$ --- функтор, переводящий группу $G$ в множество $G$, а гомоморфизм $f$ в функцию $f$.
+            \item \emph{Свободный функтор} $F: \Sets \to \Groups$ --- функтор, где $F(X)$ --- свободная группа на образующих $X$, а $F(f)$ --- гомоморфизм, попрождённый соответствием образующих $f$.
+            \item \dots
+            \item \dots
+            \item В случае $\AbGroups$ и $\Groups$, то есть тривиальный \emph{забывающий функтор} $U: \AbGroups \to \Groups$ и функтор $F: \Groups \to \AbGroups, G \to G/[G, G]$.
+            \item Есть тривиальный забывающий функтор $U: \Setsstar \to \Sets, (A, a) \mapsto A, f \mapsto f$. При этом в обратную сторону есть функтор
+                \[
+                    F: \Sets \to \Setsstar, A \mapsto (A \sqcup \{\varnothing\}, \varnothing), f \mapsto f_\star :=
+                    \begin{cases}
+                        f(x),& \text{ если } x \in A,\\
+                        \varnothing,& \text{ если } x = \varnothing.
+                    \end{cases}
+                \]
+            \item Пусть имеется категория $C$ и фиксирован объект $A \in \Ob(C)$. Тогда можно определить функтор $F: C \to \Sets, X \mapsto \Hom(A, X), f \mapsto F(f) := f \circ \varphi$.
+                \[
+                    \xymatrix{
+                        X \ar[rr]^{f} && Y\\
+                        & A \ar[ul]^{\varphi} \ar[ur]_{F(f)(\varphi)}
+                    }
+                \]
+                Функтор $F$ называется \emph{копредставимым}.
+        \end{enumerate}
+    \end{example}
+
+    \begin{lemma}
+        Пусть дан функтор $F: C \to D$. Тогда если объекты $X$ и $Y$ категории $C$ изоморфны, то $F(X)$ и $F(Y)$ изоморфны.
+    \end{lemma}
+
+    \begin{definition}
+        \emph{Контрвариантный функтор} $F: C \to D$ --- это обычный функтор $C^{op} \to D$. Т.е. это совокупность ``функции'' $\Ob(C) \to \Ob(D)$ и ``функции'' из класса морфизмов $C$ в класс морфизмов $D$, что
+        \begin{itemize}
+            \item для всякого морфизма $f \in \Hom(X, Y)$, где $X, Y \in \Ob(C)$, $F(f) \in \Hom(F(Y), F(X))$,
+            \item для всяких морфизмов $f$ и $g$ в $C$ $F(f \circ g) = F(g) \circ F(f)$,
+            \item для всякого объекта $X \in \Ob(C)$ $F(\id_X) = \id_{F(X)}$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item Есть контравариантный функтор $F: \Top \to \CC{-}\Comm\Alg$, где $F(X) = C(X)$ --- множество комплекснозначных непрерывных функций на $X$, а $F(f)(\varphi) := \varphi \circ f$.
+            \item \emph{Представимые функторы}. Пусть дана категория $C$ и фиксирован объект $A \in \Ob(C)$. Тогда есть контравариантный функтор $h_A: C^{op} \to \Sets$, что $h_A(X) = \Hom(X, A)$, а $h_A(f)(\varphi) = \varphi \circ h$. 
+        \end{enumerate}
+    \end{example}
+
+    \begin{definition}
+        Категории $C$ и $D$ называются \emph{изоморфными}, если есть функторы $F: C \to D$ и $G: D \to C$, что $GF = \Id_C$, а $FD = \Id_D$.
+    \end{definition}
+
+    \subsection{Мономорфизмы и эпиморфизмы}
+
+    \begin{definition}
+        Морфизм $f$ называется
+        \begin{itemize}
+            \item \emph{мономорфизмом}, если для всяких морфизмов $g$ и $h$ будет верно $f \circ g = f \circ h \Rightarrow g = h$ (на $f$ можно сокращать слева).
+            \item \emph{расщепимым мономорфизмом}, если есть морфизм $r$, что $r \circ f = \id$ (у $f$ есть обратимый слева). $r$ называется \emph{ретракцией} $f$.
+            \item \emph{эпиморфизмом}, если для всяких морфизмов $g$ и $h$ будет верно $g \circ f = g \circ f \Rightarrow g = h$ (на $f$ можно сокращать справа).
+            \item \emph{расщепимым эпиморфизмом}, если есть морфизм $r$, что $f \circ r = \id$ (у $f$ есть обратимый справа).
+        \end{itemize}
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item В $\Sets$ (расщепимые) мономорфизмы --- инъективные отображения, (расщепимые) эпиморфизмы --- сюръективные отображения.
+            \item В $\Groups$ (расщепимые) мономорфизмы --- инъективные гомоморфизмы, (расщепимые) эпиморфизмы --- сюръективные гомоморфизмы.
+            \item В $\Rings$ так же как в $\Groups$.
+            \item \dots
+        \end{enumerate}
+    \end{example}
+
+    \begin{remark*}
+        Функторы совершенно не всегда сохраняют мономорфизмы и эпиморфизмы.
+    \end{remark*}
+
+    \begin{lemma}
+        Функторы сохраняют расщепимые мономорфизмы и расщепимые эпиморфизмы.
+    \end{lemma}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item Всякий морфизм, являющийся расщепимым мономорфизмом и эпиморфизмом, есть изоморфизм.
+            \item Всякий морфизм, являющийся расщепимым эпиморфизмом и мономорфизмом, есть изоморфизм.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{definition}
+        Пусть имеются морфизмы $F, G: C \to D$. \emph{Естественное преобразование} $\alpha: F \to G$ --- это совокупность морфизмов $\alpha_X \in \Hom(F(X), G(X))$ для всякого $X \in \Ob(C)$, что для всяких $A, B \in \Ob(C)$ и всякого морфизма $f \in \Hom(A, B)$ верно, что $G(f) \circ \alpha_A = \alpha_B \circ F(f)$.
+        \[
+            \xymatrix{
+                F(A) \ar[r]^{\alpha_A} \ar[d]^{F(f)} & G(A) \ar[d]^{G(f)}\\
+                F(B) \ar[r]^{\alpha_B} & G(B)\\
+            }
+        \]
+        Множество всех естественных преобразований $F \to G$ иногда обозначается $\Nat(F, G)$.
+
+        \emph{Композицией (также вертикальной композицией) естественных преобразований} $\alpha: F \to G$ и $\beta: G \to H$, где $F, G, H: C \to D$ называется естественное преобразование $\beta \circ \alpha := \gamma
+        : F \to H$, что $\gamma_X := \beta_X \circ \alpha_X$.
+        \[
+            \xymatrix{
+                F(A) \ar[r]_{\alpha_A} \ar[d]^{F(f)} \ar@/^1em/[rr]^{\gamma_A} & G(A) \ar[r]_{\beta_A} \ar[d]^{G(f)} & H(A) \ar[d]^{H(f)}\\
+                F(B) \ar[r]^{\alpha_B} \ar@/_1em/[rr]_{\gamma_B} & G(B) \ar[r]^{\beta_B} & H(B)\\
+            }
+        \]
+
+        \emph{Горизонтальной композицией естественных преобразований} $\alpha: F \to G$ и $\beta: H \to I$, где $F, G: C \to D$, $H, I: D \to E$ называется естественное преобразование $\beta \cdot \alpha := \gamma: H \circ F \to I \circ G$, где $\gamma_X := \beta_{G(X)} H(\alpha_X) = I(\beta_X) \alpha_{H(X)}$. (В равенстве и определённости композиции можно убедиться, если нарисовать диаграмму всех переходов для каких-нибудь объектов $A$ и $B$ и морфизма $f \in \Hom(A, B)$; но она будет большая: 14 узлов, 29 стрелок и абсолютная коммутативность.)
+        
+        Если $\alpha$ обратим, т.е. $\alpha_X$ обратим и его можно заменить на $\alpha_X^{-1}$, то $\alpha$ называется \emph{естественным изоморфизмом}, а $F$ и $G$ называются \emph{изоморфными}, и пишут $F \simeq G$.
+
+        Категории $C$ и $D$ называются \emph{эквивалентными} (и пишут $C \simeq D$), если есть функторы $F: C \to D$, $G: D \to C$ и естественные изоморфизмы $\alpha: \id_D \to F \circ G$ и $\beta: \id_C \to G \circ F$.
+    \end{definition}
+
+    \begin{remark}
+        Таким образом мы получили категорию $\Funct(C, D)$ функторов $C \to D$, где морфизмами являются естественные преобразования.
+    \end{remark}
+
+    \begin{lemma}
+        Зафиксируем категорию $I$ состоящую из объектов $0$ и $1$ и единственного нетождественного морфизма $0 \to 1$. Тогда для всяких функторов $F, G: C \to D$ задать естественное преобразование $F \to G$ --- всё равно, что задать функционал $H: C \times I \to D$, что $H({\cdot}, 0) = F$ и $H({\cdot}, 1) = G$.
+    \end{lemma}
+
+    \begin{lemma}
+        Горизонтальная и вертикальная композиции коммутируют.
+    \end{lemma}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item \dots
+            \item Назовём \emph{топологической группой} группу заданную на топологическом пространстве $G$, что сама операция группы есть непрерывное отображение $G \times G \to G$. Например, $\RR^+$ и $\RR^\cdot$ есть топологические группы на $\RR$ и $\RR \setminus \{0\}$ соответственно. Будем рассматривать категорию \LocCompAbGroups локально компактных (у всякой точки есть замкнутая окрестность, являющаяся компактной) топологических абелевых групп. Для всякой группы $A$ определим сопряжённую $A^* := \Hom(A, S^1)$ --- группа непрерывных гомоморфизмов $A \to S^1$ с некоторой топологией. Тогда есть тривиальный функтор $F$ и нетривиальный функтор $G$ из рассматриваемой категории в себя, где $G(A) = A^{**}$. При этом естественное преобразование $F \to G$ строится также как для векторных пространств. Таким образом $\LocCompAbGroups \simeq \LocCompAbGroups^*$.
+            \item $\CompAbGroups \simeq \AbGroups$.
+            \item Пусть \CompTop --- категория компактных топологических пространств.
+        \end{enumerate}
+    \end{example}
+
+    \begin{definition}
+        Пусть дан функтор $F: C \to D$. Для всяких $X, Y \in \Ob(C)$ временно обозначим функцию
+        \[F_{X, Y}: \Hom_C(X, Y) \to \Hom_D(F(X), F(Y)), f \mapsto F(f).\]
+        Тогда $f$ называется
+        \begin{itemize}
+            \item \emph{унивалентным} (также ``\emph{faithful}''), если $F_{X, Y}$ инъективен
+            \item \emph{полным} (также ``\emph{full}''), если $F_{X, Y}$ сюръективен
+            \item \emph{вполне унивалентным} (также ``\emph{fully faithful}''), если $F_{X, Y}$ биективен
+        \end{itemize}
+        для всяких $X, Y \in \Ob(C)$.
+
+        Также $F$ называется \emph{существенно сюръективным} (также ``\emph{по существу сюръективный}'', ``\emph{плотный}'', ``\emph{essentially surjective}'' или ``\emph{dense}''), если для всякого $B \in \Ob(D)$ есть $A \in \Ob(C)$, что
+        \[B \simeq F(A).\]
+    \end{definition}
+
+    \begin{theorem}
+        Функтор $F: C \to D$ задаёт эквивалентность категорий тогда и только тогда, когда
+        \begin{itemize}
+            \item $F$ вполне унивалентен,
+            \item $F$ существенно сюръективный.
+        \end{itemize}
+    \end{theorem}
+
+    \begin{proof}
+        \begin{thlemma}
+            Пусть даны объекты $X, Y, S, T \in \Ob(C)$ и изоморфизмы $\alpha \in \Hom(X, Y)$ и $\beta \in \Hom(S, T)$. Тогда есть единственная отображение, и оно является биекцией, $\varphi: \Hom(X, S) \to \Hom(Y, T)$, что следующая диаграмма коммутативна.
+            \[
+                \xymatrix{
+                    X \ar[r]^{\alpha} \ar[d]_{f}& Y \ar[d]^{\varphi(f)}\\
+                    S \ar[r]^{\beta}& T
+                }
+            \]
+        \end{thlemma}
+
+        \begin{proof}
+            Рассмотрим отображение
+            \[\varphi: \Hom(X, S) \to \Hom(Y, T), f \mapsto \beta f \alpha^{-1}.\]
+            Очевидно, он делает диаграмму коммутативной. При чём $\varphi$ обратим: если определить функцию
+            \[\varphi^{-1}: \Hom(Y, T) \to \Hom(X, S), g \mapsto \beta^{-1} g \alpha,\]
+            то сразу будет понятно, что $\varphi^{-1} \circ \varphi = \Id_{\Hom(X, S)}$, а $\varphi \circ \varphi^{-1} = \Id_{\Hom(Y, T)}$. Это показывает существование $\varphi$ и то, что оно биекция.
+
+            Если есть другая функция $\psi$, подходящая тем же требованиям, то мы имеем, что для всякого $f \in \Hom(X, S)$
+            \[
+                \beta f = \psi(f) \alpha
+                \qquad \Longrightarrow \qquad
+                \varphi(f) = \beta f \alpha^{-1} = \psi(f) \alpha \alpha^{-1} = \psi(f),
+            \]
+            что прямо означает $\varphi = \psi$. Это означает единственность $\varphi$.
+        \end{proof}
+
+        Пусть $F$ задаёт эквивалентность категорий. Тогда есть функтор $G: D \to C$ и естественные изоморфизмы $\tau: F \circ G \to \Id_D$, $\sigma: G \circ F \to \Id_C$.
+        \begin{itemize}
+            \item Для всякого $X \in D$ существование $\tau$ означает
+                \[F(G(X)) \simeq X.\]
+                Это означает существенную сюръективность $F$.
+            \item Для всякого $f \in \Hom(X, Y)$ ($X, Y \in \Ob(C)$) существование $\sigma$ означает, что есть изоморфизмы $\alpha \in \Hom(X, G(F(X)))$ и $\beta \in \Hom(Y, G(F(Y)))$, что следующая диаграмма коммутативна.
+                \[
+                    \xymatrix{
+                        X \ar[r]^(0.35){\alpha} \ar[d]_{f}& G(F(X)) \ar[d]^{G(F(f))}\\
+                        Y \ar[r]^(0.35){\beta}& G(F(X))
+                    }
+                \]
+                Следовательно, функция $f \mapsto G(F(f))$ есть биекция $\Hom(X, Y) \to \Hom(G(F(X)), G(F(Y)))$. Аналогично $f \mapsto F(G(f))$ есть биекция. Значит $F$ и $G$ являются и инъекциями и сюръекциями, то бишь биекциями. Это означает вполне унивалентность $F$.
+        \end{itemize}
+
+        Теперь пусть $F$ вполне унивалентен и существенно сюръективности. Из существенной сюръективности следует, что для всякого $X \in \Ob(D)$ есть $Y \in \Ob(C)$, что $X \simeq F(Y)$. Тогда определим искомый $G$ на $\Ob(D)$: каждому $X$ сопоставим только что найденный $Y$. В таком случае $X \simeq F(Y) = F(G(X))$.
+
+        Теперь определим искомый $G$ на $\Hom(A, B)$. Мы знаем, что есть изоморфизмы $\alpha \in \Hom(A, F(G(A)))$ и $\alpha \in \Hom(B, F(G(B)))$. Значит есть единственная отображение (и оно биекция) $\varphi: \Hom(A, B) \to \Hom(F(G(A)), F(G(B)))$, что следующая диаграмма коммутативна.
+        \[
+            \xymatrix{
+                A \ar[r]^(0.35){\alpha} \ar[d]_{f}& F(G(A)) \ar[d]^{\varphi(f)}\\
+                B \ar[r]^(0.35){\beta}& F(G(B))
+            }
+        \]
+        При этом $F_{G(A), G(B)}$ биективно по вполне унивалентности, а мы хотим, чтобы $F_{G(A), G(B)} \circ G_{A, B}$ задавала коммутативность диаграммы выше. Значит
+        \[F_{G(A), G(B)} \circ G_{A, B} = \varphi \qquad \Longrightarrow \qquad G_{A, B} = F_{G(A), G(B)}^{-1} \circ \varphi.\]
+        Несложно проверить, что $G$ функтор (т.е. что ещё $G(\id_A) = \id_{G(A)}$ и $G(fg) = G(f)G(g)$). Таким образом мы построили $G$, что $F \circ G \simeq \Id_D$.
+
+        Теперь покажем, что $G \circ F \simeq \Id_C$. Мы знаем, что для всякого $A \in \Ob(C)$ есть фиксированные (заданные естественным преобразованием $F \circ G \to \Id_D$)
+        \[\alpha_{F(A)} \in \Hom(F(A), F(G(F(A)))) \quad \text{ и } \quad \alpha_{F(A)}^{-1} \in \Hom(F(G(F(A))), F(A)),\]
+        вместе образующие изоморфизм $F(A)$ и $F(G(F(A)))$. По вполне унивалентности $F$ есть
+        \[\beta_A \in \Hom(A, G(F(A))) \text{ и } \beta_A^{-1} \in \Hom(G(F(A)), A),\]
+        что $F(\beta_A) = \alpha_{F(A)}$ и $F(\beta_A^{-1}) = \alpha_{F(A)}^{-1}$. Следовательно,
+        \[
+            F(\beta_A \beta_A^{-1}) = F(\beta_A) F(\beta_A^{-1}) = \alpha_{F(A)} \alpha_{F(A)}^{-1} = \id_{F(G(F(A)))} = F(\id_{G(F(A))}),
+            \quad \Longrightarrow \quad
+            \beta_A \beta_A^{-1} = \id_{G(F(A))};
+        \]
+        аналогично $\beta_A^{-1} \beta_A = \id_A$. Т.е. $\beta_A$ --- изоморфизм $A \to G(F(A))$. Аналогичным образом можно поднять коммутативные диаграммы и понять, что все $\beta_A$ задают естественный изоморфизм $\Id_C \to G \circ F$.
+    \end{proof}
+
+    \begin{definition}
+        Категория называется \emph{скелетной}, если в ней изоморфные объекты совпадают.
+
+        \emph{Скелет категории} $C$ --- такая категория $D$, что
+        \begin{itemize}
+            \item $D$ --- скелетна,
+            \item для всякого объекта $X \in C$ есть объект $Y \in D$, что $X \simeq Y$,
+            \item $\Hom_D(X, Y) = \Hom_C(X, Y)$,
+            \item $f \circ_D g = f \circ_C g$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{remark}
+        Вложение $D$ в $C$ --- вполне унивалентный существенно сюръективный функтор. Таким образом скелет категории эквивалентен самой категории.
+    \end{remark}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item В $\Sets$ в качестве объектов скелета можно взять кардиналы.
+            \item В категории вполне упорядоченных множеств объекты скелета --- ординалы.
+            \item В $\Vect_F$ объекты скелета --- $F^{(I)}$ для всякого кардинала $I$.
+            \item Скелет в предпорядке --- порядок.
+        \end{enumerate}
+    \end{example}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item В каждой категории существует скелет.
+            \item Скелет эквивалентен исходной категории.
+            \item Эквивалентность между скелетными категориями --- изоморфизм.
+            \item Две категории эквивалентны тогда и только тогда, когда их скелеты изоморфны.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item С помощью аксиомы выбора выделить в каждом классе изоморфности представителя и сузить категорию на них.
+            \item Вложение скелета категории в саму категорию вполне унивалентно (действительно, если в скелете есть объекты $X$ и $Y$, то $\Hom(X, Y)$ в скелете был унаследован от изначальной категории, а поэтому обратное вложение задаёт биекцию на $\Hom(X, Y)$) и существенно сюръективно (так как по определению скелета у каждого объекта в изначальной категории у каждого объекта из его класса изоморфности был выделен в скелет какой-то объект в скелет). Значит по доказанной теореме данное вложение задаёт эквивалентность категорий.
+            \item Пусть категории $C$ и $D$ скелетны и эквивалентны, а эквивалентность задаётся функторами $F: C \to D$ и $G: D \to C$ и естественными изоморфизмами $\tau: GF \to \Id_C$ и $\sigma: FG \to \Id_D$. Тогда для всякого объекта $X \in \Ob(C)$ имеем, что $X \simeq G(F(X))$, а значит $GF$ совпадает с $\Id_C$ на $\Ob(C)$. Таким образом $F$ задаёт биекцию: $F$ --- биекция на $\Ob(C)$ и на $\Hom(X, Y)$ для всех $X, Y \in \Ob(C)$. Значит можно рассмотреть обратный функтор $F^{-1}: D \to C$, и тогда $F^{-1}F = \Id_C$, $F F^{-1} = \Id_D$. Т.е. всякий функтор, задающий эквивалентность, задаёт изоморфность.
+            \item По предыдущим пунктам эквивалентность категорий равносильна эквивалентности их скелетов (так как эквивалетность категорий --- отношение эквивалентности), что равносильно изоморфности скелетов.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{definition}
+        Пусть фиксированы категория $C$ и объект $A \in \Ob(C)$. Тогда можно определить ковариантный функтор
+        \begin{align*}
+            \Hom(A, {-}) = h^A: {}
+            &C \to \Sets,\\
+            &\Ob(C) \ni X \mapsto \Hom(A, X),\\
+            &\Hom(X, Y) \ni k \mapsto (\varphi: \Hom(A, X) \to \Hom(A, Y), f \mapsto k \circ f)
+        \end{align*}
+        и контравариантный функтор
+        \begin{align*}
+            \Hom({-}, A) = h_A: {}
+            &C \to \Sets,\\
+            &\Ob(C) \ni X \mapsto \Hom(X, A),\\
+            &\Hom(X, Y) \ni k \mapsto (\varphi: \Hom(X, A) \to \Hom(Y, A), f \mapsto f \circ k).
+        \end{align*}
+    \end{definition}
+
+    \begin{lemma}[Йонеды (Yoneda)]
+        Пусть фиксированы категория $C$ и объект $A \in \Ob(C)$.
+        \begin{enumerate}
+            \item Для всякого ковариантного функтора $F: C \to \Sets$ отображение
+                \[\Lambda: \Nat(\Hom(A, {-}), F) \to F(A), \tau \mapsto \tau_A(\id_A)\]
+                является биекцией.
+            \item Для всякого контравариантного функтора $F: C \to \Sets$ отображение
+                \[\Lambda: \Nat(\Hom({-}, A), F) \to F(A), \tau \mapsto \tau_A(\id_A)\]
+                является биекцией.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Пусть дано какое-то естественное преобразование $\tau: h_A \to F$. Нарисуем его диаграмму для $k \in \Hom(A, X)$. Выделим также в этой диаграмме орбиту $\id_A$ из $\Hom(A, A)$ (слева сверху). Получим следующую диаграмму.
+                \[
+                    \vcenter{
+                        \xymatrix{
+                            \Hom(A, A) \ar[rrr]^{h_A(k): f \mapsto k \circ f} \ar[dd]_{\tau_A}&&& \Hom(A, X) \ar[dd]^{\tau_X}\\
+                            & A \ar[r]^{k} \ar[lu]_{h_A} \ar[ld]^{F}& X \ar[ru]^{h_A} \ar[rd]_{F}&\\
+                            F(A) \ar[rrr]_{F(k)}&&& F(X)
+                        }
+                    }
+                    \qquad
+                    \vcenter{
+                        \xymatrix{
+                            \id_A \ar@{|->}[r]^{h_A(k)} \ar@{|->}[d]_{\tau_A}& k \ar@{|->}[d]^{\tau_X}\\
+                            \tau_A(\id_A) \ar@{|->}[r]_(0.4){F(k)}& F(k)(\tau_A(\id_A))
+                        }
+                    }
+                \]
+                По ней сразу понятно, что $\tau_X(k) = F(k)(\tau_A(\id_A))$. Это значит, что $\tau$ определяется не более чем единственным образом и только по $\tau_A(\id_A)$. Значит $\Lambda$ --- инъекция.
+        
+                Тогда возьмём всякое $a \in F(A)$ и определим $\tau_X(f) := F(f)(a)$. Т.е. попытаемся восстановить $\tau$ для $\tau_A(\id_A) = a$. Совокупность $\{\tau_X\}$ мы восстановили, осталось проверить, что тогда $\tau$ действительно является естественным преобразованием.
+                \[
+                    \vcenter{
+                        \xymatrix{
+                            \Hom(A, X) \ar[rrr]^{h_A(k): f \mapsto k \circ f} \ar[dd]_{\rotatebox{-90}{$\scriptstyle\tau_X: f \mapsto F(f)(a)$}}&&& \Hom(A, Y) \ar[dd]^{\rotatebox{-90}{$\scriptstyle\tau_Y: g \mapsto F(g)(a)$}}\\
+                            & X \ar[r]^{k} \ar[lu]_{h_A} \ar[ld]^{F}& Y \ar[ru]^{h_A} \ar[rd]_{F}&\\
+                            F(A) \ar[rrr]_{F(k)}&&& F(X)
+                        }
+                    }
+                    \qquad
+                    \vcenter{
+                        \xymatrix{
+                            f \ar@{|->}[r]^{h_A(k)} \ar@{|->}[d]_{\tau_A}& k \circ f \ar@{|->}[d]^(0.35){\tau_X}\\
+                            F(f)(a) \ar@{|->}[r]_(0.4){F(k)}& {\begin{gathered}
+                                \vspace{-0.8em}F(k \circ f)(a)\\
+                                \rotatebox{-90}{$\overset{\rotatebox{90}{$\scriptstyle?$}}{=}$}\\
+                                F(k)(F(f)(a))
+                            \end{gathered}}
+                        }
+                    }
+                \]
+                Несложно видеть по нарисованным диаграммам, что вся суть проблемы коммутативности диаграммы заключается в доказательстве того, что $F(k)(F(f)(a)) = F(k \circ f)(a)$, т.е. $F(k) \circ F(f) = F(k \circ f)$. Но это следует из того, что $F$ функтор. Это значит, что $\Lambda$ --- сюръекция.
+        
+                Таким образом $F$ --- биекция с простым описанием.
+            \item Поскольку $A_C = A_{C^\op}$, $\id_{A_C} = \id_{A_{C^\op}}$,
+                \[\Hom_C({-}, A_C) = \Hom_{C^\op}(A_{C^\op}, {-}),\]
+                $F$ --- ковариантный функтор $C^\op \to \Sets$, а
+                \[\Nat(\Hom_C({-}, A_C), F) = \Nat(\Hom_{C^\op}(A_{C^\op}, {-}), F),\]
+                то задача сводится к предыдущей.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{corollary}
+        Выше упомянутые отображения задают биекции
+        \[
+            \Nat(h^A, h^B) \leftrightarrow \Hom(B, A)
+            \qquad \text{ и } \qquad
+            \Nat(h_A, h_B) \leftrightarrow \Hom(A, B).
+        \]
+    \end{corollary}
+
+    \begin{corollary}
+        Есть вполне унивалентный функтор
+        \[C \to \widehat{C} := \Funct(C^\op, \Sets).\]
+    \end{corollary}
+
+    \begin{proof}
+        Рассмотрим функтор
+        \begin{align*}
+            F: {}
+            &C \to \Funct(C^\op, \Sets),\\
+            &\Ob(C) \ni X \mapsto h_X,\\
+            &\Hom(X, Y) \to \Hom(h_X, h_Y) = \Nat(h_X, h_Y), 
+        \end{align*}
+        где отображение морфизмов производится согласно биекции из предыдущего следствия. И поскольку это соответствие --- биекция, данный функтор вполне унивалентен.
+    \end{proof}
+
+    \begin{definition}
+        Функтор $F: C \to \Sets$ называется \emph{представимым}, если изоморфен $\Hom(A, {-})$ для некоторого $A \in \Ob(C)$. Аналогично если $F$ контраваринтный, то представим, если изоморфен $\Hom({-}, A)$.
+    \end{definition}
+
+    \begin{definition}
+        Пусть даны категории $C$ и $D$ и объект $Z \in \Ob(D)$. \emph{Постоянный функтор}
+        \begin{align*}
+            \const_Z: {}
+            &C \to D,\\
+            &\Ob(C) \ni X \mapsto Z,\\
+            &\Hom(X, Y) \ni f \mapsto \id_Z. 
+        \end{align*}
+    \end{definition}
+
+    \begin{definition}
+        Пусть $D$ --- малая категория (т.е. категория, где класс объектов является множеством), а $F$ --- функтор $D \to C$. \emph{Конус над} $F$ --- совокупность $(L, \varphi)$ объекта $L \in \Ob(C)$ и семейства гомоморфизмов $\varphi_X: L \to F(X)$ для каждого $X \in \Ob(D)$, что для всякого морфизма $f: X \to Y$ в $D$ верно $F(f) \circ \varphi_X = \varphi_Y$. \emph{Предел} $F$ --- такой конус $(L, \varphi)$ над $F$, что для всякого конуса $(N, \psi)$ над $F$ существует единственный морфизм $u: N \to L$, что $\varphi_X \circ u = \psi_X$.
+
+        Аналогично определяется коконус и копредел.
+    \end{definition}
+
+    \begin{definition}
+        Пусть $D$ --- малая категория (т.е. категория, где класс объектов является множеством), а $F$ --- функтор $D \to C$. \emph{Предел} $F$ --- объект, задающий представимость функтора $Z \mapsto \Nat(\const_Z, F)$, вместе c фиксированным преобразованием $\const_{\lim F} \to F$.
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item Терминальный и инициальный объекты --- это предел и копредел в случае пустой категории $D$.
+            \item Произведение и копроизведение --- это предел и копредел соответственно для $D$, состоящего только из 2 объектов.
+            \item Расслоёные произведение и копроизведение --- это предел и копредел соответственно диаграмм (функторов, где $D$).
+                \[
+                    \vcenter{
+                        \xymatrix{
+                            \bigcirc \ar[rd] && \bigcirc \ar[ld]\\
+                            & \bigcirc
+                        }
+                    }
+                    \qquad \text{ и } \qquad
+                    \vcenter{
+                        \xymatrix{
+                            \bigcirc && \bigcirc\\
+                            & \bigcirc \ar[lu] \ar[ru]
+                        }
+                    }.
+                \]
+            \item Уравниитель --- это предел диаграммы
+                \[
+                    \xymatrix{
+                        \bigcirc \ar@<0.5 ex>[r] \ar@<-0.5 ex>[r]& \bigcirc
+                    }
+                \]
+            \item Предел диаграммы из только одного объекта --- тот самый объект.
+        \end{enumerate}
+    \end{example}
+
+    \begin{example}
+        Если рассмотреть в качестве $C$ некоторое множество с порядком (т.е. для всякого элемента $i$ в множестве определим элемент $X_i$ в категории и определить стрелку $X_i \to X_j$ тогда и только тогда, когда $i > j$), то конусами и коконусами всякой диаграммы будут верхние и нижние грани соответствующего подмножества соответственно, а пределом и копределом в нём будут точные верхняя и нижняя грани.
+
+        Если же взять категорию коммутативных колец и выделить в ней категорию диаграмму с объектами $X_k := \ZZ/p^k \ZZ$ для каждого $k \in \NN$ и морфизмами-факторизациями $\ZZ/p^n\ZZ \to \ZZ/p^m\ZZ$ для каждых $n \geqslant m$, то пределом будет кольцо $p$-адических чисел.
+        
+        Аналогично, если в коммутативных кольцах выделить диаграмму с объектами $X_k := F[T]/(T^i)$, то получится кольцо степенных рядов $F[[T]]$.
+    \end{example}
+\end{document}

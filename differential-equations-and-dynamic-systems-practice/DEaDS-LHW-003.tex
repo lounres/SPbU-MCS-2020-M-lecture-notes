@@ -1,0 +1,68 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+
+\title{Теоретическое домашнее задание от 17.09\\Дифференциальные уравнения и динамические системы}
+\author{Глеб Минаев @ 204 (20.Б04-мкн)}
+% \date{}
+
+\begin{document}
+    \maketitle
+    
+    \begin{problem}{3}
+        Пусть $\alpha$ --- $\omega$-периодический корень уравнения
+        \[y' = y^2 + p(x)y + q(x).\]
+        Пока забудем про $\omega$-периодичность и определим вид всякого другого решения $\beta$ данного уравнения. Сделаем замену $\tau := \beta - \alpha$. Тогда получим, что
+        \[
+            \tau'
+            = \beta' - \alpha'
+            = \beta^2 + p \beta + q - \alpha^2 - p \alpha - q
+            = (\beta - \alpha)(\beta + \alpha + p)
+            = \tau (\tau + 2\alpha + p)
+            = \tau^2 + (2\alpha + p) \tau.
+        \]
+        Теперь сделаем замену
+        \[v := \frac{1}{\tau}, \qquad \Longrightarrow \qquad \tau = \frac{1}{v}, \quad \tau' = \frac{-v'}{v^2}.\]
+        Тогда получим, что
+        \begin{gather*}
+            \frac{-v'}{v^2} = \frac{1}{v^2} + \frac{2\alpha + p}{v}\\
+            -v' = 1 + (2\alpha + p)v\\
+            v' + (2\alpha + p)v = -1
+        \end{gather*}
+        Теперь обозначим
+        \[\varphi(x) := e^{\int_0^x (2\alpha(t) + p(t))dt}, \quad \varphi' = (2\alpha + p) \varphi.\]
+        Получим, что
+        \begin{gather*}
+            \varphi v' + \varphi (2\alpha + p) v = -\varphi\\
+            \varphi v' + \varphi' v = -\varphi\\
+            (\varphi v)' = -\varphi\\
+            \varphi(x) v(x) = C - \int_0^x \varphi(t) dt\\
+            \tau(x) = \frac{\varphi(x)}{C - \int_0^x \varphi(t) dt}\\
+            \beta(x) = \frac{\varphi(x)}{C - \int_0^x \varphi(t) dt} + \alpha\\
+            \beta(x) = \frac{e^{\int_0^x (2\alpha + p)dt}}{C - \int_0^x e^{\int_0^t (2\alpha + p)ds} dt} + \alpha\\
+        \end{gather*}
+
+        Теперь вспомним, что нам нужна $\omega$-периодичность $\beta$. Вспомним, что это равносильно $\beta(x) = \beta(x + \omega)$ для всех $x$. Тогда имеем следующую последовательность равносильных переходов.
+        \begin{gather*}
+            \frac{e^{\int_0^x (2\alpha + p)dt}}{C - \int_0^x e^{\int_0^t (2\alpha + p)ds} dt}
+            = \frac{e^{\int_0^{x + \omega} (2\alpha + p)dt}}{C - \int_0^{x + \omega} e^{\int_0^t (2\alpha + p)ds} dt}\\
+            \frac{e^{\int_0^x (2\alpha + p)dt}}{C - \int_0^x e^{\int_0^t (2\alpha + p)ds} dt}
+            = \frac{e^{\int_0^\omega (2\alpha + p)dt + \int_\omega^{x + \omega} (2\alpha + p)dt}}{C - \int_0^\omega e^{\int_0^t (2\alpha + p)ds} dt - \int_\omega^{x + \omega} e^{\int_0^t (2\alpha + p)ds} dt}\\
+            \frac{e^{\int_0^x (2\alpha + p)dt}}{C - \int_0^x e^{\int_0^t (2\alpha + p)ds} dt}
+            = \frac{e^{\int_0^\omega (2\alpha + p)dt} e^{\int_0^x (2\alpha + p)dt}}{C - \int_0^\omega e^{\int_0^t (2\alpha + p)ds} dt - \int_0^x e^{\int_0^{t + \omega} (2\alpha + p)ds} dt}\\
+            C - \int_0^\omega e^{\int_0^t (2\alpha + p)ds} dt - \int_0^x e^{\int_0^{t + \omega} (2\alpha + p)ds} dt
+            = e^{\int_0^\omega (2\alpha + p)dt} \left(C - \int_0^x e^{\int_0^t (2\alpha + p)ds} dt\right)\\
+            C - \int_0^\omega e^{\int_0^t (2\alpha + p)ds} dt - \int_0^x e^{\int_0^\omega (2\alpha + p)ds + \int_\omega^{t + \omega} (2\alpha + p)ds} dt
+            = e^{\int_0^\omega (2\alpha + p)dt} \left(C - \int_0^x e^{\int_0^t (2\alpha + p)ds} dt\right)\\
+            C - \int_0^\omega e^{\int_0^t (2\alpha + p)ds} dt - e^{\int_0^\omega (2\alpha + p)ds} \int_0^x e^{\int_\omega^{t + \omega} (2\alpha + p)ds} dt
+            = e^{\int_0^\omega (2\alpha + p)dt} \left(C - \int_0^x e^{\int_0^t (2\alpha + p)ds} dt\right)\\
+            C - \int_0^\omega e^{\int_0^t (2\alpha + p)ds} dt = e^{\int_0^\omega (2\alpha + p)dt} C\\
+            C \left(1 - e^{\int_0^\omega (2\alpha + p)dt}\right) = \int_0^\omega e^{\int_0^t (2\alpha + p)ds} dt\\
+        \end{gather*}
+        Таким образом $\beta$ является $\omega$-периодическим корнем тогда и только тогда, когда $\beta$ имеет ранее оговоренный вид и верно последнее равенство. При этом
+        \[e^{\int_0^t (2\alpha + p)ds} > 0 \qquad \Longrightarrow \qquad \int_0^\omega e^{\int_0^t (2\alpha + p)ds} dt > 0.\]
+        Значит если $\int_0^\omega (2\alpha + p)dt = 0$, т.е. $e^{\int_0^\omega (2\alpha + p)dt} = 1$, то искомых $C$ не существует; иначе искомое $C$ единственно и находится по формуле
+        \[C = \frac{\int_0^\omega e^{\int_0^t (2\alpha + p)ds} dt}{1 - e^{\int_0^\omega (2\alpha + p)dt}}.\]
+        Таким образом искомое $C$ единственно, а значит $\omega$-периодических корней, отличных от $\alpha$, не более одного. Следовательно, $\omega$-периодических корней не более двух.
+    \end{problem}
+\end{document}

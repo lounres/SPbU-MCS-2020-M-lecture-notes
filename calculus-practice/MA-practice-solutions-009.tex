@@ -1,0 +1,387 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions-en}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{esint}
+
+\title{Listochek 9.\\Calculus.\\Solutions.}
+\author{Gleb Minaev @ 102 (20.Б02-мкн)}
+% \date{}
+
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\grad}{grad}
+\renewcommand{\Re}{\qopname\relax o{Re}}
+\renewcommand{\Im}{\qopname\relax o{Im}}
+\newcommand{\HD}{\ensuremath{\mathrm{HD}}\xspace}
+
+\begin{document}
+    \maketitle
+
+    \begin{multicols}{2}
+        \tableofcontents
+    \end{multicols}
+
+    \section*{Basic problems}
+    \addcontentsline{toc}{section}{Basic problems}
+
+    \begin{enumproblem} TBA
+        % \begin{lemma}
+        %     Operator $T$ is linear.
+        % \end{lemma}
+
+        % \begin{proof}
+        %     For any $f, g \in L^2(0; +\infty)$ and any $x \in (0; +\infty)$
+        %     \[
+        %         T(f + g)(x)
+        %         = \frac{1}{x} \int_0^x (f+g)(y) dy
+        %         = \frac{1}{x} \int_0^x f(y) dy + \frac{1}{x} \int_0^x g(y) dy
+        %         = T(f)(x) + T(g)(x).
+        %     \]
+        %     Thus $T(f + g) = T(f) + T(g)$.
+
+        %     Also for any $f \in L^2(0; +\infty)$, any $\lambda \in \RR$ and any $x \in (0; +\infty)$
+        %     \[
+        %         T(\lambda f)(x)
+        %         = \frac{1}{x} \int_0^x (\lambda f)(y) dy
+        %         = \lambda \frac{1}{x} \int_0^x f(y) dy
+        %         = \lambda T(x).
+        %     \]
+        %     Thus $T(\lambda f) = \lambda T(f)$.
+        % \end{proof}
+
+        % \begin{lemma}
+        %     Operator $T: L^2(0; +\infty) \to L^2[1; +\infty)$ defined as
+        %     \[T(f)(x) := \frac{1}{x}\int_0^x f(y) dy\]
+        %     is continuous.
+        % \end{lemma}
+
+        % \begin{proof}
+        %     \begin{align*}
+        %         \|T(f)\|^2
+        %         = \int_1^{+\infty} T(f)^2
+        %         = \int_1^{+\infty} \frac{1}{x^2} \int 
+        %     \end{align*}
+        % \end{proof}
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Let
+        \[\rho: \RR^2 \to \RR, p \mapsto \frac{|p|^2}{\pi}.\]
+        Then for any point $p \in \RR^2$ and radius $R \geqslant 0$
+        \begin{align*}
+            \iint\limits_{B_R(p)} \rho(p + (x; y)) dx dy
+            &= \int\limits_0^R \int\limits_0^{2\pi} \rho(p + r(\cos(\varphi); \sin(\varphi))) r\; d\varphi\; dr\\
+            &= \int\limits_0^R \int\limits_0^{2\pi} \frac{(p_x + r \cos(\varphi))^2 + (p_y + r \sin(\varphi))^2}{\pi} r\; d\varphi\; dr\\
+            &= \int\limits_0^R \int\limits_0^{2\pi} r \frac{p_x^2 + p_y^2 + r^2 + 2r(p_x \cos(\varphi) + p_y \sin(\varphi))}{\pi}\; d\varphi\; dr\\
+            &= \int\limits_0^R 2r (p_x^2 + p_y^2 + r^2)\; dr
+        \end{align*}
+        \begin{align*}
+            &= \left.\left(r^2 |p|^2 + \frac{r^4}{2}\right)\right|_0^R\\
+            &= R^2 |p|^2 + \frac{R^4}{2}\\
+            &= \mu(B_R(p))
+        \end{align*}
+        Thus measure $A \mapsto \int_A \rho(p) \lambda(dp)$ is defined in the same way as $\mu$, so $\mu(A) = \int_A \rho(p) \lambda(dp)$. It already means that $\mu$ is absolutely continuous with respect to the Lebesgue measure $\lambda$: if $\lambda(A) = 0$, then $\mu(A) = \int_A \rho(p) dp = 0$. But we can show that explicitly.
+
+        \begin{lemma}
+            Let $A \subseteq B_R(0)$ be a set with zero Lebesgue measure. Then $\mu(A) = 0$.
+        \end{lemma}
+
+        \begin{proof}
+            Let $\varepsilon > 0$ and $\{B_i\}$ be a cover of $A$ with balls such that $\sum_i \lambda(B_i) < \varepsilon$. If there are balls in the cover with center not in $B_R(0)$ we can change them in such way that their centers lie in $B_R(0)$, $\{B_i\}$ still is a cover of $A$, and $\sum_i \lambda(B_i)$ does not increase. Hence (if $r_i$ and $c_i$ are radius and center of $B_i$)
+            \begin{multline*}
+                \sum_i \mu(B_i) = \sum_i (|c_i|^2 |r_i|^2 + |r_i|^4/2)\\
+                \leqslant R^2\left(\sum_i r_i^2\right) + \left(\sum_i r_i^2\right)^2/2\\
+                \leqslant \left(\sum_i \lambda(B_i)\right)\left(\frac{R^2}{\pi} + \frac{1}{\pi^2}\left(\sum_i \lambda(B_i)\right)/2\right)\\
+                \leqslant \frac{\varepsilon}{\pi} (R^2 + \frac{\varepsilon}{2 \pi}).
+            \end{multline*}
+            Thus $\lambda(A) = 0$.
+        \end{proof}
+
+        \begin{corollary}
+            If $A$ is a set with zero Lebesgue measure, then $\mu(A) = 0$.
+        \end{corollary}
+
+        \begin{proof}
+            \[\mu(A) = \lim_{R \to \infty} \mu(A \cap B_R(0)) = \lim_{R \to \infty} 0 = 0.\]
+        \end{proof}
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        We need to show that if $F \subseteq E$, then $|F| O_F(f) \leqslant |E| O_E(f)$, which is the same as
+        \[\int\limits_F \left|f - \fint\limits_F f\right| \leqslant \int\limits_E \left|f - \fint\limits_E f\right|.\]
+        WLOG $\fint\limits_F f \leqslant \fint\limits_E f$. Let
+        \begin{gather*}
+            a := \fint\limits_F f
+            \qquad
+            b := \fint\limits_E f\\
+            F_1 := \{x \in F \mid x < a\}
+            \qquad
+            F_2 := \{x \in F \mid x \in [a; b]\}
+            \qquad
+            F_3 := \{x \in F \mid x > b\}\\
+            G_1 := \{x \in E \setminus F \mid x < b\}
+            \qquad
+            G_2 := \{x \in E \setminus F \mid x \geqslant b\}\\
+            m_1 := |F_1|
+            \qquad
+            m_2 := |F_2|
+            \qquad
+            m_3 := |F_3|
+            \qquad
+            n_1 := |G_1|
+            \qquad
+            n_1 := |G_2|\\
+            f_1 := \fint\limits_{F_1} f
+            \qquad
+            f_2 := \fint\limits_{F_2} f
+            \qquad
+            f_3 := \fint\limits_{F_3} f
+            \qquad
+            g_1 := \fint\limits_{G_1} f
+            \qquad
+            g_2 := \fint\limits_{G_2} f.
+        \end{gather*}
+        So we have that
+        \begin{gather*}
+            a(m_1 + m_2 + m_3) = f_1 m_1 + f_2 m_2 + f_3 m_3\\
+            b(m_1 + m_2 + m_3 + n_1 + n_2) = f_1 m_1 + f_2 m_2 + f_3 m_3 + g_1 n_1 + g_2 n_2\\
+            f_1 \leqslant a \leqslant f_2 \leqslant b \leqslant f_3\\
+            g_1 \leqslant b \leqslant g_3\\
+            m_1, m_2, m_3, n_1, n_2 \geqslant 0.
+        \end{gather*}
+        And we need to show
+        \[m_1 (a - f_1) + m_2 (f_2 - a) + m_3 (f_3 - a) \leqslant m_1 (b - f_1) + m_2 (b - f_2) + m_3 (f_3 - b) + n_1 (b - g_1) + n_2 (g_2 - b).\]
+
+        The last is equivivalent to
+        \[
+            m_1 (a - b) + m_2 (2f_2 - a - b) + m_3 (b - a) \leqslant n_1 (b - g_1) + n_2 (g_2 - b).
+        \]
+        
+        Let's fix $a$, $b$, $m_1$, $m_2$, $m_3$, $f_1$, $f_2$, $f_3$, $g_1$ and $g_2$. Let $m = m_1 + m_2 + m_3$. Then the only condition that restricts $g_1$ and/or $g_2$ is
+        \begin{gather*}
+            b(m + n_1 + n_2) = a m + g_1 n_1 + g_2 n_2\\
+            (b - a) m + (b - g_1) n_1 = (g_2 - b) n_2.
+        \end{gather*}
+        Note that $b - a \geqslant 0$, $(b - g_1) \geqslant 0$ and $g_2 - b \geqslant 0$. Then let's decrease $n_1$ and $n_2$ in such way that $n_1 = 0$. $n_2$ will be $\geqslant 0$, because $(b - a) m \geqslant 0$. But right-hand side of
+        \[
+            m_1 (a - b) + m_2 (2f_2 - a - b) + m_3 (b - a) \leqslant n_1 (b - g_1) + n_2 (g_2 - b)
+        \]
+        will decrease, so we need to prove stricter condition. Then we have that
+        \[(b - a) m = (g_2 - b) n_2,\]
+        and need to prove that
+        \[m_1 (a - b) + m_2 (2f_2 - a - b) + m_3 (b - a) \leqslant n_2 (g_2 - b).\]
+
+        Obviously it means we need to show that
+        \begin{gather*}
+            m_1 (a - b) + m_2 (2f_2 - a - b) + m_3 (b - a) \leqslant (b - a) (m_1 + m_2 + m_3)\\
+            m_2 (2f_2 - 2b) \leqslant (b - a) 2m_1\\
+            (f_2 - b) m_2 \leqslant (b - a) m_1,
+        \end{gather*}
+        that is now obvious, because $f_2 - b \leqslant 0$ and $b - a \geqslant 0$.
+        % So for now we've eliminated $g_1$, $g_2$, $n_1$, and $n_2$ from the problem. And the only conditions we have now are
+        % \begin{gather*}
+        %     a(m_1 + m_2 + m_3) = f_1 m_1 + f_2 m_2 + f_3 m_3\\
+        %     f_1 \leqslant a \leqslant f_2 \leqslant b \leqslant f_3\\
+        %     m_1, m_2, m_3 \geqslant 0.
+        % \end{gather*}
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Set $E$ of points $x$ for which $\lim_{n \to \infty} f_n(x)$ is not defined or is not $f(x)$ has zero measure. Hence if we change all $f_n$ and $f$ such that $f_n|_E = f_E = 0$, then $f_n \to f$ on all $X$ and all $f_n$ and $f$ won't change their class in $L^2$. So now we may assume that $f_n \to f$ on all $X$.
+
+        \begin{lemma}
+            For any $t > 0$
+            \[\mu(\{x \in X \mid |f| \geqslant t\}) \leqslant \frac{2}{1 + t^3}.\]
+        \end{lemma}
+
+        \begin{proof}
+            Let for some $t > 0$ $E := \{x \in X \mid |f| \geqslant t\}$ and
+            \[\mu(E) > \frac{2}{1 + t^3}.\]
+            Then there is such $\delta > 0$ that
+            \[\mu(E) \geqslant \frac{2}{1 + t^3} + 2\delta.\]
+            By continuity of $1/(1 + t^3)$ there is such $\varepsilon > 0$ that
+            \[\frac{2}{1 + t^3} + \delta > \frac{2}{1 + (t-\varepsilon)^3}.\]
+            By definition of convergence for any $x \in X$ there is such $n_x \in \NN$ that for any $n \geqslant n_x$
+            \[|f_n(x) - f(x)| \leqslant \varepsilon.\]
+            Hence there are sets
+            \[E_n := \{x \in E \mid n_x \leqslant n\},\]
+            $E_{n+1} \supseteq E_n$ and $E = \bigcup_{n=0}^\infty E_n$. Hence there is such $m$ that
+            \[\mu(E_m) \geqslant \frac{2}{1 + t^3} + \delta.\]
+            Then for any $x \in E_m$ and any $n \geqslant m$ we have that $n \geqslant m \geqslant n_x$, so
+            \[|f_n(x) - f(x)| \leqslant \varepsilon.\]
+            But $f(x) \geqslant t$, so $f_n(x) \geqslant t - \varepsilon$. Hence
+            \[\{x \in X \mid |f_m(x)| \geqslant t - \varepsilon\} \supseteq E_m.\]
+            But then
+            \[\mu(\{x \in X \mid |f_m(x)| \geqslant t - \varepsilon\}) \geqslant \mu(E_m) \geqslant \frac{2}{1 + t^3} + \delta > \frac{2}{1 + (t-\varepsilon)^3}.\]
+            Contradiction. 
+        \end{proof}
+
+        \begin{lemma}
+            Let $g: X \to \RR$ be such measurable map that for any $t > 0$
+            \[\mu(\{x \in X \mid |g(x)| \geqslant t\}) \leqslant \frac{2}{1 + t^3},\]
+            and $E$ be a set of measure $\leqslant \frac{2}{a^{3/2}}$. Then
+            \[\int_E |g|^2 \leqslant \frac{6}{\sqrt{a}}\]
+        \end{lemma}
+
+        \begin{proof}
+            Let's quickly note that
+            \[\mu(\{x \in X \mid |g(x)| \geqslant t\}) \leqslant \frac{2}{t^3}.\]
+            Then
+            \[\mu(\{x \in X \mid |g(x)|^2 \geqslant t\}) = \mu(\{x \in X \mid |g(x)| \geqslant \sqrt{t}\}) \leqslant \frac{2}{1 + t^{3/2}}.\]
+            Then
+            \begin{align*}
+                \int_E |g|^2
+                &= \int_0^{+\infty} \mu(\{x \in X \mid |g(x)|^2 \geqslant t\} \cap E)\\
+                &\leqslant \int_0^{+\infty} \min(\mu(E), \mu(\{x \in X \mid |g(x)|^2 \geqslant t\}))\\
+                &\leqslant \int_0^{+\infty} \min\left(\frac{2}{a^{3/2}}, \frac{2}{t^{3/2}}\right)\\
+                &= \int_0^a \frac{2}{a^{3/2}} + \int_a^{+\infty} \frac{2}{t^{3/2}}\\
+                &= \frac{2}{\sqrt{a}} + \frac{4}{\sqrt{a}}\\
+                &= \frac{6}{\sqrt{a}}
+            \end{align*}
+        \end{proof}
+
+        Let $\varepsilon > 0$. Then $a := \frac{(4 \cdot 6 \cdot 2)^2}{\varepsilon^2}$. By definition of convergence for any $x \in X$ there is such $n_x \in \NN$ that for any $n \geqslant n_x$
+        \[|f_n(x) - f(x)| \leqslant \delta := \frac{\varepsilon^2}{2} / \left(1 - \frac{2}{a^{3/2}}\right).\]
+        Then there are sets
+        \[X_n := \{x \in X \mid n_x \leqslant n\},\]
+        $X_{n+1} \supseteq X_n$ and $X = \bigcup_{n = 0}^{\infty} X_n$. Hence there is such $m$ that
+        \[\mu(X_m) \geqslant 1 - \frac{2}{a^{3/2}}.\]
+        Then for any $x \in X_m$ and any $n \geqslant m$ we have that $n \geqslant m \geqslant n_x$, so
+        \[|f_n(x) - f(x)| \leqslant \delta.\]
+        Thus for any $n \geqslant m$
+        \begin{align*}
+            \int_X |f_n - f|^2
+            &= \int_{X_m} |f_n - f|^2 + \int_{X \setminus X_m} |f_n - f|^2\\
+            &\leqslant \int_{X_m} \delta + \int_{X \setminus X_m} 2(|f_n|^2 + |f|^2)\\
+            &\leqslant \delta \mu(X_m) + 4 \frac{6}{\sqrt{a}}\\
+            &\leqslant \frac{\varepsilon^2}{2} + \frac{4 \cdot 6}{(4 \cdot 6 \cdot 2)/\varepsilon}\\
+            &\leqslant \frac{\varepsilon^2}{2} + \frac{\varepsilon^2}{2}\\
+            &\leqslant \varepsilon^2.
+        \end{align*}
+        Thus for any $n \geqslant f_n$.
+        \[\|f_n - f\|_{L^2} = \left(\int_X |f_n - f|^2\right)^{1/2} \leqslant \varepsilon,\]
+        which means that $f_n \to f$ in $L^2$.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        We need to show that
+        \[\int_X (\|f + v\| - \|f\|) \geqslant \frac{1}{8} \|v\|,\]
+        with conditions only on $\|f\|$. Then let's minimize the left-hand side by changing $f$ without changing $\|f\|$. It means we should minimize $\|f + v\|$. In that case $f$ should be contradirectional to $v$, so
+        \[\int_X (\|f + v\| - \|f\|) \geqslant \int_X \left(\Bigl|\|f\| - \|v\|\Bigr| - \|f\|\right).\]
+        Let
+        \[
+            X_1 := \{x \in X \mid \|f\| \leqslant \tfrac{1}{4} \|v\|\},
+            \qquad
+            X_2 := \{x \in X \mid \tfrac{1}{4} \|v\| < \|f\| \leqslant \|v\|\},
+            \qquad
+            X_3 := \{x \in X \mid \|v\| < \|f\|\}.
+        \]
+        Then
+        \[
+            \int_{X_1} \left(\Bigl|\|f\| - \|v\|\Bigr| - \|f\|\right)
+            = \int_{X_1} (\|v\| - 2\|f\|)
+            \geqslant \int_{X_1} (\|v\| - 2 \cdot \tfrac{1}{4}\|v\|)
+            = \frac{3}{4}\left(1 - \frac{1}{2}\right) \|v\|
+            = \frac{3}{8} \|v\|,
+        \]
+        \[
+            \int_{X_2} \left(\Bigl|\|f\| - \|v\|\Bigr| - \|f\|\right)
+            = \int_{X_2} (\|v\| - 2\|f\|)
+            \geqslant \int_{X_1} (\|v\| - 2\|v\|)
+            = -\mu(X_1) \|v\|,
+        \]
+        \[
+            \int_{X_3} \left(\Bigl|\|f\| - \|v\|\Bigr| - \|f\|\right)
+            = \int_{X_3} -\|v\|
+            = -\mu(X_3) \|v\|.
+        \]
+        Hence
+        \[
+            \int_X \left(\Bigl|\|f\| - \|v\|\Bigr| - \|f\|\right)
+            \geqslant \frac{3}{8} \|v\| - (\mu(X_1) + \mu(X_2)) \|v\|
+            = \frac{3}{8} \|v\| - \frac{1}{4}\|v\|
+            = \frac{1}{8} \|v\|.
+        \]
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Let $E$ do not contain any two points with rational distance between them. Then there is set $E'$ such that $\lambda(E') > 0$, $E' + s \subseteq E$ for some $s \in \RR$, and $E' \subseteq [0; 1]$. Then
+        \[F := \bigsqcup_{q \in [0; 1] \cap \QQ} E' + q\]
+        (for any different $q_1, q_2 \in Q$ sets $E' + q_1$ and $E' + q_2$ are disjoint) has infinite measure (because $\lambda(F) = \sum_{q \in [0; 1] \cap \QQ} \lambda(E' + q) = \sum_{q \in [0; 1] \cap \QQ} \lambda(E') = |[0; 1] \cap \QQ| \cdot \lambda(E') = \infty$), and is contained in $[0; 3]$, which is contradiction. Thus $E$ contains rationaly distanced couple of points. 
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        If $j = k$, then
+        \[\int_0^1 \varphi_j \varphi_k d\lambda = \int_0^1 \varphi_j^2 d\lambda = \int_0^1 d\lambda = 1.\]
+        Then WLOG $j < k$. So
+        \begin{align*}
+            \int\limits_{[0; 1]} \varphi_j \varphi_k d\lambda
+            &= \int\limits_{[0; 1)} \varphi_j \varphi_k d\lambda\\
+            &= \sum_{n=1}^{2^j}\sum_{m=1}^{2^{k-j-1}}\; \int\limits_{\left[\tfrac{2^{k-j}(n-1) + 2(m-1)}{2^k}; \tfrac{2^{k-j}(n-1) + 2(m-1) + 1}{2^k}\right)} \varphi_j \varphi_k d\lambda\\
+            &\qquad + \int\limits_{\left[\tfrac{2^{k-j}(n-1) + 2(m-1) + 1}{2^k}; \tfrac{2^{k-j}(n-1) + 2(m-1) + 2}{2^k}\right)} \varphi_j \varphi_k d\lambda
+        \end{align*}
+        \begin{align*}
+            &= \sum_{n=1}^{2^j}\sum_{m=1}^{2^{k-j-1}}\; \int\limits_{\left[\tfrac{2^{k-j}(n-1) + 2(m-1)}{2^k}; \tfrac{2^{k-j}(n-1) + 2(m-1) + 1}{2^k}\right)} (-1)^{n-1} \cdot 1\; d\lambda\\
+            &\qquad + \int\limits_{\left[\tfrac{2^{k-j}(n-1) + 2(m-1) + 1}{2^k}; \tfrac{2^{k-j}(n-1) + 2(m-1) + 2}{2^k}\right)} (-1)^{n-1} \cdot (-1)\; d\lambda\\
+            &= \sum_{n=1}^{2^j}\sum_{m=1}^{2^{k-j-1}} (-1)^{n-1} \left(\frac{1}{2^k} - \frac{1}{2^k}\right)\\
+            &= 0
+        \end{align*}
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        $f$ is summable iff $\int_E f < +\infty$ (because $f \geqslant 0$).
+
+        Let $f$ be summable. Then
+        \begin{align*}
+            \sum_{k = 1}^{+\infty} \mu(\widetilde{E}_k)
+            &= \sum_{k=1}^{+\infty} \sum_{l=k}^{+\infty} \mu(\{x \in E \mid f(x) \in [l;l+1)\})\\
+            &= \sum_{l=1}^{+\infty} \sum_{k=1}^{l} \mu(\{x \in E \mid f(x) \in [l;l+1)\})\\
+            &= \sum_{l=1}^{+\infty} l \cdot \mu(\{x \in E \mid f(x) \in [l;l+1)\})\\
+            &\leqslant \int_E f\\
+            &< +\infty.
+        \end{align*}
+
+        Let $f$ not be summable. Then
+        \begin{align*}
+            \sum_{k = 1}^{+\infty} \mu(\widetilde{E}_k)
+            &= \sum_{k=1}^{+\infty} \sum_{l=k}^{+\infty} \mu(\{x \in E \mid f(x) \in [l;l+1)\})\\
+            &= \sum_{l=1}^{+\infty} \sum_{k=1}^{l} \mu(\{x \in E \mid f(x) \in [l;l+1)\})\\
+            &= \sum_{l=1}^{+\infty} l \cdot \mu(\{x \in E \mid f(x) \in [l;l+1)\})\\
+            &= \sum_{l=0}^{+\infty} l \cdot \mu(\{x \in E \mid f(x) \in [l;l+1)\})\\
+            &= \sum_{l=0}^{+\infty} (l+1) \cdot \mu(\{x \in E \mid f(x) \in [l;l+1)\})\\
+            &\quad - \sum_{l=0}^{+\infty} \mu(\{x \in E \mid f(x) \in [l;l+1)\})\\
+            &\geqslant \int_E f - \mu(E)\\
+            &= +\infty - \mu(E)\\
+            &= +\infty.
+        \end{align*}
+    \end{enumproblem}
+
+    % \section*{Rate problems}
+    % \addcontentsline{toc}{section}{Rate problems}
+
+    % \begin{enumproblem}
+    %     TBP
+    % \end{enumproblem}
+
+    % \begin{enumproblem}
+    %     TBP
+    % \end{enumproblem}
+
+    % \begin{enumproblem}
+    %     TBP
+    % \end{enumproblem}
+
+    % \begin{enumproblem}
+    %     TBP
+    % \end{enumproblem}
+
+    % \begin{enumproblem}
+    %     TBP
+    % \end{enumproblem}
+
+    % \begin{enumproblem}
+    %     TBP
+    % \end{enumproblem}
+    
+\end{document}

@@ -1,0 +1,219 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+% \usepackage{float}
+\usepackage{inkscape}
+
+\title{Занятие от 11.03.\\Геометрия и топология. 1 курс.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\Rea}{Rea}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Fr}{Fr}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\FAC}{\ensuremath{\mathrm{FAC}}\xspace}
+\newcommand{\SAC}{\ensuremath{\mathrm{SAC}}\xspace}
+\newcommand{\T}{\ensuremath{\mathrm{T}}\xspace}
+\newcommand{\SL}{\ensuremath{\mathrm{SL}}\xspace}
+\newcommand{\PGL}{\ensuremath{\mathrm{PGL}}\xspace}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{114}
+        Давайте определим функцию
+        \[g: V \times V \to \RR, (u, v) \mapsto \frac{p(u+v)^2 - p(u)^2 - p(v)^2}{2}\]
+        Покажем, что $g$ является скалярным произведением на $V$.
+        \begin{enumerate}
+            \item Симметричность очевидна:
+                \[
+                    g(u, v)
+                    = \frac{p(u+v)^2 - p(u)^2 - p(v)^2}{2}
+                    = \frac{p(v+u)^2 - p(v)^2 - p(u)^2}{2}
+                    = g(v, u)
+                \]
+
+            \item Теперь покажем аддитивность по аргументу (покажем для правого, а для левого будет следовать из симметричности). Вспомним тождество, заданное на $p$
+                \[p(u+v)^2 + p(u-v)^2 = 2(p(u)^2 + p(v)^2)\]
+                Применим его трижды для пар $u$ и $v$, $u$ и $v-w$, $u$ и $v+w$:
+                \begin{align}
+                    p(u+v)^2 + p(u-v)^2 &= 2(p(u)^2 + p(v)^2) \label{eq1}\\
+                    p(u+v-w)^2 + p(u-v+w)^2 &= 2(p(u)^2 + p(v-w)^2) \label{eq2}\\
+                    p(u+v+w)^2 + p(-u+v+w)^2 &= 2(p(u)^2 + p(v+w)^2) \label{eq3}
+                \end{align}
+                Рассмотрим таблицу \ref{result-table}: в ней циклично просуммированы выражения выше и показано, какие квадраты модулей с какими коэффициентами входят. Суммируя всё вместе с правильными (указанными в таблице) коэффициентами мы получаем
+                \[p(u+v+w)^2 - p(u+v)^2 - p(v+w)^2 - p(w+u)^2 + p(u)^2 + p(v)^2 + p(w)^2 = 0\]
+                так как сложили несколько выражений равных нулю. При этом несложно видеть, что полученное равенство равносильно равенству
+                \[2g(u, v+w) - 2g(u, v) - 2g(v, w) = 0\]
+                Отсюда мы и получаем, что
+                \[g(u, v + w) = g(u, v) + g(u, w)\]
+
+                \begin{table}
+                    \centering
+                    \begin{tabular}{c||c|c|c||c}
+                        $p(\ldots)^2$&
+                        $\frac{1}{3} \sum\limits_{\mathrm{cyc}} \hyperref[eq1]{(\ref*{eq1})}$&
+                        $\frac{-1}{6} \sum\limits_{\mathrm{cyc}} \hyperref[eq2]{(\ref*{eq2})}$&
+                        $\frac{-1}{3} \sum\limits_{\mathrm{cyc}} \hyperref[eq3]{(\ref*{eq3})}$&
+                        Сумма\\
+                        \hline
+                        \raisebox{-10pt}{\rule{0pt}{28pt}} $u + v + w$& $3 \cdot \frac{1}{3}$& & & $1$\\
+                        \raisebox{-10pt}{\rule{0pt}{28pt}} $u + v - w$& $1 \cdot \frac{1}{3}$& $2 \cdot \frac{-1}{6}$& & $0$\\
+                        \raisebox{-10pt}{\rule{0pt}{28pt}} $v + w - u$& $1 \cdot \frac{1}{3}$& $2 \cdot \frac{-1}{6}$& & $0$\\
+                        \raisebox{-10pt}{\rule{0pt}{28pt}} $w + u - v$& $1 \cdot \frac{1}{3}$& $2 \cdot \frac{-1}{6}$& & $0$\\
+                        \raisebox{-10pt}{\rule{0pt}{28pt}} $u + v$& $-2 \cdot \frac{1}{3}$& & $1 \cdot \frac{-1}{3}$& $-1$\\
+                        \raisebox{-10pt}{\rule{0pt}{28pt}} $v + w$& $-2 \cdot \frac{1}{3}$& & $1 \cdot \frac{-1}{3}$& $-1$\\
+                        \raisebox{-10pt}{\rule{0pt}{28pt}} $w + u$& $-2 \cdot \frac{1}{3}$& & $1 \cdot \frac{-1}{3}$& $-1$\\
+                        \raisebox{-10pt}{\rule{0pt}{28pt}} $u - v$& & $-2 \cdot \frac{-1}{6}$& $1 \cdot \frac{-1}{3}$& $0$\\
+                        \raisebox{-10pt}{\rule{0pt}{28pt}} $v - w$& & $-2 \cdot \frac{-1}{6}$& $1 \cdot \frac{-1}{3}$& $0$\\
+                        \raisebox{-10pt}{\rule{0pt}{28pt}} $w - u$& & $-2 \cdot \frac{-1}{6}$& $1 \cdot \frac{-1}{3}$& $0$\\
+                        \raisebox{-10pt}{\rule{0pt}{28pt}} $u$& $-2 \cdot \frac{1}{3}$& $-2 \cdot \frac{-1}{6}$& $-4 \cdot \frac{-1}{3}$& $1$\\
+                        \raisebox{-10pt}{\rule{0pt}{28pt}} $v$& $-2 \cdot \frac{1}{3}$& $-2 \cdot \frac{-1}{6}$& $-4 \cdot \frac{-1}{3}$& $1$\\
+                        \raisebox{-10pt}{\rule{0pt}{28pt}} $w$& $-2 \cdot \frac{1}{3}$& $-2 \cdot \frac{-1}{6}$& $-4 \cdot \frac{-1}{3}$& $1$\\
+                    \end{tabular}
+                    \caption{}\label{result-table}
+                \end{table}
+
+            \item Теперь покажем, пропорциональность по правому аргументу, т.е. что $g(u, \lambda v) = \lambda g(u, v)$. Для этого заметим, что
+                \begin{enumerate}
+                    \item \[g(u, \overrightarrow{0}) = \frac{p(u)^2 - p(u)^2 - p(\overrightarrow{0})^2}{2} = 0\]
+                    \item $\forall n \in \NN$ \[g(u, nv) = \underbrace{g(u, v) + \dots + g(u, v)}_n = n g(u, v)\]
+                    \item $\forall n \in \NN$ \[g\left(u, \frac{1}{n}v\right) = \frac{1}{n} \cdot ng\left(u, \frac{1}{n}v\right) = \frac{1}{n} g\left(u, n\frac{1}{n}v\right) = \frac{1}{n} g(u, v)\]
+                    \item 
+                        \begin{multline*}
+                            g(u, -v) = g(u, -v) + g(u, v) - g(u, v) =\\
+                            g(u, -v + v) - g(u, v) = g(u, \overrightarrow{0}) - g(u, v) = -g(u, v)
+                        \end{multline*}
+                    \item $\forall n \in \ZZ, m \in \NN$ \[g\left(u, \frac{n}{m} v\right) = \sign(n)g\left(u, \frac{|n|}{m} v\right) = n g\left(u, \frac{1}{m} v\right) = \frac{n}{m} g\left(u, v\right)\]
+                \end{enumerate}
+                т.е. для всех рациональных $\lambda$ утверждение доказано. При этом заметим, что сама по себе функция $p$ непрерывна, поэтому непрерывна и $g$ (хотя потребуется непрерывность только по одному аргументу). Следовательно
+                \[g(u, \lambda v) = \lim_{n \to \infty} g(u, q_n v) = \lim_{n \to \infty} q_n g(u, v) = \lambda g(u, v)\]
+                где $(q_n)_{n=0}^\infty$ --- случайная последовательность рациональных, сходящаяся к $\lambda$.
+
+            \item И последнее.
+                \[g(u, u) = \frac{p(u + u)^2 - p(u)^2 - p(u)^2}{2} = p(u)^2 \geqslant 0\]
+                При этом равенство достигается тогда и только тогда, когда $u \neq \overrightarrow{0}$.
+        \end{enumerate}
+    \end{problem}
+
+    \begin{problem}{115}
+        Для начала заметим, что биекция
+        \[
+            \varphi: \mathrm{Mat}_n(\RR) \to \RR^{n^2},
+            \begin{pmatrix}
+                a_{1,1}& \cdots& a_{1, n}\\
+                \vdots& \ddots& \vdots\\
+                a_{n,1}& \cdots& a_{n, n}
+            \end{pmatrix}
+            \mapsto (a_{1,1}, \ldots, a_{1,n}, a_{2,1}, \ldots, a_{n,n})
+        \]
+        сопоставляет скалярному произведению $\tr(A^T B)$ в $\mathrm{Mat}_n(\RR)$ обычное скалярное произведение в $\RR^{n^2}$. Действительно,
+        \begin{align*}
+            \tr(A^T B)
+            &= \sum_{i=1}^n (A^T B)_{i, i}&
+            &= \sum_{i=1}^n \sum_{j=1}^n (A^T)_{i,j} \cdot B_{j, i}&
+            &= \sum_{i=1}^n \sum_{j=1}^n A_{j,i} \cdot B_{j, i}&
+            &= \varphi(A) \cdot \varphi(B)
+        \end{align*}
+        В таком случае будем рассматривать вместо $\mathrm{Mat}_2(\RR)$ $\RR^4$.
+
+        Также заметим, что $U$ описывается как пространство, перпендикулярное векторам $K = \varphi(E^T) = \varphi(E) = (1; 0; 0; 1)$ и $L = \varphi(J^T) = (0; -1; 1; 0)$. Поскольку $X = X^\parallel + X^\perp$, где $X^\parallel \in U$, а $X^\perp \perp U$, то $X^\perp \in \langle K, L \rangle$, а $X^\parallel \perp \langle K, L \rangle$. Таким образом
+        \[X = \alpha K + \beta L + X^\parallel\]
+        
+        Ещё раз напомним конкретные значения:
+        \begin{align*}
+            K &= (1; 0; 0; 1)&
+            L &= (0; -1; 1; 0)&
+            X &= (3; 4; 2; -5)
+        \end{align*}
+
+        Запишем банальные уравнения:
+        \begin{align*}
+            \alpha (K \cdot K) + \beta (L \cdot K) &= X \cdot K&
+            \alpha (K \cdot L) + \beta (L \cdot L) &= X \cdot L\\
+        \end{align*}
+        т.е.
+        \[
+            \begin{pmatrix}
+                K \cdot K& K \cdot L\\
+                L \cdot K& L \cdot L\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                \alpha\\ \beta
+            \end{pmatrix}
+            = \begin{pmatrix}
+                X \cdot K\\
+                X \cdot L
+            \end{pmatrix}
+        \]
+        Следовательно
+        \begin{align*}
+            \begin{pmatrix}
+                \alpha\\ \beta
+            \end{pmatrix}
+            &=
+            \begin{pmatrix}
+                K \cdot K& K \cdot L\\
+                L \cdot K& L \cdot L\\
+            \end{pmatrix}^{-1}
+            \begin{pmatrix}
+                X \cdot K\\
+                X \cdot L
+            \end{pmatrix}\\
+            &=\frac{1}{(K \cdot K)(L \cdot L) - (K \cdot L)^2}
+            \begin{pmatrix}
+                L \cdot L& -K \cdot L\\
+                -L \cdot K& K \cdot K\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                X \cdot K\\
+                X \cdot L
+            \end{pmatrix}\\
+            &=\frac{1}{2 \cdot 2 - 0^2}
+            \begin{pmatrix}
+                2& -0\\
+                -0& 2\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                -2\\
+                -2
+            \end{pmatrix}\\
+            &=\frac{4}{4}
+            \begin{pmatrix}
+                1& 0\\
+                0& 1\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                -1\\
+                -1
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                -1\\ -1
+            \end{pmatrix}\\
+        \end{align*}
+        Тогда
+        \begin{align*}
+            &X^\perp = \alpha K + \beta L = (-1; 1; -1; -1)&
+            &X^\parallel = X - X^\perp = (4; 3; 3; -4)
+        \end{align*}
+        Прообразы этих векторов легко восстанавливаются:
+        \begin{align*}
+            &X^\perp =
+            \begin{pmatrix}
+                -1& 1\\
+                -1& -1
+            \end{pmatrix}&
+            &X^\parallel =
+            \begin{pmatrix}
+                4& 3\\
+                3& -4
+            \end{pmatrix}
+        \end{align*}
+    \end{problem}
+\end{document}

@@ -1,0 +1,53 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+% \usepackage{float}
+
+\title{Занятие от 26.11.\\Геометрия и топология. 1 курс.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Fr}{Fr}
+\DeclareMathOperator{\Id}{Id}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{39}\ 
+        \begin{enumerate}
+            \renewcommand{\theenumi}{\asbuk{enumi}}
+            \renewcommand{\labelenumi}{\theenumi)}
+            \setcounter{enumi}{2}
+            \item Пусть есть некоторые $r_{A, B} > 0$ и $r_{B, C} > 0$, что
+                \begin{align*}
+                    A \subseteq U_{r_{A, B}}(B) &\wedge B \subseteq U_{r_{A, B}}(A)&
+                    &\text{ и }&
+                    B \subseteq U_{r_{B, C}}(C) &\wedge C \subseteq U_{r_{B, C}}(B)
+                \end{align*}
+                Заметим, что для всяких множеств $X$ и $Y$ и положительных значений $r$, $r_1$ и $r_2$ верно, что $X \subseteq Y \rightarrow U_r(X) \subseteq U_r(Y)$, а $U_{r_1}(U_{r_2}(X)) = U_{r_1+r_2}(X)$. Следовательно
+                \begin{align*}
+                    &A \subseteq U_{r_{A, B}}(B) \subseteq U_{r_{A, B} + r_{B, C}}(C)&
+                    &C \subseteq U_{r_{B, C}}(B) \subseteq U_{r_{A, B} + r_{B, C}}(A)
+                \end{align*}
+                Таким образом
+                \begin{multline*}
+                    \{r > 0: A \subseteq U_r(B) \wedge B \subseteq U_r(A)\}
+                    + \{r > 0: B \subseteq U_r(C) \wedge C \subseteq U_r(B)\}\\
+                    \subseteq \{r > 0: A \subseteq U_r(C) \wedge C \subseteq U_r(A)\}
+                \end{multline*}
+                Следовательно
+                \begin{multline*}
+                    \inf \{r > 0: A \subseteq U_r(B) \wedge B \subseteq U_r(A)\}
+                    + \inf \{r > 0: B \subseteq U_r(C) \wedge C \subseteq U_r(B)\}\\
+                    \geqslant \inf \{r > 0: A \subseteq U_r(C) \wedge C \subseteq U_r(A)\}
+                \end{multline*}
+                т.е.
+                \[d_H(A, B) + d_H(B, C) \geqslant d_H(A, C)\]
+            
+            \item Заметим, что $B \subseteq \Cl(A)$ равносильно тому, что во всякой окрестности всякой точки из $B$ есть точка из $A$. Это равносильно тому, что для всякого $r > 0$ для всякой точки $b \in B$ есть точка $a \in A$, что $a \in U_r(b)$, следовательно $b \in U_r(a)$, что равносильно тому, что всякая точка $B$ находится в $r$-окрестности $A$, т.е. $B \subseteq U_r(A)$. Таким образом $B \in \Cl(A)$ равносильно тому, что для всякого $r > 0$ верно, что $B \subseteq U_r(A)$.
+            
+            При этом $\Cl(A) = \Cl(B)$ равносильно тому, что $A \subseteq \Cl(B)$ и $B \subseteq \Cl(A)$, а значит равносильно тому, что $d_H(A, B) = 0$.
+        \end{enumerate}
+    \end{problem}
+\end{document}

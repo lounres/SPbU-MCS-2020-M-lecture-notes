@@ -1,0 +1,25 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+
+\title{Рейтинговое домашнее задание от 01.10\\Дифференциальные уравнения и динамические системы}
+\author{Глеб Минаев @ 204 (20.Б04-мкн)}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{4}
+        Рассмотрим функцию $\varphi(x) = \sqrt{x}$ (поскольку в области определения уравнения $x \neq 0$, то $\varphi$ определён и бесконечно дифференцируем). Сделаем подстановку $y = z \varphi$:
+        \begin{gather*}
+            y' = \frac{a}{x} y^2 + \frac{1}{2x} y + c\\
+            z' \varphi + \varphi' z = \frac{a \varphi^2}{x} z^2 + \frac{\varphi}{2x} z + c\\
+            z' \varphi + \frac{1}{2\sqrt{x}} z = \frac{a x}{x} z^2 + \frac{\sqrt{x}}{2x} z + c\\
+            z' \varphi = a z^2 + c\\
+            z' = \frac{1}{\varphi}(a z^2 + c).
+        \end{gather*}
+        Т.е. мы получили уравнение
+        \[z'(x) = n(x) m(z),\]
+        где $n(x) = 1/\varphi(x) = x^{-1/2}$, а $m(z) = az^2 + c$.
+    \end{problem}
+\end{document}

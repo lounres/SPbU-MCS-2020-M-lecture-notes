@@ -1,0 +1,67 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{math-text}
+
+\begin{document}
+    Преподаватели:
+    \begin{itemize}
+        \item Александр Вячеславович Щеголёв:
+            \begin{itemize}
+                \item \href{mailto:a.shchegolev@spbu.ru}{mail @ spbu.ru}
+                \item \href{tel:+7-950-014-32-27}{Телефон}
+            \end{itemize}
+    \end{itemize}
+
+    Зачёт: кр (3?) + ИДЗ. Аддитивно (с условиями):
+    \begin{itemize}
+        \item задачи на ``*'' (некоторым образом переквалифицируются в рейтинг);
+        \item можно часть задач закрывать ``+''-ми.
+    \end{itemize}
+
+    Результаты (для рейтинга и степендий):
+    \begin{itemize}
+        \item $0$ --- просто зачёт;
+        \item $1/3$ --- предыдущее + задачи;
+        \item $1$ --- предыдущее + ``гробы''.
+    \end{itemize}
+
+    Посещение: формально необязательное.
+
+    Переписывание зачёта есть.
+
+    Книги:
+    \begin{itemize}
+        \item Лэнг, Лэмм ...
+        \item Jacobson ...
+    \end{itemize}
+
+    Ресурс для литературы (пиратский): gen.lib.rus.ec
+
+    Также есть лекции на \href{https://www.lektorium.tv/}{lektorium.tv} от Вавилова и Петрова (с конспектами).
+
+    \section{Какие-то задачи}
+
+    \begin{problem}
+        $\forall A \in L(\RR^2)$ найти $A^{-1}$.
+    \end{problem}
+
+    \begin{problem}
+        Пусть $\overrightarrow{u} = (a, b), \overrightarrow{v} = (c, d) \in \ZZ^2$. Доказать, что $\forall w \in \ZZ^2$ вектор $w$ представляется единственным образом как $\alpha u + \beta v$, где $\alpha, \beta \in \ZZ$, тогда и только тогда, когда $|ad-bc| = 1$.
+    \end{problem}
+
+    \begin{problem}
+        Есть три кузнечика. Один находится в $(1, 0)$, другой --- в $(1;1)$, третий --- в $(0;1)$. Каждый ход один из кузнечиков, который не прыгал в предыдущий раз, перепрыгивает через последнего прыгавшего. Будем считать, что на нулевом ходу прыгал второй. Докажите, что для любых взаимно простых $p$ и $q$, один из кузнечиков рано или поздно может прыгнуть в $(p;q)$.
+    \end{problem}
+
+    \begin{problem}
+        $X =
+        \left(\begin{smallmatrix}
+            a & b\\ c & d
+        \end{smallmatrix}\right)$. $a, b, c, d \in \ZZ_{\geq 0}$. $X$ обратима, $X^{-1} \in \ZZ^2$. Докажите, что $X$ представляется в виде произведения $p$ и $q$, где $p = 
+        \left(\begin{smallmatrix}
+            1 & 1\\ 0 & 1
+        \end{smallmatrix}\right)$, $q = 
+        \left(\begin{smallmatrix}
+            0 & 1\\ 1 & 0
+        \end{smallmatrix}\right)$.
+    \end{problem}
+\end{document}

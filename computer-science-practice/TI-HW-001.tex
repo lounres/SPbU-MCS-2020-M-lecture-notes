@@ -1,0 +1,387 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{multicol}
+\usepackage{float}
+
+\title{Занятие от 7.09.\\Теоретическая информатика. 2 курс.\\Решения.}
+\author{Глеб Минаев @ 204 (20.Б04-мкн)}
+% \date{}
+
+\newcommand{\spacesymbol}{\ensuremath{\text{\textvisiblespace}}}
+
+\begin{document}
+    \maketitle
+
+    \begin{multicols}{2}
+        \tableofcontents
+    \end{multicols}
+
+    \begin{enumproblem}\ 
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{c||c|c|c}
+                $Q\backslash\Gamma$& $a$& $b$& $\spacesymbol$\\
+                \hline
+                \hline
+                $q_0$& $q_{\text{0, a}}$, \spacesymbol, $+1$& $q_{\text{0, b}}$, \spacesymbol, $+1$& Acc\\
+                \hline
+                $q_{\text{0, a}}$& $q_{\text{0, a}}$, $a$, $+1$& $q_{\text{0, a}}$, $b$, $+1$& $q_{\text{1, a}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{0, b}}$& $q_{\text{0, b}}$, $a$, $+1$& $q_{\text{0, b}}$, $b$, $+1$& $q_{\text{1, b}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{1, a}}$& $q_{\text{1}}$, \spacesymbol, $-1$& Rej& Acc\\
+                \hline
+                $q_{\text{1, b}}$& Rej& $q_{\text{1}}$, \spacesymbol, $-1$& Acc\\
+                \hline
+                $q_1$& $q_1$, $a$, $-1$& $q_1$, $b$, $-1$& $q_0$, \spacesymbol, $+1$\\
+            \end{tabular}
+        \end{table}
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        В данном случае машина получает $a$ и $b$ разделённые пробелом, а выдаёт $a$, $b$ и $ab$, разделённые пробелом.
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{c||c|c|c}
+                $Q\backslash\Gamma$& $1$& $1'$& $\spacesymbol$\\
+                \hline
+                \hline
+                $q_0$& $q_{\text{0, 1}}$, $1'$, $+1$& Error& Halt\\
+                \hline
+                $q_{\text{0, 1}}$& $q_{\text{0, 1}}$, $1$, $+1$& Error& $q_{\text{0, 2m}}$, \spacesymbol, $+1$\\
+                \hline
+                $q_{\text{0, 2m}}$& $q_{\text{0, 2}}$, $1'$, $+1$& Error& $q_{\text{0, rev}}$, \spacesymbol, $-2$\\
+                \hline
+                $q_{\text{0, rev}}$& $q_{\text{0, rev}}$, $1$, $-1$& $q_{\text{0, rev}}$, $1$, $-1$& Halt\\
+                \hline
+                $q_{\text{0, 2}}$& $q_{\text{0, 2}}$, $1$, $+1$& Error& $q_{\text{0, 3}}$, \spacesymbol, $+1$\\
+                \hline
+                $q_{\text{0, 3}}$& Error& Error& $q_{\text{1, 3 $\to$ 2e}}$, $1$, $0$\\
+                \hline
+                $q_{\text{1, 3 $\to$ 2e}}$& $q_{\text{1, 3 $\to$ 2e}}$, $1$, $-1$& $q_{\text{1, 3 $\to$ 2e}}$, $1'$, $-1$& $q_{\text{1, 2e}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{1, 2e}}$& $q_{\text{1, 2 $\to$ 1e}}$, $1$, $-1$& $q_{\text{1, 2 $\to$ 1e, 2 full}}$, $1'$, $-1$& Error\\
+                \hline
+                $q_{\text{1, 2 $\to$ 1e}}$& $q_{\text{1, 2 $\to$ 1e}}$, $1$, $-1$& $q_{\text{1, 2 $\to$ 1e}}$, $1'$, $-1$& $q_{\text{1, 1e}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{1, 2 $\to$ 1e, 2 full}}$& $q_{\text{1, 2 $\to$ 1e, 2 full}}$, $1$, $-1$& $q_{\text{1, 2 $\to$ 1e, 2 full}}$, $1'$, $-1$& $q_{\text{1, 1e, 2 full}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{1, 1e}}$& $q_{\text{1, 1 $\to$ 1'}}$, $1$, $-1$& $q_{\text{1, 1 $\to$ 1b, drop 1}}$, $1$, $-1$& Error\\
+                \hline
+                $q_{\text{1, 1e, 2 full}}$& $q_{\text{1, 1 $\to$ 1'}}$, $1$, $-1$& $q_{\text{2, 1 $\to$ 2'}}$, $1$, $+1$& Error\\
+                \hline
+                $q_{\text{1, 1 $\to$ 1'}}$& $q_{\text{1, 1 $\to$ 1'}}$, $1$, $-1$& $q_{\text{1, new 1'}}$, $1$, $+1$& Error\\
+                \hline
+                $q_{\text{1, new 1'}}$& $q_{\text{1, 1 $\to$ 3e}}$, $1'$, $+1$& Error& Error\\
+                \hline
+                $q_{\text{1, 1 $\to$ 3e}}$& $q_{\text{1, 1 $\to$ 3e}}$, $1$, $+1$& $q_{\text{1, 1 $\to$ 3e}}$, $1'$, $+1$& $q_{\text{1, 2 $\to$ 3e}}$, \spacesymbol, $+1$\\
+                \hline
+                $q_{\text{1, 2 $\to$ 3e}}$& $q_{\text{1, 2 $\to$ 3e}}$, $1$, $+1$& $q_{\text{1, 2 $\to$ 3e}}$, $1'$, $+1$& $q_{\text{1, 3 $\to$ 3e}}$, \spacesymbol, $+1$\\
+                \hline
+                $q_{\text{1, 3 $\to$ 3e}}$& $q_{\text{1, 3 $\to$ 3e}}$, $1$, $+1$& $q_{\text{1, 3 $\to$ 3e}}$, $1'$, $+1$& $q_{\text{1, 3 $\to$ 2e}}$, $1$, $0$\\
+                \hline
+                $q_{\text{1, 1 $\to$ 1b, drop 1}}$& $q_{\text{1, 1 $\to$ 1b, drop 1}}$, $1$, $-1$& $q_{\text{1, 1 $\to$ 1b, drop 1}}$, $1'$, $-1$& $q_{\text{1, 1b, drop 1}}$, \spacesymbol, $+1$\\
+                \hline
+                $q_{\text{1, 1b, drop 1}}$& $q_{\text{1, 1 $\to$ 2', 2++}}$, $1'$, $+1$& Error& Error\\
+                \hline
+                $q_{\text{1, 1 $\to$ 2', 2++}}$& $q_{\text{1, 1 $\to$ 2', 2++}}$, $1$, $+1$& $q_{\text{1, 1 $\to$ 2', 2++}}$, $1'$, $+1$& $q_{\text{1, 2 $\to$ 2', 2++}}$, \spacesymbol, $+1$\\
+                \hline
+                $q_{\text{1, 2 $\to$ 2', 2++}}$& $q_{\text{1, 2 $\to$ 2', 2++}}$, $1$, $+1$& $q_{\text{1, new 2'}}$, $1$, $+1$& Error\\
+                \hline
+                $q_{\text{1, new 2'}}$& $q_{\text{1, 2 $\to$ 3e}}$, $1'$, $+1$& Error& Error\\
+                \hline
+                $q_{\text{2, 1 $\to$ 2'}}$& $q_{\text{1, 1 $\to$ 2'}}$, $1$, $+1$& $q_{\text{1, 1 $\to$ 2'}}$, $1'$, $+1$& $q_{\text{1, 2 $\to$ 2'}}$, \spacesymbol, $+1$\\
+                \hline
+                $q_{\text{2, 2 $\to$ 2'}}$& $q_{\text{2, 2 $\to$ 2'}}$, $1$, $+1$& Halt, $1$, \dots& Error\\
+            \end{tabular}
+        \end{table}
+    \end{enumproblem}
+    
+    \begin{enumproblem}
+        Напишем машину, которой подаются битовые строки $\bar{w}_1$ и $\bar{w}_2$, разделённые двумя пробелами, а она оставляет на ленте $\bar{w}_1^R \bar{w}_2$ и возвращает головку в исходное положение.
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{c||c|c|c}
+                $Q\backslash\Gamma$& $0$& $1$& $\spacesymbol$\\
+                \hline
+                \hline
+                $q_0$& $q_{\text{copy 0, 1 $\to$ 2b}}$, \spacesymbol, $+1$& $q_{\text{copy 1, 1 $\to$ 2b}}$, \spacesymbol, $+1$& $q_{\text{shift2, $\to$ 2e}}$, \spacesymbol, $+2$\\
+                \hline
+                $q_{\text{copy 0, 1 $\to$ 2b}}$& $q_{\text{copy 0, 1 $\to$ 2b}}$, $0$, $+1$& $q_{\text{copy 0, 1 $\to$ 2b}}$, $1$, $+1$& $q_{\text{copy 0}}$, \spacesymbol, $+1$\\
+                \hline
+                $q_{\text{copy 1, 1 $\to$ 2b}}$& $q_{\text{copy 1, 1 $\to$ 2b}}$, $0$, $+1$& $q_{\text{copy 1, 1 $\to$ 2b}}$, $1$, $+1$& $q_{\text{copy 1}}$, \spacesymbol, $+1$\\
+                \hline
+                $q_{\text{copy 0}}$& Error& Error& $q_{\text{shift}}$, $0$, $-2$\\
+                \hline
+                $q_{\text{copy 1}}$& Error& Error& $q_{\text{shift}}$, $1$, $-2$\\
+                \hline
+                $q_{\text{shift}}$& $q_{\text{shift, 0}}$, \spacesymbol, $-1$& $q_{\text{shift, 1}}$, \spacesymbol, $-1$& $q_0$, \spacesymbol, $0$\\
+                \hline
+                $q_{\text{shift, 0}}$& $q_{\text{shift, 0}}$, $0$, $-1$& $q_{\text{shift, 1}}$, $0$, $-1$& $q_0$, \spacesymbol, $0$\\
+                \hline
+                $q_{\text{shift, 1}}$& $q_{\text{shift, 0}}$, $1$, $-1$& $q_{\text{shift, 1}}$, $1$, $-1$& $q_0$, \spacesymbol, $0$\\
+                \hline
+                $q_{\text{shift2, $\to$ 2e}}$& $q_{\text{shift2, $\to$ 2e}}$, $0$, $+1$& $q_{\text{shift2, $\to$ 2e}}$, $1$, $+1$& $q_{\text{shift2, \spacesymbol, \spacesymbol}}$, $0$, $-1$\\
+                \hline
+                $q_{\text{shift2, \spacesymbol, \spacesymbol}}$& $q_{\text{shift2, 0, \spacesymbol}}$, \spacesymbol, $-1$& $q_{\text{shift2, 1, \spacesymbol}}$, \spacesymbol, $-1$& $q_{\text{shift2, \spacesymbol}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{shift2, 0, \spacesymbol}}$& $q_{\text{shift2, 0, 0}}$, \spacesymbol, $-1$& $q_{\text{shift2, 1, 0}}$, \spacesymbol, $-1$& $q_{\text{shift2, 0}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{shift2, 1, \spacesymbol}}$& $q_{\text{shift2, 0, 1}}$, \spacesymbol, $-1$& $q_{\text{shift2, 1, 1}}$, \spacesymbol, $-1$& $q_{\text{shift2, 1}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{shift2, 0, 0}}$& $q_{\text{shift2, 0, 0}}$, $0$, $-1$& $q_{\text{shift2, 1, 0}}$, $0$, $-1$& $q_{\text{shift2, 0}}$, $0$, $-1$\\
+                \hline
+                $q_{\text{shift2, 0, 1}}$& $q_{\text{shift2, 0, 0}}$, $1$, $-1$& $q_{\text{shift2, 1, 0}}$, $1$, $-1$& $q_{\text{shift2, 0}}$, $1$, $-1$\\
+                \hline
+                $q_{\text{shift2, 1, 0}}$& $q_{\text{shift2, 0, 1}}$, $0$, $-1$& $q_{\text{shift2, 1, 1}}$, $0$, $-1$& $q_{\text{shift2, 1}}$, $0$, $-1$\\
+                \hline
+                $q_{\text{shift2, 1, 1}}$& $q_{\text{shift2, 0, 1}}$, $1$, $-1$& $q_{\text{shift2, 1, 1}}$, $1$, $-1$& $q_{\text{shift2, 1}}$, $1$, $-1$\\
+                \hline
+                $q_{\text{shift2, \spacesymbol}}$& Error& Error& Halt, \spacesymbol, $0$\\
+                \hline
+                $q_{\text{shift2, 0}}$& Error& Error& Halt, $0$, $0$\\
+                \hline
+                $q_{\text{shift2, 1}}$& Error& Error& Halt, $1$, $0$\\
+            \end{tabular}
+        \end{table}
+        Состояния $q_0$, $q_{\text{copy \dots}}$, $q_{\text{shift}}$ и $q_{\text{shift, \dots}}$ выполняют сведение задачи для $a\bar{w}_1$ и $\bar{w}_2$ к задаче для $\bar{w}_1$ и $a \bar{w}_2$. Таким образом мы сводим задачу к задаче $\varepsilon$ и $\bar{w}_1^R \bar{w}_2$. Значит остаётся сдвинуть получившуюся строку на два влево; за это отвечают состояния $q_{\text{shift2, \dots}}$.
+
+        Теперь напишем машину, которая прибавляет единицу к числу в развёрнутой двоичной записи.
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{c||c|c|c}
+                $Q\backslash\Gamma$& $0$& $1$& $\spacesymbol$\\
+                \hline
+                \hline
+                $q_0$& $q_{\text{return}}$, $1$, $-1$& $q_0$, $0$, $+1$& $q_{\text{return}}$, $1$, $-1$\\
+                \hline
+                $q_{\text{return}}$& $q_{\text{return}}$, $0$, $-1$& $q_{\text{return}}$, $1$, $-1$& Halt, \spacesymbol, $+1$\\
+            \end{tabular}
+        \end{table}
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Сделаем машину, которая находит (первое) вхождение $a$ и удаляет его, а затем поставим её на повтор по условию присутствия $a$ в строке.
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{c||c|c|c|c}
+                $Q\backslash\Gamma$& $a$& $b$& $c$& \spacesymbol\\
+                \hline
+                \hline
+                $q_0$& $q_{\text{shift, $\to$ e}}$, \spacesymbol, $+1$& $q_0$, $b$, $+1$& $q_0$, $c$, $+1$& Halt\\
+                \hline
+                $q_{\text{shift, $\to$ e}}$& $q_{\text{shift, $\to$ e}}$, $a$, $+1$& $q_{\text{shift, $\to$ e}}$, $b$, $+1$& $q_{\text{shift, $\to$ e}}$, $c$, $+1$& $q_{\text{shift, \spacesymbol}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{shift, \spacesymbol}}$& $q_{\text{shift, a}}$, \spacesymbol, $-1$& $q_{\text{shift, b}}$, \spacesymbol, $-1$& $q_{\text{shift, c}}$, \spacesymbol, $-1$& $q_0$, \spacesymbol, $0$\\
+                \hline
+                $q_{\text{shift, a}}$& $q_{\text{shift, a}}$, $a$, $-1$& $q_{\text{shift, b}}$, $a$, $-1$& $q_{\text{shift, c}}$, $a$, $-1$& $q_0$, $a$, $0$\\
+                \hline
+                $q_{\text{shift, b}}$& $q_{\text{shift, a}}$, $b$, $-1$& $q_{\text{shift, b}}$, $b$, $-1$& $q_{\text{shift, c}}$, $b$, $-1$& $q_0$, $b$, $0$\\
+                \hline
+                $q_{\text{shift, c}}$& $q_{\text{shift, a}}$, $c$, $-1$& $q_{\text{shift, b}}$, $c$, $-1$& $q_{\text{shift, c}}$, $c$, $-1$& $q_0$, $c$, $0$\\
+            \end{tabular}
+        \end{table}
+    \end{enumproblem}
+
+    \addtocounter{enumprb}{1}
+
+    \begin{enumproblem}
+        Заметим, что можно переформулировать задачу следующим образом. Постройте машину, которая
+        \begin{enumerate}
+            \item проверяет присутствие ровно одной буквы $c$ в строке,
+            \item заменяет её на пробел (в итоге получаются строки $\bar{u}$ и $\bar{v}$ из $\Sigma^*$, разделённые пробелом),
+            \item проверяет равенство $\bar{u}$ и $\bar{v}$.
+        \end{enumerate}
+        Проверку равенства $\bar{u}$ и $\bar{v}$ реализуем так: слева от $\bar{u}$ и справа от $\bar{v}$ напишем по букве $c$, сделав отступ (т.е. на ленте через пробел будут написаны $c$, $\bar{u}$, $\bar{v}$ и $c$), а затем с концов $u$ и $v$ будем стирать по букве, в итоге устанавливая равенство $\bar{u}$ и $\bar{v}$.
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{c||c|c|c|c}
+                $Q\backslash\Gamma$& $a$& $b$& $c$& \spacesymbol\\
+                \hline
+                \hline
+                $q_0$& $q_{\text{c1}}$, $a$, $-2$& $q_{\text{c1}}$, $a$, $-2$& $q_{\text{c1}}$, $a$, $-2$& $q_{\text{c1}}$, \spacesymbol, $-2$\\
+                \hline
+                $q_{\text{c1}}$& $q_{\text{find c}}$, $c$, $+2$& $q_{\text{find c}}$, $c$, $+2$& $q_{\text{find c}}$, $c$, $+2$& $q_{\text{find c}}$, $c$, $+2$\\
+                \hline
+                $q_{\text{find c}}$& $q_{\text{find c}}$, $a$, $+1$& $q_{\text{find c}}$, $b$, $+1$& $q_{\text{found c}}$, \spacesymbol, $+1$& Rej\\
+                \hline
+                $q_{\text{found c}}$& $q_{\text{found c}}$, $a$, $+1$& $q_{\text{found c}}$, $b$, $+1$& Rej& $q_{\text{c2}}$, \spacesymbol, $+1$\\
+                \hline
+                $q_{\text{c2}}$& $q_{\text{1}}$, $c$, $-2$& $q_{\text{1}}$, $c$, $-2$& $q_{\text{1}}$, $c$, $-2$& $q_{\text{1}}$, $c$, $-2$\\
+                \hline
+                $q_{\text{1}}$& $q_{\text{1, a}}$, \spacesymbol, $-1$& $q_{\text{1, b}}$, \spacesymbol, $-1$& Error& $q_{\text{2, $\varepsilon$}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{1, a}}$& $q_{\text{1, a}}$, $a$, $-1$& $q_{\text{1, a}}$, $b$, $-1$& Error& $q_{\text{2, a}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{1, b}}$& $q_{\text{1, b}}$, $a$, $-1$& $q_{\text{1, b}}$, $b$, $-1$& Error& $q_{\text{2, b}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{2, $\varepsilon$}}$& Rej& Rej& Acc& $q_{\text{2, $\varepsilon$}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{2, a}}$& $q_3$, \spacesymbol, $+1$& Rej& Rej& $q_{\text{2, a}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{2, b}}$& Rej& $q_3$, \spacesymbol, $+1$& Rej& $q_{\text{2, b}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_3$& $q_4$, $a$, $+1$& $q_4$, $b$, $+1$& $q_{\text{2, $\varepsilon$}}$, $c$, $-1$& $q_3$, \spacesymbol, $+1$\\
+                \hline
+                $q_4$& $q_4$, $a$, $+1$& $q_4$, $b$, $+1$& Error& $q_1$, \spacesymbol, $-1$\\
+            \end{tabular}
+        \end{table}
+    \end{enumproblem}
+
+    \addtocounter{enumprb}{2}
+
+    \begin{enumproblem}
+        Решим такую задачу.
+        \begin{quotation}
+            Пусть головка стоит на клетке $0$, слева от неё написана троичная запись $\bar{n}$ некоторого числа, а справа --- унарная запись числа $u$. Мы хотим, чтобы головка вернулась на место, слева было написано $k\bar{n}$, а справа --- унарная запись числа $v$, где $v$ и $k$ --- неполное частное и остаток при делении $u$ на $3$. Пусть также в клетке $0$ по умолчанию стоит знак $\times$; его нельзя будет писать и стирать, он будет ровно в одном экземпляре.
+        \end{quotation}
+        Рассмотрим следующую машину $M_1$.
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{c||c|c|c|c|c|c}
+                $Q\backslash\Gamma$& $\times$& $a$& $0$& $1$& $2$& \spacesymbol\\
+                \hline
+                \hline
+                $q_0 = q_{\text{0, 0}}$& $q_{\text{0, 0}}$, $\times$, $+1$& $q_{\text{0, 1}}$, \spacesymbol, $+1$& Error& Error& Error& $q_{\text{1, 0}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{0, 1}}$& Error& $q_{\text{0, 2}}$, \spacesymbol, $+1$& Error& Error& Error& $q_{\text{1, 1}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{0, 2}}$& Error& $q_{\text{0, 0}}$, $a$, $+1$& Error& Error& Error& $q_{\text{1, 2}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{1, 0}}$& $q_{\text{2, 0}}$, $\times$, $-1$& $q_{\text{1, 0}}$, $a$, $-1$& Error& Error& Error& $q_{\text{1, 0}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{1, 1}}$& $q_{\text{2, 1}}$, $\times$, $-1$& $q_{\text{1, 1}}$, $a$, $-1$& Error& Error& Error& $q_{\text{1, 1}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{1, 2}}$& $q_{\text{2, 2}}$, $\times$, $-1$& $q_{\text{1, 2}}$, $a$, $-1$& Error& Error& Error& $q_{\text{1, 2}}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{2, 0}}$& Error& Error& $q_{\text{2, 0}}$, $0$, $-1$& $q_{\text{2, 0}}$, $1$, $-1$& $q_{\text{2, 0}}$, $2$, $-1$& $q_3$, $0$, $+1$\\
+                \hline
+                $q_{\text{2, 1}}$& Error& Error& $q_{\text{2, 1}}$, $0$, $-1$& $q_{\text{2, 1}}$, $1$, $-1$& $q_{\text{2, 1}}$, $2$, $-1$& $q_3$, $1$, $+1$\\
+                \hline
+                $q_{\text{2, 2}}$& Error& Error& $q_{\text{2, 2}}$, $0$, $-1$& $q_{\text{2, 2}}$, $1$, $-1$& $q_{\text{2, 2}}$, $2$, $-1$& $q_3$, $2$, $+1$\\
+                \hline
+                $q_3$& $q_{3'}$, $\times$, $+1$& Error& $q_3$, $0$, $+1$& $q_3$, $1$, $+1$& $q_3$, $2$, $+1$& Error\\
+                \hline
+                $q_{3'}$& Error& Error& Error& Error& Error& $q_{\text{4, 0}}$, $0$, \spacesymbol\\
+                \hline
+                $q_{\text{4, 0}}$& Error& Error& $q_{\text{4, check}}$, $0$, $+3$& Error& Error& Error\\
+                \hline
+                $q_{\text{4, check}}$& Error& $q_{\text{4, $\to$ end}}$, $a$, $+3$& Error& Error& Error& $q_{4'}$, \spacesymbol, $-3$\\
+                \hline
+                $q_{\text{4, $\to$ end}}$& Error& $q_{\text{4, $\to$ end}}$, $a$, $+3$& Error& Error& Error& $q_{\text{4, shift}}$, \spacesymbol, $-3$\\
+                \hline
+                $q_{\text{4, shift}}$& Error& $q_{\text{4, shifted}}$, \spacesymbol, $-2$& Error& Error& Error& Error\\
+                \hline
+                $q_{\text{4, shifted}}$& Error& Error& $q_{\text{4, shifted'}}$, $a$, $+1$& Error& Error& $q_{\text{4, shift}}$, $a$, $-1$\\
+                \hline
+                $q_{\text{4, shifted'}}$& Error& Error& Error& Error& Error& $q_{\text{4, 0}}$, $0$, $0$\\
+                \hline
+                $q_{4'}$& Error& Error& $q_5$, \spacesymbol, $-1$& Error& Error& Error\\
+                \hline
+                $q_5$& Halt& $q_5$, \spacesymbol, $-1$& Error& Error& Error& Error\\
+            \end{tabular}
+        \end{table}
+
+        Заметим, что вся машина состоит из ``подзадач''.
+        \begin{enumerate}
+            \item Состояния $q_{0\dots}$ (т.е. $q_{0, 0}$, $q_{0, 1}$ и $q_{0, 2}$) составляют подзадачу $0$, которая ``компрессирует'' унарную запись. Т.е. она идёт по ней слева направо стирает $a$-шки и записывает остаток (второе число в номере состояния) число стёртых $a$-шек; при этом если остаток сбрасывается в $0$, то $a$-шка не стирается. Таким образом она разбивает $a$-шки на тройки последовательных, стирает в каждой тройке первые две, а неразбитые на тройки $a$-шки съедает, и запоминает их число. Следовательно останется неполное частное при дилении $u$ на $3$ $a$-шек и остаток при том же делении будет запомнен. Так например строка $aaaaaaa$ (7 $a$-шек) будет превращена в строку $\spacesymbol\spacesymbol a\spacesymbol\spacesymbol a$ с конечным состоянием $q_{0, 1}$.
+            \item Состояния $q_{1\dots}$ составляют подзадачу $1$, которая сдвигает головку к символу $\times$. По сути это три одинаковые подзадачи, но их три, так как нужно хранить остаток при делении, полученный из подзадачи $0$.
+            \item Состояния $q_{2\dots}$ составляют подзадачу $2$, которая сдвигается в конец уже записанного троичного числа и пишет цифру, соответствующую запомненному остатку.
+            \item Состояние $q_3$ как подзадача $3$ сдвигает головку к символу $\times$. Состояние $q_{3'}$ делает последнее действие данной подзадачи, готовя условия для подзадачи $3$.
+            \item Состояния $q_{4\dots}$ составляют подзадачу $4$, которая собирает разъехавшиеся $a$-шки в одно унарное число. Делает она это повторяя такую подзадачу:
+                \begin{quotation}
+                    Пусть написаны несколько $a$-шек (может быть, ни одной) подряд, затем $0$, а после него несколько раз (может быть, ни одного) повторена запись $\spacesymbol a \spacesymbol$. Т.е. имеется запись наподобие $a\dots a0\spacesymbol a\spacesymbol \spacesymbol a \spacesymbol \spacesymbol a \dots \spacesymbol \spacesymbol a$. При этом головка стоит на нуле. Мы хотим, чтобы, если справа от нуля есть $a$-шка, слева от нуля было на одну $a$-шку больше, а справа --- на одну меньше.
+                \end{quotation}
+                Таким образом подзадача поставила $0$ и привела нас к формулировке задачи, где слева $a$-шек нет. Теперь несложно видеть, что $q_{4, 0}$ --- начальное состояние, из которого мы двигаемся на $+3$, чтобы посмотреть, есть ли смысл выполнять подзадачу. Если нет, то производится откат к изначальной задаче: $q_{4'}$ убирает ноль, $q_5$ сдвигает нас к символу $\times$. Если же да, то мы переходим в состояние $q_{\text{4, $\to$ end}}$, прыгающее на $+3$ каждый раз и ищущее последнюю $a$-шку. Как только она $a$-шки не обнаруживает, она прыгает назад на последнюю $a$-шку, после чего запускает алгоритм сдвига каждой $a$-шки правее нуля на $-2$: на $a$-шке мы попадаем в состояние $q_{\text{4, shift}}$, которое удаляет $a$-шку и прыгает на $-2$, там мы ставим в состоянии $q_{\text{4, shifted}}$ новую $a$-шку, и если там был ноль, то заканчиваем сдвиги и в состоянии $q_{\text{4, shifted'}}$ ставим новый ноль --- на 1 правее. После этого подзадача завершена, а значит её можно начать снова --- мы переходим в $q_{4, 0}$.
+        \end{enumerate}
+
+        Теперь осталось написать слева символ $\times$, зациклить эту машину на условии присутствии $a$-шки справа и сдвинуть полученное число в правильное место ленты. Получаем следующую машину $M$.
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{c||c|c|c|c|c|c}
+                $Q\backslash\Gamma$& $\times$& $a$& $0$& $1$& $2$& \spacesymbol\\
+                \hline
+                \hline
+                $q_0$& Error& $q_{0'}$, $a$, $-1$& Error& Error& Error& Halt, $0$, $0$\\
+                \hline
+                $q_{0'}$& Error& Error& Error& Error& Error& $q_{1, 0}$, $\times$, $0$\\
+                \hline
+                $q_{1, 0}$& $q_{\text{1, check}}$, $\times$, $+1$& Error& Error& Error& Error& Error\\
+                \hline
+                $q_{\text{1, check}}$& Error& $q_{\text{1, $M_1$}}$, $a$, $-1$& Error& Error& Error& $q_{2}$, \spacesymbol, $-1$\\
+                \hline
+                $q_{\text{1, $M_1$}}$& $M_1:\left\{\begin{aligned}\text{Halt} \to q_{1, 0}, {\times}, 0\end{aligned}\right.$& Error& Error& Error& Error& Error\\
+                \hline
+                $q_{2}$& $q_{2, {\times}}$, $\times$, $-1$& Error& $q_{2, 0}$, $\times$, $-1$& $q_{2, 1}$, $\times$, $-1$& $q_{2, 2}$, $\times$, $-1$& Error\\
+                \hline
+                $q_{2, {\times}}$& $q_{2, {\times}}$, $\times$, $-1$& Error& $q_{2, 0}$, $0$, $-1$& $q_{2, 1}$, $1$, $-1$& $q_{2, 2}$, $\times$, $-1$& $q_4$, \spacesymbol, $+1$\\
+                \hline
+                $q_{2, 0}$& $q_{2, {\times}}$, $\times$, $-1$& Error& $q_{2, 0}$, $0$, $-1$& $q_{2, 1}$, $1$, $-1$& $q_{2, 2}$, $2$, $-1$& $q_{3, 0}$, \spacesymbol, $+1$\\
+                \hline
+                $q_{2, 1}$& $q_{2, {\times}}$, $\times$, $-1$& Error& $q_{2, 0}$, $0$, $-1$& $q_{2, 1}$, $1$, $-1$& $q_{2, 2}$, $2$, $-1$& $q_{3, 1}$, \spacesymbol, $+1$\\
+                \hline
+                $q_{2, 2}$& $q_{2, {\times}}$, $\times$, $-1$& Error& $q_{2, 0}$, $0$, $-1$& $q_{2, 1}$, $1$, $-1$& $q_{2, 2}$, $2$, $-1$& $q_{3, 2}$, \spacesymbol, $+1$\\
+                \hline
+                $q_{3, 0}$& $q_{3, 0}$, $\times$, $+1$& Error& $q_{3, 0}$, $0$, $+1$& $q_{3, 0}$, $1$, $+1$& $q_{3, 0}$, $2$, $+1$& $q_{2, 0}$, $0$, $-1$\\
+                \hline
+                $q_{3, 1}$& $q_{3, 1}$, $\times$, $+1$& Error& $q_{3, 1}$, $0$, $+1$& $q_{3, 1}$, $1$, $+1$& $q_{3, 1}$, $2$, $+1$& $q_{2, 1}$, $1$, $-1$\\
+                \hline
+                $q_{3, 2}$& $q_{3, 2}$, $\times$, $+1$& Error& $q_{3, 2}$, $0$, $+1$& $q_{3, 2}$, $1$, $+1$& $q_{3, 2}$, $2$, $+1$& $q_{2, 2}$, $2$, $-1$\\
+                \hline
+                $q_4$& Halt, \spacesymbol, $0$& Error& Error& Error& Error& Error\\
+            \end{tabular}
+        \end{table}
+        Здесь $q_0$ и $q_{0'}$ ставят знак $\times$. $q_{\text{1, check}}$ проверяет присутствие $a$-шки справа. $q_{1, M_1}$ запускает машину $M_1$. $q_{2\dots}$ идут налево, запоминая последний увиденный (непробельный) символ. $q_{3\dots}$ (после того как $q_{2\dots}$ напоролись на пробел) идут до конца направо, пишут соответствующий символ и опять запускают спуск по $q_{2\dots}$. $q_4$ стирает оставшийся символ $\times$ и завершает работу.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Давайте рассмотрим биекцию $f: \NN \to \ZZ$, которая изображается последовательностью $(0, 1, -1, 2, -2, \dots)$. Таким образом мы получаем следующую простую таблицу.
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{c||c|c|c|c|c|c|c|c}
+                $n$& \dots& $-2$& $-1$& $0$& $1$& $2$& $3$& \dots\\
+                \hline
+                \hline
+                $f^{-1}(n)$& \dots& $4$& $2$& $0$& $1$& $3$& $5$& \dots\\
+                \hline
+                $f^{-1}(n+1) - f^{-1}(n)$& \dots& $-2$& $-2$& $1$& $2$& $2$& $2$& \dots\\
+                \hline
+                $f^{-1}(n-1) - f^{-1}(n)$& \dots& $2$& $2$& $2$& $-1$& $-2$& $-2$& \dots
+            \end{tabular}
+        \end{table}
+        Эта таблица нужна нам для того, что мы хотим эмулировать двухсторонне бесконечную полосу с помощью перерасположения её клеток в односторонней. При чём мы хотим, чтобы $f$ задавала это соответствие. Но в таком случае нужно правильно эмулировать шаг вправо (т.е. $f^{-1}(n+1) - f^{-1}(n)$) и шаг влево ($f^{-1}(n-1) - f^{-1}(n)$).
+
+        Давайте сделаем вместо одного барьера $\vdash$ --- два подряд, а справа от них уже будем уже нумеровать клетки по правилу функции $f$. Разделим числа на две группы $S_+ := \NN_{\geqslant 1}$ и $S_- := \NN_{\leqslant 0}$. Таким образом если мы, например, в $S_+$, то если надо пойти направо, то просто прибавим $2$, а если налево --- то $-2$. При этом если мы были в единице и пошли налево, прибавлением $-2$ к координате мы попали в первый (правый) барьер; в таком случае несложно понять, что надо прибавить ещё $1$. С $S_-$ аналогично. Т.е. формально правило следующее.
+        \begin{enumerate}
+            \item Пусть мы в $S_+$ и идём вправо. Тогда нужно прибавить $+2$.
+            \item Пусть мы в $S_-$ и идём влево. Тогда нужно прибавить $+2$.
+            \item Пусть мы в $S_+$ и идём влево. Тогда нужно прибавить $-2$. При попадании в барьер прибавить $+1$.
+            \item Пусть мы в $S_-$ и идём вправо. Тогда нужно прибавить $-2$. При попадании в барьер прибавить $+3$.
+        \end{enumerate}
+        При этом понятно, что мы меняем наше множество тогда и только тогда, когда влетаем в барьер. Следовательно вместо множества состояний $Q$ возьмём множество состояний $Q' := \{q_+; q_-\}_{q \in Q}$ состоящее из состояний $q_+$ и $q_-$ для всякого $q \in Q$ ($\pm$ в индексе значит принадлежность местоположения головки множеству $S_\pm$ соответственно). Таким образом если из $q$ при символе $l$ мы переходили в $p$, то из $q_\pm$ при символе $l$ мы будем переходить в $p_\pm$. При этом после всякого $q_\pm$ нужно поставить несколько состояний (для каждых $q_\pm$ и $l$ набор дополнительных состояний индивидуальный), что по понятным правилам выполнение может раздвоиться, и в одном случае переход надо поставить на $p_+$, а в другом --- на $p_-$. Например, как в таблице далее изображено поднятия $(q, l) \to (p, k, +1)$ и $(q', l) \to (p', k, -1)$.
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{c||c|c|c}
+                $Q\backslash\Gamma$& $l$& \dots& $\vdash$\\
+                \hline
+                \hline
+                $q_+$& $p_+$, $k$, $+2$& \dots& Error\\
+                \hline
+                \hline
+                $q_-$& $s_{q_-, l, +1}$, $k$, $-2$& \dots& Error\\
+                \hline
+                $s_{q_-, l, +1}$& $p_+$, $l$, $0$& $p_+$, \dots, $0$& $p_-$, $\vdash$, $+3$\\
+                \hline
+                \hline
+                $q'_-$& $p'_-$, $k$, $-2$& \dots& Error\\
+                \hline
+                \hline
+                $q'_+$& $s_{q'_+, l, -1}$, $k$, $-2$& \dots& Error\\
+                \hline
+                $s_{q'_-, l, -1}$& $p'_-$, $l$, $0$& $p_-$, \dots, $0$& $p'_+$, $\vdash$, $+1$\\
+            \end{tabular}
+        \end{table}
+        
+        В принципе везде можно было дать общее правило: прибавить $2$ со знаком, равным произведению знака группы и знака сдвига, если попали в барьер, прибавить $+1$, если опять попали, прибавить $+2$. В таком случае можно было бы не рассматривать 4 случая, а сразу запихнуть два дополнительных состояния. Но это довольно некрасиво.
+    \end{enumproblem}
+\end{document}

@@ -1,0 +1,23 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+
+\title{Теоретическое домашнее задание от 15.10\\Дифференциальные уравнения и динамические системы}
+\author{Глеб Минаев @ 204 (20.Б04-мкн)}
+% \date{}
+
+\newcommand{\range}{\mathop{\mathrm{range}}}
+
+\begin{document}
+    \maketitle
+    
+    \begin{problem}{7}
+        Пусть $\alpha$ --- решение уравнения $y' = f(x, y)$ c периодом $T$. Тогда имеем, что для вяской фиксированной константы $x_0$ и всякого $n \in \ZZ$
+        \[f(x_0 + nT, \alpha(x_0)) - \alpha'(x_0) = f(x_0 + nT, \alpha(x_0 + nT)) - \alpha'(x_0 + nT) = 0,\]
+        т.е. $f(x, \alpha(x_0)) - \alpha'(x_0)$, являясь многочленом от $x$, имеет бесконечно много корней (все точки вида $x_0 + nT$ и, возможно, что-то ещё). Таким образом $f(x, \alpha(x_0)) - \alpha'(x_0) \equiv 0$, т.е. для всякого $a \in \range(\alpha)$ верно, что $f(x, a) \equiv \alpha'(\alpha^{-1}(a))$ констнатно по $x$.
+        
+        Пусть $A = \sup_\RR \alpha$, а $\alpha(x_1) = A$. Тогда имеем, что $f(x, A) = \alpha'(x_1) = 0$, так как $x_1$ --- точка супремума. Рассмотрим функцию $\beta(x) \equiv A$. Тогда
+        \[\beta' = 0 = f(x, A) = f(x, \beta).\]
+        Следовательно, $\beta$ --- решение, которое имеет с $\alpha$ общие точки (все точки супремума $\alpha$, а это, как минимум, точки вида $x_0 + nT$). Следовательно по единственности области $\RR^2$ $\alpha = \beta$, т.е. $\alpha \equiv A$.
+    \end{problem}
+\end{document}

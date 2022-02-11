@@ -1,0 +1,116 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions-en}
+\usepackage{float}
+
+\title{Homework of 09.28\\Differential equations and dynamic systems.\\Solutions.}
+\author{Глеб Минаев @ 204 (20.Б04-мкн)}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{156}
+        \begin{gather*}
+            xy' - 2x^2 \sqrt{y} = 4y\\
+            xy' = 4y + 2x^2 y^{1/2}\\
+            y' = \frac{4}{x} y + 2x y^{1/2}
+        \end{gather*}
+        Obtained Bernoulli equation for degree $1/2$. Substitute $v = y^{1 - 1/2} = y^{1/2}$. Hence
+        \begin{gather*}
+            2v' = \frac{4}{x} v + 2x\\
+            v' - \frac{2}{x} v = x
+        \end{gather*}
+        Consider map $\varphi(x) := e^{\int_1^x \frac{-2}{t} dt} = e^{-2\ln(x)} = x^{-2}$. Then $\varphi' = \frac{-2}{x} \varphi$. So
+        \begin{gather*}
+            \varphi v' - \frac{2}{x} \varphi v = x \varphi\\
+            \varphi v' + \varphi' v = x \varphi\\
+            (\varphi v)' = x \varphi\\
+            \varphi v = \int t \varphi(t) dt = \int t^{-1} dt = \ln(x) + C\\
+            v = x^2 \ln(x) + C x^2\\
+            y = v^2 = (x^2 \ln(x) + C x^2)^2.\\
+        \end{gather*}
+    \end{problem}
+
+    \begin{problem}{166}
+        \begin{gather*}
+            \int_0^x (x-t) y(t) dt = 2x + \int_0^x y(t) dt.
+        \end{gather*}
+        Consider map $Y(x) := \int_0^x y(t) dt$. Then
+        \begin{gather*}
+            \int_0^x (x-t) dY(t) = 2x + Y(x)\\
+            \left.(x-t) Y(t)\right|_0^x - \int_0^x Y(t) d(x-t) = 2x + Y(x)\\
+            (x-x)Y(x) - (x-0)Y(0) + \int_0^x Y(t) dt = 2x + Y(x)\\
+            0 - 0 + \int_0^x Y(t) dt = 2x + Y(x)\\
+            \int_0^x Y(t) dt = 2x + Y(x)
+        \end{gather*}
+        Consider map $z(x) := \int_0^x Y(t) dt$. Then
+        \begin{gather*}
+            z = 2x + z'\\
+            z' - z = -2x
+        \end{gather*}
+        Consider map $\varphi(x) := e^{\int_0^x -1dt} = e^{-x}$. Then $\varphi' = -\varphi$. So
+        \begin{gather*}
+            \varphi z' - \varphi z = -2x \varphi\\
+            \varphi z' + \varphi' z = -2x \varphi\\
+            (\varphi z)' = -2x \varphi\\
+            \varphi z = \int -2t \varphi(t) dt = \int -2t e^{-t} dt = \int 2t d e^{-t} = 2x e^{-x} - \int 2 e^{-t} = 2x e^{-x} + 2 e^{-x} + C\\
+            z = 2x + 2 + Ce^x\\
+            y = z'' = Ce^x\\
+        \end{gather*}
+        The only remaining conditions are $z(0) = 0$ and $z'(0) = 0$. From the first condition we have that
+        \[0 = z(0) = 2 \cdot 0 + 2 + C e^0 = 2 + C.\]
+        So $C = -2$. Considering the second condition we have that
+        \[z'(0) = 2 - 2e^0 = 2 - 2 = 0.\]
+        So $2 + 2x - 2e^x$ is the only possible $z$. Hence $y(x) = z''(x) = -2e^x$ is the only solution of the equation.
+    \end{problem}
+
+    \begin{problem}{168}
+        \begin{gather*}
+            3y' + y^2 + \frac{2}{x^2} = 0\\
+            3y' = - y^2 - \frac{2}{x^2}\\
+            y' = - \frac{1}{3} y^2 - \frac{2}{3 x^2}\\
+        \end{gather*}
+        Obtained Riccati equation. Consider $\alpha(x) := \frac{1}{x}$. Then
+        \[\alpha' = -\frac{1}{x^2} = - \frac{1}{3x^2} - \frac{2}{3x^2} = -\frac{1}{3} y^2 - \frac{2}{3x^2}.\]
+        Hence $\alpha$ is one of solutions. Substitute $y = z + \alpha$. Then
+        \[z' = (y-\alpha)' = -\frac{1}{3}(y^2 - \alpha^2) = -\frac{1}{3}(y - \alpha)(y + \alpha) = -\frac{1}{3}z(z + 2\alpha) = -\frac{2\alpha}{3} z - \frac{1}{3} z^2.\]
+        Obtained Bernoulli equation for degree $2$. Substitute $z = v^{1-2} = v^{-1}$. Then
+        \begin{gather*}
+            -v' = -\frac{2\alpha}{3}v - \frac{1}{3}\\
+            v' - \frac{2\alpha}{3} v = \frac{1}{3}.
+        \end{gather*}
+        Consider map $\varphi(x) := e^{\int_1^x \frac{-2\alpha(t)}{3} dt} = e^{\int_1^x \frac{-2dt}{3t}} = e^{-\frac{2}{3}\ln(x)} = x^{-2/3}$. Then $\varphi' = -\frac{2\alpha}{3} \varphi$. So
+        \begin{gather*}
+            \varphi v' - \frac{2\alpha}{3} \varphi v = \frac{\varphi}{3}\\
+            \varphi v' + \varphi' v = \frac{\varphi}{3}\\
+            (\varphi v)' = \frac{\varphi}{3}\\
+            \varphi v = \int \frac{\varphi(t)}{3} dt = \int \frac{t^{-2/3}}{3} dt = x^{1/3} + C\\
+            v = x + C x^{2/3}\\
+            z = \frac{1}{v} = \frac{1}{x + C x^{2/3}}\\
+            y = z + \alpha = \frac{1}{x} \cdot \frac{2 x^{1/3} + C}{x^{1/3} + C}\\
+        \end{gather*}
+    \end{problem}
+
+    \begin{problem}{104}
+        \begin{gather*}
+            2x^3 y' = y(2x^2 - y^2)\\
+            2x^3 y' = 2x^2 y - y^3\\
+            y' = \frac{1}{x} y - \frac{1}{2x^3} y^3
+        \end{gather*}
+        Obtained Bernoulli equation for degree $3$. Substitute $v = y^{1-3} = y^{-2}$. Then
+        \begin{gather*}
+            \frac{v'}{-2} = \frac{1}{x} v - \frac{1}{2x^3}\\
+            v' = -\frac{2}{x} v + \frac{1}{x^3}\\
+            v' + \frac{2}{x} v = \frac{1}{x^3}
+        \end{gather*}
+        Consider map $\varphi(x) := e^{\int_1^x \frac{2dt}{t}} = e^{2\ln(x)} = x^2$. Then $\varphi' = \frac{2}{x} \varphi$. So
+        \begin{gather*}
+            \varphi v' + \frac{2}{x} \varphi v = \frac{\varphi}{x^3}\\
+            \varphi v' + \varphi' v = \frac{\varphi}{x^3}\\
+            (\varphi v)' = \frac{\varphi}{x^3}\\
+            \varphi v = \int \frac{\varphi(t)}{t^3} dt = \int \frac{dt}{t} = \ln(x) + C\\
+            v = \frac{\ln(x) + C}{x^2}\\
+            y = \frac{1}{\sqrt{v}} = \frac{x}{\sqrt{\ln(x) + C}}.
+        \end{gather*}
+    \end{problem}
+\end{document}

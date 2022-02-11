@@ -1,0 +1,269 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+
+\title{Занятие от 12.11.\\Геометрия и топология. 1 курс.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Fr}{Fr}
+\DeclareMathOperator{\Id}{Id}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{14}\ 
+        \begin{enumerate}
+            \item Покажем, что $|\mathcal{B}| \geqslant n$. Поскольку $\mathcal{B}$ конечно, обозначим его элементы как $\mathcal{B}_i$, где $i \in [1; |\mathcal{B}|]$. Теперь давайте для каждого элемента $m$ из $M$ определим последовательность
+                \[A_m := \{[m \in \mathcal{B}_i]\}_{i=1}^{|\mathcal{B}|}\]
+                т.е. для всякого $i$
+                \[
+                    A_m(i) :=
+                    \begin{cases}
+                        1& \text{если $m \in \mathcal{B}_i$}\\
+                        0& \text{иначе}
+                    \end{cases}
+                \]
+                Вместе с этим рассмотрим частично упорядоченное множество $\mathfrak{M}_\mathcal{B} = \langle 2^{|\mathcal{B}|}, \preccurlyeq \rangle$, где
+                \[
+                    A \preccurlyeq B :\Longleftrightarrow \forall i \in [1; |\mathcal{B}|]\; A(i) \leqslant B(i) 
+                \]
+                Очевидно, что для всякого $m \in M$ последовательность $A_m$ является членом $\mathfrak{B}$.
+
+                Пусть для некоторых $m, n \in M$ верно сравнение $A_m \succcurlyeq A_n$. Это значит, что для всякого $U \in \mathcal{B}$ верно, что $n \in U \rightarrow m \in U$. Тогда можно рассмотреть множество
+                \[\Omega' := \{U \in \Omega \mid n \in U \rightarrow m \in U\}\]
+                где $\Omega$ --- первоначальная (дискретная) топология на $M$. Несложно видеть, что $\Omega'$ является топологией, и причём более слабой, чем $\Omega$, так как, например, не содержит $\{n\}$. С другой стороны $\mathcal{B} \subseteq \Omega'$, поэтому $\mathcal{B}$ не является предбазой $\Omega$ --- противоречие. Это значит, что никакие две последовательности, соответствующие элементам $M$, несравнимы в $\mathfrak{B}$.
+
+                С другой стороны, если для некоторого $m \in M$ верно, что нет $n \in M$, что последовательность $A_n \succcurlyeq A_m$, можно рассмотреть
+                \[S_m := \bigcap_{\substack{i \in [1; |\mathcal{B}|]\\A_m(i) = 1}} \mathcal{B}_i\]
+                Очевидно, что $m \in S_m$. При этом для всякого $n \in M$, отличного от $m$, будет такое $j \in [1; |\mathcal{B}|]$, что $A_m(j) > A_n(j)$, а значит $n \notin \mathcal{B}_J$, и следовательно $n \notin S$. Поэтому $S = \{m\}$, что значит, что для всякой топологии $\Omega'$, что $\mathcal{B} \subseteq \Omega'$, то $\Omega'$ содержит $\{m\}$. Поэтому если никакие две последовательности, соответствующие элементам из $M$, несравнимы, то всякая топология, содержащая как подмножество $\mathcal{B}$, содержит как подмножество и $\{m\}$ для всякого $m \in M$, а значит совпадает с дискретной топологией на $M$.
+
+                Таким образом $\mathcal{B}$ является предбазой дискретной топологией на $M$ тогда и только тогда, когда $\mathcal{B}$ --- семейство подмножеств $M$ и последовательности, соответствующие элементам из $M$, образуют антицепь в $\mathfrak{B}$. Поэтому мощность $M$ равна размеру какой-то антицепи в $\mathfrak{B}$.
+
+                Заметим, что по теореме Дилуорса максимальный размер антицепи в $\mathfrak{B}$ равен размеру минимального разбиения на цепи $\mathfrak{B}$. Покажем, что минимальное разбиение $\mathfrak{B}$ на цепи равно
+                \[\binom{|\mathcal{B}|}{\left\lfloor \frac{|\mathcal{B}|}{2} \right\rfloor}.\]
+
+                Обозначим $\mathcal{B}$ наконец за $N$. Определим для всякого $k \in [0; N]$
+                \[
+                    B_k := \left\{S \in 2^{N} \mid \sum_{i \in [1; N]} S(i) = k\right\}
+                \]
+                Понятно, что каждое $S_k$ является антицепью, поэтому количество цепей будет не менее $|S_k|$, т.е. не менее $\binom{N}{k}$, а значит не менее $\binom{N}{\lfloor N/2 \rfloor}$.
+                
+                Также очевидно, что для всяких $k$ и $l$ верно, что если $k < l$, то всякий элемент из $S_k$ меньше или несравним со всяким элементом из $S_l$. При этом заметим, что для всякого $k$ у каждого элемента из $S_k$ есть ровно $k$ меньших элементов из $S_{k-1}$ и $N-k$ больших элементов из $S_{k+1}$. Поэтому по лемме Холла для всякого $k \leqslant (N+1)/2$ есть паросочетание из $S_k$ в $S_{k-1}$ и паросочетание из $S_{N-k}$ в $S_{N-k+1}$.
+
+                Действительно, в двудольном графе, порождённом $S_k$ и $S_{K-1}$ (где элементы соединены ребром только если сравнимы) степень каждой вершины доли $S_k$ равна $k$, а в доли $S_{k-1}$ --- $N - k + 1$. Поэтому если взять любые $p$ вершин из $S_{k-1}$ и смежные с ними $q$ вершин из $S_k$, то будет верно
+                \[p \cdot (N - k + 1) = \text{``количество рёбер между $p$-компонентой и $q$-компонентой''} \leqslant q \cdot k\]
+                следовательно
+                \[\frac{q}{p} \geqslant \frac{N - k + 1}{k} = 1 + \frac{N + 1 - 2k}{k} \geqslant 1\]
+                т.е. $q \geqslant p$, что значит, что условие леммы Холла выполнено, а тогда данные паросочетания строятся.
+
+                Построив эти паросочетания, можно посмотреть на бамбуки, которые они образуют в графе, образованном всем $\mathcal{B}$: это будут цепи, на которое распалось $\mathcal{B}$. При этом они все будут содержать по элементу из $S_{\lfloor N/2 \rfloor}$, поэтому цепей $\binom{N}{\lfloor N/2 \rfloor}$. Таким образом $S_{\lfloor N/2 \rfloor}$ --- максимальная цепь.
+
+                Итого
+                \[|M| \leqslant \binom{|\mathcal{B}|}{\left\lfloor \frac{|\mathcal{B}|}{2} \right\rfloor}\]
+                При этом из решения следует, что для всяких $M$ и $N$, что
+                \[|M| \leqslant \binom{N}{\left\lfloor \frac{N}{2} \right\rfloor}\]
+                можно точно так же построить $\mathfrak{B}$ (оно зависит, не от $\mathcal{B}$, а от его мощности, поэтому можно вместо неё подставить $N$), в нём взять антицепь размера $|M|$ сопоставить их элементам $M$ (для каждого $m$ данную последовательность так же назовём $A_m$), затем определить
+                \[
+                    \mathcal{B}_i := \{m \in M \mid A_m(i) = 1\}
+                \]
+                И тогда $\mathcal{B} := \{\mathcal{B}_i \mid i \in [1; N]\}$ будет предбазой в $\Omega$.
+
+                В частности, из неравенства и следует, что
+                \[|M| \leqslant \binom{|\mathcal{B}|}{\left\lfloor \frac{|\mathcal{B}|}{2} \right\rfloor} \leqslant 2^{|\mathcal{B}|}\]
+                Поэтому $|\mathcal{B}| \geqslant n$.
+
+            \item Давайте построим интересный пример $\mathcal{B}$ на $2n$. Сопоставим каждому элементу $m \in M$ индивидуальную бинарную последовательность $s_m$ длины $n$. Далее определим для всякого $i \in [1; n]$
+                \begin{align*}
+                    A_i &:= \{m \in M \mid s_m(i) = 1\}\\
+                    B_i &:= \{m \in M \mid s_m(i) = 0\}
+                \end{align*}
+                Рассмотрим $\mathcal{B} := \{A_i \mid i \in [1; n]\} \cup \{B_i \mid i \in [1; n]\}$. Заметим, что для всякого $m \in M$
+                \[
+                    \{m\} = \left(\bigcap_{\substack{i \in [1; n]\\s_m(i) = 1}} A_i\right) \cap \left(\bigcap_{\substack{i \in [1; n]\\s_m(i) = 0}} B_i\right)
+                \]
+                что значит, что в любой топологии, в которой лежит как подмножество $\mathcal{B}$, лежат как элементы все $\{m\}$, где $m \in M$, а значит любая такая топология совпадает с дискретной топологией на $M$. Следовательно $\mathcal{B}$ --- предбаза дискретной топологии на $|M|$ мощности $2n$.
+        \end{enumerate}
+    \end{problem}
+
+    \begin{problem}{18}
+        Пусть рассматривается множество $X$ с топологией $\Omega$.
+
+        \begin{lemma}
+            $\Cl \circ \Int \circ \Cl \circ \Int = \Cl \circ \Int$.
+        \end{lemma}
+
+        \begin{proof}
+            Пусть дано некоторое $S \subseteq X$. Тогда определим $T := \Cl(\Int(S))$, $I := \Int(T)$, $F := \Fr(T) = \Cl(T) \setminus \Int(T) = T \setminus I$, $J := X \setminus T$. Очевидно, что $T$ замкнуто, следственно $J$ открыто. Также очевидно, что $I$ открыто. Заметим ещё, что $\Int(S)$ --- открытое подмножество $\Cl(\Int(S)) = T$, поэтому $\Int(S) \subseteq I$.
+
+            Покажем, что в любой окрестности любой точки $F$ есть как точки $I$, так и точки $J$.
+
+            Пусть дана некоторая точка $f \in F$ и у неё окрестность $U$, что $U \cap I = \varnothing$. Тогда $U \cap \Int(S) = \varnothing$, а в таком случае $X \setminus U$ --- замкнутое множество, содержащее как подмножество $S$. Значит $f \notin \Cl(\Int(S)) = T$, а следовательно $f \notin F$ --- противоречие. Получаем, что $U \cap I \neq \varnothing$.
+
+            Теперь пусть также даны $f \in F$ и её окрестность $U$, но только $U \cap J = \varnothing$. Тогда $U$ --- открытое подмножество $T$, следовательно $U \subseteq \Int(T) = I$, а значит $f \in I$. Но в таком случае $f \notin F$ --- противоречие. Получаем, что $U \cap J \neq \varnothing$.
+
+            Таким образом мы получаем, что $X$ делится на три части:
+            \begin{itemize}
+                \item точки, у которых некоторая окрестность лежит полностью в $I$ --- элементы $I$;
+                \item точки, у которых некоторая окрестность лежит полностью в $J$ --- элементы $J$;
+                \item точки, у которых каждая окрестность непустым образом пересекается и с $I$, и с $J$ --- элементы $F$.
+            \end{itemize}
+
+            Тогда $\Cl(I) = X \setminus \Int(J \cup F) = X \setminus \Int(J) = T$. Таким образом $\Cl(\Int(T)) = T$. А значит $(\Cl\circ\Int\circ\Cl\circ\Int)(S) = (\Cl \circ \Int)(S)$.
+        \end{proof}
+
+        \begin{corollary}
+            $\Int \circ \Cl \circ \Int \circ \Cl = \Int \circ \Cl$.
+        \end{corollary}
+
+        \begin{proof}
+            \begin{align*}
+                X \setminus \Cl(\Int(\Cl(\Int(X \setminus S)))) &= X \setminus \Cl(\Int(X \setminus S))\\
+                X \setminus \Cl(\Int(\Cl(X \setminus \Cl(S)))) &= X \setminus \Cl(X \setminus \Cl(S))\\
+                X \setminus \Cl(\Int(X \setminus \Int(\Cl(S)))) &= X \setminus (X \setminus \Int(\Cl(S)))\\
+                X \setminus \Cl(X \setminus \Cl(\Int(\Cl(S)))) &= \Int(\Cl(S))\\
+                X \setminus (X \setminus \Int(\Cl(\Int(\Cl(S))))) &= \Int(\Cl(S))\\
+                \Int(\Cl(\Int(\Cl(S)))) &= \Int(\Cl(S))\\
+            \end{align*}
+        \end{proof}
+
+        Из этих двух утверждений (и ещё нескольких с лекции) следует, что:
+        \begin{itemize}
+            \item Минимальная последовательность операций $\Cl$ и $\Int$, переводящая $X$ в $Y$ (если какая-то существует), не содержит двое $\Cl$ или двое $\Int$ подряд. Иначе можно заменить эти две подряд идущие операции на одну, укоротив последовательность.
+            \item Если $Y$ получается из $X$ конечной последовательностью операцией $\Cl$ и $\Int$, то минимальная последовательность --- чередующаяся.
+            \item Минимальная последовательность операций $\Cl$ и $\Int$, переводящая $X$ в $Y$ (если какая-то существует), не содержит подпоследовательностей $\Cl, \Int, \Cl, \Int$ и $\Int, \Cl, \Int, \Cl$. Иначе можно заменить их на $\Cl, \Int$, $\Int, \Cl$ соответственно, укоротив последовательность.
+            \item Если $Y$ получается из $X$ конечной последовательностью операцией $\Cl$ и $\Int$, то минимальная последовательность имеет длину не более трёх, так как иначе она (из-за чередования) начинает содержать либо $\Cl, \Int, \Cl, \Int$, либо $\Int, \Cl, \Int, \Cl$.
+            \item Если $Y$ получается из $X$ конечной последовательностью операцией $\Cl$ и $\Int$, то получается и одной из следующих операций:
+                \begin{align*}
+                    &\Id&
+                    &\Cl&
+                    &\Int&
+                    &\Int\circ\Cl&
+                    &\Cl\circ\Int&
+                    &\Cl\circ\Int\circ\Cl&
+                    &\Int\circ\Cl\circ\Int
+                \end{align*}
+        \end{itemize}
+        Таким образом можно получить не более 7 различных множеств.
+
+        Приведём пример, когда получаются все 7. Для этого возьмём в качестве топологического пространства $\RR$ со стандартной топологией, а в качестве $X$ --- $\{0\} \cup (\QQ \cap (1; 2)) \cup [3; 4) \cup (4; 5)$. Тогда данные операции, применённые к $X$, выдадут следующий результат.
+        \begin{align*}
+            &\Id&
+            &\{0\} \cup (\QQ \cap (1; 2)) \cup [3; 4) \cup (4; 5)\\
+            &\Cl&
+            &\{0\} \cup (1; 2) \cup [3; 5]\\
+            &\Int&
+            &(3; 4) \cup (4; 5)\\
+            &\Int\circ\Cl&
+            &(1; 2) \cup (3; 5)\\
+            &\Cl\circ\Int&
+            &[3; 5]\\
+            &\Cl\circ\Int\circ\Cl&
+            &[1; 2] \cup [3; 5]\\
+            &\Int\circ\Cl\circ\Int&
+            &(3; 5)\\
+        \end{align*}
+        Несложно видеть, что все множества попарно различны.
+
+        Итого, ответ --- 7.
+    \end{problem}
+
+    \begin{problem}{20}
+        \begin{lemma}
+            $Y \cap \Int(A) \subseteq \Int_Y(A)$.
+        \end{lemma}
+
+        \begin{proof}
+            Заметим, что если $U \in \Omega$ и $U \subseteq A$, то $U \cap Y \in \Omega_Y$ и $U \cap Y \subseteq A$. Следовательно
+            \[
+                Y \cap \Int(A)
+                = Y \cap \bigcup_{\substack{U \in \Omega\\U \subseteq A}} U
+                = \bigcup_{\substack{U \in \Omega\\U \subseteq A}} U \cap Y
+                \subseteq \bigcup_{\substack{U \in \Omega\\U \cap Y \subseteq A}} U \cap Y
+                = \bigcup_{\substack{U \cap Y \in \Omega_Y\\U \cap Y \subseteq A}} U \cap Y
+                = \bigcup_{\substack{U \in \Omega_Y\\U \subseteq A}} U
+                = \Int_Y(A)
+            \]
+            т.е. $Y \cap \Int(A) \subseteq \Int_Y(A)$.
+        \end{proof}
+
+        Несложно понять, почему в обратную сторону это утверждение не (всегда) верно. Для этого рассмотрим $X = \RR$, $Y = A = \QQ$. Тогда $Y \cap \Int(A) = \QQ \cap \Int(\QQ) = \QQ \cap \varnothing = \varnothing$, а $\Int_Y(A) = \Int_{\QQ}(\QQ) = \QQ$. Очевидно, что $\QQ \nsubseteq \varnothing$.
+
+        \begin{lemma}
+            $\Cl_Y(A) = Y \cap \Cl(A)$.
+        \end{lemma}
+
+        \begin{proof}
+            Немного перепишем утверждение, определив $B := X \setminus A$:
+            \begin{align*}
+                \Cl_Y(A) = Y \cap \Cl(A)\qquad
+                &\longleftrightarrow\qquad Y \setminus \Cl_Y(A) = Y \setminus (Y \cap \Cl(A))\\
+                &\longleftrightarrow\qquad \Int_Y(Y \setminus A) = Y \setminus \Cl(A)\\
+                &\longleftrightarrow\qquad \Int_Y(Y \cap B) = Y \setminus \Cl(Y \setminus B)\\
+                &\longleftrightarrow\qquad \Int_Y(Y \cap B) = Y \setminus (X \setminus \Int(X \setminus (Y \setminus B)))\\
+                &\longleftrightarrow\qquad \Int_Y(Y \cap B) = Y \cap \Int(X \setminus (Y \setminus B))\\
+                &\longleftrightarrow\qquad \Int_Y(Y \cap B) = Y \cap \Int((X \setminus Y) \cup B)\\
+            \end{align*}
+            Докажем последнее утверждение для абсолютно любого $B \subseteq X$. Заметим, что
+            \begin{align*}
+                y \in \Int_Y(Y \cap B)\qquad
+                &\longleftrightarrow\qquad
+                    \left\{
+                        \begin{aligned}
+                            &y \in Y \cap B\\
+                            &\exists\, U \in \Omega_Y:\; y \in U \wedge U \subseteq Y \cap B
+                        \end{aligned}
+                    \right.\\
+                &\longleftrightarrow\qquad
+                    \left\{
+                        \begin{aligned}
+                            &y \in Y \wedge y \in B\\
+                            &\exists\, V \in \Omega:\; y \in V \wedge V \cap Y \subseteq B
+                        \end{aligned}
+                    \right.\\
+            \end{align*}
+            а с другой стороны
+            \begin{align*}
+                y \in Y \cap \Int((X \setminus Y) \cup B)\qquad
+                &\longleftrightarrow\qquad
+                    \left\{
+                        \begin{aligned}
+                            &y \in Y\\
+                            &y \in \Int((X \setminus Y) \cup B)
+                        \end{aligned}
+                    \right.\\
+                &\longleftrightarrow\qquad
+                    \left\{
+                        \begin{aligned}
+                            &y \in Y\\
+                            &y \in (X \setminus Y) \cup B\\
+                            &\exists\, U \in \Omega:\; y \in U \wedge U \subseteq (X \setminus Y) \cup B
+                        \end{aligned}
+                    \right.\\
+                &\longleftrightarrow\qquad
+                    \left\{
+                        \begin{aligned}
+                            &y \in Y \wedge y \in B\\
+                            &\exists\, U \in \Omega:\; y \in U \wedge U \subseteq (X \setminus Y) \cup B
+                        \end{aligned}
+                    \right.\\
+                &\longleftrightarrow\qquad
+                    \left\{
+                        \begin{aligned}
+                            &y \in Y \wedge y \in B\\
+                            &\exists\, U \in \Omega:\; y \in U \wedge U \cap Y \subseteq B
+                        \end{aligned}
+                    \right.\\
+            \end{align*}
+            Тем самым для абсолютно любого $y$
+            \[y \in \Int_Y(Y \cap B)\qquad \longleftrightarrow\qquad y \in Y \cap \Int((X \setminus Y) \cup B)\]
+            а следовательно
+            \[\Int_Y(Y \cap B) = Y \cap \Int((X \setminus Y) \cup B)\]
+            И как следствие мы получаем требование леммы:
+            \[\Cl_Y(A) = Y \cap \Cl(A)\]
+        \end{proof}
+    \end{problem}
+
+\end{document}

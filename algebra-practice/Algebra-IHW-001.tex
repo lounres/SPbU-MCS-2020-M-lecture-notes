@@ -1,0 +1,430 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+
+\title{Индивидуальное ДЗ\\Алгебра}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\begin{document}
+    \maketitle
+
+    \begin{enumproblem}[2.42]
+        Введём на плоскости систему комплексных координат так, что имеющаяся окружность была окружностью $|z| = 1$. Тогда точки $A$, $B$, $C$, $D$, $E$ и $F$ имеют координаты $a$, $b$, $c$, $d$, $e$ и $f$.
+
+        \begin{lemma}
+            Пусть в комплексных координатах заданы две точки: $a$ и $b$. Тогда прямая, проходящая через них, описывается уравнением
+            \[\frac{z - a}{b - a} = \frac{\overline{z} - \overline{a}}{\overline{b} - \overline{a}}\]
+        \end{lemma}
+
+        \begin{proof}
+            Заметим, что $z$ лежит на прямой $\overline{AB}$ тогда и только тогда, когда $\angle ZAB = 0 \pmod{\pi}$, т.е. аргумент $\frac{z-a}{b-a}$ равен $0 \pmod{\pi}$, или иначе
+            \[\frac{z - a}{b - a} \in \RR\]
+            При чём для всякого комплексного числа $t$ верно, что $t \in \RR \leftrightarrow t = \overline{t}$. Следовательно и получаем, что
+            \[\frac{z - a}{b - a} \in \RR \leftrightarrow \frac{\overline{z} - \overline{a}}{\overline{b} - \overline{a}}\]
+        \end{proof}
+
+        Пусть точки $P$, $Q$ и $R$ описывают координаты $p$, $q$ и $r$. Тогда мы имеем, что
+        \begin{align*}
+            &\frac{p-a}{b-a} = \frac{\overline{p} - \overline{a}}{\overline{b} - \overline{a}}&
+            &\frac{p-d}{e-d} = \frac{\overline{p} - \overline{d}}{\overline{e} - \overline{d}}&
+        \end{align*}
+        Заметим, что
+        \[\frac{\overline{p} - \overline{a}}{\overline{b} - \overline{a}} = \frac{(\overline{p} - \overline{a})ab}{a - b}\]
+        Следовательно
+        \begin{align*}
+            &p-a + (\overline{p} - \overline{a})ab = 0&
+            &p-d + (\overline{p} - \overline{d})ed = 0&
+        \end{align*}
+        или же
+        \begin{align*}
+            &p + \overline{p}ab = a + b&
+            &p + \overline{p}ed = e + d&
+        \end{align*}
+        Таким образом $\overline{p} = \frac{a + b - d - e}{ab - de}$, а $p = \frac{bde + ade - abe - abd}{de - ab}$. Аналогично получаются
+        \begin{align*}
+            &\overline{q} = \frac{b + c - e - f}{bc - ef}&
+            &\overline{r} = \frac{c + d - f - a}{cd - af}\\
+            &q = \frac{cef + bef - bcf - bce}{ef - bc}&
+            &r = \frac{dfa + cfa - cda - cdf}{af - cd}\\
+        \end{align*}
+
+        Теперь же осталось показать, что $P$, $Q$ и $R$ коллинеарны. Т.е. нужно доказать, что
+        \[\frac{p - q}{r - q} = \frac{\overline{p} - \overline{q}}{\overline{r} - \overline{q}}\]
+        Заметим, что
+        \[
+            (p - q)(\overline{r} - \overline{q}) - (\overline{p} - \overline{q})(r - q)
+            = (\overline{p}q + \overline{q}r + \overline{r}p) - (p\overline{q} + q\overline{r} + r\overline{p})
+            = \overline{(p\overline{q} + q\overline{r} + r\overline{p})} - (p\overline{q} + q\overline{r} + r\overline{p})
+        \]
+        Заметим, что
+        \[\overline{(ab - de)(bc - ef)(cd - af)} = -\frac{(ab - de)(bc - ef)(cd - af)}{(abcdef)^2}\]
+        следовательно
+        \[\overline{\left(\frac{(ab - de)(bc - ef)(cd - af)}{abcdef}\right)} = -\frac{(ab - de)(bc - ef)(cd - af)}{abcdef}\]
+        Значит нужно показать, что
+        \[(p\overline{q} + q\overline{r} + r\overline{p}) \frac{(ab - de)(bc - ef)(cd - af)}{abcdef} \in i\RR\]
+        Заметим, что
+        \begin{align*}
+            &p\overline{q} \frac{(ab - de)(bc - ef)(cd - af)}{abcdef}\\
+            =& \left(\frac{1}{a} + \frac{1}{b} - \frac{1}{d} - \frac{1}{e}\right)(b + c - e - f)\left(\frac{a}{c} - \frac{d}{f}\right)\\
+            =& 2\frac{a}{c} - 2\frac{d}{f} + \frac{b}{c} - \frac{e}{c} - \frac{f}{c} + \frac{b}{f} + \frac{c}{f} - \frac{e}{f} + \frac{a}{b} - \frac{a}{d} - \frac{a}{e} + \frac{d}{a} + \frac{d}{b} - \frac{d}{e}\\
+            -& \frac{ae}{bc} - \frac{af}{bc} - \frac{ab}{cd} + \frac{ae}{cd} + \frac{af}{cd} - \frac{ab}{ce} + \frac{af}{ce}
+            - \frac{bd}{af} - \frac{cd}{af} + \frac{ed}{af} - \frac{cd}{bf} + \frac{ed}{bf} + \frac{bd}{ef} + \frac{cd}{ef}
+        \end{align*}
+        Аналогично
+        \begin{align*}
+            &q\overline{r} \frac{(ab - de)(bc - ef)(cd - af)}{abcdef}\\
+            =& -2\frac{b}{d} + 2\frac{e}{a} - \frac{c}{d} + \frac{f}{d} + \frac{a}{d} - \frac{c}{a} - \frac{d}{a} + \frac{f}{a} - \frac{b}{c} + \frac{b}{e} + \frac{b}{f} - \frac{e}{b} - \frac{e}{c} + \frac{e}{f}\\
+            +& \frac{bf}{cd} + \frac{ba}{cd} + \frac{bc}{de} - \frac{bf}{de} - \frac{ba}{de} + \frac{bc}{df} - \frac{ba}{df}
+            + \frac{ce}{ba} + \frac{de}{ba} - \frac{fe}{ba} + \frac{de}{ca} - \frac{fe}{ca} - \frac{ce}{fa} - \frac{de}{fa}
+        \end{align*}
+        \begin{align*}
+            &r\overline{p} \frac{(ab - de)(bc - ef)(cd - af)}{abcdef}\\
+            =& 2\frac{c}{e} - 2\frac{f}{b} + \frac{d}{e} - \frac{a}{e} - \frac{b}{e} + \frac{d}{b} + \frac{e}{b} - \frac{a}{b} + \frac{c}{d} - \frac{c}{f} - \frac{c}{a} + \frac{f}{c} + \frac{f}{d} - \frac{f}{a}\\
+            -& \frac{ca}{de} - \frac{cb}{de} - \frac{cd}{ef} + \frac{ca}{ef} + \frac{cb}{ef} - \frac{cd}{ea} + \frac{cb}{ea}
+            - \frac{df}{cb} - \frac{ef}{cb} + \frac{af}{cb} - \frac{ef}{db} + \frac{af}{db} + \frac{df}{ab} + \frac{ef}{ab}
+        \end{align*}
+        Таким образом
+        \begin{align*}
+            &(p\overline{q} + q\overline{r} + r\overline{p}) \frac{(ab - de)(bc - ef)(cd - af)}{abcdef}\\
+            =& 2\left(\frac{a}{c} - \frac{c}{a}\right) + 2\left(\frac{c}{e} - \frac{e}{c}\right) + 2\left(\frac{e}{a} - \frac{a}{e}\right) - 2\left(\frac{b}{d} - \frac{d}{b}\right) - 2\left(\frac{d}{f} - \frac{f}{d}\right) - 2\left(\frac{f}{b} - \frac{b}{f}\right)\\
+            +& \left(\frac{cb}{ea} - \frac{ae}{bc}\right) + \left(\frac{ae}{cd} - \frac{cd}{ea}\right) + \left(\frac{af}{cd} - \frac{cd}{af}\right) + \left(\frac{ce}{ba} - \frac{ab}{ce}\right) + \left(\frac{af}{ce} - \frac{ce}{fa}\right) + \left(\frac{af}{db} - \frac{bd}{af}\right)\\
+            +& \left(\frac{bf}{cd} - \frac{cd}{bf}\right) + \left(\frac{ed}{bf} - \frac{bf}{de}\right) + \left(\frac{bd}{ef} - \frac{ef}{db}\right) + \left(\frac{de}{ba} - \frac{ba}{de}\right) + \left(\frac{bc}{df} - \frac{df}{cb}\right) + \left(\frac{df}{ab} - \frac{ba}{df}\right)\\
+            +& \left(\frac{de}{ca} - \frac{ca}{de}\right) + \left(\frac{ca}{ef} - \frac{fe}{ca}\right) + \left(\frac{cb}{ef} - \frac{ef}{cb}\right)
+        \end{align*}
+        В каждой скобке разность $t$ и $t^{-1}$, где $|t| = 1$, т.е. $t - \overline{t} \in i\RR$. Таким образом всё выражение чисто мнимое.ё
+    \end{enumproblem}
+
+    \begin{enumproblem}[1.71.3]
+        \begin{remark*}
+            Здесь за $\zeta_n$ обозначается корень из $1$ степени $n$ с минимальным ненулевым аргументом. Т.е. $\zeta_n = \exp(\frac{2\pi}{n}i)$.
+        \end{remark*}
+
+        \begin{lemma}
+            Пусть $\{\alpha_i\}_{i=1}^n$ --- различные (комплексные) значения, а $f$ --- некоторый полином степени $< n$. Тогда
+            \[\frac{f(x)}{\prod_{i=1}^n (x - \alpha_i)} = \sum_{i=1}^n \frac{a_i}{x-\alpha_i}\]
+            где
+            \[a_i := \frac{f(\alpha_i)}{\prod_{t \neq i} (\alpha_i - \alpha_t)}\] 
+        \end{lemma}
+    
+        \begin{proof}
+            Заметим, что по интерполяционной теореме Лагранжа
+            \[
+                f(x)
+                = \sum_{i=1}^n f(\alpha_i) \prod_{j \neq i} \frac{x - \alpha_j}{\alpha_i - \alpha_j}
+                = \sum_{i=1}^n a_i \prod_{j \neq i} (x - \alpha_j)
+            \]
+            Следовательно
+            \[\frac{f(x)}{\prod_{i=1}^n (x - \alpha_i)} = \sum_{i=1}^n \frac{a_i}{x-\alpha_i}\]
+        \end{proof}
+    
+        \begin{lemma}
+            Пусть $\{\alpha_i\}_{i=1}^n$ --- различные (комплексные) значения. Определим
+            \[P(x) := \prod_{i=1}^n (x - \alpha_i)\]
+            Тогда
+            \[\prod_{i \neq t} (\alpha_t - \alpha_i) = P'(\alpha_i)\]
+        \end{lemma}
+    
+        \begin{proof}
+            Заметим, что
+            \[P'(x) = \sum_{i=1}^n \prod_{j \neq i} (x - \alpha_j)\]
+            Следовательно
+            \[P'(\alpha_t) = \sum_{i=1}^n \prod_{j \neq i} (\alpha_t - \alpha_j) = \prod_{j \neq t} (\alpha_t - \alpha_j)\]
+        \end{proof}
+    
+        \begin{corollary}
+            \[\prod_{\substack{i \in [0; n-1]\\ i \neq t}} (\zeta_n^t - \zeta_n^i) = n\zeta_n^{-t}\]
+        \end{corollary}
+    
+        \begin{theorem}
+            \[\frac{2n+2}{x^{2n+2}-1} - \frac{1}{x-1} - \frac{1}{x+1} + n = \frac{x^2-1}{2x} \sum_{i=1}^n \frac{1}{\frac{x^2+1}{2x} - \cos(\frac{2\pi i}{2n+2})}\]
+        \end{theorem}
+    
+        \begin{proof}
+            \[
+                \frac{2n+2}{x^{2n+2}-1}
+                = \sum_{i=1}^{2n+2} \frac{1}{x - \zeta_{2n+2}^i} \cdot \frac{2n+2}{(2n+2) \zeta_{2n+2}^{-i}}
+                = \sum_{i=1}^{2n+2} \frac{1}{\zeta_{2n+2}^{-i} x - 1}
+            \]
+            Заметим, что
+            \[
+                \frac{1}{\zeta_{2n+2}^i x - 1} + \frac{1}{\zeta_{2n+2}^{-i} x - 1}
+                = \frac{2x \cos(\frac{2 \pi i}{2n+2}) - 2}{x^2 + 1 - 2x \cos(\frac{2 \pi i}{2n+2})}
+                = \frac{x^2 - 1}{x^2 + 1 - 2x \cos(\frac{2 \pi i}{2n+2})} - 1
+                = \frac{\frac{x^2-1}{2x}}{\frac{x^2+1}{2x} - \cos(\frac{2\pi i}{2n+2})} - 1
+            \]
+            Следовательно
+            \[
+                \frac{2n+2}{x^{2n+2}-1} - \frac{1}{x-1} + \frac{1}{x+1} + n
+                = \sum_{i=1}^n \frac{1}{\zeta_{2n+2}^i x - 1} + \frac{1}{\zeta_{2n+2}^{-i} x - 1}
+                = \frac{x^2-1}{2x} \sum_{i=1}^n \frac{1}{\frac{x^2+1}{2x} - \cos(\frac{2\pi i}{2n+2})}
+            \]
+        \end{proof}
+
+        \begin{corollary}
+            \begin{align*}
+                \sum_{i=1}^n \frac{1}{2 - 2\cos(\frac{\pi i}{n+1})}
+                &= \frac{1}{2} \sum_{i=1}^n \frac{1}{1 - \cos(\frac{2 \pi i}{2n+2})}\\
+                &= \frac{1}{2} \lim_{x \to 1} \frac{\cfrac{2n+2}{x^{2n+2}-1} - \cfrac{1}{x-1} + \cfrac{1}{x+1} + n}{\cfrac{x^2-1}{2x}}\\
+                &= \lim_{x \to 1} \frac{\cfrac{(2n+2)}{x^{2n+1} + x^{2n} + \dots + 1} - 1 + \cfrac{x-1}{x+1} + n(x-1)}{\cfrac{(x^2-1)(x-1)}{x}}\\
+                \intertext{по правилу Лопиталя диференцируем числитель и знаменатель дважды}
+                &= \lim_{x \to 1} \frac{(2n+2)\frac{2((2n+1)x^{2n} + \dots + 1)^2 - (x^{2n+1} + x^{2n} + \dots + 1)((2n+1)(2n)x^{2n-1} + \dots + 2 \cdot 1)}{(x^{2n+1} + x^{2n} + \dots + 1)^3} - \cfrac{4}{(x+1)^3}}{\cfrac{2(x^3+1)}{x^3}}\\
+                &= \frac{(2n+2) \cfrac{2 \left(\frac{(2n+1)(2n+2)}{2}\right)^2 - (2n+2) \cdot \frac{(2n+2)(2n+1)(2n)}{3}}{(2n+2)^3} - \frac{4}{2^3}}{\frac{2 \cdot 2}{1}}\\
+                &= \frac{2 \left(\frac{(2n+1)}{2}\right)^2 - \frac{(2n+1)(2n)}{3} - \frac{1}{2}}{4}\\
+                &= \frac{3(2n+1)^2 - 2(2n+1)(2n) - 3}{24}\\
+                &= \frac{n^2 + 2n}{6} 
+            \end{align*}
+        \end{corollary}
+    \end{enumproblem}
+
+    \begin{enumproblem}[.1]
+        Давайте упростим порождающие наборы делая линейные замены (т.е. заменяя вектор $u$ на $\lambda u$ или $u$ на $u + \lambda v$, где $v$ лежит в породжающем наборе):
+        \begin{align*}
+            U
+            &= \left\langle
+                \begin{pmatrix}
+                    1 \\ 3 \\ 2 \\ 0
+                \end{pmatrix},
+                \begin{pmatrix}
+                    -2 \\ 2 \\ -4 \\ 0
+                \end{pmatrix},
+                \begin{pmatrix}
+                    1 \\ -4 \\ -1 \\ -3
+                \end{pmatrix}
+            \right\rangle&
+            &= \left\langle
+                \begin{pmatrix}
+                    1 \\ 3 \\ 2 \\ 0
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ 8 \\ 0 \\ 0
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ -7 \\ -3 \\ -3
+                \end{pmatrix}
+            \right\rangle&
+            &= \left\langle
+                \begin{pmatrix}
+                    1 \\ 3 \\ 2 \\ 0
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ 1 \\ 0 \\ 0
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ -7 \\ -3 \\ -3
+                \end{pmatrix}
+            \right\rangle\\
+            &= \left\langle
+                \begin{pmatrix}
+                    1 \\ 0 \\ 2 \\ 0
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ 1 \\ 0 \\ 0
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ 0 \\ -3 \\ -3
+                \end{pmatrix}
+            \right\rangle&
+            &= \left\langle
+                \begin{pmatrix}
+                    1 \\ 0 \\ 2 \\ 0
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ 1 \\ 0 \\ 0
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ 0 \\ 1 \\ 1
+                \end{pmatrix}
+            \right\rangle&
+            &= \left\langle
+                \begin{pmatrix}
+                    1 \\ 0 \\ 0 \\ -2
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ 1 \\ 0 \\ 0
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ 0 \\ 1 \\ 1
+                \end{pmatrix}
+            \right\rangle&
+        \end{align*}
+        Заметим, что в новом порождающем множестве по первым трём координатам восстанавливается разложение на порождающие элементы, а последняя просто выводится из них. Поэтому вектор $(a, b, c, x)$ лежит в $U$ тогда и только тогда, когда раскладывается в линейную сумму порождающих векторов, т.е. только когда $-2a + c = x$, так как если вектор раскладывается то только как
+        \[
+            \begin{pmatrix}
+                a \\ b \\ c \\ x
+            \end{pmatrix}
+            = a
+            \begin{pmatrix}
+                1 \\ 0 \\ 0 \\ -2
+            \end{pmatrix}
+            + b
+            \begin{pmatrix}
+                0 \\ 1 \\ 0 \\ 0
+            \end{pmatrix}
+            + c
+            \begin{pmatrix}
+                0 \\ 0 \\ 1 \\ 1
+            \end{pmatrix}
+        \]
+        и проблемы могут возникнуть только в несвободных координатах (в данном случае --- только в четвёртой). Таким образом $U$ задаётся системой уравнений
+        \[
+            \left\{
+                \begin{aligned}
+                    &-2 x_1 + x_3 = x_4
+                \end{aligned}
+            \right.
+        \]
+
+        Аналогично обработаем $V$:
+        \begin{align*}
+            V
+            &= \left\langle
+                \begin{pmatrix}
+                    -4 \\ 4 \\ -4 \\ -2
+                \end{pmatrix},
+                \begin{pmatrix}
+                    1 \\ -2 \\ 4 \\ 3
+                \end{pmatrix},
+                \begin{pmatrix}
+                    1 \\ -2 \\ 4 \\ 3
+                \end{pmatrix}
+            \right\rangle&
+            &= \left\langle
+                \begin{pmatrix}
+                    -4 \\ 4 \\ -4 \\ -2
+                \end{pmatrix},
+                \begin{pmatrix}
+                    1 \\ -2 \\ 4 \\ 3
+                \end{pmatrix}
+            \right\rangle&
+            &= \left\langle
+                \begin{pmatrix}
+                    0 \\ -4 \\ 12 \\ 10
+                \end{pmatrix},
+                \begin{pmatrix}
+                    1 \\ -2 \\ 4 \\ 3
+                \end{pmatrix}
+            \right\rangle\\
+            &= \left\langle
+                \begin{pmatrix}
+                    1 \\ -2 \\ 4 \\ 3
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ -4 \\ 12 \\ 10
+                \end{pmatrix}
+            \right\rangle&
+            &= \left\langle
+                \begin{pmatrix}
+                    1 \\ -2 \\ 4 \\ 3
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ 1 \\ -3 \\ -5/2
+                \end{pmatrix}
+            \right\rangle&
+            &= \left\langle
+                \begin{pmatrix}
+                    1 \\ 0 \\ -2 \\ -2
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ 1 \\ -3 \\ -5/2
+                \end{pmatrix}
+            \right\rangle&
+        \end{align*}
+        Точно так же $V$ определяется системой линейных уравнений:
+        \[
+            \left\{
+                \begin{aligned}
+                    &-2 x_1 + -3 x_2 = x_3\\
+                    &-2 x_1 + -\frac{5}{2} x_2 = x_4\\
+                \end{aligned}
+            \right.
+        \]
+
+        Заметим, что вектор $(1, 0, -2, -2)$ --- первый образующий вектор $V$ --- не является корнем СЛУ подпространства $U$, поэтому не лежит в нём, а значит если положить его в $U$ (и взять замыкание), то получим всё $\RR^4$. Значит $U + V = \RR^4$, а базис $U + V$ ---
+        \[
+            \left\{
+                \begin{pmatrix}
+                    1 \\ 0 \\ 0 \\ 0
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ 1 \\ 0 \\ 0
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ 0 \\ 1 \\ 0
+                \end{pmatrix},
+                \begin{pmatrix}
+                    0 \\ 0 \\ 0 \\ 1
+                \end{pmatrix}
+            \right\}
+        \]
+        Также получим, что СЛУ, задающее $U \cap V$ --- объединение СЛУ, задающих $U$ и $V$:
+        \begin{align*}
+            &&
+            &\left\{
+                \begin{aligned}
+                    &-2 x_1 + x_3 = x_4\\
+                    &-2 x_1 + -3 x_2 = x_3\\
+                    &-2 x_1 + -\frac{5}{2} x_2 = x_4\\
+                \end{aligned}
+            \right.&
+            &\Longleftrightarrow&
+            &\left\{
+                \begin{aligned}
+                    &-2 x_1 + x_3 = x_4\\
+                    &-2 x_1 + -3 x_2 = x_3\\
+                    &\frac{5}{2} x_2 + x_3 = 0\\
+                \end{aligned}
+            \right.&
+            &\Longleftrightarrow&
+            &\left\{
+                \begin{aligned}
+                    &-2 x_1 + x_3 = x_4\\
+                    &\frac{5}{2} x_2 + x_3 = 0\\
+                    &-2 x_1 + -3 x_2 = x_3\\
+                \end{aligned}
+            \right.\\
+            &\Longleftrightarrow&
+            &\left\{
+                \begin{aligned}
+                    &-2 x_1 - \frac{5}{2} x_2 = x_4\\
+                    &\frac{5}{2} x_2 + x_3 = 0\\
+                    &-2 x_1 -\frac{1}{2} x_2 = 0\\
+                \end{aligned}
+            \right.&
+            &\Longleftrightarrow&
+            &\left\{
+                \begin{aligned}
+                    &-2 x_1 - \frac{5}{2} x_2 = x_4\\
+                    &\frac{5}{2} x_2 + x_3 = 0\\
+                    &4 x_1 + x_2 = 0\\
+                \end{aligned}
+            \right.&
+            &\Longleftrightarrow&
+            &\left\{
+                \begin{aligned}
+                    &8 x_1 = x_4\\
+                    &-10 x_1 + x_3 = 0\\
+                    &4 x_1 + x_2 = 0\\
+                \end{aligned}
+            \right.\\
+            &\Longleftrightarrow&
+            &\left\{
+                \begin{aligned}
+                    &8 x_1 = x_4\\
+                    &10 x_1 = x_3\\
+                    &-4 x_1 = x_2 \\
+                \end{aligned}
+            \right.&
+        \end{align*}
+        Следовательно
+        \[
+            U \cap V
+            = \left\langle
+                \begin{pmatrix}
+                    1 \\ -4 \\ 10 \\ 8
+                \end{pmatrix}
+            \right\rangle
+        \]
+        а значит $\{(1, -4, 10, 8)\}$ и есть базис $U \cap V$.
+    \end{enumproblem}
+\end{document}

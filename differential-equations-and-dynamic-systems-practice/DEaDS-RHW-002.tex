@@ -1,0 +1,44 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+
+\title{Рейтинговое домашнее задание от 17.09\\Дифференциальные уравнения и динамические системы}
+\author{Глеб Минаев @ 204 (20.Б04-мкн)}
+\date{}
+
+\newcommand{\const}{\mathrm{const}}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{2}
+        Давайте временно про периодичность и просто решим дифференциальное уравнение. Сделаем заммену
+        \[
+            z(x) := \frac{y(x)}{e^{kx}},
+            \qquad \Longrightarrow \qquad
+            y(x) = z(x) e^{kx},
+            y'(x) = z'(x) e^{kx} + k z(x) e^{kx}.
+        \]
+        Получаем уравнение
+        \begin{gather*}
+            z' e^{kx} + k z e^{kx} = k z e^{kx} + f\\
+            z' e^{kx} = f\\
+            z' = \frac{f}{e^{kx}}\\
+            z(x) = \int_0^x e^{-kt} f(t) dt + C.
+        \end{gather*}
+        Таким образом решение изначального уравнения имеет вид
+        \[y = e^{kx} \left(\int_0^x e^{-kt} f(t) dt + C\right).\]
+
+        Теперь определим, какие из данных решений являются $\omega$-периодическими (при условии $\omega$-периодичности $f$, конечно). $\omega$-периодичность значит, что $y(x) = y(x+\omega)$ для всех $x \in \RR$. Это значит, что
+        \begin{gather*}
+            e^{kx} \left(\int_0^x e^{-kt} f(t) dt + C\right) = e^{k(x + \omega)} \left(\int_0^{x + \omega} e^{-kt} f(t) dt + C\right)\\
+            \int_0^x e^{-kt} f(t) dt + C = e^{k\omega} \left(\int_0^\omega e^{-kt} f(t) dt + \int_\omega^{x + \omega} e^{-kt} f(t) dt + C\right)\\
+            \int_0^x e^{-kt} f(t) dt + C = e^{k\omega} \left(\int_0^\omega e^{-kt} f(t) dt + \int_0^x e^{-k(t + \omega)} f(t + \omega) d(t + \omega) + C\right)\\
+            \int_0^x e^{-kt} f(t) dt + C = e^{k\omega} \left(\int_0^\omega e^{-kt} f(t) dt + e^{-k\omega} \int_0^x e^{-kt} f(t) dt + C\right)\\
+            C = e^{k\omega} \left(\int_0^\omega e^{-kt} f(t) dt + C\right)\\
+            C = \frac{e^{k\omega}}{1 - e^{k\omega}} \int_0^\omega e^{-kt} f(t) dt\\
+        \end{gather*}
+        Заметим, что все переходы были равносильными, а значит решение $\omega$-периодично тогда и только тогда, когда выполнено последнее равенство. При этом $k \neq 0$ и $\omega \neq 0$, поэтому $k\omega \neq$, а значит $\frac{e^{k\omega}}{1 - e^{k\omega}}$ определено. Также $e^{-kt} f(t)$ --- непрерывная функция, а значит её интеграл от $0$ до $\omega$ будет определён. Таким образом правая сторона равенства определена и, следовательно, решение (строго) единственно, так как получается при единственном $C$. Конкретнее, единственное решение ---
+        \[e^{kx} \left(\int_0^x e^{-kt} f(t) dt + \frac{e^{k\omega}}{1 - e^{k\omega}} \int_0^\omega e^{-kt} f(t) dt\right).\]
+    \end{problem}
+\end{document}

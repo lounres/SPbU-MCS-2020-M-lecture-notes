@@ -1,0 +1,162 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions-en}
+\usepackage{float}
+\usepackage[all]{xy}
+\CompileMatrices
+
+\title{Homework of 11.16\\Differential geometry}
+\author{Gleb Minaev @ 204 (20.Б04-мкн)}
+\date{}
+
+\newcommand{\const}{\mathrm{const}}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{72}
+        \begin{lemma}
+            Let $\gamma: [0; 1] \to \RR^n$ be regular a curve from $\vec{0}$ to $\vec{v}$ of length $l$, whose curvature is everywhere not less than $k > 0$ and which is concatenable to itself (that means concatenation of $\gamma: [0; 1] \to \RR^n$ and $\gamma + \vec{v}: [0; 1] \to \RR^n$ is regular too). Then for every $m \in \NN \setminus \{0\}$ curve
+            \[
+                \tau_m: [0; 1] \to \RR^n, t \mapsto
+                \begin{cases}
+                    \frac{1}{m}\gamma(tm)& \text{ if } \frac{0}{m} \leqslant t \leqslant \frac{1}{m}\\
+                    \dots\\
+                    \frac{1}{m}(\gamma(tm - p) + p\vec{v})& \text{ if } \frac{p}{m} \leqslant t \leqslant \frac{p+1}{m}\\
+                    \dots\\
+                    \frac{1}{m}(\gamma(tm - m + 1) + (m-1)\vec{v})& \text{ if } \frac{m-1}{m} \leqslant t \leqslant \frac{m}{m}
+                \end{cases}
+                \quad (p \in \{0; \dots; m-1\})
+            \]
+            is regular, has length $l$, goes from $\vec{0}$ to $\vec{v}$, and whose curvature is everywhere not less than $mk$.
+        \end{lemma}
+
+        \begin{proof}
+            \begin{itemize}
+                \item $\tau_m$ is correctly defined, because for every $p \in \{0; \dots; m-1\}$
+                    \begin{align*}
+                        \frac{1}{m}\left(\gamma\left(\frac{p+1}{m}m - p\right) + p\vec{v}\right)
+                        &= \frac{1}{m}(\gamma(1) + p\vec{v})\\
+                        &= \frac{1}{m}((p+1)\vec{v})\\
+                        &= \frac{1}{m}(\gamma(0) + (p+1)\vec{v})\\
+                        &= \frac{1}{m}\left(\gamma\left(\frac{p+1}{m}m - (p+1)\right) + (p+1)\vec{v}\right),
+                    \end{align*}
+                    i.e. $\tau_m(\frac{p+1}{m})$ is correctly defined.
+                \item For any $p \in \{0; \dots; m-2\}$ curve $(m\tau_m - p\vec{v})|_{[\frac{p}{m}; \frac{p+2}{m}]}$ is just concatenation of $\gamma$ and $\gamma + \vec{v}$, which is regular. Regularity of $\tau_m$ on $[0; 1] \setminus \{\frac{p}{m}\}_{p=1}^{m-1}$ is obvious. So now regularity of $\tau_m$ in any point $\frac{p}{m}$ is obvious too. Hence $\tau_m$ is regular everywhere.
+                \item Length of $\tau_m$ is
+                    \begin{align*}
+                        \int_0^1 \|\tau'_m(t)\| dt
+                        &= \sum_{p=0}^{m-1} \int_{p/m}^{(p+1)/m} \left\|\left(\frac{1}{m}(\gamma(tm - p) + p\vec{v})\right)'\right\| dt\\
+                        &= \sum_{p=0}^{m-1} \int_{p/m}^{(p+1)/m} \left\|\left(\frac{1}{m}\gamma(tm - p)\right)'\right\| dt\\
+                        &= \sum_{p=0}^{m-1} \int_{p/m}^{(p+1)/m} \|\gamma'(tm - p)\| dt\\
+                        &= \sum_{p=0}^{m-1} \frac{1}{m} \int_{p/m}^{(p+1)/m} \|\gamma'(tm - p)\| d(tm - p)\\
+                        &= \sum_{p=0}^{m-1} \frac{1}{m} \int_0^1 \|\gamma'(s)\| ds\\
+                        &= \sum_{p=0}^{m-1} \frac{l}{m}\\
+                        &= l.
+                    \end{align*}
+                \item
+                    \[\tau_m(0) = \frac{1}{m} \gamma(0 \cdot m) = \frac{1}{m} \gamma(0) = \frac{1}{m} \vec{0} = \vec{0}\]
+                    and
+                    \[
+                        \tau_m(1)
+                        = \frac{1}{m}(\gamma(1 \cdot m - m + 1) + (m-1)\vec{v})
+                        = \frac{1}{m}(\gamma(1) + (m-1)\vec{v})
+                        = \frac{1}{m}(\vec{v} + (m-1)\vec{v})
+                        = \frac{m}{m}\vec{v}
+                        = \vec{v}.
+                    \]
+                \item For every $p \in \{0; \dots; m-1\}$ and every $t \in [\frac{p}{m}; \frac{p+1}{m}]$
+                    \[
+                        \tau_m'(t)
+                        = \left(\frac{1}{m} (\gamma(tm-p) - p\vec{v})\right)'
+                        = \gamma'(tm-p)
+                    \]
+                    and $\tau_m''(t) = m \gamma''(tm-p)$. Hence
+                    \[
+                        \kappa_{\tau_m}(t)
+                        = \frac{|\tau_m''(t) \times \tau_m'(t)|}{\|\tau_m'(t)\|^3}
+                        = \frac{|m\gamma''(tm-p) \times \gamma'(tm-p)|}{\|\gamma'(tm-p)\|^3}
+                        = m \kappa_{\gamma}(tm-p) \geqslant mk.
+                    \]
+            \end{itemize}
+        \end{proof}
+
+        \begin{corollary}
+            Let $\gamma: [0; 1] \to \RR^n$ be regular a curve from $\vec{0}$ to $\vec{v}$ of length $l$, whose curvature is everywhere positive and which is concatenable to itself. Then for every $k > 0$ there is $m \in \NN \setminus \{0\}$. Such that curvature $\tau_m$ is everywhere not less than $k$.
+        \end{corollary}
+
+        \begin{proof}
+            Curvature of $\tau_m$ in $t$ is a continuous function on compact $[0; 1]$. Hence there is $\varepsilon > 0$ such that the curvature is everywhere not less $\varepsilon$. Then there is $m \in \NN$ such that $m \geqslant k/\varepsilon$. So curvature of $\tau_m$ is everywhere not less than $m \varepsilon \geqslant k$.
+        \end{proof}
+
+        \begin{enumerate}
+            \renewcommand{\theenumi}{\alph{enumi}}
+            \renewcommand{\labelenumi}{\theenumi)}
+            \item Let's consider almost trochoid ($h > 1$, $\alpha > 0$)
+                \[\gamma: [0; 1] \to \RR^2, t \mapsto \left(t - \frac{h}{2\pi} \sin(2\pi t); \frac{\alpha h}{2\pi}(1 - \cos(2\pi t))\right).\]
+                Then
+                \[\gamma'(t) = (1 - h \cos(2\pi t); \alpha h \sin(2\pi t)), \qquad \gamma''(t) = 2\pi h (\sin(2\pi t); \alpha \cos(2\pi t)).\]
+                So
+                \begin{align*}
+                    |\gamma'(t) \times \gamma''(t)|
+                    &= |(1 - h \cos(2\pi t)) 2\pi h\alpha \cos(2\pi t) - \alpha h \sin(2\pi t) 2\pi h\sin(2\pi t)|\\
+                    &= 2\pi h\alpha |\cos(2\pi t) - h|\\
+                    &\geqslant 2\pi h\alpha (h-1) > 0.\\
+                \end{align*}
+                Also when $\|\gamma'(t)\| = 0$, $1 = h \cos(2\pi t)$ and $\alpha h \sin(2\pi t)$. Then $\sin(2\pi t) = 0$, so $t \in \ZZ$, $h \cos(2\pi t) = h > 1$. Hence $\|\gamma'(t)\|$ is always positive. Hence $\gamma$ is regular, self-concatenable, goes from $\vec{0}$ to $(1; 0)$, and has positive curvature.
+
+                Let $l$ be a length of $\gamma$; obviously $l > 1$. We know that for some $m \in \NN \setminus \{0\}$ curve $\tau_m$ is also regular, goes from $\vec{0}$ to $(1; 0)$, and has length $l$, but also has curvature that is not less $1.1 > 1$. Then let's consider curve $\delta := \gamma/l$. Then $\delta$ is regular, goes from $\vec{0}$ to $(1/l; 0)$, has length $1$, and curvature $> 1$ (it increased, because of the homotety with coefficient from $(0; 1)$). Then let's prove that fro every $\varepsilon > 0$ $l$ may be $< 1 + \varepsilon$; in that case
+                \[\frac{1}{l} > \frac{1}{1 + \varepsilon} > \frac{1 - \varepsilon^2}{1 + \varepsilon} = 1 - \varepsilon.\]
+
+                \begin{align*}
+                    l
+                    &= \int_0^1 \|\gamma'(t)\| dt\\
+                    &= \int_0^1 \sqrt{(1 - h \cos(2\pi t))^2 + (\alpha h \sin(2\pi t))^2} dt\\
+                    &\leqslant \int_0^1 |1 - h \cos(2\pi t)| + |\alpha h \sin(2\pi t)| dt\\
+                    &\leqslant \int_0^1 |1 - h \cos(2\pi t)| + \alpha h dt\\
+                    &\leqslant \int_0^1 |1 - h \cos(2\pi t)| dt + \alpha h.
+                \end{align*}
+                We already have that
+                \[\lim_{\substack{h \to 1^+\\ \alpha \to 0^+}} \alpha h = 0.\]
+                Let $\varphi := \cos^{-1}(1/h)$. Then $\lim_{h \to 1^+} \varphi = 0^+$ and
+                \begin{align*}
+                    \int_0^1 |1 - h \cos(2\pi t)| dt
+                    &= \int_0^1 (1 - h \cos(2\pi t)) dt + 2\int_{-\varphi}^\varphi (h \cos(2\pi t) - 1) dt\\
+                    &= 1 + 2\int_{-\varphi}^\varphi (h \cos(2\pi t) - 1) dt\\
+                    &\leqslant 1 + 2\int_{-\varphi}^\varphi (h - 1) dt\\
+                    &\leqslant 1 + 4\varphi (h - 1) dt.
+                \end{align*}
+                Hence
+                \[
+                    \lim_{\substack{h \to 1^+\\ \alpha \to 0^+}} l
+                    \leqslant \lim_{\substack{h \to 1^+\\ \alpha \to 0^+}} \int_0^1 |1 - h \cos(2\pi t)| dt + \alpha h
+                    \leqslant \lim_{\substack{h \to 1^+\\ \alpha \to 0^+}} 1 + 4\varphi (h-1) + \alpha h
+                    = 1 + 0 + 0 = 1.
+                \]
+                Then there are $h > 1$ and $\alpha > 0$ such that $l < 1 + \varepsilon$. 
+            \item Let's consider spiral ($r > 0$)
+                \[\gamma: [0; 1] \to \RR^3, t \mapsto (t; r (\cos(2\pi t) - 1); r \sin(2\pi t)).\]
+                Then
+                \[
+                    \gamma'(t) = (1; -2\pi r \sin(2\pi t); 2\pi r \cos(2\pi t)),
+                    \qquad
+                    \gamma''(t) = (0; -4\pi^2 r \cos(2\pi t); -4\pi^2 r \sin(2\pi t)).
+                \]
+                So
+                \begin{align*}
+                    |\gamma'(t) \times \gamma''(t)|
+                    &= \sqrt{(-4\pi^2 r \cos(2\pi t))^2 + (-4\pi^2 r \sin(2\pi t))^2 + (8\pi^3 r^2 \sin(2\pi t)^2 + 8\pi^3 r^2 \cos(2\pi t)^2)^2}\\
+                    &= \sqrt{16\pi^4 r^2 + 64\pi^6 r^4} > 0
+                \end{align*}
+                Also $\|\gamma'(t)\| \geqslant 1$. Hence $\gamma$ is regular, self-concatenable, goes from $\vec{0}$ to $(1; 0; 0)$, and has positive curvature. Also length of $\gamma$ is
+                \begin{align*}
+                    \int_0^1 \|\gamma'(t)\| dt
+                    &= \int_0^1 \sqrt{1 + 4 \pi^2 r^2 \sin(2\pi t)^2 + 4 \pi^2 r^2 \cos(2\pi t)^2}\\
+                    &= \int_0^1 \sqrt{1 + 4 \pi^2 r^2}\\
+                    &= \sqrt{1 + 4 \pi^2 r^2}\\
+                \end{align*}
+                Hence for every $\varepsilon > 0$ if $r < \frac{\varepsilon}{2\pi}$ then the length is $< 1 + \varepsilon$.
+                
+                So by the same reasoning we construct $\tau_m$ with the same characteristics but curvature, which increased in needed way, and homotate it with coefficient $1/l$ to get the asked curve.
+        \end{enumerate}
+    \end{problem}
+\end{document}

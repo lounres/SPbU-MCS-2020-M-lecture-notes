@@ -1,0 +1,1128 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{../.tex/mcs-notes}
+\usepackage{todonotes}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage[all]{xy}
+\CompileMatrices
+
+\settitle
+{Введение в алгебраическую геометрию.}
+{Иван Александрович Панин}
+{algebraic-geometry/main.pdf}
+\date{}
+
+% \DeclareMathOperator{\Quot}{Quot}
+% \DeclareMathOperator*{\osc}{osc}
+% \DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\const}{const}
+% \DeclareMathOperator{\grad}{grad}
+% \newcommand{\eqdef}{\mathbin{\stackrel{\mathrm{def}}{=}}}
+% \newcommand{\True}{\mathrm{True}}
+% \newcommand{\False}{\mathrm{False}}
+\newcommand{\Id}{\mathrm{Id}}
+% \renewcommand{\Re}{\mathrm{Re}}
+% \renewcommand{\Im}{\mathrm{Im}}
+\renewcommand{\mod}{\mathrm{mod}}
+\newcommand{\Max}{\mathrm{Max}}
+\newcommand{\Ker}{\mathrm{Ker}}
+\renewcommand{\AA}{\ensuremath{\mathbb{A}}\xspace}
+\newcommand{\Func}{\mathrm{Func}}
+\newcommand{\Aff}{\mathrm{Aff}}
+\newcommand{\Mor}{\mathrm{Mor}}
+\newcommand{\Sect}{\mathrm{Sect}}
+\newcommand{\can}{\mathrm{can}}
+\newcommand{\fgrkalg}[1][k]{\text{f.g.r.$#1$-alg.}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\incl}{\mathrm{in}}
+\newcommand{\Ospaces}{\mathrm{\mathcal{O}-spaces}}
+
+\begin{document}
+    \maketitle
+
+    \listoftodos[TODOs]
+
+    \tableofcontents
+
+    \vspace{2em}
+    Литература:
+    \begin{itemize}
+        \item Хартсхорн, ``Алгебраическая геометрия''.
+        \item Атья, Макдональд, ``Введение в коммутативную алгебру''.
+    \end{itemize}
+
+    \begin{remark}
+        Все кольца ассоциативны, коммутативны и с единицей.
+    \end{remark}
+
+    \section{Коммутативноалгебраическое введение}
+
+    \begin{definition}
+        Пусть $I$ --- частично упорядоченное по порядку $\leqslant$ множество, т.е.
+        \[a \leqslant b \leqslant c \quad \Longrightarrow \quad a \leqslant c.\]
+
+        ОВУ: всякая последовательности элементов $i_1 \leqslant i_2 \leqslant \dots$ стабилизируется с некоторого момента (т.е. последовательность имеет константный хвост).
+
+        \emph{Наличие минимального элемента}. Для всякого $J \subseteq I$ существует $j_{max} \in J$, что для всякого $j \in J$ имеет место следствие $j_{max} \leqslant j \Rightarrow j = j_{max}$.
+    \end{definition}
+
+    \begin{lemma}
+        $I$ удовлетворяет ОВУ тогда и только тогда, когда $I$ удовлетворяет наличию минимального элемента.
+    \end{lemma}
+    
+    \begin{proof}
+        \begin{itemize}
+            \item[$\Rightarrow$)] Предположим, что максимального элемента, т.е. для всякого элемента есть строго больший. Тогда мы можем построить строго возрастающую последовательность, что противоречит ОВУ.
+            \item[$\Leftarrow$)] Пусть дана нестрого возрастающая последовательность $(i_m)_{m=1}^\infty$. Тогда применяя свойство наличия максимального элемента для $J := \{i_m\}_{m=1}^\infty$, получаем, что есть $j_M \in J$ (для некоторого $M$), для которого нет строго большего в $J$. Значит после $j_M$ все элементы с ним совпадают. 
+        \end{itemize}
+    \end{proof}
+
+    \begin{definition}
+        Пусть $A$ --- кольцо, а $M$ --- $A$-модуль. Тогда $\mod(A)$ --- множество всех подмодулей в $M$, упорядоченных по включению ($(0), M \in \mod(M)$).
+
+        $M$ \emph{нётеров}, если $\mod(A)$ удовлетворяет ОВУ (или наличию максимального элемента).
+    \end{definition}
+
+    \begin{lemma}\ \label{neotherian-modules-lemma}
+        \begin{enumerate}
+            \item Если $M$ нётеров, то любой подмодуль $N \subseteq M$ конечнопорождён (как $A$-модуль).
+            \item Если любой подмодуль $M$ конечнопорождён, то $M$ нётеров.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[$1 \Rightarrow 2$)] Пусть $M$ нётеров, $N \subseteq M$ --- подмодуль. Пусть $I$ --- все конечнопорождённые модули в $N$.
+
+                $I$ непуст, так как $(0) \in I$. Следовательно, в $I$ есть максимальный элемент, пусть $N_{max}$. Если $N_{max} = N$, то $N$ конечнопорождён. Если $N_{max} \neq N$, то существует $x \in N \setminus N_{max}$, что $N_{max} \nsubseteq N_{max} + x \cdot A \subseteq N$ --- противоречие.
+            
+            \item[$2 \Rightarrow 1$)] Пусть имеется последовательность $M_1 \subseteq M_2 \subseteq \dots$ подмодулей $M$. Определим
+                \[M_\infty := \bigcup_{m=1}^\infty M_m.\]
+                $M_\infty$ тоже подмодуль $M$. Значит $M_\infty$ конечнопорождён. $x_1, \dots, x_n \in M_\infty$, значит есть $n_0$, что $x_1, \dots, x_n \in M_{n_0}$. Следовательно,
+                    \[M_{n_0} = M_{n_0 + 1} = M_{n_0 + 2} = \dots\]
+        \end{itemize}
+    \end{proof}
+
+    \begin{lemma}\label{factor-neotherianity-lemma}
+        $M'$ --- подмодуль $M$ и есть сюръективный гомоморфизм $\pi: M \to M/M' = M''$. Тогда $M$ нётеров тогда и только тогда, когда $M'$ и $M''$ нётеровы.
+    \end{lemma}
+
+    \begin{proof}
+        Пусть $M$ --- нётерово. Покажем, что $M'$ нётерово. Пусть есть цепочка $M'_1 \subseteq M'_2 \subseteq \dots$ подмодулей $M$. $M$ нётерово, значит цепочка стабилизируется, значит $M'$ нётерова.
+
+        Покажем, что $M''$ нётерово. Пусть есть цепочка подмодулей $M''_1 \subseteq M''_2 \subseteq \dots$. Следовательно $[\pi(\pi^{-1}(M''_1) \subseteq \pi^{-1}(M''_2) \subseteq \dots)] \subseteq M$. Значит цепочка стабилизируется. Значит стабилизируется изначальная цепочка, значит $M''$ нётерово.
+
+        Теперь предположим, что $M'$ и $M''$ нётеровы.
+        \todo[inline]{Дописать.}
+    \end{proof}
+
+    \begin{definition}
+        Кольцо $A$ \emph{нётерово}, если как модуль над собой нётерово.
+    \end{definition}
+
+    \begin{remark}
+        $1$ --- образующая $A$ как $A$-модуля. Всякий идеал $I$ является подмодулем $A$, но может не иметь одного образующего.
+    \end{remark}
+
+    \begin{definition}
+        \emph{Идеал} $I$ кольца $A$ --- непустое подмножество $A$, что для всяких $a, b \in I$ $a + b \in I$ и для всяких $a \in I$, $k \in A$ $ak \in I$.
+    \end{definition}
+
+    \begin{lemma} \label{neotherian-rings-and-finitely-generated-ideals-lemma}
+        Пусть дано кольцо $A$. TFAE
+        \begin{enumerate}
+            \item $A$ нётерово.
+            \item Любая цепочка идеалов $I_1 \subseteq I_2 \subseteq \dots$ стабилизируется.
+            \item Всякий идеал $I$ конечнопорождён.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[$1 \Leftrightarrow 2$)] По определению.
+            \item[$1 \Leftrightarrow 3$)] По лемме \ref{neotherian-modules-lemma}.  
+        \end{itemize}
+    \end{proof}
+
+    \begin{lemma}
+        Пусть дано нётерово кольцо $A$. Тогда для всякого $n \geqslant 0$ $A^n$ --- нётеров модуль.
+    \end{lemma}
+
+    \begin{proof}
+        $(0)$ --- нётеров. $A^1 = A$ --- нётеров. Далее легко провести по индукции, что $A^{n-1}$ нётерово и $A^n / A^{n-1} = A$ нётерово, а тогда $A^n$ нётерово.
+    \end{proof}
+
+    \begin{corollary}
+        Если $A$ --- нётерово кольцо, то всякий конечнопорождённый $A$-модуль $M$ нётеров.
+    \end{corollary}
+
+    \begin{proof}
+        Пусть $m_1, \dots, m_r \in M$ --- система порождающих модуля $M$. Тогда имеем сюръективный гомоморфизм $A^r \to M$, порождённый $e_i \mapsto m_i$. Следовательно, по лемме \ref{factor-neotherianity-lemma} из нётеровости $A^r$ следует нётеровость $M$.
+    \end{proof}
+
+    \begin{corollary}
+        Если $M$ --- конечнопорождённый модуль и $N$ --- подмодуль $M$, то $N$ конечнопорождён. В частности всякий подмодуль $N \subseteq A^r$ конечнопорождён.
+    \end{corollary}
+
+    \begin{proof}
+        \todo[inline]{Дописать.}
+    \end{proof}
+
+    \begin{theorem}[Гильберта]
+        Если кольцо $A$ нётерово, то $A[t]$ нётерово.
+    \end{theorem}
+
+    \begin{proof}
+        Пусть фиксирован некоторый идеал $I$ в $A[t]$. Как только мы покажем, что $I$ конечнопорождён, то применяя лемму \ref{neotherian-rings-and-finitely-generated-ideals-lemma}, получим нётеровость $A[t]$.
+
+        Пусть $\mathcal{A} \subseteq A$ --- множество старших членов многочленов из $I$.
+
+        \begin{thlemma}
+            $\mathcal{A}$ --- идеал. И, следовательно, конечнопорождено.
+        \end{thlemma}
+
+        \begin{proof}
+            Действительно, для всяких $a, b \in \mathcal{A}$ есть многочлены $f_a, f_b \in I$ со старшими коэффициентами $a$ и $b$ соответственно. Следовательно $f_a t^{\deg(f_b)} + f_b t^{\deg(f_a))}$ лежит в $I$ и имеет старший коэффициент $a + b$ (если только $a + b \neq 0$; иначе очевидно). Также если $a \in \mathcal{A}$, а $k \in A$, то есть многочлен $f_a \in I$ с данным старшим коэффициентом. Но тогда $k f_a$ (если $ak \neq 0$; иначе очевидно) лежит в $I$ и имеет старший член $a k$.
+        \end{proof}
+
+        Рассмотрим $a_1$, \dots, $a_r$ --- система порождающих $\mathcal{A}$, а $f_1$, \dots, $f_r$ --- многочлены из $I$ с данными старшими коэффициентами.
+
+        Тогда всякий $f \in I$ порождается тогда и только тогда, когда порождается соответствующий ему $g \in I$ степени меньше $n := \max_k \deg(f_k)$, так как иначе с помощью старших членов $f_i$ можно породить старший член $f$, вычесть его из $f$ и тем самым понизить степень. Значит вопрос свёлся к порождаемости многочленов из $I$ степени не выше $n$.
+
+        Заметим, что описанные многочлены образуют модуль $I \cap (A \oplus A t \oplus \dots \oplus A t^{n-1})$ --- подмодуль $A^n$. Значит $I \cap (A \oplus A t \oplus \dots \oplus A t^{n-1})$ конечнопорождён, а отсюда $I$ конечнопорождён.
+    \end{proof}
+
+    \begin{lemma}
+        Если $B$ --- нётерово кольцо, $C$ --- кольцо, а $\varphi: B \to C$ --- гомоморфизм колец, то $\varphi(B)$ --- нётерово.
+    \end{lemma}
+
+    \begin{proof}
+        Пусть дана последовательность идеалов $I_1 \subseteq I_2 \subseteq \dots$ в $\varphi(B)$. Тогда $\varphi^{-1}(I_i)$ --- идеалы и
+        \[\varphi^{-1}(I_1) \subseteq \varphi^{-1}(I_2) \subseteq \dots.\]
+        Значит с какого-то момента эта цепочка стабилизируется, а значит стабилизируется образ этой цепочки по $\varphi$, т.е. изначальная цепочка.
+    \end{proof}
+
+    \begin{lemma}
+        Если $\psi: A \to C$ --- гомоморфизм колец, такой что $C$ --- конечная $A$-алгебра, порождённая элементами $x_1$, \dots, $x_n$. Тогда $C$ нётеров.
+    \end{lemma}
+
+    \begin{proof}
+        Мы можем рассмотреть нативное вложение $A$ в $A[t_1, \dots, t_n]$ и гомоморфизм $A$-алгебр $\varphi: A[t_1, \dots, t_n] \to C$, порождённый $\psi$ и соотношениями $\varphi(t_i) = x_i$.
+        \[
+            \xymatrix{
+                A \ar@{_{(}->}[rd] \ar[rr]^{\psi}&& C\\
+                & A[t_1, \dots, t_n] \ar@{->>}[ru]_{\varphi}
+            }
+        \]
+        $\varphi$ сюръективен, а $A[t_1, \dots, t_n]$ нётерово. Таким образом $\varphi(B) = C$ нётерово.
+    \end{proof}
+
+    \begin{remark}
+        Всякое поле нётерово.
+    \end{remark}
+
+    \begin{corollary}
+        Любая конечнопорождённая $F$-алгебра, где $F$ --- поле, нётерова.
+    \end{corollary}
+
+    \begin{remark}
+        \begin{itemize}
+            \item $\ZZ$ --- нётерово кольцо.
+            \item Всякое кольцо является $\ZZ$-кольцом.
+            \item Если кольцо $R$ --- конечнопорождённая $\ZZ$-алгебра, то оно нётерово.
+        \end{itemize}
+    \end{remark}
+
+    \begin{lemma}
+        Пусть $A$ --- нётерово кольцо, а $M''$ --- $A$-модуль. Тогда $M$ конечнопорождён тогда и только тогда, когда нётеров.
+    \end{lemma}
+
+    \begin{proof}
+        Если $M''$ нётеров, то уже доказано, что $M''$ конечнопорождён, так как является собственным подмодулем (см. лемму \todo{Ref}).
+
+        Если $M''$ конечнопорождено, то есть система порождающих $m_1$, \dots, $m_s$. Тогда есть сюръективный гомоморфизм
+        \[\varphi: A^s \to M'', e_i \mapsto m_i.\]
+        При этом $A^s$ нётеров, значит $M''$ нётеров.
+    \end{proof}
+
+    \begin{lemma}\label{horrible-lemma}
+        Пусть даны кольца $A \subseteq B \subseteq C$, что $A$ --- нётерово, $C$ --- конечнопорождённый $B$-модуль и конечнопорождённая $A$-алгебра. Тогда $B$ --- конечнопорождённая $A$-алгебра.
+    \end{lemma}
+
+    \begin{proof}
+        Пусть $y_1$, \dots, $y_n$ --- система порождающих $C$ как $A$-алгебру, а $x_1$, \dots, $x_m$ --- система порождающих $C$ как $B$-модуль. Тогда есть $b_{i, j} \in B$, что
+        \[y_i = \sum b_{i, j} x_j,\]
+        и $b_{i, j, k} \in B$, что
+        \[x_i x_j = \sum b_{i, j, k} x_k.\]
+        Пусть $B_0$ --- это $A$-подалгебра в $B$, порождённая всеми $b_{i, j}$ и $b_{i, j, k}$. Заметим, что количество перечисленных порождающих конечно, т.е. $B_0$ --- конечнопорождённая алгебра. Следовательно, $B_0$ нётерова.
+
+        Поймём, что $C$ порождается уже над $B_0$ элементами $x_1$, \dots, $x_n$. Действительно, для всякого $c \in C$ есть $F \in A[t_1, \dots, t_n]$, что $c = F(y_1, \dots, y_n)$. При этом $y_i = \sum b_{i, j} x_j$. Значит
+        \[c = G(x_1, \dots, x_m) \in B_0 x_1 + \dots + B_0 x_m,\]
+        так как при раскрытии скобок каждый квадратный $x_i x_j$ член заменяется на линейную сумму $\sum b_{i, j, k} x_k$, т.е. можно запустить банальный алгоритм понижения степени и получить линейное по $x_i$ выражение.
+
+        Таким образом $C$ как $B_0$-модуль конечнопорождён (а $B_0$ нётеров), значит всякий $B_0$-подмодуль в $C$ конечнопорождён, значит $B$ --- конечнопорождённый $B_0$-модуль. Поскольку $B_0 \subseteq B$, то $B$ --- конечнопорождённая $B_0$-алгебра. Следовательно, $B$ --- конечнопорождённая $B_0$-алгебра, а $B_0$ --- конечнопорождённая $A$-алгебра, и тогда $B$ --- конечнопорождённая $A$-алгебра.
+    \end{proof}
+
+    \subsection{Алгебраические и чисто трансцендентные расширения полей}
+
+    \begin{definition}
+        Пусть есть поле $F$, содержащееся в поле $E$. Элемент $x \in E$ называется \emph{алгебраическим над $F$}, если есть $g \in F[t]$, что $g(x) = 0 \in E$. Иначе $x$ называется \emph{трансцендентным над $F$}.
+    \end{definition}
+
+    \begin{lemma}
+        Если $x$ алгебраический над $F$, то рассмотрим $F$-подалгебру $F[x]$ в $E$, порождённую $x$, т.е. есть гомоморфизм алгебр $\varphi: F[t] \to E$, порождённый соотношением $\varphi(t) = x$, определяет алгебру $\varphi(F[t])$. Тогда существует неприводимый многочлен $f \in F[t]$, что $f(x) = 0$ и $F[x] = \varphi(F[t]) = F[t]/(f)$.
+    \end{lemma}
+
+    \begin{proof}
+        $\varphi$ --- гомоморфизм алгебр, а значит гомоморфизм колец, значит $\Ker(\varphi) \subseteq F[t]$ непуст (из-за алгебраичности $x$) и является идеалом. Но всякий идеал в $F[t]$ является главным, следовательно $\Ker(\varphi) = (f(t))$ для некоторого $f \in F[t]$. При этом, так как $E$ поле, $\Ker(\varphi)$ --- простой идеал, т.е. $f(t)$ неприводим. Отсюда получаем искомое.
+    \end{proof}
+
+    \begin{corollary}
+        Уже $F[x]$ является подполем в $E$.
+    \end{corollary}
+
+    \begin{corollary}\label{finitness-of-algebraic-field-corollary}
+        $\dim_F F[x] = \deg f(t) < \infty$.
+    \end{corollary}
+
+    \begin{corollary}\label{finite-generation-of-F[x]-corollary}
+        $F[x]$ порождается как векторное пространство над $F$ элементами (базисом) $1$, $x$, \dots, $x^d$ для некоторого $d \in \NN$.
+    \end{corollary}
+
+    \begin{definition}
+        Пусть $K \subseteq L$ --- поля. Если $y_1, ..., y_m \in L$ алгебраичны над $K$ и
+        \[K \subseteq K[y_1] \subseteq K[y_1][y_2] \subseteq \dots \subseteq K[y_1]\dots[y_m] = L,\]
+        то $L$ называется \emph{конечнопорождённым алгебраически порождённым алгебраическим расширением поля $K$}.
+    \end{definition}
+
+    \begin{lemma}\label{finite-gerenation-of-finite-algebraic-extension-lemma}
+        Если даны поля $K \subseteq L$, что $L$ --- конечнопорождённое алгебраическое расширение $K$, то $\dim_K L < \infty$.
+    \end{lemma}
+
+    \begin{proof}
+        Если $m = 1$, то утверждение превращается в следствие \ref{finitness-of-algebraic-field-corollary}.
+
+        По следствию \ref{finite-generation-of-F[x]-corollary} $1$, \dots, $y_2^{d_2}$ порождают $K[y_1][y_2]$ как векторное пространство над $K[y_1]$. При этом $K[y_1]$ порождается $1$, \dots, $y_1^{d_1}$ как векторное пространство над $K$. Следовательно, все элементы вида $y_1^{\alpha_1} y_2^{\alpha_2}$, $\alpha_1 \in \{0; \dots; d_1\}$, $\alpha_2 \in \{0; \dots; d_2\}$, порождают $K[y_1][y_2]$ как векторное пространство над $K$. Следовательно
+        \[\dim_K K[y_1][y_2] = \dim_K K[y_1] \cdot \dim_{K[y_1]} K[y_1][y_2] < \infty.\]
+    \end{proof}
+
+    \begin{exercise}
+        Верно и обратное: если $\dim_K L < \infty$, то $L$ --- конечнопорождённое алгебраическое расширение поля $K$.
+    \end{exercise}
+
+    \begin{definition}
+        Пусть даны поля $F \subseteq E$ и $x \in E$, трансцендентный в $F$. Тогда
+        \[F(x) := \{\frac{f(x)}{g(x)} \mid f, g \in F[t], g(t) \neq 0\}.\]
+    \end{definition}
+
+    \begin{lemma}
+        \begin{enumerate}
+            \item $F(x)$ корректно определено.
+            \item $F(x)$ --- поле.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Если $g(x) = 0$, то $x$ алгебраично. Значит $f(x)/g(x)$ определено.
+            \item Операции наследуются от поля. Несложно видеть, что $F(x)$ относительно них замкнуто.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{lemma}
+        $F(x) \cong F(t)$ как поля, где $F(t)$ --- поле рациональных функций.
+    \end{lemma}
+
+    \begin{proof}
+        Построим понятный гомоморфизм полей
+        \[\varphi: F(t) \to F(x), f/g \mapsto f(x)/g(x).\]
+        По построению $\varphi$ сюръективен. $\Ker(\varphi)$ --- идеал в поле, т.е. либо $(0)$, либо всё $F(t)$. Но $\varphi$ сохраняет $F$, значит $\Ker(\varphi) = 0$, т.е. $\varphi$ инъективен. Итого $\varphi$ --- изоморфизм.
+    \end{proof}
+
+    \begin{lemma}
+        Пусть $x$ трансцендентно. Тогда $1$, $x$, $x^2$, \dots линейно независимы.
+    \end{lemma}
+
+    \begin{proof}
+        В противном случае это означает, что есть некоторое $n \in \NN$ и $a_0, \dots, a_n \in F$, что
+        \[\sum_{k=0}^n a_k x^k = 0.\]
+        Тогда $f(x) = 0$, где
+        \[f(t) := \sum_{k=0}^n a_k t^k.\]
+        Это противоречит с трансцендентностью $x$.
+    \end{proof}
+
+    \begin{lemma}
+        Пусть даны поле $L$ и независимая переменная $t$. Тогда
+        \[L(t) := \{\frac{f(t)}{g(t)} \mid f(t), g(t) \in L[t], g(t) \neq 0\}\]
+        не является конечнопорождённой $L$-алгеброй.
+    \end{lemma}
+
+    \begin{proof}
+        Предположим противное. Пусть $L(t) = L[y_1, \dots, y_s]$ --- конечнопорождённая $L$-алгебра, где $y_i = \frac{f_i(t)}{g_i(t)}$. Тогда есть гомоморфизм
+        \[\varphi: L[T_1, \dots, T_s] \to L(t), T_i \mapsto y_i.\]
+        Понятно, что
+        \[L[y_1, \dots, y_s] = \varphi(L[T_1, \dots, T_s]).\]
+
+        Тогда рассмотрим $h(t)$ --- неприводимый делитель значения
+        \[1 - \prod_{i=1}^s q_i(t).\]
+        Поскольку $L = L[y_1, \dots, y_s]$, то $1/h(t) \in L[y_1, \dots, y_s]$, то есть $G(T_1, \dots, T_s) \in L[T_1, \dots, T_s]$, что $G(y_1, \dots, y_s) = \frac{1}{h(t)}$. Понятно, что есть некоторое $N \in \NN$, что
+        \[G(y_1, \dots, y_s) = \frac{F(t)}{(\prod q_i(t))^N}.\]
+        Тогда
+        \[\left(\prod q_i(t)\right)^N = h(t) F(t).\]
+
+        Вспомним, что
+        \begin{gather*}
+            \prod g_i(t) - 1 = h(t) \cdot h_1(t) \quad \Longrightarrow \quad \prod g_i(t) \equiv 1 \pmod{h(t)} \quad \Longrightarrow \quad \left(\prod g_i(t)\right)^N \equiv 1 \pmod{h(t)},\\
+            \left(\prod g_i(t)\right)^N = h(t) F(t) \quad \Longrightarrow \quad \left(\prod g_i(t)\right)^N \equiv 0 \pmod{h(t)},
+        \end{gather*}
+        т.е. $0 \equiv 1 \pmod{h(t)}$.
+    \end{proof}
+
+    \begin{lemma}
+        Пусть $F \subseteq E$ --- поля, и $E = F[x_1, \dots, x_n]$ конечнопорождёно как $F$-алгебра. Тогда $[x_1, \dots, x_n]$ алгебраичны над $F$ и $\dim_F E < \infty$.
+    \end{lemma}
+
+    \begin{proof}
+        Среди $x_1$, \dots, $x_n$ может оказаться элемент трансцендентный над $F$, WLOG $x_1$. Получим
+        \[F \subseteq F(x_1) \subseteq E.\]
+        Среди оставшихся может оказаться элемент, трансцендентный над $F(x_1)$, WLOG $x_2$. Получим
+        \[F \subseteq F(x_1) \subseteq F(x_1)(x_2) \subseteq E.\]
+        Будем повторять данную операцию до конца. Таким образом выделим $x_1$, \dots, $x_r$, получим
+        \[F \subseteq F(x_1) \subseteq F(x_1)(x_2) \subseteq \dots \subseteq \underbrace{F(x_1)\dots(x_r)}_{K} \subseteq E,\]
+        что все $x_{r+1}$, \dots, $x_n$ алгебраичны над $K$. Тогда $E$ как векторное пространство над $K$ конечномерно (лемма \ref{finite-gerenation-of-finite-algebraic-extension-lemma}).
+        
+        Тогда имеем, что
+        \[F \subseteq K \subseteq E,\]
+        где $E$ --- конечнопорождённый $K$-модуль и конечнопорождённая $F$-алгебра. Следовательно, по лемме \ref{horrible-lemma} $K$ --- конечнопорождённая $F$-алгебра.
+
+        Пусть $r \neq 0$. Пусть $L = F(x_1)\dots(x_{r-1})$. Тогда $L(x_r) = K$, где $x_r \in K$ трансцендентен над $L$. Следовательно, $L(x_r) \cong L(t)$, т.е. $K = L(x_r)$ --- не конечнопорожденная $L$-алгебра, и тем более не конечнопорождённая $F$-алгебра. Противоречие.
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $F \to A$ --- конечнопорождённая $F$-алгебра, а $\mathcal{M}$ --- максимальный идеал $A$. Тогда $F \hookrightarrow A/\mathcal{M}$ --- конечное алгебраическое расширение поля.
+    \end{corollary}
+
+    \begin{proof}
+        \todo[inline]{Дописать?}
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $F$ --- алгебраически замкнутое поле, а $F \to A$ --- конечнопорождённая $F$-алгебра. Тогда $F \to A/\mathcal{M}$ --- изоморфизм.
+    \end{corollary}
+
+    \begin{proof}
+        $A/\mathcal{M}$ --- конечное алгебраическое расширение поля $F$, т.е. совпадает с $F$.
+    \end{proof}
+
+    \begin{exercise}
+        Пусть $R$ --- кольцо, $I \subseteq J \subseteq R$ --- два иделала в $R$. Тогда TFAE.
+        \begin{enumerate}
+            \item $I = J$.
+            \item $\overline{\varphi}: R/I \to R/J, r \mathbin{\mod} I \mapsto r \mathbin{\mod} J$ --- изоморфизм колец.
+        \end{enumerate}
+    \end{exercise}
+
+    \begin{proof}
+        Если $I = J$, то очевидно что $r \mathbin{\mod} I = r \mathbin{\mod} J$, а $R/I = R/J$, а тогда $\overline{\varphi}$, являясь тождественным отображением, является изоморфизмом колец.
+
+        Пусть $\overline{\varphi}$ --- изоморфизм колец. Рассмотрим вложения $\pi_I: R \to R/I, r \mapsto r \mathbin{\mod} I$ и $\pi_J: R \to R/J, r \mapsto r \mathbin{\mod} J$. Следовательно, имеем коммутативность диаграммы
+        \[
+            \xymatrix{
+                & R \ar[dl]_{p_I} \ar[dr]^{p_J} &\\
+                R/I \ar[rr]^{\sim}_{\overline{\varphi}} && R/J
+            }
+        \]
+        Следовательно,
+        \[
+            r \in I
+            \quad \Leftrightarrow \quad
+            r \in \Ker(p_I)
+            \quad \Leftrightarrow \quad
+            p_I(r) = 0
+            \quad \Leftrightarrow \quad
+            p_J(r) = 0
+            \quad \Leftrightarrow \quad
+            r \in \Ker(p_J)
+            \quad \Leftrightarrow \quad
+            r \in J,
+        \]
+        т.е. $I=J$.
+    \end{proof}
+
+    \begin{exercise}
+        Пусть $\mathcal{M} \subseteq R$ --- идеал. Тогда TFAE.
+        \begin{enumerate}
+            \item $\mathcal{M}$ максимален.
+            \item $R/\mathcal{M}$ --- поле.
+        \end{enumerate}
+    \end{exercise}
+
+    \begin{theorem}[Гильберта о нулях, Nullstellensatz (слабая)]
+        Пусть $K$ --- алгебраически замкнутое поле (например, $\CC$), $\mathcal{M} \subseteq K[t_1, \dots, t_n]$ --- максимальный идеал. Тогда $\mathcal{M} = (t_1-x_1, \dots, t_n-x_n)$, где $x_i \in F$.
+    \end{theorem}
+
+    \begin{proof}
+        Зафиксируем некоторые значения $x_1, \dots, x_n \in K$ и рассмотрим идеал $I := (t_1 - x_1, \dots, t_n - x_n)$. Также рассмотрим следующие гомоморфизмы:
+        \begin{gather*}
+            in: K \to K[t_1, \dots, t_n], r \mapsto r,\\
+            \pi_\mathcal{M}: K[t_1, \dots, t_n] \to K[t_1, \dots, t_n]/\mathcal{M}, r \mapsto r \mathbin{\mod} \mathcal{M}, \qquad i_\mathcal{M} := \pi_\mathcal{M} \circ in,\\
+            \pi_I: K[t_1, \dots, t_n] \to K[t_1, \dots, t_n]/I, r \mapsto r \mathbin{\mod} I, \qquad i_I := \pi_I \circ in.
+        \end{gather*}
+        \[
+            \xymatrix{
+                && K[t_1, \dots, t_n]/\mathcal{M} \ar@{-->}[dd]^\varphi\\
+                K \ar[r]|(0.3){in} \ar@(ur, l)[rru]^(0.4){i_\mathcal{M}}_(0.4){\sim} \ar@(dr, l)[rrd]_(0.4){i_I}^(0.4){\sim} & K[t_1, \dots, t_n] \ar[ur]_{\pi_\mathcal{M}} \ar[dr]^{\pi_I}\\
+                && K[t_1, \dots, t_n]/I &
+            }
+        \]
+        Заметим, что $i_\mathcal{M}$ --- изоморфизм колец, так как $\mathcal{M}$ максимален. При этом для всякого многочлена $F \in K[t_1, \dots, t_n]$ по теореме Безу $F(t_1, \dots, t_n) \equiv F(x_1, \dots, x_n) \pmod{I}$, а значит $i_I$ инъективен, так как $K$ поле, и сюръективен, так как $[F]_I = [F(x_1, \dots, x_n)]_I = i_I(F(x_1, \dots, x_n))$. Следовательно $i_I$ тоже изоморфизм колец. Следовательно есть изоморфизм колец $\varphi = i_\mathcal{M}^{-1} \circ i_I$, т.е. для всякого $r \in K$
+        \[\varphi(r \mathbin{\mod} \mathcal{M}) = r \mathbin{\mod} I.\]
+        Осталось показать, что $\varphi \circ \pi_\mathcal{M} = \pi_I$, т.е. для всякого $F \in K[t_1, \dots, t_n]$ $\varphi: F \mathbin{\mod} \mathcal{M} \mapsto F \mathbin{\mod} I$.
+
+        На деле для случайных $x_1$, \dots, $x_n$ это не верно. Поэтому возьмём $x_k := i_\mathcal{M}^{-1}(t_k \mathbin{\mod} \mathcal{M})$, т.е. чтобы $t_k - x_k \in \mathcal{M}$. Тогда получим, что
+        \[\varphi(t_k \mathbin{\mod} \mathcal{M}) = \varphi(x_k \mathbin{\mod} \mathcal{M}) = x_k \mathbin{\mod} I = t_k \mathbin{\mod} I.\]
+        Поскольку $\varphi$ --- гомоморфизм колец, а всякий многочлен представляется в виду суммы произведений элементов $K$ и $t_1$, \dots, $t_n$, то теперь это верно для всех многочленов. Значит $\mathcal{M} = I$.
+
+        % Рассмотрим рассмотрим последовательность отображений
+        % \[
+        %     \xymatrix{
+        %         & K[t_1, \dots, t_n] \ar[rd]^{\varphi}&\\
+        %         K \ar[ur] \ar[rr]_(0.4){\sim}&& K[t_1, \dots, t_n]/\mathcal{M}
+        %     }
+        % \]
+        % где $\varphi: \mathcal{M} \mapsto 0$. Поскольку $\mathcal{M}$ максимален, $K[t_1, \dots, t_n]/\mathcal{M}$ --- поле, т.е. $K$. Тогда $x_i := \varphi(t_i)$. Значит $\varphi(t_i - x_i) = 0$, т.е. $t_i - x_i \in \Ker(\varphi) = \mathcal{M}$. Таким образом
+        % \[(t_1 - x_1, \dots, t_n - x_n) \subseteq \mathcal{M}.\]
+        % Обозначим $R = K[t_1, \dots, t_n]$. При этом по определению
+        % \[(t_1 - x_1, \dots, t_n - x_n) = (t_1 - x_1) \cdot R + \dots + (t_n - x_n) \cdot R.\]
+        % Следовательно остлось показать, что
+        % \[\mathcal{M} \subseteq (t_1 - x_1) \cdot R + \dots + (t_n - x_n) \cdot R.\]
+
+        % Рассмотрим гомоморфизм колец $\psi: K \to K[t_1 - x_1, \dots, t_n - x_n]/(t_1 - x_1, \dots, t_n - x_n)$. Покажем, что это изоморфизм колец. Поскольку $K$ --- поле, $\psi$ инъективен. Рассмотрим любой $F \in K[t_1 - x_1, \dots, t_n - x_n]$. Тогда его можно разложить по степеням: $F = F_0 + \dots + F_d$ ($\deg(F_k) = k$). Тогда
+        % \[F \equiv F_0 \pmod{(t_1 - x_1, \dots, t_n - x_n)}.\]
+        % Значит $[F] = [F_0] = \psi(F_0)$. Т.е. $\psi$ сюръективен. Вот $\psi$ и изоморфизм колец (а следовательно).
+
+        % Значит у нас есть изоморфизмы колец из $K$ в $K[t_1-x_1, \dots, t_n-x_n]/\mathcal{M}$ и $K[t_1-x_1, \dots, t_n-x_n]/(t_1-x_1, \dots, t_n-x_n)$. Таким образом их ядра совпали (упражнение выше), т.е. $(t_1-x_1,\dots,t_n-x_n) = \mathcal{M}$.
+    \end{proof}
+
+    \section{Аффинная геометрия}
+    
+    \begin{remark*}
+        Глава I. \S 1. Замкнутые подмножества $A_k^n$.
+        \todo[inline]{Обозначить это по-нормальному.}
+    \end{remark*}
+
+    \begin{definition}
+        Пусть фиксировано поле $k$. \emph{Аффинное пространство} над полем $k$ размерности $n$ --- есть пространство
+        \[\AA^n = \AA_k^n := \{x = (x_1, \dots, x_n) \mid x_i \in k\} = k^n.\]
+
+        Пусть $A := k[T_1, \dots, T_n]$, $f \in A$. Тогда $f$ --- отображение $\AA^n \to k$. Пусть фиксировано $S \subseteq A$. Тогда \emph{множеством общих нулей многочленов из $S$} (также ``общие нули многочленов из $S$'' или ``нули $S$'') --- это множество
+        \[Z(S) := \{x \in \AA^n \mid \forall f \in S\; f(x) = 0\}.\]
+        Все подмножества $Z(S)$ называются \emph{замкнутыми подмножествами в $\AA^n$} или \emph{аффинными подмножествами в $\AA^n$}.
+    \end{definition}
+
+    \begin{example}\ 
+        \begin{enumerate}
+            \item $\varnothing = Z(\{a\}_{a \in k}) = Z(A)$.
+            \item $\AA^n = Z(\varnothing) = Z(\{0\})$.
+            \item $\{(x_1, \dots, x_n)\} = Z(\{T_1 - x_1, \dots, T_n - x_n\})$.
+            \item Замкнутые подмножества в $\AA^1$ --- это $\AA$, $\varnothing$ и любое конечное подмножество.
+            \item Если $n = 2$, то $Z(f)$ называется \emph{плоской кривой}.
+        \end{enumerate}
+    \end{example}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item Если $S \subseteq S'$, то $Z(S') \subseteq Z(S)$.
+            \item Пусть $I$ --- идеал, порождённый многочленами из $S$. Тогда $Z(I) = Z(S)$.
+            \item Для всякого $S$ есть конечное $S'$, что $Z(S) = Z(S')$.
+            \item Пусть есть семейство $\{S_i\}_{i \in I}$. Тогда
+                \[Z\left(\bigcup_{i \in I} S_i\right) = \bigcap_{i \in I} Z(S_i).\]
+            \item Пусть дано семейство идеалов $\{I_j\}_{j \in J}$. Тогда
+                \[Z\left(\sum_{j \in J} I_j\right) = \bigcap_{j \in J} Z(I_j).\]
+            \item Пусть дано семейство $\{S_i\}_{i=1}^n$. $S' := S_1 S_2 \dots S_n = \{f_1 \dots f_n \mid f_1 \in S_1 \wedge \dots \wedge f_n \in S_n\}$. Тогда
+                \[Z(S') = \bigcup_{i = 1}^n Z(S_i).\]
+            \item Пусть дано семейство идеалов $\{I_j\}_{j=1}^n$. Тогда
+                \[Z\left(\bigcap_{j=1}^n I_j\right) = \bigcup_{j=1}^n Z(I_j).\]
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Действительно, для всякой точки $x \in Z(S')$ верно, что для всякого $f \in S'$ $f(x) = 0$, а значит то же верно для всякого $f \in S$ (так как $S \subseteq S'$), т.е. $x \in Z(S)$.
+
+            \item Поскольку $S \subseteq I$, то $Z(I) \subseteq Z(S)$. При этом для всякого $x \in Z(S)$ верно, что для всякого $f \in S$ $f(x) = 0$, а значит то же верно для всех $f \in I$ (так как $I$ --- идеал, порождённый $S$), т.е. $x \in Z(I)$. Т.е. $Z(S) \subseteq Z(I)$. Следовательно, $Z(S) = Z(I)$.
+
+            \item Если известно, что $S$ и $S'$ порождают одинаковые идеалы, то $Z(S) = Z(S')$. Но всякий идеал в $k[T_1, \dots, T_n]$ конечнопорождён, а значит у идеала, порождённого $S$, есть конечное порождающее множество $S'$ --- искомое $S'$.
+
+            \item Заметим, что $x \in Z(\bigcup_{i \in I} S_i)$ тогда и только тогда, когда на $x$ зануляются все многочлены из $\bigcup_{i \in I} S_i$, что равносильно тому, что на $x$ зануляются все многочлены из каждого $S_i$, что равносильно тому, что $x$ лежит в каждом $Z(S_i)$, что равносильно тому, что $x \in \bigcap_{i \in I} Z(S_i)$. Отсюда следует требуемое.
+
+            \item По прошлому пункту.
+                \[Z\left(\bigcup_{j \in J} I_j\right) = \bigcap_{j \in J} Z(I_j).\]
+                Но также несложно видеть, что идеал, порождённый $\bigcup_{j \in J} I_j$, есть $\sum_{j \in J} I_j$. Отсюда сиюминутно следует искомое (по ранее доказанному пункту).
+
+            \item Покажем утверждение для $n = 2$. Заметим, что если $x \in Z(S_1)$, то на $x$ зануляются все многочлены из $S_1$, а значит и из $S_1 \cdot S_2$, т.е. $x \in Z(S_1 S_2)$. Следовательно $Z(S_1) \subseteq Z(S_1 S_2)$. Из аналогичного утверждения получаем, что $Z(S_1) \cup Z(S_2) \subseteq Z(S_1 S_2)$. При этом если $x \in Z(S_1 S_2) \setminus Z(S_1)$, то есть многочлен $f \in S_1$, что $f(x) \neq 0$. Но для всякого $g \in S_2$ верно $fg \in S_1 S_2$, а значит $f(x)g(x) = 0$, а тогда $g(x) = 0$, т.е. $x \in Z(S_2)$. Итого $Z(S_1 S_2) = Z(S_1) \cup Z(S_2)$. Утверждение для всякого $n$ получается по индукции с помощью данного.
+
+            \item Покажем для $n=2$; общий случай получается по индукции. Пусть даны идеалы $I$ и $J$. Имеем по прошлому пункту
+                \[Z(I \cdot J) = Z(I) \cup Z(J).\]
+                При этом $I \cdot J \subseteq I \cap J$, а $I \cap J \subseteq I$, $I \cap J \subseteq J$. Следовательно
+                $Z(I \cdot J) \supseteq Z(I \cap J)$, $Z(I \cap J) \supseteq Z(I)$, $Z(I \cap J) \supseteq Z(J)$. Итого
+                \[Z(I \cdot J) \supseteq Z(I \cap J) \supseteq Z(I) \cup Z(J),\]
+                откуда
+                \[Z(I \cdot J) = Z(I \cap J) = Z(I) \cup Z(J).\]
+        \end{enumerate}
+    \end{proof}
+
+    \begin{corollary}
+        Мораль такова.
+        \begin{enumerate}
+            \item Замкнутые идеалы образуют топологию, где они являются замкнутыми. Т.е. их дополнения образуют топологию (являясь открытыми).
+            \item Каждое замкнутое подмножество имеет вид $Z(I)$, где $I$ --- идеал.
+            \item Сумма идеалов соответствует пересечению замкнутых множеств (и наоборот). Т.е. для всякого семейства идеалов $\{I_j\}_{j \in J}$ верно, что
+                \[\bigcap_{j \in J} Z(I_j) = Z\left(\sum_{j \in J} I_j\right).\]
+            \item Конечные пересечения идеалов соответствуют конечным объединениям замкнутых множеств. Т.е. для всякого семейства идеалов $\{I_j\}_{j=1}^n$ верно, что
+                \[\bigcup_{j=1}^n Z(I_j) = Z\left(\bigcap_{j=1}^n I_j\right).\]
+        \end{enumerate}
+    \end{corollary}
+
+    \begin{definition}
+        Пусть имеется множество точек $X \subseteq A_k^n$. Определим множество
+        \[I(X) := \{f \in A \mid \forall x \in X\; f(x) = 0\}.\]
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item $I(X)$ --- идеал.
+            \item Если $X \subseteq Y$, то $I(X) \supseteq I(Y)$.
+            \item $I(X) = I(\overline{X})$ ($\overline{X}$ --- замыкание $X$ в смысле рассмотренной топологии).
+            \item \todo[inline,caption={Написать леммы про пересечения и объединения $I(X)$}]{Написать леммы про пересечения и объединения $I(X)$:
+            \begin{enumerate}
+                \item $\sum_{j \in J} I(X_j) = I(\bigcap_{j \in J} X_j)$?
+                \item $\bigcap_{j \in J} I(X_j) = I(\bigcup_{j \in J} X_j)$?
+            \end{enumerate}}
+            \item Если $X \subseteq Y$, то $ZI(X) \subseteq ZI(Y)$.
+            \item Если $S \subseteq T$, то $IZ(S) \subseteq IZ(T)$.
+            \item $ZI(X) \supseteq X$.
+            \item $IZ(S) \supseteq S$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Если $f, g \in I(X)$, то для всякой точки $x \in X$ верно $f(x) = g(x) = 0$, а тогда $(f+g)(x) = 0$, т.е. $f+g \in I(X)$. Если же $f \in I(X)$, $g \in A$, то для всякой точки $x \in X$ верно $f(x) = 0$, а значит $(fg)(x) = 0$, т.е. $fg \in I(X)$.
+            \item Если $f \in I(Y)$, то $f(Y) = 0$, значит $f(X) = 0$, тогда $f \in I(X)$.
+            \item Понятно, что $X \subseteq \overline{X}$, а значит $I(\overline{X}) \subseteq I(X)$. Покажем обратное. Пусть есть $x \in \overline{X} \setminus X$. Если есть какой-то многочлен $f \in A$, что $f$ зануляется на $X$, но не на $x$, то $Y := Z(f)$ является замкнутым, $X \subseteq Y$, а $x \notin Y$. Следовательно, так как $\overline{X} \subseteq Y$, то $x \notin \overline{X}$ --- противоречие. Это значит, что всякий многочлен, зануляющийся на $X$, зануляется на всякой точке из $\overline{X} \setminus X$, а значит на всём $\overline{X}$. Следовательно $I(X) \subseteq I(\overline{X})$.
+            \item $X \subseteq Y \Rightarrow I(X) \supseteq I(Y) \Rightarrow ZI(X) \subseteq ZI(Y)$.
+            \item $S \subseteq T \Rightarrow Z(S) \supseteq Z(T) \Rightarrow IZ(S) \subseteq IZ(T)$.
+            \item Поскольку $I(X)$ --- множество всех многочленов, зануляющихся на $X$, то всё $I(X)$ зануляется на $X$, т.е. $ZI(X) \supseteq X$. 
+            \item Поскольку $Z(S)$ --- множество всех точек, на которых зануляется $S$, то $S$ на нём зануляется, а тогда $IZ(S) \supseteq S$.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{definition}
+        Пусть $I$ --- некоторый идеал. \emph{Радикал из иделала $I$} --- $\sqrt{I} := \{h \in A \mid \exists N \colon \; h^N \in I\}$.
+
+        Идеал $I$ называется \emph{радикальным} тогда и только тогда, когда для всякого $g \in A$, что есть $m \geqslant 1$, что $g^m \in I$ верно, что $g \in I$.
+    \end{definition}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item $\sqrt{I}$ --- идеал.
+            \item $Z(\sqrt{I}) = Z(I)$.
+            \item Идеал $I$ радикален тогда и только тогда, когда $\sqrt{I} \subseteq I$.
+            \item $\sqrt{I}$ радикален.
+            \item $I(X)$ радикален.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Пусть $h \in \sqrt{I}$. Тогда есть $N$, что $h^N \in I$. Значит для всякого $f \in A$
+                \[(hf)^N = h^n f^n \in I A \subseteq I.\]
+                Т.е. $hf \in \sqrt{I}$. Значит $hA \subseteq \sqrt{I}$.
+        
+                Пусть $h_1, h_2 \in \sqrt{I}$. Тогда есть $N_1$ и $N_2$, что $h_1^{N_1}, h_2^{N_2} \in I$. Тогда
+                \[(h_1 + h_2)^{N_1 + N_2} = \sum_{k=0}^{N_1 + N_2} h_1^k h_2^{N_1 + N_2 - k} \binom{N_1 + N_2}{N_1}.\]
+                При этом при $k \leqslant N_1$
+                \[
+                    h_2^{N_2} \in I,
+                    \qquad
+                    h_1^k h_2^{N_1 - k} \binom{N_1 + N_2}{N_1} \in A,
+                    \qquad \Longrightarrow \qquad
+                    h_1^k h_2^{N_1 + N_2 - k} \binom{N_1 + N_2}{N_1} \in I;
+                \]
+                аналогично для $k \geqslant N_1$.
+
+            \item Поскольку $I \subseteq \sqrt{I}$, то $Z(\sqrt{I}) \subseteq Z(I)$. При этом для всякого $x \in Z(I)$ верно, что для всякого $f \in S$ $f(x) = 0$, а значит для всякого $f \in \sqrt{I}$ есть $N$, что $f^N(x) = 0$, а тогда $f(x) = 0$, т.е. $x \in Z(\sqrt{I})$. Т.е. $Z(I) \subseteq Z(\sqrt{I})$. Следовательно, $Z(\sqrt{I}) = Z(I)$.
+
+            \item Определение по-другому написанное.
+            
+            \item Несложно видеть, что $\sqrt{\sqrt{I}} = \sqrt{I}$ по определению радикала. Значит $\sqrt{\sqrt{I}} \subseteq \sqrt{I}$, т.е. $\sqrt{I}$ радикален.
+            
+            \item $I(X)$ --- максимальный идеал, что $X \subseteq Z(I(X))$. При этом $Z(\sqrt{I(X)}) = Z(I(X))$, значит $\sqrt{I} \subseteq I$. Таким образом $I$ максимален.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{lemma}
+        Если $X$ замкнуто, то $ZI(X) = X$.
+    \end{lemma}
+
+    \begin{proof}
+        Как мы уже знаем, $X \subseteq ZI(X)$; покажем обратное. Заметим, что $X = Z(S)$. Тогда $I(X) = IZ(X) \supseteq S$. Тогда $ZI(X) \subseteq Z(S) = X$.
+    \end{proof}
+
+    \begin{theorem}[Гильберта о нулях, Nullstellensatz]
+        Если $I$ --- радикальный идеал, то $IZ(I) = I$.
+    \end{theorem}
+
+    \begin{corollary}
+        $I$ и $Z$ --- биекции из множества замкнутых множеств в $A$ и обратно. При этом $Z \circ I$ и $I \circ Z$ --- тождественные отображения.
+    \end{corollary}
+
+    \begin{proof}
+        Как мы уже знаем, $I$ --- функция из множества замкнутых множеств в $A$, а $Z$ --- наоборот. При этом по следствию двух предыдущих утверждений $ZI$ и $IZ$ --- тождественные функции из множества замкнутых функций в себя и из $A$ в себя. Из первого следует, что $I$ инъективно, а $Z$ сюръективно; из второго следует, что $Z$ инъективно, а $I$ сюръективно. Т.е. $I$ и $Z$ --- биекции.
+    \end{proof}
+
+    \begin{corollary}\ 
+        \begin{enumerate}
+            \item $ZI(X) = \overline{X}$.
+            \item $IZ(I) = \sqrt{I}$.
+        \end{enumerate}
+    \end{corollary}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item $ZI(X) = ZI(\overline{X}) = \overline{X}$.
+            \item $IZ(I) = IZ(\sqrt{I}) = \sqrt{I}$.
+        \end{enumerate}
+    \end{proof}
+
+    \begin{remark}
+        Точки в $\AA^n$ находятся во взаимнооднозначном соответствии с максимальными идеалами в $A$ --- это говорит слабая теорема Гильберта о нулях. Т.е. всякой точке $x \in \AA^n$ сопоставляется $I(x)$, а максимальному идеалу $\mathcal{M}$ сопоставляется $Z(\mathcal{M})$, которое является точкой, так как $\mathcal{M} = (T_1 - x_1, \dots, T_n - x_n)$, а значит подходит только точка $(x_1; \dots; x_n)$.
+    \end{remark}
+
+    \begin{definition}
+        Пусть $X$ замкнуто. Тогда $k[X] := A/I(X)$ --- \emph{кольцо регулярных функций на $X$}.
+    \end{definition}
+
+    \begin{lemma}
+        Пусть $X_1$ и $X_2$ замкнуты.
+        \begin{enumerate}
+            \item $X := X_1 \sqcup X_2$ замкнуто.
+            \item Отображение
+                \[\varphi: k[X] \to k[X_1] \times k[X_2], F \mathop{\mod} I(X) \mapsto (F \mathop{\mod} I(X_1), F \mathop{\mod} I(X_2))\]
+                задаёт изоморфизм колец.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{definition}
+        Пусть $X$ --- замкнутое множество. Функция $f: X \to k$ называется \emph{регулярной}, если есть $F \in A$, что $f = F|_X$.
+    \end{definition}
+
+    \begin{remark}
+        Множество $k[X]$ регулярных функций на $X$ является кольцом и даже $k$-алгеброй.
+        
+        При этом $T_i \in A = k[T_1, \dots, T_n]$ образуют $A$, значит функции $t_i: X \to k, x \mapsto T_i(x)$ образуют $k[X]$. Значит получается сюръективный гомоморфизм $\varphi: A \to k[X], F \mapsto F|_X$, который на деле порождается соотношениями $T_i \mapsto t_i$. 
+    \end{remark}
+
+    \begin{lemma}
+        Рассмотрим гомоморфизм $\varphi: A \to k[X], F \to F|_X$.
+        \begin{enumerate}
+            \item $\Ker(\varphi) = I(X)$.
+            \item $A/I(X) \underset{\sim}{\overset{\varphi}{\to}} k[X]$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item $\varphi(F) = 0$ iff $F|_{X} \equiv 0$, iff $F(X) = 0$, iff $F \in I(X)$.
+            \item $\varphi$, очевидно, сюръективно. Следовательно, $\varphi$ индуцирует изоморфизм
+                \[A/I(X) = A/\Ker(\varphi) \to k[X].\]
+        \end{enumerate}
+    \end{proof}
+
+    \begin{lemma}
+        Пусть даны замкнутые множества $X_1$ и $X_2$. Тогда $X_1 \cap X_2 = \varnothing$ равносильно $I(X_1) + I(X_2) = A$.
+    \end{lemma}
+
+    \begin{proof}
+        Понятно, что если $X_1 \cap X_2 = \varnothing$
+        \[A = I(\varnothing) = I(X_1 \cap X_2) = I(ZI(X_1) \cap ZI(X_2)) = IZ(I(X_1) + I(X_2)) = I(X_1) + I(X_2).\]
+        А если $A = I(X_1) + I(X_2)$, то
+        \[X_1 \cap X_2 = ZI(X_1) \cap ZI(X_2) = Z(I(X_1) + I(X_2)) = Z(A) = \varnothing.\]
+    \end{proof}
+
+    \begin{theorem}
+        Пусть $X_1$, $X_2$ --- замкнутые множества, $X_1 \cap X_2 = \varnothing$, а $X := X_1 \sqcup X_2$. $\psi: k[X] \to k[X_1] \times k[X_2], f \mapsto (f|_{X_1}, f|_{X_2})$ --- изоморфизм колец (и даже алгебр).
+    \end{theorem}
+
+    \begin{proof}
+        Понятно, что $\psi$ определено корректно и является гомоморфизмом алгебр. Также понятно, что $\psi$ инъективно, так как всякая функция $f$, зануляющаяся на $X_1$ и $X_2$, зануляется на $X$, т.е. ядро $\psi$ тривиально.
+
+        Покажем, что $\psi$ сюръективно. Пусть $(f_1, f_2) \in k[X_1] \times k[X_2]$. Тогда есть $F_1, F_2 \in A$, что $f_1 = F_1|_{X_1}$, $f_2 = F_2|_{X_2}$. Мы знаем, что $I(X_1) + I(X_2) = A$. Тогда $F_1 - F_2 = H_1 - H_2$, где $H_1 \in I(X_1)$, $H_2 \in I(X_2)$. Тогда $F_1 - H_1 = F_2 - H_2 =: F$. Имеем, что $F|_{X_1} = (F_1 - H_1)|_{X_1} = f_1 - 0 = f_1$; аналогично $F|_{X_2} = f_2$.
+    \end{proof}
+
+    \begin{definition}
+        Кольцо $R$ называется \emph{редуцированным}, если для всякого $a \in R$ и всякого $m \geqslant 1$ из того, что $a^m = 0$ следует, что $a = 0$ (т.е. в $R$ нет нильпотентов).
+    \end{definition}
+
+    \begin{remark*}
+        $k[X]$ редуцированно.
+    \end{remark*}
+
+    \begin{lemma}
+        Любая конечнопорождённая редуцируемая $k$-алгебра $B$ изоморфна $k$-алгебра $k[X]$ регулярных функций для некоторых замкнутого подмножества $X \subseteq A$.
+    \end{lemma}
+
+    \begin{proof}
+        Пусть $B = k[t_1, \dots, t_m]$, где $t_1, \dots, t_m = B$ (они порождают $B$ над $k$). Рассмотрим гомоморфизм $\varphi: k[T_1, \dots, T_m] \to B, T_i \mapsto t_i$ алгебр. Понятно, что $\varphi$ сюръективен. Пусть $I := \Ker(\varphi)$. Тогда есть изоморфизм $\overline{\varphi}: A/I \to B$. Поскольку $B$ редуцированно, то $I$ радикален:
+        \[
+            f^m \in I
+            \qquad \Longrightarrow \qquad
+            \varphi(f)^m = \varphi(f^m) = 0
+            \qquad \Longrightarrow \qquad
+            \varphi(f) = 0
+            \qquad \Longrightarrow \qquad
+            f \in I.
+        \]
+        Тогда пусть $X := Z(I)$. Следовательно $I = I(X)$, а тогда $B \cong A/I = A/I(X) = k[X]$.
+    \end{proof}
+
+    \begin{lemma}
+        Пусть $R$ --- кольцо, $I$ --- радикальный идеал в $R$,
+        \[\pi: R \to \overline{R} := R/I, f \mapsto f \pmod{I}.\]
+        Тогда имеется взаимнооднозначное соответствие между множеством радикальных идеалов $J \supseteq I$ в $R$ и множеством радикальных идеалов $\mathfrak{A}$ в $\overline{R}$, заданное отображениями $J \mapsto \overline{J} := J/I$ и $\mathfrak{A} \mapsto \pi^{-1}(\mathfrak{A})$.
+    \end{lemma}
+
+    \begin{proof}
+        Обозначим
+        \begin{itemize}
+            \item множество радикальных идеалов $J \supseteq I$ в $R$ за $D_R$,
+            \item множество радикальных идеалов $\mathfrak{A}$ в $\overline{R}$ за $D_{\overline{R}}$.
+        \end{itemize}
+        Тогда заданные в условии отображения $D_R \to D_{\overline{R}}$ и $D_{\overline{R}} \to D_R$ индуцируются $\pi$ и $\pi^{-1}$. Но непонятна их корректность и биективность; это и обсудим.
+
+        Пусть $J \supseteq I$ --- радикальный идеал в $R$. Тогда $\pi(J) = J/I$. При этом если $\overline{f}^m \in J/I$ в $\overline{R}$, где $\overline{f} = f \pmod{I}$, то $(f+I)^m \subseteq J$. При этом $f^m \in (f+I)^m \subseteq J$, т.е. $f^m \in J$, значит $f \in J$. Следовательно $f + I \subseteq J$. Тогда $\overline{f} \in J/I$. Таким образом $J/I$ радикален в $\overline{R}$.
+
+        Пусть $\mathfrak{A}$ --- радикальный идеал в $\overline{R}$. Тогда $J := \pi^{-1}(\mathfrak{A})$. Следовательно, $\mathfrak{A} = J/I$. Если $f^m \in J$, то $\overline{f}^m \in \mathfrak{A}$. Тогда $\overline{f} \in J/I$. Следовательно, $f + I \subseteq J$, т.е. $f \in J$. Следовательно $J$ радикален.
+
+        Таким образом $\pi$ и $\pi^{-1}$ индуцируют корректные отображения $D_R \to D_{\overline{R}}$ и $D_{\overline{R}} \to D_R$. Таким образом осталось показать, что они образуют взаимнооднозначное соответствие.
+
+        Заметим, что $\pi$ и $\pi^{-1}$ образуют взаимнооднозначное соответствие между $\{f + I \mid f \in R\}$ и $\overline{R}$. Так как $\pi$ переводит идеал, содержащий $I$, в идеал, а $\pi^{-1}$ идеал в идеал, содержащий $I$, то $\pi$ и $\pi^{-1}$ образует взаимнооднозначное соответствие между идеалами $J \supseteq I$ в $R$ и идеалами $\mathfrak{A}$ в $\overline{R}$. Значит, аналогично, они образуют взаимнооднозначное соответствие между $D_R$ и $D_{\overline{R}}$.
+    \end{proof}
+
+    \begin{definition}
+        Пусть $X$ --- замкнутое множество в $\AA^n$. \emph{Замкнутые подмножества в $X$} --- это множества вида $Z' \cap X$, где $Z'$ --- замкнутое в $\AA^n$. 
+    \end{definition}
+
+    \begin{remark*}
+        Сравнить с топологией, индуцированной на (замкнутом) подмножестве.
+    \end{remark*}
+
+    \begin{remark*}
+        Замкнутые подмножества в $X$ --- замкнутые подмножества $Z$ в $\AA^n$, что $Z \subseteq X$.
+    \end{remark*}
+
+    \begin{corollary}
+        Пусть $X$ замкнуто в $\AA^n$. Тогда имеется взаимнооднозначное соответствие между множеством замкнутых $Z \subseteq X$ и радикальными идеалами $\overline{J}$ в $A/I(X)$, заданное отображениями $Z \mapsto \overline{I(Z)}$ и $\mathfrak{B} \mapsto Z(\pi^{-1}(\mathfrak{B}))$.
+    \end{corollary}
+
+    \begin{definition}
+        Пусть $X \subseteq \AA^n$ и $Y \subseteq \AA^m$ --- замкнутые подмножества. Временно обозначим $t_i := T_i|_X \in k[X]$ --- координатная функция на $X$. Отображение $\varphi: Y \to X$ называется \emph{регулярным}, если $t_i \circ \varphi \in k[Y]$ (т.е. каждая координата $\varphi$ как отображение является регулярной).
+    \end{definition}
+
+    \begin{remark}
+        Пусть $B$ --- $k$-алгебра. Пусть $f_1, \dots, f_n \in B$ и $F(T_1, \dots, T_n) \in k[T_1, \dots, T_n]$. Тогда $F(f_1, \dots, f_n) \in B$.
+
+        В частности, если даны $B = k[Y]$, $f_1, \dots, f_n \in B$, $F \in k[T_1, \dots, T_n]$, то $F(f_1, \dots, f_n) \in B = k[Y]$. Более того, $F(f_1, \dots, f_n)(y) = F(f_1(y), \dots, f_n(y))$.
+    \end{remark}
+
+    \begin{lemma}[следствие замечания]
+        Пусть дано некоторое отображение $\varphi: Y \to X$. TFAE
+        \begin{enumerate}
+            \item $\varphi$ --- регулярно.
+            \item Для всякого $f \in k[X]$ функция $f \circ \varphi: Y \to k$ регулярна.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{itemize}
+            \item[$2 \Rightarrow 1$)] $t_i \circ \varphi$ регулярно для всякого $i = 1, \dots, n$. Следовательно, $\varphi$ регулярно.
+            \item[$1 \Rightarrow 2$)] $t_i \circ \varphi$ регулярно для всякого $i = 1, \dots, n$ по определению. При этом $k[X]$ --- $k$-алгебра, порождённая $t_1$, \dots, $t_n$ (как элементы $k[X]$). Следовательно, есть $F(T_1, \dots, T_n) \in k[T_1, \dots, T_n]$, что $F(t_1, \dots, t_n) = f$. Тогда
+                \[f \circ \varphi = F(t_1, \dots, t_n) \circ \varphi = F(t_1 \circ \varphi, \dots, t_n \circ \varphi).\]
+                Поскольку $t_i \circ \varphi$ --- элементы $k$-алгебры $k[Y]$, то и $F(t_1 \circ \varphi, \dots, t_n \circ \varphi) \in k[Y]$.
+        \end{itemize}
+    \end{proof}
+
+    \begin{remark}
+        Это означает, что отображение $\varphi: Y \to X$ регулярно тогда и только тогда, когда $\varphi^*: \Func(X, k) \to \Func(Y, k), f \mapsto f \circ \varphi$ переводит $k[X]$ в $k[Y]$.
+    \end{remark}
+
+    \begin{definition}
+        Отображение $\varphi: Y \to X$ называется \emph{регулярным}, если для всякого $f \in k[X]$ функция $f \circ \varphi \in k[Y]$. Словами говоря, $\varphi$ --- регулярно, если она регулярные функции над $X$ переводит в регулярные функции над $Y$.
+
+        Часто пишут $\varphi^*(f)$ вместо $f \circ \varphi$, а функцию $\varphi^*(f): Y \to k$ называют переносом функции $f: X \to k$ на $Y$ посредством $\varphi$.
+
+        Ещё другими словами,
+        \[
+            \xymatrix{
+                \mathrm{Func(X, k)} \ar[r]^{\varphi^*}_{g \mapsto g \circ \varphi}& \mathrm{Func(Y, k)}\\
+                k[X] \ar@{^(->}[u] \ar@{-->}@(ur, ul)[r]& k[Y] \ar@{^(->}[u]
+            }
+        \]
+        Т.е. $\varphi$ регулярно тогда и только тогда, когда $\varphi^*(k[X]) \subseteq k[Y]$.
+    \end{definition}
+
+    \begin{remark*}
+        В этот момент Иван Александрович начинает по ошибке постоянно называть замкнутые множества \emph{аффинными множествами}.
+    \end{remark*}
+
+    \begin{lemma}
+        Пусть $X$, $Y$, $Z$ --- аффинные множества, а $\varphi: Y \to X$ и $\psi: X \to Z$ регулярны. Тогда $\psi \circ \varphi: Y \to Z$ регулярны.
+    \end{lemma}
+
+    \begin{proof}
+        Для всякого $f \in k[Z]$ верно $f \circ \psi \in k[X]$, а тогда $f \circ (\psi \circ \varphi) = (f \circ \psi) \circ \varphi \in k[Y]$. Таким образом $\psi \circ \varphi$ регулярно по второму определению.
+    \end{proof}
+
+    \begin{remark*}
+        $(\psi \circ \varphi)^* = \varphi^* \circ \psi^*$.
+    \end{remark*}
+
+    \begin{remark}
+        Пусть $B$ --- конечно порождённая редуцированная $k$-алгебра. Тогда есть некоторая система порождающих $t_1, \dots, t_n \in B$, можно построить
+        \[\psi: k[T_1, \dots, T_n] \to k[t_1, \dots, t_n] = B, T_i \mapsto t_i.\]
+        Следовательно, $B \cong A/\Ker(\psi) = k[X]$, где $X = Z(\Ker(\psi))$.
+
+        Тогда можно наблюдать, что
+        \[\Max(B) \cong \Max(k[X]) \cong \text{точки из $X$} = X.\]
+        Формальнее, $\Max(k[X]) = \{I(\{x\})\}_{x \in X}$. Тогда мы можем рассмотреть гомоморфизм $i_X: k \to k[X], a \mapsto \const_a$ ($\const_a$ --- константная функция со значением $a$) и для всякого $x \in X$ гомоморфизм $x^*: k[X] \to k, f \mapsto f(x)$. Тогда $x^* \circ i_X = \Id_k$.
+    \end{remark}
+
+    \begin{definition}
+        Назовём гомоморфизм $s: k[X] \to k$ $k$-алгебр \emph{сечением}, если $s \circ i_X = \Id_k$. Тогда $\Ker(s) \in \Max(k[X]) = \{\mathcal{M}_x\}_{x \in X}$. Тогда у нас есть биекция между сечениями $k[X]$ и точками $X$.
+
+        Множество сечений из $B$ обозначается $\Sect(B, k)$. Также назовём отображение $\can_X: X \to \Sect(k[X], k), x \mapsto x^*$ \emph{каноническим}.
+    \end{definition}
+
+    \begin{lemma}[пока без доказательства]
+        Пусть $\varphi: X' \to X$ --- регулярное отображение. Тогда есть $\psi: X' \to X$, которое переводит каждое $x'$ в такое $x$, что $\varphi^*(s) = s'$, где $s$ и $s'$ --- сечения, соответствующие $x$ и $x'$.
+        \[
+            \xymatrix{
+                X' \ar[d]_{\psi} \ar[r]^(0.35){\can_{X'}}& \Sect(X', k)& X' \ar[d]^{\varphi}\\
+                X \ar[r]_(0.35){\can_{X}}& \Sect(X, k) \ar[u]_{\varphi^*}& X\\
+            }
+        \]
+        Тогда $\psi = \varphi$.
+    \end{lemma}
+
+    \begin{remark}
+        Пусть $B$ --- конечно порождённая редуцированная $k$-алгебра. Тогда у нас есть взаимнооднозначное соответствие между $\Max(B)$ и сечениями вложения $i: k \to B$.
+
+        \todo[inline]{Дописать?}
+    \end{remark}
+
+    \begin{remark}
+        Поскольку $\Max(B)$ --- то же, что и множество сечений в $B$. Значит можно рассмотреть включение $B \to \Func(\Max(B), k), b \mapsto (\mathcal{M} \mapsto s_{\mathcal{M}}(b))$
+    \end{remark}
+
+    \begin{definition}
+        \emph{Категория $\Aff$} --- категория, чьи объекты есть пары $(B, \Max(B))$, а морфизмы $\Mor((B, \Max(B)), (B', \Max(B')))$ есть отображения $\varphi: \Max(B') \to \Max(B)$, что $\varphi^*(B) \subseteq B'$, т.е. $B \subseteq \Func(\Max(B), k)$ и то же для $B'$, $\varphi$ индуцирует $\varphi^*: \Func(\Max(B), k) \to \Func(\Max(B'), k)$ и мы хотим, чтобы $B$ переходило в $B'$ по $\varphi$.
+    \end{definition}
+
+    \begin{remark}
+        Мы знаем, что кончено порождённые редуцированные $k$-алгебры изоморфны $k$-алгебрам $k[X]$
+
+        \textbf{Локальная цель.} У нас есть категория $\Aff$ аффинных множеств и регулярных отображений между ними и категория $\fgrkalg$ конечно порождённых $k$-алгебр и гомоморфизмов $k$-алгебр между ними. Хотим показать, что они контравариантно изоморфны, где $X \in C_1 \mapsto k[X]$, $C_2 \ni B \cong k[Y] \mapsto Y$.
+    \end{remark}
+
+    \begin{lemma}
+        Пусть $X$ --- аффинное множество, $k[X]$ --- $k$-алгебра его регулярных функций. Тогда имеется биекция между $X$ и $\Sect(k[X], k)$.
+    \end{lemma}
+
+    \begin{definition}
+        Будем обозначать такие отображения $\can_X: X \to \Sect(k[X], k)$ и называть \emph{каноническими}.
+    \end{definition}
+    
+    \todo[inline, caption={Надо как-то разобраться с повторами}]{Надо как-то разобраться с повторами определений и утверждений между двумя лекциями}
+
+    \begin{proof}
+        Давайте рассмотрим $\varphi(x) := s_x$, где $s_x: k[X] \to k, f \mapsto f(x)$. Понятно, что $s_x \circ i = \Id_k$. Т.е. $\varphi$ --- инъекция.
+
+        Теперь в обратную сторону. Пусть имеется сечение $s$. $s$ --- сюръекция, $\mathcal{M} := \Ker(s)$. Тогда $k[X]/\mathcal{M} = k$, т.е. $\mathcal{M}$ максимален, а значит есть $x \in X$, что $\mathcal{M} = \mathcal{M}_x := \{f \in k[X] \mid f(x) = 0\}$.
+    \end{proof}
+
+    \begin{exercise}
+        Проверить, что это взаимно обратные биекции.
+    \end{exercise}
+
+    \begin{lemma}
+        Пусть $\varphi: X' \to X$ --- регулярное отображение. Пусть тогда $\varphi^*$ --- отображение, переводящее $k[X] \to k[X']$ по правилу $f \mapsto f \circ \varphi$. Также определим $\varphi_*: \Sect(k[X'], k) \to \Sect(k[X], k)$ по правилу $s' \mapsto s' \circ \varphi^*$. Тогда следующая диаграмма коммутативна.
+        \[
+            \xymatrix{
+                X' \ar[r]^\varphi \ar[d]_{\can_{X'}}& X \ar[d]^{\can_{X}}\\
+                \Sect(k[X'], k) \ar[r]_{\varphi_*}& \Sect(k[X], k)
+            }
+        \]
+    \end{lemma}
+
+    \begin{proof}
+        $\varphi_* \circ \can_{X'} = \can_X \circ \varphi$ тогда и только тогда, когда для всякого $x' \in X'$ верно
+        \[\varphi_*(\can_{X'}(x')) = \can_X(\varphi(x)),\]
+        что верно тогда и только тогда, когда для всякого $f \in k[X]$
+        \[\varphi_*(\can_{X'}(x'))(f) = \can_X(\varphi(x))(f).\]
+        При этом
+        \[
+            \varphi_*(\can_{X'}(x'))(f)
+            = \can_{X'}(x')(\varphi^*(f))
+            = \varphi^*(f)(x')
+            = f(\varphi(x))
+            = \can_X(\varphi(x))(f).
+        \]
+    \end{proof}
+
+    \begin{definition}
+        Пусть $R$ --- конечно порождённая редуцированная $k$-алгебра и $i: k \hookrightarrow R$ (константы). (Модельный случай: $R = k[X]$.) Тогда будем обозначать $X(R) := \Sect(R, k)$. (Оно будет напоминать нам множество замкнутых множеств.)
+
+        Рассмотрим пару $(R, X(R))$. Тогда у нас есть простые отображения забывания $(R, X(R)) \mapsto R$ и восстановления $R \mapsto (R, X(R))$. Так мы распрощались с понятием аффинных множеств в категории аффинных пространств и регулярных отображений между ними.
+
+        Так переопределим категорию $\Aff$ как категорию, где множество объектов --- это пары $(R, X(R))$, где $R$ --- конечно порождённая редуцированная $k$-алгебра, а морфизмы $\Mor((R', X(R')), (R, X(R))$) --- отображения $\varphi: X(R') \to X(R)$, что $\varphi^*: \Func(X(R), k) \to \Func(X(R'), k), f \mapsto f \circ \varphi$ переводит $R$ в $R'$ ($\varphi^*(R) \subseteq R'$).
+
+        Тут $R$ играет роль $k[X]$, а $X(R)$ --- роль $X$. В этом же случае вычисление $f \in R$ на точке $x \in X(R)$ происходит по правилу $x(f)$ (ср. с модельным случаем).
+
+        Категории конечно порождённых редуцированных $k$-алгебр (category of finitely generated reduced $k$-algebras) за $\fgrkalg$.
+    \end{definition}
+
+    \begin{definition}
+        \emph{Аффинное многообразие} --- это объект категории $\Aff$, т.е. пара $(R, X(R))$. \emph{Множество регулярных отображений $(R', X(R'))$ в $(R, X(R))$} --- множество морфизмов $\Mor((R', X(R')), (R, X(R)))$.
+    \end{definition}
+
+    \begin{example}[нетривиальные]\ 
+        \begin{enumerate}
+            \item Пусть $R$ --- f.g.r. $k$-algebra, а $f \in R$, что $f \neq 0$. Кольцо $R_f := \{g/f^n \mid g \in R \wedge n \in \NN\}$ (т.е. пары $(g, f^n)$ по модулю отношения эквивалентности $(g, f^n) \sim (g', f^{n'}) \Leftrightarrow g \cdot f^{n'} = g' \cdot f^n$) --- конечно порождённая $k$-алгебра. Это верно, потому что нужно рассмотреть $R[t]/(ft - 1)$, где обратным к (образу) $f$ будет (образ) $t$, а тогда $R[t] \overset{\sim}{\to} R_f$.
+        \end{enumerate}
+    \end{example}
+
+    \begin{definition}
+        Пусть $\varphi: Y' \to Y$ --- отображение множеств, $k$ --- наше поле. Зададим отображение $\varphi^*: \Func(Y, k) \to \Func(Y', k), f \mapsto f \circ \varphi$. $\varphi^*(f)$ называется \emph{переносом функции $f$ с $Y$ на $Y'$ посредством $\varphi$}.
+    \end{definition}
+
+    \begin{remark*}
+        После некоторых обсуждений выяснилось, что $\Sect(R, k)$ ничем не отличаются от $\Hom_{\text{$k$-alg.}}(R, k)$ --- множества гомоморфизмов $k$-алгебр $R \to k$.
+    \end{remark*}
+
+    \begin{definition}
+        Пусть $R$ --- конечнопорождённая редуцированная $k$-алгебра. Определим
+        \begin{gather*}
+            i: R \to \Func(X(R), k), f \mapsto i(f)\\
+            i(f)(x) := x(f).
+        \end{gather*}
+    \end{definition}
+
+    \begin{lemma}
+        Отображение $i$ инъективно, и кроме того есть гомоморфизм $k$-алгебр.
+    \end{lemma}
+
+    \begin{proof}
+        Как мы помним, $R \cong k[X]$ для некоторого замкнутого множества $X \subseteq \AA^n$. В этом случае $X$ находится в биективном соответствии с $\Hom(k[X], k) = X(k[X])$, а именно в соответствии $\pi: x \mapsto [f \mapsto f(x)]$. Тогда $\pi^{-1} \circ i$ выглядит просто как вложение.\todo{Этот переход непонятно написан, нужно переписать.} Отсюда и следует инъективность $i$.
+    \end{proof}
+
+    \begin{corollary}
+        Если $g \in R$ и $i(g)(x) = 0$ для всякого $x \in X(R)$, то $g = 0$.
+    \end{corollary}
+
+    \begin{proof}
+        $i: R \to \Func(X(R), k)$ --- инъективно, а тогда для вского $x \in X(R)$
+        \[i(0)(x) = x(0) = 0 = i(g)(x),\]
+        т.е. $i(0) = i(g)$, значит $0 = g$.
+    \end{proof}
+
+    \begin{corollary}
+        Пусть $g_1, g_2 \in R$ тогда $g_1 = g_2$ тогда и только тогда, когда для всякого $x \in X(R)$ $i(g_1)(x) = i(g_2)(x)$.
+    \end{corollary}
+
+    \begin{lemma}
+        Понятно, что гомоморфизм $k$-алгебр $\varphi: R \to R'$ порождает $\varphi^*: X(R') \to X(R)$ и $\varphi^{**}: \Func(X(R), k) \to \Func(X(R'), k)$. При этом имеются вложения $i: R \to \Func(X(R), k)$ и аналогичное $i'$. Тогда
+        \[\varphi^{**}(i(R)) \subseteq i'(R').\]
+    \end{lemma}
+
+    \begin{proof}
+        Мы докажем, что $\varphi^{**} \circ i = i \circ \varphi$, т.е. неформально $\varphi^{**}|_R = \varphi$. Достаточно доказать, что для всяких $f \in R$ и $x' \in X(R')$ выполняется равенство
+        \[\varphi^{**}(i(f))(x') = i'(\varphi(f))(x').\]
+        Имеем по определениям
+        \[\varphi^{**}(i(f))(x') = i(f)(\varphi^*(x')) = \varphi^*(x')(f) = (x' \circ \varphi)(f) = x'(\varphi(f)) = i'(\varphi(f))(x').\]
+        Отсюда следует требуемое утверждение.
+    \end{proof}
+
+    \begin{theorem}
+        $\Aff$ и $\fgrkalg$ контравариантно эквивалентны.
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим функтор $\Phi: \Aff \to \fgrkalg$, определённый по правилу $(R, X(R)) \mapsto R$, а $\varphi: (R', X(R')) \to (R, X(R))$ переводится в $\varphi^*|_R: R \to R'$. Понятно, что $\Phi$ контравариантен. Теперь функтор $\Psi: \fgrkalg \to \Aff$, определённый по правилу $R \mapsto (R, X(R))$, а гомоморфизм $\alpha: R \to R'$ переводится в морфизм $\varphi: (R', X(R')) \to (R, X(R))$, т.е. отображение $\varphi: X(R') \to X(R)$, что $\varphi(s) := s \circ \alpha$.
+
+        Несложно понять с помощью доказанной леммы, что $\Phi$ --- функтор, и $\Phi$ обратим, т.е. $\Psi$ корректно определён. Тут как раз $\Psi(\alpha)$ можно переопределить как $\alpha^*|_{R'}$. Следовательно, категории контравариантно эквивалентны.
+    \end{proof}
+
+    \begin{definition}
+        Пара
+        \[(\AA^n, \{\AA^n \setminus X \mid X \text{ замкнуто в } \AA^n\})\]
+        называется топологией Зарисского.
+    \end{definition}
+
+    \todo[inline, color=red]{Здесь пропущенная лекция!!!}
+
+    Пусть даны замкнутое $X \subseteq \AA^n$ и $U \subseteq X$ открытое в $X$. Положим
+    \[\Gamma(U, \mathcal{O}_X) := \{s \in \Func(U, k) \mid \forall x \in U \; \exists \text{ открытое } V \subseteq U, g, f \in k[X] \colon f|_V \neq 0 \wedge s|_V = (g/f)|_V\}.\]
+    
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item Также $\Gamma(U, \mathcal{O}_X)$ --- $k$-алгебра.
+            \item Если $U' \subseteq U$, то $\Gamma(U', \mathcal{O}_X)$ получается из $\Gamma(U, \mathcal{O}_X)$ сужением каждой функции-элемента на $U'$.
+            \item Если $U = \bigcup_i V_I$, а $s: U \to k$, то
+                \[s \in \Gamma(U, \mathcal{O}_X) \Longleftrightarrow \forall i \; s|_{V_i} \in \Gamma(V_i, \mathcal{O}_X).\]
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{lemma}\ 
+        \begin{enumerate}
+            \item $k[X] = \Gamma(X, \mathcal{O}_X)$.
+            \item Для всякого $g  \in k[X] \setminus \{0\}$ верно $k[X]_g = \Gamma(X_g, \mathcal{O}_X)$, где $X_g := \{x \in X \mid g(x) \neq 0\}$, а $R_g := \{\frac{a}{g^n} \mid a \in R \wedge n \geqslant 0\}$.
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Включение $k[X] \subseteq \Gamma(X, \mathcal{O}_X)$ очевидно. Обозначим его $\incl: k[X] \to \Gamma(X, \mathcal{O}_X)$. Пусть теперь есть $s \in \Gamma(X, \mathcal{O}_X)$. Для всякого $x \in X$ есть окрестность $V(x)$ точки $x$ в $X$ и функции $f_x, g_x \in k[X]$, что $f_x|_{V(x)} \neq 0$ и $s|_{V(x)} = (g_x/f_x)|_{V(x)}$, т.е. $(f_x s)|_{V(x)} = g_x|_{V(x)}$. Пусть $Z(x) := X \setminus V(x)$. $Z(x)$ замкнуто, $x \notin Z(x)$, значит $x \sqcup Z(x)$ замкнуто в $X$. Тогда есть $h_x \in k[X]$, что $h_x|_{Z(x)} = 0$, но $h_x(x) \neq 0$. Тогда $h_x f_x s = h_x g_x$, но теперь уже на всём $X$. Пусть $\tilde{f}_x := h_x f_x$ и $\tilde{g}_X := h_x g_x$. Тогда $\tilde{f}_x s = \tilde{h}_x$ и $\tilde{f}_x(x) = h_x(x) f_x(x) \neq 0$. Следовательно, $\{f_x\}_{x \in X}$ порождает единичный идеал в $k[X]$, значит конечнопорождён, т.е. есть $x_1, \dots, x_n \in X$ и $r_1, \dots, r_n \in k[X]$, что
+                \[r_1 \tilde{f}_{x_1} + \dots + r_n \tilde{f}_{x_n} = 1.\]
+                Следовательно,
+                \[s = \sum_{i=1}^n r_i \tilde{f}_{x_i} s = \sum_{i=1}^n r_i \tilde{g}_{x_i} \in k[X].\]
+        \end{enumerate}
+    \end{proof}
+
+    \begin{lemma}
+        Для всяких замкнутых $X$ и $X'$ всякое регулярное отображение $\alpha: X' \to X$ будет непрерывным в топологии Зарисского.
+    \end{lemma}
+
+    \begin{proof}
+        Возьмём $f \in k[X] \setminus \{0\}$ и обозначим $f' := \alpha^*(f)$. Пусть $f' \neq 0$. Тогда $X'_{f'} = \alpha^{-1}(X_f)$. Если же $f' = 0$, то $\alpha^{-1}(X_f) = X'_{f'} = \varnothing$. Поэтому прообраз всякого открытого в $X$ открыт в $X'$, т.е. $\alpha$ непрерывно.
+    \end{proof}
+
+    \begin{corollary}
+        Регулярное отображение $\alpha: X' \to X$ есть морфизм окольцованных пространств $(X' \mathcal{O}_{X'}) \to (X \mathcal{O}_{X})$.
+    \end{corollary}
+
+    \begin{proof}
+        $\alpha$ непрерывен по доказанной лемме. Пусть $f \in k[X] \setminus \{0\}$, а $f' = \alpha(f)$. Тогда $\alpha^{-1}(X_f) = X'_{f'}$ (где $X'_{f'} = \varnothing$ в случае $f' = 0$). Т.е.
+        \[\alpha(\Gamma(X_f, \mathcal{O}_f)) = \alpha(k[X]_f) = k[X']_{f'} = \Gamma(X'_{f'}, \mathcal{O}_{f'}).\]
+        \todo[inline]{Опустили случай $f = 0$.}
+    \end{proof}
+
+    \begin{lemma}
+        $\Mor_{\Aff}((k[X'], X'), (k[X], X)) = \Mor_{\Ospaces}((X', \mathcal{O}_{X'}), (X, \mathcal{O}_{X}))$.
+    \end{lemma}
+
+    \begin{proof}
+        Всякий морфизм из $\Aff$ --- морфизм из $\Ospaces$ по доказанному следствию.
+        \todo[inline]{Дописать.}
+    \end{proof}
+\end{document}

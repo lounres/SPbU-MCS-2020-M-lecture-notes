@@ -1,0 +1,49 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+
+\title{Теоретическое домашнее задание от 01.10\\Дифференциальные уравнения и динамические системы}
+\author{Глеб Минаев @ 204 (20.Б04-мкн)}
+% \date{}
+
+\begin{document}
+    \maketitle
+    
+    \begin{problem}{5}
+        Пусть $\gamma_1$ и $\gamma_2$ --- два различных решения задачи Коши для уравнений $y' = f(x, y)$ для входных данных $(x_0, y_0)$. Тогда рассмотрим функции
+        \[
+            \delta := \gamma_2 - \gamma_1
+            \qquad \text{ и } \qquad
+            g(x, y) := f(x, y + \gamma_1(x)) - f(x, \gamma_1(y)).
+        \]
+        Понятно, что $g$ определена и непрерывна в той же окрестности точки $(x_0, y_0)$, а $\delta$ --- нетривиальное (т.е. $\not\equiv 0$) решение задачи Коши для уравнения $y' = g(x, y)$ для входных данных $(x_0, y_0)$. При этом
+        \[
+            |g(x, y)| = |f(x, y + \gamma_1(x)) - f(x, \gamma_1(y))| \leqslant \varphi(|y|).
+        \]
+        Следовательно,
+        \[|\delta'| \leqslant \varphi(|\delta|), \qquad \frac{\delta'}{\varphi(|\delta|)} \in [-1; 1].\]
+        Поскольку $\delta(0) = 0$, но $\delta \not\equiv 0$, то есть некоторые $a$ и $b$, что $\delta(a)$, что $\delta(a) = 0$, $\delta((a; b]) > 0$. Действительно, мы живём в некоторой окрестности $(x_0, y_0)$, а множество точек, где $\delta \neq 0$, есть тоже открытое множество, то оно является дизъюнктным объединением интервалов (при этом не вся окрестность, так как $\delta(0) = 0$). Т.е. есть интервал (любой интервал из описанного разбиения), где $\delta \neq 0$, а на концах $\delta = 0$ (если определено; но точно определено хотя бы в одном из концов, так как иначе данный интервал совпадает с окрестностью, в которой мы живём). Тогда сузив интервал с одного из концов, получаем интервал $(a; b)$, где $\delta((a; b)) > 0$, $\delta(a) = 0$ и $\delta(b) > 0$ (есть также вариант, где $\delta < 0$ на $(a; b]$, но там задача очевидна). Тогда мы имеем, для всякого $t \in (a; b)$, что
+        \[
+            \int_t^b \frac{\delta'}{\varphi(|\delta|)} dx
+            = \int_t^b \frac{1}{\varphi(\delta(x))} d\delta(x)
+            = \int_{\delta(t)}^{\delta(b)} \frac{1}{\varphi(\lambda)} d\lambda,
+        \]
+        и при этом
+        \[
+            \left|\int_t^b \frac{\delta'}{\varphi(|\delta|)} dx\right|
+            \leqslant \int_t^b \left|\frac{\delta'}{\varphi(|\delta|)}\right| dx
+            \leqslant \int_t^b 1 dx
+            = |b - t|
+            \leqslant |b-a|.
+        \]
+        Но тогда
+        \[
+            +\infty
+            = \int_{\delta(a)}^{\delta(b)} \frac{1}{\varphi(\lambda)} d\lambda
+            = \lim_{t \to a^+} \int_{\delta(t)}^{\delta(b)} \frac{1}{\varphi(\lambda)} d\lambda
+            \leqslant \lim_{t \to a^+} |b-a|
+            = |b-a|
+        \]
+        --- противоречие. Значит $\delta$ тривиально, т.е. $\gamma_1 = \gamma_2$, т.е. $(x_0, y_0)$ --- точка единственности.
+    \end{problem}
+\end{document}

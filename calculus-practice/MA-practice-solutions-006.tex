@@ -1,0 +1,400 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+\usepackage{multicol}
+
+\title{Листочек 6. Снова многомерный.\\Математический анализ. 1 курс.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\grad}{grad}
+\renewcommand{\Re}{\qopname\relax o{Re}}
+\renewcommand{\Im}{\qopname\relax o{Im}}
+\newcommand{\HD}{\ensuremath{\mathrm{HD}}\xspace}
+
+\begin{document}
+    \maketitle
+
+    \begin{multicols}{2}
+        \tableofcontents
+    \end{multicols}
+
+    \section*{Базовые задачи}
+    \addcontentsline{toc}{section}{Базовые задачи}
+
+    \begin{enumproblem}TBP
+        % \begin{definition}
+        %     Для всякой дважды дифференцируемой функции нескольких переменных $f$ обозначим определитель матрицы Гессе функции $f$ как
+        %     \[\HD(f)\]
+        % \end{definition}
+
+        % \begin{lemma}
+        %     Дважды непрерывно-дифференцируемая функция $f$ является (строго) выпуклой тогда и только тогда, когда её гессиан положительно полуопределена (положительно определена соответственно) в любой точке.
+        % \end{lemma}
+
+        % \begin{proof}
+        %     Заметим, что если сузить функцию $f$ на прямую, проходящую через точки $x$ и $y$, то гессиан $f$ любой точки $z$ этой прямой с подставленным в него направлением этой прямой совпадёт со второй производной $f$ в $z$. Поэтому используя случай одной переменной, получаем, что $f$ выпукла тогда и только тогда, когда гессиан в любом направлении неотрицателен, что и значит его положительная полуопределённость.
+
+        %     Таким же образом мы получаем, что $f$ строго выпукла тогда и только тогда, когда гессиан в любом направлении положителен, что и есть его положительная определённость.
+        % \end{proof}
+
+        % \begin{remark}
+        %     В случае же функции двух переменных, рассматривая дискриминант многочлена второй степени, мы легко получаем, что положительная (полу-)определённость гессиана равносильна положительности (неотрицательности) $\HD(f)$.
+        % \end{remark}
+
+        % Так как
+        % \[h = \HD(F) > 0,\]
+        % то $F$ строго выпукла.
+
+        % \ItemedProblem
+        % \begin{enumerate}
+        %     \item Корректность определения $F^*$ состоит из двух деталей: независимость значения $F^*(p, q)$ от $(x, y)$ (если таких пар несколько) и существование хотя бы одной пары $(x, y)$ (для определения значения $F^*(p, q)$). Рассмотрим каждый из моментов по отдельности.
+        %         \begin{itemize}
+        %             \item Пусть есть две точки $(x_1, y_1)$ и $(x_2, y_2)$ которые дают одну и ту же пару $(p, q)$. Это значит, что частные производные в этих точках совпадают, так как $p$ и $q$ ими и являются. Рассмотрим функцию
+        %                 \[G(x, y) := F(x, y) - p x - q y\]
+        %                 Заметим, что вторые частные производные $F$ и $G$ совпадают, но первые производные $G$ в $(x_1, y_1)$ и $(x_2, y_2)$ равны $0$. При этом $G$ выпукла. Значит сужая $G$ на отрезок между $(x_1, y_1)$ и $(x_2, y_2)$, получаем, что на нём $G$ константа: там функция $G$ является функцией одной переменной, выпуклой, с нулевыми производными в обеих точка, а значит и на всём отрезке. Следовательно
+        %                 \[p x_1 + q y_1 - F(x_1, y_1) = -G(x_1, y_1) = -G(x_2, y_2) = p x_2 + q y_2 - F(x_2, y_2)\]
+
+        %                 Значит, во всех точках $(x, y)$ с частными производными $p$ и $q$ выражение принимает одно и то же значение, поэтому $F^*(p, q)$ не зависит от $(x, y)$.
+
+        %                 P.S. В случае строгой выпуклости по тому рассуждению получаем, что нет двух точек $(x, y)$ дающих одну и ту же пару $(p, q)$.
+                    
+        %             \item Полная же определённость на всей плоскости неверна. Например, возьмём
+        %                 \[F(x, y) = \sqrt{x^2 + y^2 + 1}\]
+        %                 --- верхняя полость однополостного гиперболоида $z^2 = x^2 + y^2 + 1$. Следовательно
+        %                 \begin{align*}
+        %                     &p=F_x(x, y) = \frac{x}{\sqrt{x^2 + y^2 + 1}},&
+        %                     &q=F_y(x, y) = \frac{y}{\sqrt{x^2 + y^2 + 1}},
+        %                 \end{align*}
+        %                 а
+        %                 \begin{align*}
+        %                     &\frac{\partial^2}{\partial x^2} F(x, y) = \frac{y^2 + 1}{\sqrt{x^2 + y^2 + 1}^3},&
+        %                     &\frac{\partial^2}{\partial x \partial y} F(x, y) = \frac{-xy}{\sqrt{x^2 + y^2 + 1}^3},&
+        %                     &\frac{\partial^2}{\partial y^2} F(x, y) = \frac{x^2 + 1}{\sqrt{x^2 + y^2 + 1}^3}.
+        %                 \end{align*}
+        %                 Следовательно
+        %                 \[
+        %                     \HD(F)
+        %                     = \begin{vmatrix}
+        %                         \frac{y^2 + 1}{\sqrt{x^2 + y^2 + 1}^3}& \frac{-xy}{\sqrt{x^2 + y^2 + 1}^3}\\
+        %                         \frac{-xy}{\sqrt{x^2 + y^2 + 1}^3}& \frac{x^2 + 1}{\sqrt{x^2 + y^2 + 1}^3}
+        %                     \end{vmatrix}
+        %                     = \frac{(x^2 + 1)(y^2 + 1) - x^2 y^2}{(x^2 + y^2 + 1)^3}
+        %                     = \frac{1}{(x^2 + y^2 + 1)^2}
+        %                 \]
+        %                 Таким образом понятно, что $\HD(F)$ является положительной и непрерывной функцией.
+
+        %                 С другой стороны если
+        %                 \begin{align*}
+        %                     &p = F_x(x, y) = \frac{x}{\sqrt{x^2 + y^2 + 1}},&
+        %                     &q = F_y(x, y) = \frac{y}{\sqrt{x^2 + y^2 + 1}},
+        %                 \end{align*}
+        %                 то
+        %                 \[1 - p^2 - q^2 = \frac{1}{x^2 + y^2 + 1}\]
+        %                 и значит
+        %                 \begin{align*}
+        %                     &x = \frac{p}{\sqrt{1 - p^2 - q^2}},&
+        %                     &y = \frac{q}{\sqrt{1 - p^2 - q^2}}.
+        %                 \end{align*}
+        %                 Таким образом
+        %                 \begin{multline*}
+        %                     F^*(p, q)
+        %                     = px + qy - F(x, y)\\
+        %                     = \frac{p^2}{\sqrt{1 - p^2 - q^2}} + \frac{q^2}{\sqrt{1 - p^2 - q^2}} - \frac{1}{\sqrt{1 - p^2 - q^2}}
+        %                     = -\sqrt{1 - p^2 - q^2}
+        %                 \end{multline*}
+        %                 --- нижняя единичная полусфера. И $F^*$ не может быть определена вне единичного открытого круга! (Так как $1 - p^2 - q^2 = 1/(1 + x^2 + y^2) < 1$.)
+        %         \end{itemize}
+            
+        %     \item Несложно видеть по определению, что
+        %         \[
+        %             \begin{pmatrix}
+        %                 \frac{\partial^2 F}{\partial x^2}& \frac{\partial^2 F}{\partial x \partial y}\\
+        %                 \frac{\partial^2 F}{\partial x \partial y}& \frac{\partial^2 F}{\partial y^2}
+        %             \end{pmatrix}
+        %             \begin{pmatrix}
+        %                 dx\\dy
+        %             \end{pmatrix}
+        %             =
+        %             \begin{pmatrix}
+        %                 dp\\dq
+        %             \end{pmatrix}
+        %         \]
+        %         Таким образом
+        %         \[
+        %             \begin{pmatrix}
+        %                 dx\\dy
+        %             \end{pmatrix}
+        %             =
+        %             \begin{pmatrix}
+        %                 \frac{\partial^2 F}{\partial x^2}& \frac{\partial^2 F}{\partial x \partial y}\\
+        %                 \frac{\partial^2 F}{\partial x \partial y}& \frac{\partial^2 F}{\partial y^2}
+        %             \end{pmatrix}^{-1}
+        %             \begin{pmatrix}
+        %                 dp\\dq
+        %             \end{pmatrix}
+        %             =
+        %             \frac{1}{\frac{\partial^2 F}{\partial x^2} \cdot \frac{\partial^2 F}{\partial y^2} - \left(\frac{\partial^2 F}{\partial x \partial y}\right)^2}
+        %             \begin{pmatrix}
+        %                 \frac{\partial^2 F}{\partial y^2}& -\frac{\partial^2 F}{\partial x \partial y}\\
+        %                 -\frac{\partial^2 F}{\partial x \partial y}& \frac{\partial^2 F}{\partial x^2}
+        %             \end{pmatrix}
+        %             \begin{pmatrix}
+        %                 dp\\dq
+        %             \end{pmatrix}
+        %         \]
+        %         При этом
+        %         \[
+        %             F_p^*(p, q) dp + F_q^*(p, q) dq
+        %             = d F^*(p, q)
+        %             = x dp + y dq 
+        %         \]
+        %         откуда мы получаем, что
+        %         \begin{align*}
+        %             &F_p^*(p, q) = x,&
+        %             &F_q^*(p, q) = y.
+        %         \end{align*}
+        %         (Тут мы в принципе получаем, что $F^{**} = (F^*)^*$, определённая для $F^*$ по аналогии с $F^*$ для $F$, совпадает с $F$.)
+        % \end{enumerate}
+    \end{enumproblem}
+
+    \begin{enumproblem}\ItemedProblem
+        Введём новые обозначения:
+        \begin{itemize}
+            \item $P := \prod_{j=1}^n (z - z_j)$;
+            \item $C$ --- выпуклая оболочка множества точек $\{z_j\}_{j=1}^n$.
+        \end{itemize}
+
+        \begin{lemma}
+            Множество корней многочлена $P'$ есть объединение множества кратных корней $P$ и множества корней функции
+            \[\varphi(z) := \sum_{j=1}^n \frac{1}{z - z_j}\]
+        \end{lemma}\
+        
+        \begin{proof}
+            Заметим, что общие корни $P$ и $P'$ суть кратные корни $P$, а кратные корни $P$ являются корнями $P$ и $P'$. Тогда покажем, что остальные корни $P'$ суть корни $\varphi$. Заметим, что алгебраически
+            \[P'(z) = P(z) \varphi(z)\]
+            Следовательно всякий корень $P'$, не являющийся корнем $P$, будет корнем $\varphi$, а всякий корень $\varphi$ будет корнем $P'$. И при этом множества корней $\varphi$ и $P$ не пересекаются.
+        \end{proof}
+
+        \begin{enumerate}
+            \item Если $\zeta$ есть кратный корень $P$, то утверждение очевидно; следовательно предположим обратное. Тогда мы имеем, что
+                \[\sum_{j=1}^n \frac{1}{\zeta - z_j} = 0\]
+                Отсюда понятным образом следует, что нет прямой, относительно которой все вектора из набора
+                \[\left\{\frac{1}{\zeta - z_j}\right\}_{j=1}^n\]
+                лежат в одной (открытой!) полуплоскости, так как иначе проекция их суммы на нормаль будет равна сумме проекций с одним и тем же знаком, а значит не равна нулю. Поэтому тем же свойством обладают и вектора из набора
+                \[\left\{\zeta - z_j\right\}_{j=1}^n\]
+                (так как их направления отражаются относительно вещественной оси). Значит нет разделяющей прямой $C$ и точки $\zeta$: если бы у них была разделяющая прямая, то, параллельно перенеся её в $\zeta$, мы получим прямую, относительно которой все вектора из
+                \[\left\{\zeta - z_j\right\}_{j=1}^n\]
+                лежат в одной открытой полуплоскости. Следовательно $\zeta$ лежит в $C$.
+            
+            \item Введём немного другие обозначения.
+                \begin{quotation}
+                    Пусть даны комплексные $\alpha$ и $\beta_1$, \dots, $\beta_n$. $P$ --- многочлен с корнями $\alpha$, $\beta_1$, \dots $\beta_n$. Нужно показать, что
+                    \[|\zeta - \alpha| \geqslant \frac{1}{n+1} \min_i |\beta_i - \alpha|.\]
+                \end{quotation}
+                Если $\zeta$ есть кратный корень $P$, то утверждение очевидно: есть $\beta_j = \zeta$, а значит
+                \[|\zeta - \alpha| = |\beta_j - \alpha| \geqslant \min_i |\beta_i - \alpha| \geqslant \frac{1}{n+1} \min_i |\beta_i - \alpha|;\]
+                следовательно предположим обратное. Обозначим
+                \[
+                    a := \frac{1}{\zeta - \alpha}
+                    \qquad \text{ и } \qquad
+                    b_i := \frac{1}{\zeta - \beta_i}.
+                \]
+                Так нам надо показать, что
+                \[\frac{1}{|a|} \geqslant \frac{1}{n+1} \min_i \left|\frac{1}{a} - \frac{1}{b_i}\right|.\]
+                Вспомним, что
+                \[\frac{1}{\zeta - \alpha} + \sum_{i=1}^n \frac{1}{\zeta - \beta_i} = 0\]
+                т.е.
+                \[a + \sum_{i=1}^n b_i = 0\]
+                Тогда
+                \begin{align*}
+                    \frac{1}{n+1} \min_i \frac{|b_i - a|}{|b_i|}
+                    &= \frac{1}{n+1} \min_i \frac{|b_i + \sum_{j=1}^n b_j|}{|b_i|}\\
+                    &\leqslant \frac{1}{n+1} \min_i \frac{|b_i| + \sum_{j=1}^n |b_j|}{|b_i|}\\
+                    &\leqslant \frac{1}{n+1} \left(1 + \min_i \sum_{j=1}^n \frac{|b_j|}{|b_i|}\right)\\
+                \end{align*}
+                Заметим, что в последней сумме чем больше $|b_i|$, тем меньше значение суммы. Следовательно пусть
+                \[|b_k| = \max_i |b_i|\]
+                Значит
+                \[
+                    \frac{1}{n+1} \left(1 + \min_i \sum_{j=1}^n \frac{|b_j|}{|b_i|}\right)
+                    = \frac{1}{n+1} \left(1 + \sum_{j=1}^n \frac{|b_j|}{|b_k|}\right)
+                    \leqslant \frac{1}{n+1} \left(1 + \sum_{j=1}^n \frac{|b_k|}{|b_k|}\right)
+                    = \frac{1}{n+1} (1 + n)
+                    = 1
+                \]
+                Таким образом
+                \[
+                    \frac{1}{n+1} \min_i \left|\frac{1}{a} - \frac{1}{b_i}\right|
+                    = \frac{1}{n+1} \min_i \frac{|b_i - a|}{|a| |b_i|}
+                    = \frac{1}{|a|} \frac{1}{n+1} \min_i \frac{|b_i - a|}{|b_i|}
+                    \leqslant \frac{1}{|a|} \cdot 1
+                    = \frac{1}{|a|}
+                \]
+        \end{enumerate}
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Обозначим $\{\overline{e}_i\}_{i=1}^d$ стандартный базис $\RR^d$.
+
+        Рассмотрим
+        \[G(x) := F(x) - \sum_{i=1}^d x_i \frac{\partial F}{\partial x_i} (0)\]
+        Функция $G$ будет выпуклой и имеет нулевые частные производные в нуле. Если мы покажем, что $G$ будет дифференцируема в нуле, то и $F$ будет таковой.
+
+        Заметим, что для всякого $\varepsilon > 0$ есть $\{\delta_i\}_{i=1}^d$, что для всякого $i \in \{1; \dots; d\}$
+        \[\forall x \in (-\delta_i; \delta_i) \quad |G(x \overline{e}_i)| < \varepsilon |x|\]
+
+        Следовательно для всяких $\{x_i\}_{i=1}^d$ и $\{\alpha_i\}_{i=1}^d$, что $x_i \in (-\delta_i; \delta_i)$, $\alpha_i \geqslant 0$ и $\sum_{i=1}^d \alpha_i = 1$, если $x = (\alpha_i x_i)_{i=1}^d = \sum_{i=1}^d \alpha_i (x_i \overline{e}_i)$, то
+        \[G(x) \leqslant \sum_{i=1}^d \alpha_i G(x_i \overline{e}_i) < \varepsilon \sum_{i=1}^d \alpha_i |x_i| \leqslant \varepsilon \sqrt{d} \sqrt{\sum_{i=1}^d (\alpha_i x_i)^2} = \varepsilon \sqrt{d} |x|.\]
+        В таком случае множество рассмотренных точек $x$ есть выпуклая оболочка $\{\pm x_i \overline{e}_i\}_{i=1}^d$ ($2d$ точек).
+
+        Также если зафиксировать $j \in \{1; \dots; d\}$ и
+        \[x = \frac{1}{\alpha_j} \left(x_j \overline{e}_j + \alpha_j x_j \overline{e}_j - \sum_{i=1}^n \alpha_i x_i \overline{e}_i \right)\]
+        то
+        \[\alpha_1 (x_1 \overline{e}_1) + \dots + \alpha_{j-1} (x_{j-1} \overline{e}_{j-1}) + \alpha_j x + \alpha_{j+1} (x_{j+1} \overline{e}_{j+1}) + \dots + \alpha_d (x_d \overline{e}_d) = x_j \overline{e}_j\]
+        Следовательно
+        \[G(x_j \overline{e}_j) \leqslant \alpha_1 G(x_1 \overline{e}_1) + \dots + \alpha_{j-1} G(x_{j-1} \overline{e}_{j-1}) + \alpha_j G(x) + \alpha_{j+1} G(x_{j+1} \overline{e}_{j+1}) + \dots + \alpha_d G(x_d \overline{e}_d)\]
+        а
+        \[|x| = \frac{1}{\alpha_j} \sqrt{(\alpha_1 x_1)^2 + \dots + (\alpha_{j-1} x_{j-1})^2 + x_j^2 + (\alpha_{j+1} x_{j+1})^2 + \dots + (\alpha_d x_d)^2}\]
+        Значит
+        \begin{align*}
+            G(x)
+            &\geqslant \frac{1}{\alpha_j} \left(G(x_j \overline{e}_j) + \alpha_j G(x_j \overline{e}_j) - \sum_{i=1}^d \alpha_i G(x_i \overline{e}_i)\right)&
+            &\geqslant -\varepsilon \frac{1}{\alpha_j} \left(|x_j| - \alpha_j |x_j| + \sum_{i=1}^d \alpha_i |x_i|\right)\\
+            &\geqslant -\varepsilon \sqrt{d} \frac{1}{\alpha_j} \sqrt{x_j^2 - (\alpha_j x_j)^2 + \sum_{i=1}^d (\alpha_i |x_i|)^2}&
+            &= -\varepsilon \sqrt{d} |x|
+        \end{align*}
+        В таком случае множество рассмотренных точек $x$ есть всё $\RR^n$, так как для всякой точки $p \in \RR^d$, проводя прямую через $p$, пересекающуюся с осью $Ox_j$ очень близко к нулю и по ту же сторону, что и $p$ относительно гиперплоскости всех остальных координат, её пересечение с гиперплоскостью остальных координат будет лежать в выпуклой оболочке, описанной выше. Таким образом, поскольку мы всё делаем близко к нулю и всё попадает в правильные выпуклые оболочки, то $\{x_i\}_{i=1}^d$ будут лежать в необходимых промежутках, а так как пересечение прямой с осью $Ox_j$ лежит между пересечением с гиперплоскостью остальных координат и $p$, то комбинация $\{\alpha_i\}_{i=1}^d$ будет выпуклой и $\alpha_j > 0$.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}\ItemedProblem\ 
+        \begin{enumerate}
+            \item По интегральному правилу Лейбница
+                \begin{align*}
+                    \frac{d}{dx} f_h(x)
+                    &= \frac{1}{2h} \frac{d}{dx} \int_{x-h}^{x+h} f(t) dt\\
+                    &= \frac{1}{2h} \left(f(x+h) \cdot 1 - f(x-h) \cdot 1 + \int_{x-h}^{x+h} \frac{\partial}{\partial x} f(t) dt\right)\\
+                    &= \frac{f(x+h) - f(x-h)}{2h}
+                \end{align*}
+                Это значит, что $f_h$ непрерывно дифференцируема.
+
+            \item Пусть $f([x-h; x+h]) \subseteq [f(x) - \varepsilon; f(x) + \varepsilon]$. Тогда
+                \[|f_h(x) - f(x)| = \left|\frac{1}{2h} \int_{x-h}^{x+h} (f(t) - f(x)) dt\right| \leqslant \varepsilon\]
+                При этом по непрерывности на компакте есть такое $\delta > 0$, что для всякого $x \in C$
+                \[f(U_\delta(x)) \subseteq U_\varepsilon(f(x))\]
+                и следовательно для всякого $h \in (0; \delta)$
+                \[|f_h(x) - f(x)| \leqslant \varepsilon\]
+                Это и означает равномерную сходимость $f_h \to f$ на $C$. 
+        \end{enumerate}
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Заметим, что
+        \[
+            F''_{xx} \cdot (F'_y)^2 - 2 F''_{xy} \cdot F'_x \cdot F'_y + F''_{yy} \cdot (F'_x)^2
+            =
+            \begin{pmatrix}
+                -F'_y& F'_x
+            \end{pmatrix}
+            \begin{pmatrix}
+                F''_{xx}& F''_{xy}\\
+                F''_{xy}& F''_{yy}
+            \end{pmatrix}
+            \begin{pmatrix}
+                -F'_y\\ F'_x
+            \end{pmatrix}
+        \]
+        Векторы по бокам --- вектор, перпендикулярный $\grad(F)$ и той же длины, а матрица посередине --- матрица Гессе функции $F$. В итоге всё произведение есть изменение второго порядка функции $F$ по направлению этого перпендикулярного вектора. Значит если мы повернём базис так, что $\grad(F)$ будет сонаправлен $(0, 1)$, то значение формулы выше не изменится. Поэтому повернём базис таковым образом. А также домножим $F$ на такую константу, что $\grad(F)(P_0) = (0, 1)$. Тогда $F'_x(P_0) = 0$, а $F'_y(P_0) = 1$; значит формула выше вырождается в $F''_{xx}(P_0)$.
+
+        Пусть $P_0 = (p_x, p_y)$ --- точка, что в ней зануляется $F$, но не её градиент. Нам нужно показать, что касание прямой $\Lambda: P_0 + t (1, 0)$ и $M$ имеет второй порядок тогда и только тогда, когда $F''_{xx}(P_0) = 0$.
+
+        Пусть касание $\Lambda$ и $M$ имеет второй порядок. Тогда есть последовательность точек
+        \[(Q_n)_{n=0}^\infty = (P_0 + (x_n, y_n))_{n=0}^\infty \to P_0,\]
+        которые являются корнями $F$ и что
+        \[(y_n)_{n=0}^\infty = o\Bigl((x_n^2)_{n=0}^\infty\Bigr).\]
+        При этом по формуле Тейлора в форме Коши
+        \begin{align*}
+            F(x, y)
+            &= F(P_0)\\
+            &+ F'_{x}(P_0) \cdot (x - p_x) + F'_{y}(P_0) \cdot (y - p_y)\\
+            &+ F''_{xx}(P_0) \cdot (x - p_x)^2 + 2F''_{xy}(P_0) \cdot (x - p_x)(y - p_y) + F''_{yy}(P_0) \cdot (y - p_y)^2\\
+            &+ o((x - p_x)^2 + (y - p_y)^2)
+        \end{align*}
+        Следовательно
+        \begin{align*}
+            0
+            &= F(Q_n)\\
+            &= y_n + F''_{xx}(P_0) \cdot x_n^2 + 2F''_{xy}(P_0) \cdot x_n y_n + F''_{yy}(P_0) \cdot y_n^2 + o(x_n^2 + y_n^2)\\
+            &= o(x_n^2) + F''_{xx}(P_0) \cdot x_n^2 + o(x_n^3) + o(x_n^4) + o(x_n^2)\\
+            &= F''_{xx}(P_0) \cdot x_n^2 + o(x_n^2)
+        \end{align*}
+        Таким образом $F''_{xx}(P_0) = 0$.
+
+        Пусть теперь наоборот $F''_{xx}(P_0) = 0$. Тогда мы видим, что
+        \begin{align*}
+            F(P_0 + (x, y))
+            &= y + 2 F''_{xy}(P_0) \cdot xy + F''_{yy}(P_0) \cdot y^2 + o(x^2 + y^2)\\
+            &= y(1 + 2 F''_{xy}(P_0) \cdot x + F''_{yy}(P_0) \cdot y) + o(x^2 + y^2)\\
+        \end{align*}
+        Рассмотрим манхэттенскую окрестность $U$ точки $P_0$ (т.е. произведение $\varepsilon$-окретсности по $x$ и $\varepsilon$-окрестности по $y$ для некоторого $\varepsilon > 0$), где $F'_{y}$ меняется не сильно, например, не более чем на $\alpha$ от своей абсолютной величины, где $\alpha < 1$. Тогда для всякой точки $Q = P_0 + (x, 0)$ прямой $\Lambda$ из $U$ верно, что
+        \[F(Q) = o(x^2),\]
+        а значит для всех $Q$ некоторой подокрестности $U$ есть точка $Q' = Q + (0, y)$, что $F(Q') = 0$, так как
+        \[F(Q) / F'_y(P_0) = o(x^2)\]
+        и следовательно
+        \[
+            y = C \frac{F(Q)}{F'_y(P_0)},
+            \qquad
+            C \in \left[\frac{1}{1 + \alpha}; \frac{1}{1 - \alpha}\right].
+        \]
+        Значит расстояние от всякой точки $Q$ прямой $\Lambda$ до $M$ есть $o(|Q - P_0|^2)$.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Предположим можно. Тогда у нас есть норма $||\cdot||$, порождающая в точности равномерную сходимость на компактах.
+
+        Для всякого $n \in \NN \cup \{0\}$ определим функцию
+        \[
+            f_n(x) :=
+            \begin{cases}
+                \sin(x \pi)^2& \text{ если } x \in [n; n+1],\\
+                0& \text{ иначе.}
+            \end{cases}
+        \]
+        Заметим, что для всякого набора $\{a_n\}_{n=0}^\infty$ последовательность
+        \[
+            (g_n)_{n=0}^\infty
+            = \left(\sum_{k=0}^n a_n f_n\right)_{n=0}^\infty
+        \]
+        будет равномерно сходится на любом компакте, да и вообще поточечно сходится к некоторой функции $g$. Тогда мы получаем, что $(g_n)_{n=0}^\infty$ и по норме будет сходится к $g$, значит, в частности, будет фундаментальной.
+
+        Тогда давайте построим конкретный набор $\{a_n\}_{n=0}^\infty$ следующим рекуррентным образом. Будем подразумевать, что $g_{-1}$ есть тождественно нулевая функция. Тогда несложно видеть, что для всякого $n \in \NN \cup \{0\}$ (так как $||f_n|| > 0$)
+        \[||g_n|| \geqslant |a_n| \cdot ||f_n|| - ||g_{n-1}||.\]
+        Значит можно взять такое $a_n$, что $||g_n|| \geqslant ||g_{n-1}|| + 1$.
+
+        Для такой последовательности мы получаем, что для всяких $n, m \in \NN \cup \{0\}$
+        \[||g_n - g_m|| \geqslant \Bigl| ||g_n|| - ||g_m|| \Bigr| \geqslant |n - m|,\]
+        что банальным образом противоречит фундаментальности $\{g_n\}_{n=0}^\infty$.
+    \end{enumproblem}
+
+    \section*{Рейтинговые задачи}
+    \addcontentsline{toc}{section}{Рейтинговые задачи}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+    
+\end{document}

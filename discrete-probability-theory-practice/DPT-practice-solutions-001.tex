@@ -1,0 +1,199 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+% \usepackage{float}
+\usepackage{inkscape}
+
+\title{Занятие от 18.02.\\Геометрия и топология. 1 курс.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\newcommand{\const}{\ensuremath{\mathrm{const}}\xspace}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{16}
+        Пусть на данной сетке $O$ будет началом отсчёта, а $Z$ имеет координаты $(z_x; z_y)$. Поставим в каждую точку $A = (a_x; a_y)$ значение равное вероятности $p(A)$, что турист дойдёт в неё из $O$. Заметим, что для всяких $a_x, a_y \in \ZZ$
+        \[
+            p(a_x, a_y) = 
+            \begin{cases}
+                0& \text{ если $a_x < 0$ или $a_y < 0$}\\
+                1& \text{ если $a_x = 0 = a_y$}\\
+                \frac{p(a_x - 1, a_y) + p(a_x, a_y - 1)}{2}& \text{ иначе}\\
+            \end{cases}
+        \]
+        Тогда легко видеть, что $p(a_x, a_y) = \binom{a_x + a_y}{a_x} / 2^{a_x + a_y}$.
+    \end{problem}
+
+    \begin{problem}{17}
+        Было...
+    \end{problem}
+
+    \begin{problem}{21}
+        Заметим, что событие $B$ распадается на два:
+        \begin{enumerate}
+            \item среди оставшихся 3 цифр одна является либо ``1'', либо ``5'', две другие является различными цифрами из набора $\{0; 2; 4; 6; 7; 8; 9\}$;
+            \item оставшиеся три цифры взяты из набора $\{0; 2; 4; 6; 7; 8; 9\}$, и ровно две из них совпадают.
+        \end{enumerate}
+        Соответственно
+        \[
+            \PP(B)
+            = \frac{2 \cdot \binom{7}{2} \cdot 3! + \frac{7!}{5!} \cdot 3}{10^3}
+            = \frac{7 \cdot 6^2 + 7 \cdot 6 \cdot 3}{1000}
+            = \frac{42 \cdot 9}{1000}
+            = 0{,}378
+        \]
+
+        Событие $C$ является противоположным к событию, когда все цифры различны. Следовательно
+        \[
+            \PP(C)
+            = 1 - \frac{\binom{10}{3} \cdot 3!}{10^3}
+            = 1 - \frac{10 \cdot 9 \cdot 8}{10^3}
+            = 1 - \frac{72}{10^2}
+            = 1 - 0{,}22
+            = 0{,}88
+        \]
+    \end{problem}
+
+    \begin{problem}{26}
+        Очевидно, что ответ равен
+        \[\sum_{k=0}^{\lfloor n/2 \rfloor} p^{2k} (1-p)^{n-2k} \binom{n}{2k} = \frac{((1-p) + p)^n + ((1-p) - p)^n}{2} = \frac{1 + (1-2p)^n}{2}\]
+    \end{problem}
+
+    \begin{problem}{30}
+        Рассмотрим для всякого $S \subseteq \{1; \dots; n\}$
+        \[B_S := \bigcap_{i \in S} A_i \setminus \bigcup_{j \notin S} A_j\]
+        Очевидно, что
+        \begin{align*}
+            \Omega &= \bigsqcup_{S \subseteq \{1; \dots; n\}} B_S&
+            A_i &= \bigsqcup_{\substack{S \subseteq \{1; \dots; n\}\\ i \in S}} B_S
+        \end{align*}
+        Таким образом
+        \[
+            \sum_{i=1}^n \PP(A_i)
+            = \sum_{i=1}^n \sum_{\substack{S \subseteq \{1; \dots; n\}\\ i \in S}} \PP(B_S)
+            = \sum_{S \subseteq \{1; \dots; n\}} \PP(B_S) \cdot |S|
+        \]
+        
+        Предположим $\PP(B_{\{1; \dots; n\}}) = 0$. Тогда
+        \[
+            \sum_{S \subseteq \{1; \dots; n\}} \PP(B_S) \cdot |S|
+            \leqslant \sum_{S \subseteq \{1; \dots; n\}} \PP(B_S) \cdot (n - 1)
+            = (n - 1) \sum_{S \subseteq \{1; \dots; n\}} \PP(B_S)
+            = n - 1
+        \]
+        Но $\sum_{i=1}^n A_i > n - 1$ --- противоречие. Таким образом $\PP(S_{\{1; \dots; n\}}) > 0$.
+    \end{problem}
+
+    \begin{problem}{23}
+        \begin{enumerate}
+            \item Рассмотрим равносильную задачу.
+                \begin{quotation}
+                    В строку $n_1 + \dots + n_N$ раз выписывают случайное число от $1$ до $N$. С какой вероятностью $n_1$ раз будет написано ``$1$'', \dots, $n_N$ раз будет написано ``$N$''?
+                \end{quotation}
+                
+                В таком случае очевидно, что ответ
+                \[\frac{\binom{n_1 + \dots + n_N}{n_1, \dots, n_N}}{N^{n_1 + \dots + n_N}}\]
+
+            \item Очевидно, что
+                \[p_k = \frac{\binom{n}{k} (N-1)^{n - k}}{N^n}\]
+
+                Заметим, что
+                \[
+                    \frac{p_{k+1}}{p_k}
+                    = \frac{\binom{n}{k+1}}{\binom{n}{k} (N-1)}
+                    = \frac{n-k}{(k+1) (N-1)}
+                \]
+                Соответственно
+                \begin{align*}
+                    \frac{n-k}{(k+1)(N-1)} &> 1&
+                    \frac{n-k}{k+1} &> N - 1&
+                    \frac{n+1}{k+1} &> N&
+                    \frac{n+1}{N} &> k+1&
+                    \frac{n-N+1}{N} &> k&
+                \end{align*}
+                Следовательно максимум достигается в точке $k = \lceil \frac{n-N+1}{N} \rceil$.
+
+            \item Заметим, что $N = \frac{n}{a}(1 + o(1))$.
+                \begin{align*}
+                        \lim_{n \to \infty} p_k
+                        &= \lim_{n \to \infty} \frac{1}{k!} \left(\frac{N-1}{N}\right)^n \frac{n \cdot \dots \cdot (n-k+1)}{(N-1)^k}\\
+                        &= \lim_{n \to \infty} \frac{1}{k!} \left(1 - \frac{a}{n}\right)^n \left(\frac{n}{N}\right)^k\\
+                        &= \frac{1}{k!} e^{-a} \frac{1}{a^k} = \frac{1}{k! e^a a^k}\\
+                \end{align*}
+
+            \item Заметим, что ответ
+                \[\sum_{i=0}^N (-1)^i \binom{N}{i} \frac{(N-i)^n}{N^n}\]
+
+                Действительно. Заметим, что количество исходов, когда конкретные $r$ ячеек пусты равно $(N-r)^n$. Потом эти значения умножаются на $\binom{n}{r}$ и подставляются выше. Поэтому случаи, когда конкретные $r$ ячеек пусты и только они, посчитаны в выражении выше
+                \[
+                    \sum_{i=0}^r (-1)^i \binom{r}{i}
+                    = (1 - 1)^r
+                    = \begin{cases}
+                        1& \text{ если $r = 0$}\\
+                        0& \text{ иначе}
+                    \end{cases}
+                \]
+                раз. Таким образом и остаются только случаи, когда никакие ячейки не пусты.
+            
+            \item Если рассматривать случаи, когда какие-то конкретные $n-r$ ячейки пусты, то аналогично предыдущему пункту можно получить, что кол-во вариантов, когда только они и пусты, равно
+                \[\sum_{i=0}^r (-1)^i \binom{r}{i} (r-i)^n\]
+                Следовательно итоговая вероятность равна
+                \[\frac{\binom{n}{r}}{N^n}\sum_{i=0}^r (-1)^i \binom{r}{i} (r-i)^n\]
+        \end{enumerate}
+    \end{problem}
+
+    \begin{problem}{24}
+        Заметим, что количество искомых вариантов есть
+        \[\sum_{i=0}^n (-1)^i \binom{n}{i} (n-i)!\]
+        
+        Действительно, пусть фиксированы какие-то $r$ чисел среди набора $\{1; \dots; n\}$. Тогда количество перестановок, где эти $r$ чисел являются неподвижными точками, равно $(n-r)!$, а таких наборов из $r$ чисел $\binom{n}{r}$. Тогда в выражении выше всякая перестановка, сохраняющая на месте ровно какие-то $r$ чисел, посчитана
+        \[
+            \sum_{i=0}^r (-1)^i \binom{r}{i}
+            = (1 - 1)^r
+            = \begin{cases}
+                1& \text{ если $r = 0$}\\
+                0& \text{ иначе}
+            \end{cases}
+        \]
+        раз. Т.е. останутся посчитанными только перестановки без неподвижных точек. Поэтому итоговая вероятность равна
+        \[\sum_{i=0}^n (-1)^n \frac{\binom{n}{i} (n-i)!}{n!} = \sum_{i=0}^n \frac{(-1)^i}{i!}\]
+
+        Очевидно, что в пределе (по $n$) значение равно
+        \[\sum_{i=0}^\infty \frac{(-1)^i}{i!} = \exp(-1) = \frac{1}{e}\]
+    \end{problem}
+
+    \begin{problem}{25}
+        WLOG можно считать, что игрок попросил открыть дверь № 1. Тогда у нас имеется 3 случая, где может быть приз. Если приз за дверью № 1, то менять дверь не выгодно; а в остальных двух случаях это наоборот выгодно. Поэтому в таком случае вероятность выигрыша при смене двери будет равна $2/3$, а в противном случае --- $1/3$.
+    \end{problem}
+
+    \begin{problem}{31}
+        \begin{enumerate}
+            \item Очевидно, $\PP(A) = [1 \in A]$ является искомой мерой.
+            \item Пусть $\mathcal{P}$ --- множество простых. Тогда для всякого $n \in \NN \setminus \{0\}$
+                \[\PP(n) = \PP(A_n) \prod_{p \in \mathcal{P}} (1 - \PP(A_{np}))\]
+                Легко видеть, что произведение сходится. При этом если оно сходится к чему-то положительному, то тогда $(\PP(A_{np}))_{p \in \mathcal{P}} \to 0$. В таком случае
+                \[
+                    \ln(\PP(n))
+                    = \ln(\PP(A_n)) + \sum_{p \in \mathcal{P}} \ln(1 - \PP(A_{np}))
+                    = \const - \sum_{p \in \mathcal{P}} \PP(A_{np})
+                    = \const - \PP(A_n) \sum_{p \in \mathcal{P}} \PP(A_p)
+                \]
+                Следовательно $\PP(n) > 0$ тогда и только тогда, когда $\PP(A_{np}) > 0$, ни для какого $p \in \mathcal{P}$ $\PP(A_{np}) = 1$ и $\sum_{p \in \mathcal{P}} \PP(A_p)$ сходится.
+
+                Но заметим, что
+                \[
+                    \sum_{n=1}^\infty \frac{1}{n}
+                    = \prod_{p \in \mathcal{P}} \sum_{d=0}^\infty \frac{1}{p^d}
+                    = \prod_{p \in \mathcal{P}} \frac{1}{1 - 1/p}
+                \]
+                Формально говоря, префикс гармонического ряда равен произведению префиксов в геометрических суммах; поэтому из равенства $\sum_{n=1}^\infty \frac{1}{n} = +\infty$ следует, что $\prod_{p \in \mathcal{P}} (1 - \frac{1}{p}) = 0$. И как мы успели понять это значит, что $\sum_{p \in \mathcal{P}} \frac{1}{p} = +\infty$.
+                
+                Поэтому $\sum_{p \in \mathcal{P}} \PP(A_p) = +\infty$; значит для всякого $n \in \NN \setminus \{0\}$ имеем, что $\PP(n) = 0$ --- противоречие.
+        \end{enumerate}
+    \end{problem}
+
+    \begin{problem}{14}
+        TODO
+    \end{problem}
+\end{document}

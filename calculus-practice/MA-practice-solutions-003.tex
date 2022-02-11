@@ -1,0 +1,672 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+\usepackage{multicol}
+
+\title{Листочек 3. Интегрируемый.\\Математический анализ. 1 курс.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\DeclareMathOperator{\sign}{sign}
+\renewcommand{\Re}{\qopname\relax o{Re}}
+\renewcommand{\Im}{\qopname\relax o{Im}}
+
+\begin{document}
+    \maketitle
+
+    \begin{multicols}{2}
+        \tableofcontents
+    \end{multicols}
+
+    \section*{Базовые задачи}
+    \addcontentsline{toc}{section}{Базовые задачи}
+
+    \begin{enumproblem}
+        Заметим, что по правилу Лопиталя
+        \begin{align*}
+            &\lim_{h \to 0} \frac{f(x_0 + h) - f(x_0) - f'(x_0) h - \frac{f''(x_0)}{2} h^2}{h^3/3!}\\
+            =& \lim_{h \to 0} \frac{f'(x_0 + h) - f'(x_0) - f''(x_0) h}{h^2/2!}\\
+            =& \lim_{h \to 0} \frac{f''(x_0 + h) - f''(x_0)}{h}\\
+            =& f'''(x_0)
+        \end{align*}
+        При этом
+        \[f(x_0 + h) - f(x_0) - f'(x_0) h - \frac{f''(x_0)}{2} h^2 = \frac{f''(x_0 + h\theta_h) - f''(x_0)}{2} h^2\]
+        Значит
+        \begin{align*}
+            &\lim_{h \to 0} \frac{f(x_0 + h) - f(x_0) - f'(x_0) h - \frac{f''(x_0)}{2} h^2}{\theta_h h^3/2}\\
+            =& \lim_{h \to 0} \frac{f''(x_0 + h \theta_h) - f''(x_0)}{\theta_h h}\\
+            =& f'''(x_0)
+        \end{align*}
+        Значит, деля первый предел на второй, получаем
+        \[
+            1
+            = \frac{f'''(x_0)}{f'''(x_0)}
+            = \lim_{h \to 0} \frac{\frac{1}{h^3/3!}}{\frac{1}{\theta_h h^3/ 2!}}
+            = \lim_{h \to 0} \frac{\theta_h}{3}
+        \]
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Пусть $f(x) := \sqrt{1 + x^3}$. Заметим, что $f^{-1}(x) = \sqrt[3]{x^2-1}$. Действительно:
+        \[\sqrt[3]{\sqrt{1 + x^3}^2 - 1} = \sqrt[3]{x^3} = x\]
+
+        Тогда получим, что
+        \begin{multline*}
+            \frac{d}{db}\left(\int_a^b f + \int_{f(a)}^{f(b)} f^{-1}\right)\\
+            = \frac{d}{db}\left(\left.\left(\int f\right)\right|_a^b + \left.\left(\left(\int f^{-1}\right) \circ f\right)\right|_a^b\right)\\
+            = \left(\int f\right)' + \left(\left(\int f^{-1}\right) \circ f\right)'\\
+            = f + f' \cdot (f^{-1} \circ f)\\
+            = f + f' \cdot b\\
+            = (b f(b))'
+        \end{multline*}
+        Следовательно
+        \[
+            \int_0^2 \sqrt{1 + x^3} dx + \int_{1}^{3} \sqrt[3]{x^2 - 1} dx
+            = \int_0^2 f + \int_{f(0)}^{f(2)} f^{-1}
+            = \left.x f(x)\right|_0^2
+            = 2 \cdot 3 - 0 \cdot 1
+            = 6
+        \]
+    \end{enumproblem}
+
+    \begin{enumproblem}\ 
+        \begin{enumerate}
+            \item Для начала покажем непрерывность. Пусть у какой-то точки $t \in (a; b)$ оказалось, что $\lim_{x \to t^-} f(x)  \neq f(t)$. Тогда есть $\varepsilon > 0$ и последовательность точек $(t_n)_{n=0}^\infty$, монотонно слева сходящихся к $t$, что $|f(t_n) - f(t)| \geqslant \varepsilon$. Заметим, что для всякого $s \in (t_0; t)$ верно, что
+            \[f(s) \leqslant \frac{(t - s)}{t - t_0} (f(t_0) - f(t)) + f(t),\]
+            а тогда начиная для некоторого $N$ все члены $(f(t_n))_{n=N}^\infty$ будут небольше $f(t) - \varepsilon$, так как быть неменьше $f(t) + \varepsilon$ не могут. А тогда мы имеем, что для всякой точки $r \in (t; b)$ верно, что
+            \[
+                f(r)
+                \geqslant \frac{(r - t_n)f(t) + (t - r)f(t_n)}{t - t_n}
+                = f(t) + \frac{r - t}{t - t_n}(f(t) - f(t_n))
+                \geqslant f(t) + \frac{r - t}{t - t_n}\varepsilon
+            \]
+            Поскольку $r - t > 0$ и $\varepsilon > 0$, то
+            \[\lim_{n\to \infty} f(t) + \frac{r - t}{t - t_n}\varepsilon = +\infty\]
+            --- противоречие, так как ограниченная сверху последовательность не может быть сколь угодно большой. Значит есть левая, а по аналогии и правая, непрерывность.
+
+            Теперь покажем существование левой и правой производных. Заметим, что для всяких точек $t$, $l_0$, $l_1$, $r_0$, $r_1$, что $a < l_0 < l_1 < t < r_1 < r_0 < b$ верно, что
+            \[\frac{f(l_0) - f(t)}{l_0 - t} \leqslant \frac{f(l_1) - f(t)}{l_1 - t} \leqslant \frac{f(r_1) - f(t)}{r_1 - t} \leqslant \frac{f(r_0) - f(t)}{r_0 - t}\]
+            Следовательно
+            \begin{align*}
+                &\lim_{x \to t^-} \frac{f(x) - f(t)}{x - t}&
+                &\text{ и }&
+                &\lim_{x \to t^+} \frac{f(x) - f(t)}{x - t}
+            \end{align*}
+            --- пределы неубывающей и невозрастающей функций соответственно. Но поскольку все значения первой всегда меньше значений второй, то у них обоих есть искомые пределы.
+
+            \item Пусть $t$ и $s$ --- какие-то точки $(a; b)$, что $t < s$. Тогда из рассуждений прошлого пункта следует, что
+            \[
+                \lim_{x \to t^+} \frac{f(x) - f(t)}{x - t}
+                \leqslant \frac{f(s) - f(t)}{s - t}
+                \leqslant \lim_{x \to s^-} \frac{f(x) - f(s)}{x - s}
+            \]
+            Следовательно, если производная определена в точках $t$ и $s$, то $f(t) \leqslant f(s)$. Также, не требуя существование производной, мы уже получили, что $f'_-(t) \leqslant f'_+(t) \leqslant f'_-(s) \leqslant f'_+(s)$ ($f'_-$ и $f'_+$ --- левая и правая производная).
+
+            \item Пусть даны точки $p < q < r$. Тогда по теореме Лагранжа есть точки $s \in (p; q)$ и $t \in (q; r)$, что
+            \begin{align*}
+                &f'(s) = \frac{f(p) - f(q)}{p - q}&
+                &\text{ и }&
+                &f'(t) = \frac{f(q) - f(r)}{q - r}
+            \end{align*}
+            Но так как $s < q < t$, то $f'(s) \leqslant f'(t)$. Следовательно
+            \begin{align*}
+                \frac{f(p) - f(q)}{p - q} &\leqslant \frac{f(q) - f(r)}{q - r}\\
+                (f(p) - f(q))(q - r) &\leqslant (f(q) - f(r))(p - q)\\
+                f(p)(q - r) + f(r)(p - q) &\leqslant f(q)(p - r)\\
+                \frac{f(p)(q - r) + f(r)(p - q)}{p - r} &\geqslant f(q)\\
+            \end{align*}
+            Последнее означает выпуклость $f$.
+
+            \item Сделаем несколько замечаний:
+            \begin{itemize}
+                \item Будем доказывать утверждение для нормированного интеграла:
+                    \[\frac{1}{d-c} \int_c^d f \circ \Phi \geqslant f\left(\frac{1}{d-c}\int_c^d \Phi\right)\]
+
+                \item WLOG $(c; d) = (0; 1)$. Действительно, пусть $\Psi: (0; 1) \to (a; b), x \to \Phi(c + x(d - c))$. Тогда
+                    \begin{gather*}
+                        \frac{1}{d-c} \int_c^d f \circ \Phi
+                        = \int_c^d f(\Phi(t)) d\left(\frac{t - c}{d - c}\right)
+                        = \int_0^1 f(\Phi(c + x(d - c))) dx
+                        = \int_0^1 f \circ \Psi,
+                        \\
+                        \frac{1}{d-c} \int_c^d \Phi
+                        = \int_c^d \Phi(t) d\left(\frac{t - c}{d - c}\right)
+                        = \int_0^1 \Phi(c + x(d - c)) dx
+                        = \int_0^1 \Psi
+                    \end{gather*}
+                    Следовательно утверждения для $\Phi$ и $\Psi$ равносильны.
+                    
+                \item Будем считать, что $\Phi$ определена на отрезке (а не интервале) $[c; d]$. Так как в случае интервала
+                    \begin{gather*}
+                        \frac{1}{d - c} \int_c^d f(\Phi(t)) dt := \lim_{n \to \infty} \frac{1}{d_n - c_n} \int_{c_n}^{d_n} f(\Phi(t)) dt\\
+                        \text{ и }\\
+                        f\left(\frac{1}{d - c} \int_c^d \Phi(t) dt\right) = f\left(\lim_{n \to \infty} \frac{1}{d_n - c_n} \int_{c_n}^{d_n} \Phi(t) dt\right) = \lim_{n \to \infty} f\left(\frac{1}{d_n - c_n} \int_{c_n}^{d_n} \Phi(t) dt\right),
+                    \end{gather*}
+                    где $(c_n)_{n=0}^\infty \to c$ и $(d_n)_{n=0}^\infty \to d$, то достаточно доказать утверждение для каждого отрезка $[c_n; d_n]$. Также множество значений $\Phi$ есть некоторой подотрезок интервала $(a; b)$, значит и область определения $f$ можно сузить до отрезка.
+
+                \item Будем рассматривать вместо $f(x)$ функцию $f_1(x) := f(x) - f'_+(a) x$. С одной стороны
+                    \begin{gather*}
+                        \int_c^d f(\Phi(t))dt = \int_c^d f_1(\Phi(t)) dt + f'_+(a) \int_c^d \Phi(t)dt\\
+                        \text{ и }\\
+                        f\left(\int_c^d \Phi(t)dt\right) = f_1\left(\int_c^d \Phi(t)dt\right) + f'_+(a) \int_c^d \Phi(t)dt
+                    \end{gather*}
+                    поэтому, убирая вторые слагаемые как равные значения в правых сторонах равенств, получаем равносильность утверждения для $f$ и $f_1$. С другой же стороны мы получаем, что теперь правые производные $f_1$ неотрицательны (а если вместо $f'_+(a)$ взять что-то побольше, то будут даже положительными), а значит $f_1$ не убывает.
+            \end{itemize}
+            
+            Будем обозначать за $\Sigma_n$ разбиение $\{[\frac{k-1}{n}; \frac{k}{n}]\}_{k=1}^n$ отрезка $[0; 1]$. Тогда
+            \begin{align*}
+                &S^+(\Phi, \Sigma_n) \geqslant \int_0^1 \Phi(t)dt \geqslant S^-(\Phi, \Sigma_n),&
+                &\lim_{n \to \infty} S^+(\Phi, \Sigma_n) = \int_0^1 \Phi(t)dt = \lim_{n \to \infty} S^-(\Phi, \Sigma_n)&
+            \end{align*}
+            Заметим, что из неубываемости $f$ следует, что
+            \[
+                S^+(f \circ \Phi, \Sigma_n)
+                = \sum_{k=1}^n \frac{1}{n} \sup_{\left[\frac{k-1}{n}; \frac{k}{n}\right]} (f \circ \Phi)
+                = \frac{1}{n} \sum_{k=1}^n f\left(\sup_{\left[\frac{k-1}{n}; \frac{k}{n}\right]} \Phi\right);
+            \]
+            аналогично и для $S^-$. При этом так же
+            \begin{gather*}
+                S^+(f \circ \Phi, \Sigma_n) \geqslant \int_0^1 f \circ \Phi \geqslant S^-(f \circ \Phi, \Sigma_n),\\
+                \lim_{n \to \infty} S^+(f \circ \Phi, \Sigma_n) = \int_0^1 f \circ \Phi = \lim_{n \to \infty} S^-(f \circ \Phi, \Sigma_n)
+            \end{gather*}
+            
+            \begin{lemma}
+                Пусть дан некоторый набор чисел $\{a_n\}_{k=1}^n$. Тогда (даже без условия на монотонность $f$)
+                \[\frac{\sum_{k=1}^n f(a_k)}{n} \geqslant f\left(\frac{\sum_{k=1}^n a_k}{n}\right)\]
+            \end{lemma}
+
+            \begin{proof}
+                Пусть $a$ --- среднее арифметическое набора $\{a_k\}_{k=1}^n$. Тогда $a$ находится на отрезке $[a_t; a_{t+1}]$ для какого-то $t$ от $1$ до $n-1$. Тогда из выпуклости $f$ следует, что 
+                \begin{align*}
+                    \sum_{k=1}^n f(a_k)
+                    &\geqslant \sum_{k=1}^n \frac{(a_k - a_t)f(a_{t+1}) + (a_{t+1} - a_k)f(a_t)}{a_{t+1} - a_t}\\
+                    &= \frac{(\sum_{k=1}^n a_k - n a_t)f(a_{t+1}) + (n a_{t+1} - \sum_{k=1}^n a_k)f(a_t)}{a_{t+1} - a_t}\\
+                    &= n\frac{(a - a_t)f(a_{t+1}) + (a_{t+1} - a)f(a_t)}{a_{t+1} - a_t}\\
+                    &\geqslant n f(a),\\
+                \end{align*}
+                откуда и следует искомое.
+            \end{proof}
+            
+            Из полученной леммы следует, что
+            \[
+                S^+(f \circ \Phi, \Sigma_n)
+                = \frac{1}{n} \sum_{k=1}^n f\left(\sup_{\left[\frac{k-1}{n}; \frac{k}{n}\right]} \Phi\right)
+                \geqslant f\left(\sum_{k=1}^n \frac{1}{n} \sup_{\left[\frac{k-1}{n}; \frac{k}{n}\right]} \Phi\right)
+                = f(S^+(\Phi, \Sigma_n));
+            \]
+            аналогично для $S^-$. Следовательно
+            \[
+                \int_0^1 f \circ \Phi
+                = \lim_{n \to \infty} S^+(f \circ \Phi, \Sigma_n)
+                \geqslant \lim_{n \to \infty} f(S^+(\Phi, \Sigma_n))
+                = f\left(\lim_{n \to \infty} S^+(\Phi, \Sigma_n)\right)
+                = f\left(\int_0^1 \Phi\right)
+            \]
+        \end{enumerate}
+    \end{enumproblem}
+
+    \begin{enumproblem}\label{prb-4}
+        Для всякого $n \in \NN \setminus \{0\}$ рассмотрим следующие функции
+        \begin{align*}
+            f_1(x) &:= \frac{x+1}{2}&
+            g_1(x) &:= \sqrt{x}\\
+            f_n(x) &:= \frac{f_{n-1}(x)+g_{n-1}(x)}{2}&
+            g_n(x) &:= \sqrt{f_{n-1}(x)g_{n-1}(x)}\\
+        \end{align*}
+
+        Тогда искомая $f = \lim_{n \to \infty} f_n$.
+
+        \begin{lemma}
+            Для всякого $n \in \NN \setminus \{0\}$
+            \[f_n \geqslant f_{n+1} \geqslant f_n \geqslant g_n\]
+        \end{lemma}
+
+        \begin{proof}
+            Пусть $f_0(x) = \max(x, 1)$, $g_0(x) = \min(x, 1)$. Тогда для всякого $n \in \NN \cup \{0\}$ мы имеем, что $f_{n+1}(x)$ и $g_{n+1}(x)$ --- среднее арифметическое и средннее геометрическое $f_n(x)$ и $g_n(x)$. Следовательно
+            \[\max(f_n(x), g_n(x)) \geqslant f_{n+1}(x) \geqslant g_{n+1}(x) \geqslant \min(f_n(x), g_n(x))\]
+            Следовательно для всякого $n \in \NN \setminus \{0\}$
+            \[f_n(x) \geqslant f_{n+1}(x) \geqslant g_{n+1}(x) \geqslant g_n(x)\]
+        \end{proof}
+
+        \begin{lemma}
+            Для всякого $n \in \NN \setminus \{0\}$ функция $\frac{f_n}{g_n}$ возрастает на $[1; +\infty)$.
+        \end{lemma}
+
+        \begin{proof}
+            Сначала заметим важный момент:
+            \[
+                = \left(\frac{\alpha + \frac{1}{\alpha}}{2}\right)'
+                = \frac{\alpha' - \frac{\alpha'}{\alpha^2}}{2}
+                = \alpha' \frac{\alpha^2 - 1}{2 \alpha^2}
+            \]
+            а значит $\frac{\alpha + \frac{1}{\alpha}}{2}$ возрастает (говоря про $\alpha > 0$) тогда и только тогда, когда $\alpha$ отдаляется от $1$.
+
+            Давайте доказывать требуемое утверждение по индукции.
+
+            \textbf{База.} $n = 1$.
+            \[\frac{f_n}{g_n} = \frac{x+1}{2\sqrt{x}} = \frac{\sqrt{x} + \sqrt{\frac{1}{x}}}{2}\]
+            Но $\sqrt{x}$ возрастает, а $\sqrt{1} = 1$, значит $\sqrt{x}$ отдаляется от $1$ на $[0; + \infty)$, а следовательно возрастает и $f_1/g_1$.
+
+            \textbf{Шаг.} Пусть утверждение верно для $n$; докажем для $n+1$. Давайте заметим, что
+            \[
+                \frac{f_{n+1}}{g_{n+1}}
+                = \frac{f_n + g_n}{2\sqrt{f_ng_n}}
+                = \frac{\sqrt{\frac{f_n}{g_n}} + \sqrt{\frac{g_n}{f_n}}}{2}
+            \]
+            Если сделать замену $\alpha := \sqrt{\frac{f_n}{g_n}}$, то получаем, что $\frac{f_{n+1}}{g_{n+1}}$ возрастает тогда и только тогда, когда $\alpha$ отдаляется от $1$. При этом $\alpha \geqslant 1$, значит возрастание $\frac{f_{n+1}}{g_{n+1}}$ равносильно возрастанию $\frac{f_n}{g_n}$.
+        \end{proof}
+
+        \begin{corollary}
+            Для всякого $n \in \NN \setminus \{0\}$ на $[1; +\infty)$
+            \[\frac{f'_n}{f_n} \geqslant \frac{g'_n}{g_n}\]
+        \end{corollary}
+
+        \begin{proof}
+            \begin{align*}
+                &\frac{f'_n}{f_n} \geqslant \frac{g'_n}{g_n}&
+                &\Longleftrightarrow&
+                &(\ln(f_n))' \geqslant (\ln(g_n))'&
+                &\Longleftrightarrow&
+                &\left(\ln\left(\frac{f_n}{g_n}\right)\right)' \geqslant 0&
+                &\Longleftrightarrow&
+                &\left(\frac{f_n}{g_n}\right)' \geqslant 0
+            \end{align*}
+            Последнее несомненно верно, так как $\frac{f_n}{g_n}$ возрастает.
+        \end{proof}
+
+        \begin{lemma}
+            Для всякого $n \in \NN \setminus \{0\}$ на $[1; + \infty)$
+            \[f'_n \geqslant f'_{n+1} \geqslant f'_n \geqslant g'_n\]
+        \end{lemma}
+
+        \begin{proof}
+            \begin{itemize}
+                \item Заметим, что для всякого $n \in \NN \setminus \{0\}$
+                    \[\frac{f'_n}{g'_n} \geqslant \frac{f_n}{g_n} \geqslant 1\]
+                    Следовательно $f'_n \geqslant g'_n$.
+                
+                \item Для всякого $n \in \NN \setminus \{0\}$
+                    \[f'_{n+1} = \frac{f'_n + g'_n}{2} \leqslant f'_n\]
+                    так как $g'_n \leqslant f'_n$.
+                
+                \item Для всякого $n \in \NN \setminus \{0\}$
+                    \[
+                        g'_{n+1}
+                        = \left(\sqrt{f_n g_n}\right)'
+                        = \frac{f'_n g_n + g'_n f_n}{2 \sqrt{f_n g_n}}
+                        = \frac{f'_n \sqrt{\frac{g_n}{f_n}} + g'_n \sqrt{\frac{f_n}{g_n}}}{2}
+                    \]
+                    Тогда получаем последовательность равносильных утверждений:
+                    \begin{align*}
+                        g'_{n+1} &\geqslant g'_n\\
+                        f'_n \sqrt{\frac{g_n}{f_n}} + g'_n \sqrt{\frac{f_n}{g_n}} &\geqslant 2g'_n\\
+                        f'_n \sqrt{\frac{g_n}{f_n}} &\geqslant g'_n (2 - \sqrt{\frac{f_n}{g_n}})\\
+                        f'_n &\geqslant g'_n \sqrt{\frac{f_n}{g_n}}(2 - \sqrt{\frac{f_n}{g_n}})\\
+                    \end{align*}
+                    Поскольку $t(2-t)$ --- парабола с ветвями вниз, чьё максимальное значение --- $1 \cdot (2 - 1) = 1$, то $t(w - t) \leqslant 1$, а значит
+                    \[f'_n \geqslant g'_n \geqslant g'_n \sqrt{\frac{f_n}{g_n}}(2 - \sqrt{\frac{f_n}{g_n}})\]
+                    А значит и $g_{n+1} \geqslant g_n$.
+            \end{itemize}
+        \end{proof}
+
+        \begin{lemma}
+            Пределы $\lim_{n \to \infty} f_n$ и $\lim_{n \to \infty} g_n$ определены на всём $[0; +\infty)$ и равны.
+        \end{lemma}
+
+        \begin{proof}
+            Мы знаем, что $(f_n)_{n=1}^\infty \geqslant (g_n)_{n=1}^\infty$, и при этом первая последовательность убывает, а вторая возрастает, значит они имеют пределы $f$ и $g$. При этом
+            \[
+                f
+                = \lim_{n \to \infty} f_{n+1}
+                = \lim_{n \to \infty} \frac{f_n + g_n}{2}
+                = \frac{f + g}{2}
+            \]
+            Следовательно $f = g$.
+        \end{proof}
+
+        Заметим, что для всяких $a_1 \geqslant a_2 \geqslant 0$ и $b_1 \geqslant b_2 \geqslant 0$ имеют место неравенства
+        \begin{align*}
+            &\frac{a_1 + b_1}{2} \geqslant \frac{a_2 + b_2}{2}&
+            &\sqrt{a_1 b_1} \geqslant \sqrt{a_2 b_2}
+        \end{align*}
+        Следовательно легко доказать по индукции, что из возрастания $f_1$ и $g_1$ следует неубывание $f_n$ и $g_n$, а следовательно и $f$.
+        
+        Заметим, что для всякого $n \in \NN \setminus \{0\}$ верно, что на $[1; + \infty)$
+        \[f'_1 \geqslant f'_n\qquad \Longrightarrow\qquad \frac{1}{2} \geqslant f'_n.\]
+        Значит $|f_n(x) - f_n(y)| \leqslant \frac{|x - y|}{2}$. А тогда
+        \[|f(x) - f(y)| = \lim_{n \to \infty} |f_n(x) - f_n(y)| \leqslant \frac{|x - y|}{2},\]
+        т.е. $f$ липшицева. Следовательно непрерывна (на $[1; + \infty)$).
+
+        Рассмотрим также $\varphi: [0; + \infty)^2 \to [0; + \infty)$, которая определяется так. Пусть дана пара $(a, b)$. Тогда построим последовательности $(x_n)_{n=0}^\infty$, $(y_n)_{n=0}^\infty$, где $x_0 = a$, $y_0 = b$. Тогда $x_{n+1}$ и $y_{n+1}$ как среднее арифметическое и среднее геометрическое удовлетворяют неравенствам
+        \[\max(x_n, y_n) \geqslant x_{n+1} \geqslant y_{n+1} \geqslant \min(x_n, y_n)\]
+        Следовательно $(x_n)_{n=1}^\infty \geqslant (y_n)_{n=1}^\infty$, причём первая не увеличивается, а вторая не уменьшается. Следовательно они имеют предел. И так как
+        \[\lim_{n \to \infty} x_n = \lim_{n \to \infty} \frac{x_n + y_n}{2} = \frac{\lim_{n \to \infty} x_n + \lim_{n \to \infty} y_n}{2}\]
+        то $\lim_{n \to \infty} x_n = \lim_{n \to \infty} y_n$. Тогда $\varphi(a, b)$ определяется как $\lim_{n \to \infty} x_n$ с данными начальными членами.
+
+        Несложно видеть, что
+        \begin{itemize}
+            \item $\varphi(a, b) = \varphi(b, a)$.
+            \item $\varphi(a, 0) = 0$.
+            \item $\varphi(\lambda a, \lambda b) = \lambda \varphi(a, b)$. Так как $\frac{(\lambda a) + (\lambda b)}{2} = \lambda \frac{a + b}{2}$ и $\sqrt{(\lambda a)(\lambda b)} = \lambda \sqrt{ab}$. Значит строимые последовательности умножаются на $\lambda$.
+            \item Для всяких $a_1 \geqslant a_2$ и $b_1 \geqslant b_2$ верно $\varphi(a_1, b_1) \geqslant \varphi(a_2, b_2)$. Получается из того, что при таких условиях $\frac{a_1 + b_1}{2} \geqslant \frac{a_2 + b_2}{2}$ и $\sqrt{a_1 b_1} \geqslant \sqrt{a_2 b_2}$. Поэтому при замене $a_1$ и $b_1$ на $a_2$ и $b_2$ строимые последовательности не увеличиваются.
+            \item $f(x) = \varphi(x, 1)$.
+        \end{itemize}
+
+        Таким образом мы имеем, что
+        \[f(1/x) = \varphi\left(\frac{1}{x}, 1\right) = \frac{1}{x} \varphi(1, x) = \frac{1}{x} f(x)\]
+        Следовательно из непрерывности $f$ на $[1; +\infty)$ следует, что непрерывность на $(0; 1)$. Теперь покажем непрерывность в $0$.
+
+        Для этого заметим, что
+        \[
+            \lim_{x \to 0} f(x)
+            = \lim_{y \to +\infty} f\left(\frac{1}{y}\right)
+            = \lim_{y \to + \infty} \frac{f(y)}{y}
+        \]
+        Заметим, что
+        \begin{align*}
+            &\lim_{y \to +\infty} \frac{f_1(y)}{y} = \lim_{y \to +\infty} \frac{y + 1}{2y} = \frac{1}{2}&
+            &\lim_{y \to +\infty} \frac{g_1(y)}{y} = \lim_{y \to +\infty} \frac{\sqrt{y}}{y} = 0
+        \end{align*}
+        \begin{gather*}
+            \lim_{y \to +\infty} \frac{f_{n+1}(y)}{y} = \lim_{y \to +\infty} \frac{f_n(y) + g_n(y)}{2y} = \frac{1}{2} \lim_{y \to +\infty} \frac{f_n(y)}{y} + \frac{1}{2} \lim_{y \to +\infty} \frac{g_n(y)}{y}\\
+            \lim_{y \to +\infty} \frac{f_{n+1}(y)}{y} = \lim_{y \to +\infty} \frac{\sqrt{f_n(y) g_n(y)}}{y} = \sqrt{\lim_{y \to +\infty} \frac{f_n(y)}{y} \cdot \lim_{y \to +\infty} \frac{g_n(y)}{y}}\\
+        \end{gather*}
+        Тогда по индукции получаем, что
+        \begin{align*}
+            &\lim_{y \to +\infty} \frac{f_n(y)}{y} = \frac{1}{2^n}&
+            &\lim_{y \to +\infty} \frac{g_n(y)}{y} = 0
+        \end{align*}
+        Следовательно
+        \[\lim_{n \to \infty} \frac{f(y)}{y} \leqslant \lim_{n \to \infty} \frac{f_n(y)}{y} = \frac{1}{2^n}\]
+        т.е.
+        \[\lim_{n \to \infty} \frac{f(y)}{y} = 0\]
+        При этом $f(0) = \phi(0, 1) = 0$, значит $f$ непрерывна и в $0$. Таким образом $f$ непрерывна на всём $[0; +\infty)$.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}\ItemedProblem\ 
+        \begin{enumerate}
+            \item Будем считать, что все функции $f_n$ не убывают. Действительно, если все функции неубывающие с некоторого момента, то можно просто отрезать начало, чтобы остались только неубывающие функции, доказать для полученной последовательности, и тогда утверждение будет для всей последовательности. Если же подпоследовательность неубывающих функций и подпоследовательность невозрастающих функций (константные уберём ровно в одну из них) бесконечны, то можно доказать утверждение для каждой из них, а вместо $N(\varepsilon)$ брать максимальный из двух получающихся.
+            
+                Заметим, что функция $f = \lim_{n \to \infty} f_n$ тоже монотонна на $[0; 1]$. Поскольку непрерывна, мы для всякого $n$ можем взять последовательность $(a_{n, k})_{k=0}^n$, что $f(a_{n, k}) = \frac{k}{n}$. Тогда существует $M = M(n)$, что для всякого $m \geqslant M$ и всякого $k$ от $0$ до $n$ верно, что $|f_m(a_{n, k}) - f(a_{m, k})| < \frac{1}{n}$ (её легко найти, взяв максимум для каждой точки $a_{n, k}$, их конечное количество). Тогда для всякой точки $x$ верно, что она находится на отрезке $[a_{n, k}; a_{n, k+1}]$ для некоторого $k$, а тогда для всякого $m \geqslant M$ верно, что
+                \[
+                    f_m(x) - f(x)
+                    \leqslant f_m(a_{n, k+1}) - f(a_{n, k})
+                    < \frac{1}{n} + f(a_{n, k+1}) - f(a_{n, k})
+                    = \frac{1}{n} - \frac{k+1}{n} - \frac{k}{n}
+                    = \frac{2}{n}
+                \]
+                Значит в качестве $N(\varepsilon)$ можно брать $M(\lceil\frac{2}{\varepsilon}\rceil)$.
+
+            \item Давайте вместо каждого $g_n$ рассмотрим $g_n - g$. Тогда каждая $g_n$ останется непрерывной, пределом будет функция, тождественно равная $0$, и условие на монотонное убывание $g_n(x)$ по $n$ останется. Поэтому если мы докажем для случая $g \equiv 0$, то для случая любого $g(x)$ будет следовать сразу даже без изменения функции $N(\varepsilon)$.
+
+                Тогда мы получаем, что $g_n \geqslant 0$. Рассмотрим для всякой функции $g_n$ значение $b_n := \sup_{[0; 1]} g_n$ и точку $t_n$ в которой он достигается (поскольку $g_n$ --- непрерывная функция на компакте, то такая есть). Заметим, что $g_n \geqslant g_{n+1}$, значит $b_n \geqslant b_{n+1}$, а тогда у $(b_n)_{n=0}^\infty$ есть предел $b$. Пусть $b > 0$. Тогда выделим из последовательности $(n)_{n=0}^\infty$ такую подпоследовательность $(i_n)_{n=0}^\infty$, что $(t_{i_n})_{n=0}^\infty$ сходится к некоторой точке $t$.
+                
+                Тогда мы получаем, что для всяких $n$ и $m$, что $n \geqslant m$, верно, что
+                \[g_m(t_n) \geqslant g_n(t_n) = b_n \geqslant b\]
+                Значит
+                \[g_m(t) = g_m\left(\lim_{n \to \infty} t_{i_n}\right) = \lim_{n \to \infty} g_m(t_{i_n}) \geqslant b\]
+                а следовательно
+                \[g(t) = \lim_{m \to \infty} g_m(t) \geqslant b\]
+                --- противоречие.
+                Значит $(b_n)_{n=0}^\infty \to 0$. Тогда $(g_n)_{n=0}^\infty$ равномерно сходится к $g$, так как в качестве $N(\varepsilon)$ можно взять $N(\varepsilon)$ у последовательности $(b_n)_{n=0}^\infty$:
+                \[|g_n(t) - g(t)| \leqslant \sup_{[0; 1]} g_n - g = b_n\]
+
+            \item Нет. Для примера, возьмём $g_n(x) := e^{-n x^2}$. Заметим, что для всякого $x \neq 0$
+                \[
+                    \lim_{n \to \infty} g_n(x)
+                    = \lim_{n \to \infty} \exp(-n x^2)
+                    = \exp\left(\lim_{n \to \infty} -n x^2\right)
+                    = \exp(-\infty)\\
+                    = 0\\
+                \]
+                т.е. $g(x) = 0$. В случае $x = 0$ мы имеем, что $g_n(x) = e^0 = 1$, следовательно $g(0) = 1$. (Иначе говоря, $g \equiv \mathds{1}_{\{0\}}$.) Поскольку
+                \[
+                    \lim_{x \to 0} g_n(x) - g(x) = \lim_{x \to 0} e^{-nx^2} = \lim_{y \to 0} e^y = 1
+                \]
+                То для всякого $\varepsilon < 1$ и $n \in \NN$ найдётся $x \neq 0$, что $g_n(x) > \varepsilon$. Значит никакой равномерной непрерывности нет.
+        \end{enumerate}
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Заметим, что из чётности обеих сторон следует, что
+        \[
+            \forall u \in \RR\quad \cosh(u) \leqslant e^\frac{u^2}{2}
+            \qquad \Longleftrightarrow\qquad
+            \forall x \geqslant 0\quad \frac{e^x + e^{-x}}{2} \leqslant e^\frac{x^2}{2}
+        \]
+        Значит нужно показать, что
+        \[\forall x \geqslant 0\quad \frac{e^{2x} + 1}{2} \leqslant e^\frac{x^2+2x}{2}\]
+        Так как при $x = 0$ достигается равенство, продифференцировав обе стороны сведём задачу к следующей:
+        \[
+            \forall x \geqslant 0\quad e^{2x} \leqslant (x+1)e^\frac{x^2+2x}{2}
+            \qquad \Longleftrightarrow\qquad
+            \forall x \geqslant 0\quad (x+1)e^\frac{x^2-2x}{2} \geqslant 1
+        \]
+        Так как при $x = 0$ достигается равенство, то продифференцировав ещё раз сведём задачу к следующей:
+        \[
+            \forall x \geqslant 0\quad x^2 e^\frac{x^2-2x}{2} \geqslant 0
+        \]
+        Эта задача уже очевидна, так как $x^2 \geqslant 0$, а экспонента всегда $> 0$. 
+    \end{enumproblem}
+
+    \section*{Рейтинговые задачи}
+    \addcontentsline{toc}{section}{Рейтинговые задачи}
+
+    \begin{enumproblem}TBP
+        % Продолжим в терминах \hyperref[prb-4]{задачи 4}.
+
+        % \begin{lemma}
+        %     Для всяких положительных дифференцируемых функций $p$ и $q$ (рассматриваемых на интервале в общем смысле этого слова) функция $\frac{p}{q}$ не убывает тогда и только тогда, когда $\frac{p'}{p} \geqslant \frac{q'}{q}$. Причём функция возрастает тогда и только тогда, когда почти везде (на всюду плотном множестве) выполняется строгое неравенство.
+        % \end{lemma}
+
+        % \begin{proof}
+        %     Действительно, $\frac{p}{q}$ не убывает тогда и только тогда, когда $(\frac{p}{q})' \geqslant 0$, т.е.
+        %     \[
+        %         \frac{p' q - q' p}{p^2} \geqslant 0
+        %         \qquad \Longleftrightarrow\qquad
+        %         \frac{p'}{p} - \frac{q'}{q} \geqslant 0
+        %         \qquad \Longleftrightarrow\qquad
+        %         \frac{p'}{p} \geqslant \frac{q'}{q}
+        %     \]
+
+        %     При этом невозрастание есть тогда и только тогда, когда есть некоторый интервал, на котором функция константна, что равносильно зануляемости производной на этом интервале. Поэтому множество точек, где выполняется неравенство всюду плотно тогда и только тогда, когда нет никакого интервала корней производной, что равносильно строгой возрастаемости $\frac{p}{q}$.
+        % \end{proof}
+
+        % \begin{lemma}
+        %     Для всякого $n \in \NN \setminus \{0\}$ функция $\frac{f'_n}{g'_n}$ возрастает.
+        % \end{lemma}
+
+        % \begin{proof}
+        %     Давайте докажем утверждение по индукции по $n$.
+            
+        %     Заметим, что
+        %     \[
+        %         \frac{f'_{n+1}}{g'_{n+1}}
+        %         = \frac{\frac{f'_n + g'_n}{2}}{\frac{f'_n \sqrt{\frac{g_n}{f_n}} + g'_n \sqrt{\frac{f_n}{g_n}}}{2}}
+        %         = \frac{f'_n + g'_n}{f'_n \sqrt{\frac{g_n}{f_n}} + g'_n \sqrt{\frac{f_n}{g_n}}}
+        %         = \frac{\sqrt{\frac{f'_n}{g'_n}} + \sqrt{\frac{g'_n}{f'_n}}}{\sqrt{\frac{f'_n}{g'_n}} \sqrt{\frac{g_n}{f_n}} + \sqrt{\frac{g'_n}{f'_n}} \sqrt{\frac{f_n}{g_n}}}
+        %         = \frac{\alpha + \frac{1}{\alpha}}{\alpha \beta + \frac{1}{\alpha \beta}}
+        %     \]
+        %     где $\alpha := \sqrt{\frac{f'_n}{g'_n}}$ и $\beta := \sqrt{\frac{g_n}{f_n}}$. Пусть $x < y$. Тогда покажем, что
+        %     \[
+        %         \frac{\alpha(x) + \frac{1}{\alpha(x)}}{\alpha(x) \beta(x) + \frac{1}{\alpha(x) \beta(x)}}
+        %         \leqslant
+        %         \frac{\alpha(y) + \frac{1}{\alpha(y)}}{\alpha(y) \beta(x) + \frac{1}{\alpha(y) \beta(x)}}
+        %         \leqslant
+        %         \frac{\alpha(y) + \frac{1}{\alpha(y)}}{\alpha(y) \beta(y) + \frac{1}{\alpha(y) \beta(y)}}
+        %     \]
+        %     откуда и будет следовать требуемое утверждение.
+
+        %     Заметим, что $\alpha^2 = \frac{f'_n}{g'_n}$ по предположению возрастает.
+        % \end{proof}
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Заметим, что
+        \begin{align*}
+            &\left|\frac{f(x)(y-z) + f(z)(x-y) + f(y)(z-x)}{(x-y)(x-z)(y-z)}\right|\\
+            = &\frac{1}{|y-z|} \left|\frac{f(x)(y-x) + f(x)(x-z) - f(z)(y-x) - f(y)(x-z)}{(x-y)(x-z)}\right|\\
+            = &\frac{1}{|y-z|} \left|\frac{(f(x)-f(z))(y-x) + (f(x)-f(y))(x-z)}{(x-y)(x-z)}\right|\\
+            = &\frac{1}{|y-z|} \left|\frac{f(x)-f(y)}{x-y} - \frac{f(x)-f(z)}{x-z}\right|\\
+        \end{align*}
+
+        Рассмотрим для всякого множества $T$ и функции $g$ функцию
+        \begin{align*}
+            &\kappa_{g, T}: (0; +\infty) \to \RR, \delta \mapsto\\
+            &\delta \sup \left\{\left|\frac{g(x)(y-z) + g(z)(x-y) + g(y)(z-x)}{(x-y)(x-z)(y-z)}\right| \mid x, y, z \in T \wedge \max(|x-y|, |y-z|, |z-x|) = \delta\right\}
+        \end{align*}
+
+        Тогда предел $\lim_{\delta \to 0} \kappa_{f, S}(\delta) = 0$ равносилен тому, что для всякого $\varepsilon > 0$ есть $\delta = \delta(\varepsilon) > 0$, что $\kappa_{f, S}((0; \delta)) \subseteq U_\varepsilon(0)$. Это же равносильно (возможно, при другом $\delta(\varepsilon)$) тому, что для всякого $\varepsilon > 0$ и для всякой тройки точек $x$, $y$, $z$ из $S$, что $\max(|x-y|, |y-z|, |z-x|) < \delta(\varepsilon)$ верно неравенство:
+        \[\frac{\delta}{|y-z|} \cdot \left|\frac{f(x)-f(y)}{x-y} - \frac{f(x)-f(z)}{x-z}\right| < \varepsilon\]
+
+        Следствием из этого является то, что для этой же тройки точек
+        \[\left|\frac{f(x)-f(y)}{x-y} - \frac{f(x)-f(z)}{x-z}\right| < \varepsilon\]
+        так как $\frac{\delta}{|y-z|} \geqslant 1$.
+
+        Пусть $\overline{S}$ --- замыкание $S$.
+
+        \begin{lemma}
+            Для всякой предельной точки $x$ множества $S$ верно, что $\lim_{t \to x} f(t)$ определён.
+        \end{lemma}
+
+        \begin{proof}
+            Пусть это не так. Тогда есть последовательности $(y_n)_{n=0}^\infty$ и $(z_n)_{n=0}^\infty$ точек $S$, сходящиеся к $x$, что $\lim_{n \to \infty} f(y_n)$ и $\lim_{n \to \infty} f(z_n)$ определены и равны неравным $L_y$ и $L_z$.
+
+            Возьмём любое $\varepsilon > 0$ и соответствующее $\delta = \delta(\varepsilon)$. Тогда WLOG можно считать, что последовательности $(y_n)_{n=0}^\infty$ и $(z_n)_{n=0}^\infty$ лежат в $U_\delta(x)$. Также возьмём любую точку $s \in U_{\delta/2}(x)$. Тогда
+            \[
+                \left|\frac{f(s)-f(y_n)}{s-y_n} - \frac{f(y_n)-f(z_n)}{y_n-z_n}\right| < \varepsilon
+            \]
+            При этом
+            \[
+                \lim_{n \to \infty} \left|\frac{f(y_n)-f(z_n)}{y_n-z_n}\right|
+                \geqslant |L_y-L_z| \lim_{n \to \infty} \frac{1}{|y_n-z_n|}
+                = C \cdot +\infty
+                = +\infty
+            \]
+            Следовательно
+            \begin{multline*}
+                \lim_{n \to \infty} \left|\frac{f(s)-f(y_n)}{s-y_n} - \frac{f(y_n)-f(z_n)}{y_n-z_n}\right|
+                \geqslant \lim_{n \to \infty} \left|\frac{f(y_n)-f(z_n)}{y_n-z_n}\right| - \left|\frac{f(s)-f(y_n)}{s-y_n}\right|\\
+                = +\infty - \left|\frac{f(s) - L_y}{s - x}\right|
+                = +\infty
+            \end{multline*}
+            --- противоречие.
+        \end{proof}
+
+        \begin{lemma}
+            $f$ доопределяется на $\overline{S}$ для всякой точки $x \in S \setminus \overline{S}$ так, что $\lim_{\delta \to 0} \kappa_{f, \overline{S}}(\delta) = 0$.
+        \end{lemma}
+
+        \begin{proof}
+            Давайте доопределим $f$ на $\overline{S}$ просто предельными значениями в этих точках.
+
+            Заметим, что $\lim_{\delta \to 0} \kappa_{g, \overline{T}}(\delta) = 0$ тогда и только тогда, когда
+            \begin{multline*}
+                \lim_{\delta \to 0} \sup \left\{\frac{\max(|x-y|, |y-z|, |z-x|)}{|y-z|} \cdot \left|\frac{g(x)-g(y)}{x-y} - \frac{g(x)-g(z)}{x-z}\right| \mid\right.\\
+                \left. x, y, z \in T \wedge \max(|x-y|, |y-z|, |z-x|) < \delta\right\} = 0
+            \end{multline*}
+
+            Пусть $x$, $y$, $z$ --- какая-то тройка точек $\overline{S}$, что $\max(|x-y|, |y-z|, |z-x|) < \delta$. Тогда есть последовательности $(x_n)_{n=0}^\infty$, $(y_n)_{n=0}^\infty$ и $(z_n)_{n=0}^\infty$ точек из $S$, сходящиеся к $x$, $y$ и $z$ соответственно. Заметим что WLOG можно считать, что $\max(|x_n-y_n|, |y_n-z_n|, |z_n-x_n|) < \delta$ для всякого $n$, рано или поздно (начиная с некоторого $N$) это всё равно произойдёт. Значит
+            \begin{multline*}
+                \frac{\max(|x_n-y_n|, |y_n-z_n|, |z_n-x_n|)}{|y_n-z_n|} \cdot \left|\frac{f(x_n)-f(y_n)}{x_n-y_n} - \frac{f(x_n)-f(z_n)}{x_n-z_n}\right| \in\\
+                \left\{\frac{\max(|x'-y'|, |y'-z'|, |z'-x'|)}{|y'-z'|} \cdot \left|\frac{f(x')-f(y')}{x'-y'} - \frac{f(x')-f(z')}{x'-z'}\right| \mid\right.\\
+                \left. x', y', z' \in S \wedge \max(|x'-y'|, |y'-z'|, |z'-x'|) < \delta\right\} = 0
+            \end{multline*}
+            Следовательно
+            \begin{multline*}
+                \frac{\max(|x-y|, |y-z|, |z-x|)}{|y-z|} \cdot \left|\frac{f(x)-f(y)}{x-y} - \frac{f(x)-f(z)}{x-z}\right|\\
+                = \lim_{n \to \infty} \frac{\max(|x_n-y_n|, |y_n-z_n|, |z_n-x_n|)}{|y_n-z_n|} \cdot \left|\frac{f(x_n)-f(y_n)}{x_n-y_n} - \frac{f(x_n)-f(z_n)}{x_n-z_n}\right| \leqslant\\
+                \sup \left\{\frac{\max(|x'-y'|, |y'-z'|, |z'-x'|)}{|y'-z'|} \cdot \left|\frac{f(x')-f(y')}{x'-y'} - \frac{f(x')-f(z')}{x'-z'}\right| \mid\right.\\
+                \left. x', y', z' \in S \wedge \max(|x'-y'|, |y'-z'|, |z'-x'|) < \delta\right\} = 0
+            \end{multline*}
+            Значит при замене $S$ на $\overline{S}$ подпредельный супремум не меняется, а следовательно
+            \[
+                \lim_{\delta \to 0} \kappa_{f, S}(\delta) = 0
+                \qquad \longleftrightarrow\qquad
+                \lim_{\delta \to 0} \kappa_{f, \overline{S}}(\delta) = 0
+            \]
+
+            Таким образом $f$ мы доопределили $f$ искомым образом.
+        \end{proof}
+
+        \begin{lemma}
+            $f$ непрерывна на $\overline{S}$.
+        \end{lemma}
+
+        \begin{proof}
+            Пусть $x \in S$ --- точка, предельная для $S$, что в ней есть разрыв функции $f$. Тогда есть последовательность $(z_n)_{n=0}^\infty$ точек $S$, сходящаяся к $x$, что $|f(x) - f(z_n)| > C$ для некоторого $C > 0$. Пусть $y$ --- всякая другая точка множества $S$. Тогда
+            \[
+                \lim_{n \to \infty} \left|\frac{f(x)-f(z_n)}{x-z_n}\right|
+                \geqslant C \lim_{n \to \infty} \frac{1}{|x-z_n|}
+                = C \cdot +\infty
+                = +\infty
+            \]
+            Следовательно
+            \begin{multline*}
+                \lim_{n \to \infty} \left|\frac{f(x)-f(y)}{x-y} - \frac{f(x)-f(z_n)}{x-z_n}\right|
+                \geqslant -\left|\frac{f(x)-f(y)}{x-y}\right| + \lim_{n \to \infty} \left|\frac{f(x)-f(z_n)}{x-z_n}\right|\\
+                = -\left|\frac{f(x)-f(y)}{x-y}\right| + {+\infty}
+                = +\infty
+            \end{multline*}
+
+            При этом всякое $\varepsilon > 0$ и для него $\delta = \delta(\varepsilon)$. Тогда возьмём любую точку $y$ из $U_{\delta/2}(x) \cap S$. Также будет $N \in \NN$, что для всякого $n > N$ будет верно, что $|z_n - x| < \delta/2$. Следовательно
+            \[\left|\frac{f(x)-f(y)}{x-y} - \frac{f(x)-f(z_n)}{x-z_n}\right| < \varepsilon\]
+            --- противоречие, так как мы показали, что левая часть может принимать сколь угодно большие значения.
+            
+            Значит $f$ непрерывна.
+        \end{proof}
+
+        \begin{lemma}
+            $f$ дифференцируема на $\overline{S}$.
+        \end{lemma}
+
+        \begin{proof}
+            Пусть $x$ --- некоторая точка $\overline{S}$. Пусть $(x_n)_{n=0}^\infty$ всякая последовательность точек $\overline{S}$, сходящаяся к $x$. Тогда последовательность
+            \[\left(\frac{f(x_n) - f(x)}{x_n - x}\right)_{n=0}^\infty\]
+            фундаментальна: достаточно брать члены из $\delta(\varepsilon)$-окрестности $x$, чтобы разность любых двух членов была меньше $\varepsilon$. Значит определён предел
+            \[
+                \lim_{t \to x} \frac{f(t) - f(x)}{t - x}
+            \]
+            т.е. $f$ дифференцируема в $x$ на $\overline{S}$.
+        \end{proof}
+
+        Так мы свели задачу к тому, чтобы один раз дифференцируемо продолжить функцию $f$, определённую на замкнутом множестве $\overline{S}$, на всё $\RR$.
+
+        Заметим, что дополнение к $\overline{S}$ есть объединение некоторого семейства $\Sigma$ непересекающихся интервалов. При этом $|\Sigma| \leqslant |\NN|$. Заметим, что для всякого интервала $(a; b) \in \Sigma$ значения $f$ и $f'$ в точках $a$ и $b$ уже определены, поэтому их нужно аккуратно гладко (дифференцируемо) соединить. Таким образом проблем внутри всякого интервала из $\Sigma$ не возникнет.
+
+        Рассмотрим любой интервал $(a; b)$ из $\Sigma$. Тогда мы можем соединить точки $(a, f(a))$ и $(b, f(b))$ на этом интервале трёхзвенной ломанной, что конечные звенья имеют правильные наклоны. Также можно подрегулировать длины конечных звеньев так, что по высоте ломаная была бы заключена между $\min(f(a), f(b)) - |a-b|^2$ и $\max(f(a), f(b)) + |a-b|^2$.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+    
+\end{document}

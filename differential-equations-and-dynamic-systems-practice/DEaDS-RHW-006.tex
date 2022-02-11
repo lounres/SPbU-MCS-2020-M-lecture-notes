@@ -1,0 +1,29 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+
+\title{Рейтинговое домашнее задание от 15.10\\Дифференциальные уравнения и динамические системы}
+\author{Глеб Минаев @ 204 (20.Б04-мкн)}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{6}
+        Несложно видеть, что
+        \[
+            \frac{y_1' - y_2'}{y_1 - y_2} - (y_1 + y_2)
+            = \frac{(y_1^2 + q y_1 + r) - (y_2^2 + q y^2 + r) - y_1^2 + y_2^2}{y_1 - y_2}
+            = \frac{q y_1 - q y^2}{y_1 - y_2}
+            = q
+        \]
+        и
+        \[
+            \frac{y_1 y_2' - y_2 y_1'}{y_1 - y_2} + y_1 y_2
+            = \frac{y_1 (y_2^2 + q y_2 + r) - y_2 (y_1^2 + q y_1 + r) + y_1^2 y_2 - y_1 y_2^2}{y_1 - y_2}
+            = \frac{y_1 r - y_2 r}{y_1 - y_2}
+            = r.
+        \]
+        Следовательно, $q$ и $r$ определяются во всех точка кроме тех, где $y_1 = y_2$.
+    \end{problem}
+\end{document}
