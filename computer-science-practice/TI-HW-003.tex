@@ -1,0 +1,66 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{inkscape}
+
+\title{Домашнее задание от 21.09.\\Теоретическая информатика. 2 курс.\\Решения.}
+\author{Глеб Минаев @ 204 (20.Б04-мкн)}
+% \date{}
+
+\newcommand{\lex}{\mathrm{lex}}
+
+\begin{document}
+    \maketitle
+
+    \begin{multicols}{2}
+        \tableofcontents
+    \end{multicols}
+
+    \begin{problem}{3}
+        Рассмотрим НКА $A = (\Sigma, Q, S, F, \delta)$, реализующий язык $K$. Тогда рассмотрим автомат
+        \[B = (\Sigma, Q, S, F', \delta), \qquad \text{ где } F' := \{q \in Q \mid \exists v \in L\colon\; \delta^*(q, v) \cap F \neq \varnothing\}\]
+        т.е. автомат $A$ с новым множеством принимающих состояний. Тогда $B$ будет распознавать $K \cdot L^{-1}$, так как есть следующая последовательность равносильных утверждений.
+        \begin{itemize}
+            \item $u$ распознаётся автоматом $B$.
+            \item Есть некоторое состояние $q \in \delta^*(S, u) \cap F'$.
+            \item Есть некоторое состояние $q \in \delta^*(S, u)$ и некоторое слово $v \in L$, что $\delta^*(q, v) \cap F \neq \varnothing$.
+            \item Есть некоторое слово $v \in L$, что $\delta^*(S, uv) \cap F \neq \varnothing$.
+            \item Есть некоторое слово $v \in L$, что $uv \in K$.
+            \item $u \in K \cdot L^{-1}$.
+        \end{itemize}
+
+        P.S. Регулярность $L$ не нужна!
+    \end{problem}
+
+    \begin{problem}{4}
+        Пусть даны ДКА $A_1 = (\Sigma, Q_1, q_{0, 1}, F_1, \delta_1)$ и $A_2 = (\Sigma, Q_2, q_{0, 2}, F_2, \delta_2)$. Рассмотрим ДКА $\widehat{A} = (\Sigma, \widehat{Q}, \widehat{q}_0, \widehat{F}, \widehat{\delta})$, где
+        \begin{gather*}
+            \widehat{Q} := Q_1 \times Q_2 \times \{0; 1\},
+            \qquad
+            \widehat{q}_0 := (q_{0, 1}, q_{0, 2}, 0),
+            \qquad
+            \widehat{F} := F_1 \times F_2 \times \{0\},\\
+            \widehat{\delta}((q_1, q_2, r), s) := 
+            \begin{cases}
+                (\delta_1(q_1, s), q_2, 1)& \text{ если } r = 0,\\
+                (q_1, \delta_2(q_2, s), 0)& \text{ если } r = 1.
+            \end{cases}
+        \end{gather*}
+        Говоря на пальцах,
+        \begin{itemize}
+            \item $\widehat{Q}$ хранит хранит текущие состояния двух автоматов и информацию о том, какой номер хода по модулю $2$ был последним,
+            \item $\widehat{\delta}$ использует автомат, соответствующий остатку по модулю $2$ номера хода, не трогая другой автомат, и меняет остаток хода на следующий,
+            \item $\widehat{q}_0$ указывает на то, что в самом начале автоматы поставлены в свои обычные начальные конфигурации и будут использованы в порядке $A_1$, $A_2$, $A_1$, $A_2$, \dots,
+            \item $\widehat{F}$ указывает на то, что признаны будут строки только чётной длины, где строка из нечётных символов принимается автоматом $A_1$, а из чётных --- $A_2$ (формально будет следовать из утверждения дальше).
+        \end{itemize}
+        В таком случае несложно показать по индукции, что
+        \begin{gather*}
+            \widehat{\delta}^*(\widehat{q}_0, u_1 v_1 u_2 v_2 \dots u_n v_n) = (\delta_1^*(q_{0, 1}, u_1 \dots u_n), \delta_2^*(q_{0, 2}, v_1 \dots v_n), 0),\\
+            \text{ и }\\
+            \widehat{\delta}^*(\widehat{q}_0, u_1 v_1 u_2 v_2 \dots u_n v_n u_{n+1}) = (\delta_1^*(q_{0, 1}, u_1 \dots u_{n+1}), \delta_2^*(q_{0, 2}, v_1 \dots v_n), 1).
+        \end{gather*}
+        Таким образом главное свойство $F$ доказано: действительно, $\widehat{A}$ принимает строку тогда и только тогда, когда строка имеет вид $u_1 v_1 \dots u_n v_n$, $A_1$ принимает строку $u_1 \dots u_n$ и $A_2$ принимает строку $v_1 \dots v_n$. А это и значит, что
+        \[L(\widehat{A}) = \mathrm{PerfectShuffle}(L(A_1), L(A_2)).\]
+    \end{problem}
+\end{document}

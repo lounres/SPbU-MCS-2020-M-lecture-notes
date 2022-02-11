@@ -1,0 +1,292 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+\usepackage{multicol}
+
+\title{Листочек 6. Снова многомерный.\\Математический анализ.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\grad}{grad}
+\renewcommand{\Re}{\qopname\relax o{Re}}
+\renewcommand{\Im}{\qopname\relax o{Im}}
+\newcommand{\HD}{\ensuremath{\mathrm{HD}}\xspace}
+
+\begin{document}
+    \maketitle
+
+    \begin{multicols}{2}
+        \tableofcontents
+    \end{multicols}
+
+    \section*{Базовые задачи}
+    \addcontentsline{toc}{section}{Базовые задачи}
+
+    \begin{enumproblem}
+        Пусть $\mathfrak{A}$ --- сигма-алгебра над $X$. Давайте введём отношение $\sim$ неразличимости по $\mathfrak{A}$: для всяких $x, y \in X$
+        \[x \sim y \quad \Longleftrightarrow \quad \forall A \in \mathfrak{A}\colon \; x \in A \Leftrightarrow y \in A.\]
+        В таком случае мы можем заменить $X$ на $X/\sim$ (склеить неразличимые с точки зрения $\mathfrak{A}$ точки) и соответствующим образом изменить $\mathfrak{A}$. Заметим также, что мощность $\mathfrak{A}$ не изменилась. Таким образом мы просто имеем, что все элементы $X$ попарно различимы:
+        \[\forall A \in \mathfrak{A}\colon \; x \in A \Leftrightarrow y \in A.\]
+        Если $X$ конечно, то $|\mathfrak{A}| \leqslant |2^X| \in \NN$. Т.е. если искомая сигма-алгебра существует, то $|X| \geqslant |\NN|$. Выделим какой-нибудь счётный набор $Y := \{y_i\}_{i \in \NN}$ элементов из $X$. Поскольку $y_i$ и $y_j$ отделимы по определению, то есть множество $S_{i|j} \in \mathfrak{A}$, что
+        \[y_i \in S_{i|j}, \quad y_j \notin S_{j|i}.\]
+        Тогда определим
+        \[I_i := \bigcap_{j \in \NN \setminus \{i\}} S_{i|j}.\]
+        По определению сигма-алгебры $I_i \in \mathfrak{A}$, а при этом $y_k \in I_i$ тогда и только тогда, когда $k=i$. Тогда для всякого $A \subseteq Y$ можем определить
+        \[I_A := \bigcup_{y_i \in A} I_i.\]
+        Опять же $I_A \in \mathfrak{A}$, а $Y \cap I_A = A$. Поскольку $|2^Y| = |2^\NN|$, то у нас определено $|2^\NN|$ множеств $Y_A$ и все они попарно различно. Значит
+        \[|\mathfrak{A}| \geqslant |2^\NN|.\]
+        Т.е. сигма-алгебры бывают либо конечные, либо хотя бы континуальные.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        \begin{lemma}\label{best-dividing-lemma}
+            Пусть имеется множество $A$ меры $a$ ($a < +\infty$). Тогда его можно разбить в объединение двух множеств $A = B \sqcup C$, что
+            \[\max(\mu(B), \mu(C)) \leqslant \frac{2}{3}.\]
+        \end{lemma}
+
+        \begin{proof}
+            Рассмотрим множество
+            \[\Sigma := \{(B; C) \mid B \cap C \wedge B \cup C = A \wedge \mu(B) \geqslant \mu(C)\}.\]
+            Введём на $\Sigma$ отношение $\leqslant$:
+            \[(B_1; C_1) \leqslant (B_2; C_2) \Longleftrightarrow B_2 \subseteq B_1.\]
+            Заметим следующие утверждения.
+            \begin{itemize}
+                \item 
+                    \[(B_1; C_1) \leqslant (B_2; C_2) \Longleftrightarrow C_1 \subseteq C_2.\]
+                \item \textbf{Рефлексивность $\leqslant$.} Поскольку $C \subseteq C$, то $(B; C) \leqslant (B; C)$.
+                \item \textbf{Транзитиваность $\leqslant$.} Если $(B_1; C_1) \leqslant (B_2; C_2) \leqslant (B_3; C_3)$, то
+                    \[C_1 \subseteq C_2 \subseteq C_3, \qquad \Longrightarrow \qquad C_1 \subseteq C_3,\]
+                    откуда имеем, что $(B_1; C_1) \leqslant (B_3; C_3)$.
+                \item \textbf{Антисимметричность $\leqslant$.} Поскольку $(B_1; C_1) \leqslant (B_2; C_2) \leqslant (B_1; C_1)$, то $C_1 \subseteq C_2 \subseteq C_1$. Таким образом $C_1 = C_2$, а значит
+                    \[B_1 = A \setminus C_1 = A \setminus C_2 = B_2,\]
+                    и наконец $(B_1; C_1) = (B_2; C_2)$.
+                \item Пусть в $\Sigma$ выбрана не более чем счётная цепь (линейно упорядоченное по $\leqslant$ подмножество) $\Phi$. Тогда определим
+                    \[C' := \bigcup_{(B; C) \in \Phi} C, \qquad B' := A \setminus C' = \bigcap_{(B; C) \in \Phi} B.\]
+                    Несложно видеть, что
+                    \[\mu(C') = \sup_{(B; C) \in \Phi} \mu(C').\]
+                    При этом для всех $(B; C) \in \Sigma$ по определению $\mu(C) \leqslant \mu(B)$, т.е. $\mu(C) \leqslant \frac{1}{2} \mu(A)$. Таким образом $\mu(C') \leqslant \frac{1}{2} \mu(A)$, а значит $\mu(C') \leqslant \mu(B')$. Таким образом $(B'; C') \in \Sigma$ и для всякого $(B; C) \in \Phi$
+                    \[(B'; C') \geqslant (B; C).\]
+                    Таким образом $(B'; C')$ есть верхняя грань $\Phi$. 
+            \end{itemize}
+            Таким образом $\leqslant$ --- частичный порядок, что у всякой не более чем счётной цепи есть верхняя грань.
+
+            Определим функцию
+            \[\tau: \Sigma \to \RR_{\geqslant 0}, (B; C) \mapsto \frac{\mu(C)}{\mu(A)}.\]
+            Мы знаем, что множество значений $\tau$ является подмножеством $[0; \frac{1}{2}]$. Тогда построим последовательность $((\Lambda_i; a_i))_{i \in \NN}$ ($\Lambda_i \in \Sigma$, $a_i \in \RR$) рекуррентно следующим образом. Возьмём в качестве $\Lambda_0$ случайный элемент $\Sigma$, а $a_0 := \sup_\Sigma \tau$. Далее определим
+            \[
+                A_{n+1} := \{\Lambda \in \Sigma \mid \Lambda \geqslant \Lambda_n\},
+                \qquad
+                a_{n+1} := \sup_{\Lambda \geqslant \Lambda_n} \tau(\Lambda) = \sup_{A_{n+1}} \tau,
+            \]
+            а в качестве $\Lambda_{n+1}$ возьмём случайный элемент из $A_{n+1}$, что
+            \[\tau(\Lambda_{n+1}) \geqslant \frac{a_{n+1} + \tau(\Lambda_n)}{2}.\]
+
+            Если в какой-то момент цепь не продолжается, то значит мы случайно взяли в качестве $\Lambda_i$ некоторый максимальный элемент $\widehat{\Lambda}$. Т.е. нет в $\Sigma$ другого $\Lambda$, что
+            \[\Lambda \geqslant \widehat{\Lambda} \qquad \text{ и } \qquad \tau(\Lambda) \geqslant \tau(\widehat{\Lambda}).\]
+
+            Иначе таким образом получаем счётную цепь $\{\Lambda_i\}_{i \in \NN}$. Тогда у неё есть верхняя грань $\widehat{\Lambda}$. При этом
+            \[\{\Lambda \in \Sigma \mid \forall i \in \NN \; \Lambda_i \leqslant \Lambda\} = \bigcap_{i \in \NN} A_i;\]
+            и $\widehat{\Lambda}$ лежит в этом множестве, т.е. данное множество непусто. Следовательно, так как $A_i \supseteq A_{i+1}$, и значит $a_i \geqslant a_{i+1}$, то
+            \[\sup \{\tau(\Lambda) \in \Sigma \mid \forall i \in \NN \; \Lambda_i \leqslant \Lambda\} = \lim_{i \to +\infty} a_i.\]
+            Но заметим, что $a_{i+1} \geqslant \tau(\Lambda_i)$ по определению, а тогда $\tau(\Lambda_{n+1}) \geqslant \tau(\Lambda_n)$. И при этом
+            \[0 \leqslant a_{n+1} - \tau(\Lambda_{n+1}) \leqslant a_{n+1} - \frac{a_{n+1} + \tau(\Lambda)}{2} = \frac{a_{n+1} - \tau(\Lambda_n)}{2} \leqslant \frac{a_n - \tau(\Lambda_n)}{2}.\]
+            Значит
+            \[\lim_{i \to +\infty} a_i = \lim_{i \to +\infty} \tau(\Lambda_i).\]
+            Значит
+            \[\sup \{\tau(\Lambda) \in \Sigma \mid \forall i \in \NN \; \Lambda_i \leqslant \Lambda\} = \lim_{i \to +\infty} \tau(\Lambda_i) = \sup_{i \in \NN} \tau(\Lambda_i),\]
+            что означает, что для всякого $\Lambda$ не меньшего всех $\Lambda_i$ верно, что
+            \[\tau(\Lambda) = \sup_{i \in \NN} \tau(\Lambda_i).\]
+            Таким образом для $\widehat{\Lambda}$ нет в $\Sigma$ другого $\Lambda$, что
+            \[\Lambda \geqslant \widehat{\Lambda} \qquad \text{ и } \qquad \tau(\Lambda) \geqslant \tau(\widehat{\Lambda}).\]
+
+            Пусть $\widehat{\Lambda} = (B; C)$. По условию задачи $B$ можно разбить в объединение $B = S \sqcup T$, что $\mu(S) \geqslant \mu(T) > 0$. Тогда если $\mu(T) + \mu(C) \leqslant \mu(S)$, то можем взять
+            \[\Lambda := (S; T \cup C) \in \Sigma,\]
+            и тогда $\Lambda \geqslant \widehat{\Lambda}$, а
+            \[\tau(\Lambda) = \tau(\widehat{\Lambda}) + \frac{\mu(T)}{\mu(A)} > \tau(\widehat{\Lambda})\]
+            --- противоречие с определением $\widehat{\Lambda}$. Значит
+            \[
+                \mu(T) + \mu(C) > \frac{\mu(A)}{2} > \mu(S).
+            \]
+            Тогда $\mu(C) \geqslant \mu(C)$, так как иначе по аналогии можно получить противоречие с $\Lambda := (T \cup C; S)$. Таким образом $\mu(C) \geqslant \mu(S) \geqslant \mu(T)$. И при этом
+            \[\mu(S) + \mu(T) = \mu(B) \geqslant \mu(C),\]
+            т.е. для $\mu(C)$, $\mu(S)$ и $\mu(T)$ выполнены (все 3) нестрогие неравенства треугольника, а также
+            \[\mu(S) + \mu(T) + \mu(C) = \mu(B) + \mu(C) = \mu(A).\]
+            Значит
+            \[3 \mu(C) \geqslant \mu(S) + \mu(T) + \mu(C) = \mu(A) \geqslant 2\mu(C).\]
+            Т.е.
+            \[\frac{\mu(C)}{\mu(A)} \in \left[\frac{1}{3}; \frac{1}{2}\right], \qquad \frac{\mu(B)}{\mu(A)} \in \left[\frac{1}{2}; \frac{2}{3}\right].\]
+        \end{proof}
+
+        \begin{lemma}\label{big-finite-set-lemma}
+            Пусть имеется множество $A$ бесконечной меры. Тогда у него есть подмножество $B$ сколь угодно большой, но конечной меры.
+        \end{lemma}
+
+        \begin{proof}
+            Предположим противное, т.е. есть константа $P > 0$, что для всякого $B \subseteq A$ верно, что либо $\mu(B) = +\infty$, либо $\mu(B) \leqslant P$.
+
+            Тогда обозначим
+            \[S := \sup_{\substack{B \subseteq A\\ \mu(B) < +\infty}} \mu(B).\]
+            Понятно, что $S$ определено (так как есть представитель $B$ --- $\varnothing$, и есть ограничение сверху, т.е. $S \leqslant P < +\infty$). Тогда есть последовательность множеств $(B_i)_{i=0}^\infty$, что
+            \[\lim_{i \to \infty} \mu(B_i) = S.\]
+            Рассмотрим
+            \[\widehat{B} := \bigcup_{i=0}^\infty B_i.\]
+            Понятно, что $\widehat{B} \subseteq A$, $\mu(\widehat{B}) \geqslant \sup_{i \in \NN} \mu(B_i) = S$. Тогда у $A \setminus \widehat{B}$ есть подмножество $C$, что $0 < \mu(C) < +\infty$. Таким образом определим $B' := \widehat{B} \cup C$. Тогда
+            \[\mu(B') = \mu(C) + \mu(\widehat{B}) \in (S; +\infty)\]
+            --- противоречие с определением $S$.
+        \end{proof}
+
+        Теперь решим нашу задачу. Если $\alpha = \infty$, то достаточно взять $A = X$, поэтому рассматриваем только $\alpha < +\infty$. Если $\mu(X) = +\infty$, то по лемме \ref{big-finite-set-lemma} без потери общности можно просто заменить $X$ на подмножество конечной меры, большей $\alpha$. Таким образом $X < +\infty$.
+
+        Построим последовательность $((B_i, \alpha_i, X_i))_{i=0}^\infty$ рекурсивно следующим образом. Начальный член определяется как
+        \[B_0 := \varnothing, \quad \alpha_0 := \alpha, \quad X_0 := X.\]
+        Далее для всякого $n$ определим $n+1$-ый член через $n$-ый. по лемме \ref{best-dividing-lemma} есть разбиение $X_n = Y \sqcup Z$, что
+        \[\mu(Y), \mu(Z) \in \left[\frac{\mu(X)}{3}; \frac{2\mu(X)}{3}\right].\]
+        Тогда есть два случая:
+        \begin{enumerate}
+            \item Если $\mu(Y) \leqslant \alpha_n$, то определим
+                \[B_{n+1} := B_n \cup Y, \quad \alpha_{n+1} = \alpha_n - \mu(Y), \quad X_{n+1} = Z.\]
+            \item Если $\mu(Y) > \alpha_n$, то определим
+                \[B_{n+1} := B_n, \quad \alpha_{n+1} = \alpha_n, \quad X_{n+1} = Y.\]
+        \end{enumerate}
+        Несложно видеть (показать по индукции), что
+        \begin{itemize}
+            \item $B_n \subseteq B_{n+1}$,
+            \item $B_n \cap X_n = \varnothing$,
+            \item $\mu(B_n) + \alpha_n = \alpha$,
+            \item $\alpha_n \leqslant \mu(X_n)$,
+            \item $\mu(X_{n+1}) \leqslant \frac{2}{3} \mu(X_n)$.
+        \end{itemize}
+        Определим
+        \[A := \bigcup_{n=0}^\infty B_n.\]
+        Понятно, что
+        \[\mu(A) = \lim_{n \to \infty} \mu(B_n) = \alpha - \lim_{n \to \infty} \alpha_n = \alpha,\]
+        так как $\alpha_n \in [0; (2/3)^n \mu(X)]$. Так мы нашли то самое $A$.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Заметим, что канторово множество $C$ имеет меру Лебегу $0$. Действительно, для всякого $n$ и $\varepsilon > 0$ семейство интервалов
+        \[\{(\frac{a_1}{3} + \dots + \frac{a_n}{3^n} - \varepsilon; \frac{a_1}{3} + \dots + \frac{a_n}{3^n} + \frac{1}{3^n} + \varepsilon) \mid a_1, \dots, a_n \in \{0; 2\}\}\]
+        есть открытое покрытие $A$ суммарной длины $(2/3)^n + 2^{n+1}\varepsilon$. Следовательно есть накрытия такого типа суммарной длины сколь угодно близкой к $0$, что и означает равенство внешней меры Лебега $0$ (отсюда внутренняя мера Лебега тоже равна $0$).
+
+        Тогда всякое подмножество $C$ измеримо по Лебегу (имеет меру $0$). Но $C$ континуально, а значит множество его подмножеств гиперконтинуально (т.е. мощности $2^\text{континуум}$). Следовательно, измеримых по Лебегу множеств не менее чем гиперконтинуум. При этом подмножеств прямой тоже гиперконтинуально, значит измеримых по Лебегу ровно гиперконтинуально.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Для всякого множества $S$ индексов из $I := \{1; \dots; n\}$ определим множество
+        \[E_S := \{x \in X \mid x \in A_i \Leftrightarrow i \in S\} = \bigcap_{i \in S} E_i \cap \bigcap_{i \notin S} (X \setminus E_i).\]
+        
+        \begin{lemma}
+            Если $S \neq T$, то $E_S \cap E_T = \varnothing$.
+        \end{lemma}
+
+        \begin{proof}
+            Если есть $j \in S \setminus T$, то
+            \[E_S \subseteq E_j \qquad \text{ и } \qquad E_T \subseteq X \setminus E_j,\]
+            откуда следует, что $E_S \cap E_T = \varnothing$. Значит если $E_S \cap E_T \neq \varnothing$, то $S \setminus T = \varnothing$ и $T \setminus S = \varnothing$, т.е. $S = T$. Отсюда следует доказываемое утверждение.
+        \end{proof}
+
+        Несложно видеть, что
+        \[
+            E_1 \cup \dots \cup E_n = \bigsqcup_{\substack{S \subseteq I\\ S \neq \varnothing}} E_S,
+            \qquad
+            E_i = \bigsqcup_{\{i\} \subseteq S \subseteq I} E_S,
+            \qquad
+            E_i \cup E_j = \bigsqcup_{\substack{S \subseteq I\\ \{i; j\} \cap S \neq \varnothing}} E_S,
+        \]
+        откуда сразу следует, что
+        \[
+            \eta(E_1 \cup \dots \cup E_n) = \sum_{\substack{S \subseteq I\\ S \neq \varnothing}} \eta(E_S),
+            \qquad
+            \eta(E_i) = \sum_{\{i\} \subseteq S \subseteq I} \eta(E_S),
+            \qquad
+            \eta(E_i \cup E_j) = \bigsqcup_{\substack{S \subseteq I\\ \{i; j\} \cap S \neq \varnothing}} \eta(E_S).
+        \]
+
+        Таким образом левая и правая части доказываемого неравенства представляются в виде суммы различных $\eta(E_S)$. Чтобы доказать неравенство, покажем, что коэффициент при каждом $\eta(E_S)$ с левой стороны не меньше чем с правой.
+
+        Пусть дано множество индексов $S \subseteq I$. Тогда понятно, что слева $\eta(E_S)$ входит с коэффициентом $[S \neq \varnothing]$ (это скобка Айверсона), так как слева она используется (и когда используется, то с коэффициентом $1$) тогда и только тогда, когда $S \neq \varnothing$.
+        
+        При этом справа $\eta(E_S)$ используется в членах $\eta(E_i)$ с коэффициентом $1$ и в членах $- \eta(E_i \cup E_j)$ с коэффициентом $-1$. Членов первого типа, очевидно, $|S|$, а второго типа $\binom{n}{2} - \binom{n-|S|}{2}$ (так как всего неупорядоченных пар $\{i; j\}$ ровно $\binom{n}{2}$, а неподходящих, т.е. таких, что $i, j \notin S$, --- $\binom{n - |S|}{2}$). Таким образом нужно доказать для всех $k \in \{0; \dots; n\}$ неравенство
+        \[[k \neq 0] \geqslant k - \left(\binom{n}{2} - \binom{n-k}{2}\right).\]
+
+        Очевидно, что при $k = 0$ достигается равенство и этот случай можно не учитывать; поэтому заменим $[k \neq 0]$ на просто $1$ и перенесём его в правую сторону. Несложно видеть, что
+        \begin{align*}
+            - 1 + k - \left(\binom{n}{2} - \binom{n-k}{2}\right)
+            &= \frac{-2 + 2k - n(n-1) + (n-k)(n-k-1)}{2}\\
+            &= \frac{-2 + 2k - n(n-1) + n(n-1) - (2n-1)k + k^2}{2}\\
+            &= \frac{k^2 - (2n-3)k - 2}{2}\\
+        \end{align*}
+        Данная функция (от $k$) является параболой с ветвями вверх. При при $k = 1$ значение равно
+        \[\frac{1 - (2n-3) - 2}{2} = \frac{-(2n-2)}{2} = \frac{-2(n-1)}{2} \leqslant 0,\]
+        а при $k = n$ значение равно
+        \[\frac{n^2 - (2n-3)n - 2}{2} = \frac{n^2 - 2n^2 + 3n - 2}{2} = -\frac{n^2 - 3n + 2}{2} = -\frac{(n-1)(n-2)}{2} \leqslant 0.\]
+        Значит во всех точках между $1$ и $n$ функция тоже достигает неотрицательные значения. Отсюда следует требуемое неравенство.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Заметим, что если $E_1 \cap \dots \cap E_n = \varnothing$, то
+        \[X = X \setminus \varnothing = X \setminus \bigcap_{i=1}^n E_i = \bigcup_{i=1}^n X \setminus E_i.\]
+        Но
+        \[\sum_{i=1}^n P(X \setminus E_i) = \sum_{i=1}^n 1 - P(E_i) = n - \sum_{i=1}^n P(E_i) < 1,\]
+        а из предыдущего равенства мы получаем, что
+        \[\sum_{i=1}^n P(X \setminus E_i) \geqslant P\left(\bigcup_{i=1}^n X \setminus E_i\right) = P(X) = 1.\]
+        Значит $E_1 \cap \dots \cap E_n \neq \varnothing$.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Давайте в качестве $A$ возьмём самое стандартное канторово множество. Покажем, что сумма Минковского $A + A$ равна $[0; 2]$. Как известно,
+        \[A = \{\frac{a_1}{3} + \frac{a_2}{3^2} + \dots \mid a_i \in \{0; 2\}\}.\]
+        Тогда
+        \begin{align*}
+            A + A
+            &= \{x + y \mid x \in A \wedge y \in A\}\\
+            &= \{2(\frac{x}{2} + \frac{y}{2}) \mid x \in A \wedge y \in A\}\\
+            &= \{2(\frac{a_1 + b_1}{2 \cdot 3} + \frac{a_2 + b_2}{2 \cdot 3^2} + \dots) \mid a_i, b_i \in \{0; 2\}\}\\
+            &= \{2(\frac{c_1}{3} + \frac{c_2}{3^2} + \dots) \mid c_i \in \{0; 1; 2\}\}\\
+            &= \{2\alpha \mid \alpha \in [0; 1]\}\\
+            &= [0; 2]
+        \end{align*}
+
+        При этом мера Лебега канторова множества $A$ равна $0$, так как для всякого $n$ и $\varepsilon > 0$ семейство интервалов
+        \[\{(\frac{a_1}{3} + \dots + \frac{a_n}{3^n} - \varepsilon; \frac{a_1}{3} + \dots + \frac{a_n}{3^n} + \frac{1}{3^n} + \varepsilon) \mid a_1, \dots, a_n \in \{0; 2\}\}\]
+        есть открытое покрытие $A$ суммарной длины $(2/3)^n + 2^{n+1}\varepsilon$. Следовательно есть накрытия такого типа суммарной длины сколь угодно близкой к $0$, что и означает равенство внешней меры Лебега $0$ (отсюда внутренняя мера Лебега тоже равна $0$).
+    \end{enumproblem}
+
+    \section*{Рейтинговые задачи}
+    \addcontentsline{toc}{section}{Рейтинговые задачи}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TBP
+    \end{enumproblem}
+    
+\end{document}

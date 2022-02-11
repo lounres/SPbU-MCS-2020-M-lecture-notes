@@ -1,0 +1,28 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions-en}
+\usepackage{float}
+\usepackage[normalem]{ulem}
+\usepackage[all]{xy}
+\CompileMatrices
+
+\title{Homework of 09.27\\Differential geometry}
+\author{Gleb Minaev @ 204 (20.Б04-мкн)}
+\date{}
+
+\newcommand{\Int}{\mathrm{Int}}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{50}
+        Let $\alpha$ and $\beta$ be some two loops starting at $e \in G$ (identity element of the group $G$). Consider map $S: I \times I \to G, (s, t) \mapsto \alpha(s) \cdot \beta(t)$. It is composition of maps $I \times I \to G \times G, (s, t) \mapsto (\alpha(s), \beta(t))$ (that has continuous coordinates, hence is continuous itself) and $G \times G \to G, (x, y) \mapsto x \cdot y$ (that is continuous by definition). Note that $S|_{I \times \{0\}} = S|_{I \times \{1\}} = \alpha$ and $S|_{\{0\} \times I} = S|_{\{1\} \times I} = \beta$.
+        
+        Consider on $I \times I$ paths $\varphi: (0; 0) \leadsto (1; 0) \leadsto (1; 1)$ and $\psi: (0; 0) \leadsto (0; 1) \leadsto (1; 1)$. So $S \circ \varphi = \alpha \beta$, $S \circ \psi = \beta \alpha$. Hence $S$ is almost homotopy between paths $\alpha \beta$ and $\beta \alpha$. To make it clear (and show explicit homotopy) construct homotopy $H$ between $\varphi$ and $\psi$ (it exists because $I \times I \cong D^2$ is simply connected), so $H \circ S$ is homotopy between $\alpha \beta$ and $\beta \alpha$.
+    \end{problem}
+
+    \begin{problem}{51}
+        Let $ST$ be a solid torus in neighbourhood of $S^1$. Then obviously $D^3 \setminus ST$ is a deformation retract of $\RR^3 \setminus S^1$ (because we know that $\RR^3 \setminus \Int(D^3)$ (where interior $\Int(D^3)$ of $D^3$ means $D^3 \setminus S^2$) deformation retracts to its border $S^2$ and $ST \setminus S^1$ deformation retracts to its border). Hence $D^3 \setminus ST$ is a homotopy equivalent to $\RR^3 \setminus S^1$.
+
+        Consider inversion (in \href{https://en.wikipedia.org/wiki/Inversive_geometry#In_three_dimensions}{geometrical meaning}) with center inside $ST$ and any positive radius. Then result will be some \sout{crumpled solid torus without $\Int(D^3)$} space that is homeomorphic to solid torus without $\Int(D^3)$. And similarly to strip with a hole (which defromation retract is a circle with a path from one its point to an opposit one) solid torus with a (3-dimensional) hole deformation retracts to $S^2$ with a path from one its point to another one. Obviously obtained topological space is homotopy equivalent to $S^2 \vee S^1$. Hence $S^2 \vee S^1$ is homotopy equivalent to $\RR^3 \setminus S^1$.
+    \end{problem}
+\end{document}

@@ -1,0 +1,51 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+% \usepackage{float}
+\usepackage{inkscape}
+
+\title{Занятие от 18.02.\\Геометрия и топология. 1 курс.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Fr}{Fr}
+\DeclareMathOperator{\Id}{Id}
+\newcommand{\FAC}{\ensuremath{\mathrm{FAC}}\xspace}
+\newcommand{\SAC}{\ensuremath{\mathrm{SAC}}\xspace}
+\newcommand{\T}{\ensuremath{\mathrm{T}}\xspace}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{79}
+        Обозначим нашу поверхность за $S$, а количества вершин, рёбер и граней графа за $V$, $E$ и $F$ соответственно.
+
+        Вспомним, что по задаче 73
+        \[V - E + F \geqslant \chi(S).\]
+
+        Если мы просуммируем количества рёбер у каждой грани, то с одной стороны получим $2E$, а с другой --- значение, неменьшее $kF$; т.е.
+        \[2E \geqslant kF\]
+        Тогда мы получаем, что
+        \[V - \chi(S) \geqslant E - F \geqslant E - \frac{2}{k} E = \frac{k-2}{k} E.\]
+        Следовательно
+        \[(k-2) E \leqslant k(V - \chi(S)).\]
+    \end{problem}
+
+    \begin{problem}{83}
+        Пусть $K_{4,4}$ вложен в некоторую поверхность $S$. Несложно видеть, что тогда любая грань будет иметь хотя бы 4 ребра границы. Действительно, поскольку $K_{4,4}$ двудолен, то всякий цикл имеет чётную длину; при этом поскольку нет кратных рёбер, то всякий рёберно простой цикл имеет длину хотя бы $4$. Таким образом по предыдущей задаче
+        \[\frac{k-2}{k} E \leqslant V - \chi(S)\]
+        где $k = 4$. Следовательно
+        \[\chi(S) \leqslant V - \frac{k-2}{k} E = 8 - \frac{2}{4} (4 \cdot 4) = 0\]
+        т.е. $S$ не может быть проективной плоскостью ($\chi(\RR P^2) = 1 > 0$).
+
+        Приведём пример вложения для тора. Его можно видеть на рис. \ref{K_4,4-in-torus}
+        \begin{figure}[p]
+            \Huge
+            \centering
+            \inkscapepicture{GaT-practice-solutions-009-1}
+            \caption{Вложение $K_{4,4}$ в тор.}
+            \label{K_4,4-in-torus}
+        \end{figure}
+    \end{problem}
+\end{document}

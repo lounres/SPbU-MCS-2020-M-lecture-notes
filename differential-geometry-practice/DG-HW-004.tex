@@ -1,0 +1,54 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions-en}
+\usepackage{float}
+\usepackage{inkscape}
+\usepackage[all]{xy}
+\CompileMatrices
+
+\title{Homework of 09.27\\Differential geometry}
+\author{Gleb Minaev @ 204 (20.Б04-мкн)}
+\date{}
+
+\newcommand{\Id}{\mathrm{Id}}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{37}
+        Notice that a sphere with $p$ handles is a sphere with $2p$ holes glued with $p$ cylinders (lateral surfaces of cylinders). Let's name holes as $h_{1, a}$, $h_{1, b}$, \dots, $h_{p, a}$, and $h_{p, b}$ and cylinders as $c_1$, \dots, $c_p$. So the sphere with $p$ handles can be obtained by glueing upper border of each $c_i$ to hole $h_{i, a}$ and its lower border to hole $h_{i, b}$.
+        
+        Then consider $d$ spheres with $2p$ holes each and $pd$ cylinders. Let's name each sphere with holes as $s_1$, \dots, $s_d$, holes of sphere $s_i$ as $h_{i, 1, a}$, $h_{i, 1, b}$, \dots, $h_{i, p, a}$, $h_{i, p, b}$ and cylinders as $c_{1, 1}$, \dots, $c_{1, p}$, $c_{2, 1}$, \dots, $c_{d, p}$. Then consider glueing upper border of each cylinder $c_{i, j}$ to hole $h_{i, j, a}$ and its lower border to hole $h_{i+1, j, b}$ (where $i+1$ is considered with respect to congruence modulo $d$). Hence we've got some (path-connected without boundary) surfaces $C$.
+
+        Let $B$ be the sphere with $p$ handles, $B'$ be a disjoint union of sphere with $2p$ holes and $p$ cylinders and $C'$ be a disjoint union of $d$ spheres with $2p$ holes each and $pd$ cylinders. Then there are continuous maps $p_B: B' \to B$, $p_C: C' \to C$ that are results of glueing and
+        \[f': C' \to B', s_i \mapsto s, h_{i, j, l} \mapsto h_{j, l}, c_{i, j} \mapsto c_{j}\]
+        that is obvious covering space. It's also obvious there is a continuous map $f: C \to B$ such that diagram
+        \[
+            \xymatrix{
+                C' \ar[r]^{f'} \ar[d]_{p_C} & B' \ar[d]^{p_B}\\
+                C \ar[r]_{f} & B\\
+            }
+        \]
+        is commutative. Hence obviously $f$ is $d$-sheeted covering space.
+
+        Also $\chi(s_i) = 2 - 2p$, $\chi(c_{i, j}) = 0$. So
+        \[\chi(C) = \sum_{i=1}^d \chi(s_i) + \sum_{i=1}^d \sum_{j=1}^p \chi(c_{i, j}) = d \cdot (2-2p) + d \cdot p \cdot 0 = 2d(1-p).\]
+        So as far as $C$ is oriented surface, it is a sphere with $d(p-1) + 1$ handles.
+    \end{problem}
+
+    \begin{problem}{38}
+        We will repeat the trick. Notice that there is obvious covering space $S^2 \to \RR P^2$. Hence there is obvious covering space of cross-cap by a sphere with $2$ holes.
+
+        Let $B'$ be a disjoint union of sphere with $p$ holes and $p$ cross-caps and $C'$ be a disjoint union of two spheres with $p$ holes each and $p$ spheres with two holes each (cylinders). Let's name sphere in $B'$ as $s$, holes in $s$ as $h_1$, \dots, $h_p$, cross-caps in $B'$ as $m_1$, \dots, $m_p$, spheres in $C'$ as $s_1$ and $s_2$, holes in $s_i$ as $h_{i, 1}$, \dots, $h_{i, p}$, cylinders in $C'$ as $c_1$, \dots, $c_p$.
+
+        There is obvious covering space $f': C' \to B'$ where $s_1$ and $s_2$ identically cover $s$ and $c_i$ $2$-sheetedly covers $m_i$ (as we noticed at the beginning of the proof) for each $i$. Glueing all $m_i$ to $h_i$ respectively we obtain a surface $B$ and a projection $p_B: B' \to B$. Glueing all upper borders of $c_i$ to $h_{1, i}$ and lower borders of $c_i$ to $h_{2, i}$ with respect to $f'$ and $p_B$ (it will be glued in not usually but turned out because of nature of the covering space of cross-cap; if previously we turn out $s_2$ then glueing will be usual). Hence there is a continuous map $f: C \to B$ such that diagram
+        \[
+            \xymatrix{
+                C' \ar[r]^{f'} \ar[d]_{p_C} & B' \ar[d]^{p_B}\\
+                C \ar[r]_{f} & B\\
+            }
+        \]
+        is commutative. Hence obviously $f$ is $2$-sheeted covering space.
+
+        Also $C$ is oriented (because $s_1$ and all $c_i$ will get usual orientation and $s_2$ will get opposite orientation). Hence $C$ is a sphere with handles (more precisely, with $p-1$ handles).
+    \end{problem}
+\end{document}

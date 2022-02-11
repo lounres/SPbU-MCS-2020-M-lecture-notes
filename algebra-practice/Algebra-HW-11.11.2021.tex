@@ -1,0 +1,215 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions-en}
+\usepackage[russian]{babel}
+% \usepackage{float}
+% \usepackage{inkscape}
+\usepackage[all]{xy}
+\CompileMatrices
+
+\title{Homework for 11.11\\Algebra}
+\author{Gleb Minaev @ 204 (20.Б04-мкн)}
+\date{}
+
+\newcommand{\Id}{\mathrm{Id}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Mor}{\mathrm{Mor}}
+\newcommand{\Sets}{\mathrm{Sets}}
+\newcommand{\Ob}{\mathrm{Ob}}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{1}\ 
+        \begin{enumerate}
+            \item The graph is irrealisable, because then there must be an arrow from the left to the right vertex.
+                \[
+                    \xymatrix{
+                        \bullet \ar@<0.5ex>[r] \ar@{-->}@/^1em/@<0.5ex>[rr] & \bullet \ar@<0.5ex>[l] \ar[r] & \bullet
+                    }
+                \]
+            \item The graph is realisable.
+                \[
+                    \xymatrix{
+                        \bullet & \bullet \ar@<0.5ex>[l] \ar@<-0.5ex>[l] \ar[r] & \bullet
+                    }
+                \]
+                Let the category be the subcategory of $\Sets$ formed with some sets $A$, $B$, and $C$ and some (different) maps $f: B \to A$, $g: B \to A$, and $h: B \to C$ (and also bijections of $A$, $B$, and $C$ on themselves).
+                \[
+                    \xymatrix{
+                        A & B \ar@<0.5ex>[l]^{g} \ar@<-0.5ex>[l]_{f} \ar[r]^{h} & C
+                    }
+                \]
+                Obviously the considered morphisms are closed on themselves: there is no need in other morphisms, because any possible compositions uses at least one $id$-argument. Hence it's subcategory, so category.
+            \item The graph is realisable.
+                \[
+                    \xymatrix{
+                        \bullet \ar@<0.5ex>[rr] \ar[rd] && \bullet \ar@<0.5ex>[ll] \ar[ld] \\
+                        & \bullet
+                    }
+                \]
+                Let the category be the subcategory of $\Sets$ formed with some sets $A$, $B$, and $C$ and some bijections $f: A \to B$, $g: A \to C$, $h: B \to A$, and $i: B \to C$ (and also bijections of $A$, $B$, and $C$ on themselves), such that the diagram is commutative. (The silliest example is three sets, each is of its unique element, and the only possible bijections between them. But we may also consider any three "equal spaces with different points of view" (homeomorphic topological spaces or isomorphic vector spaces with different considered basises or isomorphic graphs with different disposition of their vertices) and isomorphisms between them that turn their "points of view" (basises in vector spaces or dispositions of vertices in graphs) into each other).
+                \[
+                    \xymatrix{
+                        A \ar@<0.5ex>[rr]^{f} \ar[rd]_{g} && B \ar@<0.5ex>[ll]^{h} \ar[ld]^{i} \\
+                        & C
+                    }
+                \]
+                Obviously the considered morphisms are closed on themselves. Hence it's subcategory, so category.
+            \item The graph is irrealisable.
+                \[
+                    \xymatrix{
+                        \bullet \ar[r] & \bullet \ar@<1ex>[l] \ar@<-1ex>[l]
+                    }
+                \]
+                Let name the arrows like in next diagram.
+                \[
+                    \xymatrix{
+                        A \ar[r]^{g} & B \ar@<15pt>[l]_{h} \ar@<-15pt>[l]_{f}
+                    }
+                \]
+                Then $g \circ f$ must be $\id_B$, and $h \circ g$ must be $\id_A$ (because there are no other arrows from $A$ to itself and from $B$ to itself). Hence
+                \[f = \id_A \circ f = h \circ g \circ f = h \circ \id_B = h.\]
+                It's contradiction.
+        \end{enumerate}
+    \end{problem}
+
+    \begin{problem}{16}\ 
+        \begin{enumerate}
+            \renewcommand{\theenumi}{\asbuk{enumi}}
+            \renewcommand{\labelenumi}{(\theenumi)}
+            \item Let $\tau: \Id_\Sets \to \Id_\Sets$ be a natural transformation. It means that for every $X \in \Ob(\Sets)$ there is a morphism $\tau_X: X \to X$ that is a map $X \to X$, such that for any morphism (map) $f: X \to Y$ diagram below is commutative.
+                \[
+                    \xymatrix{
+                        X \ar[r]^{f} \ar[d]_{\tau_X} & Y \ar[d]^{\tau_Y}\\
+                        X \ar[r]_{f} & Y
+                    }
+                \]
+                Then for any $X$ and any $x \in X$ let's consider $f: \{x\} \to X, x \mapsto x$.
+                \[
+                    \xymatrix{
+                        \{x\} \ar[r]^{x\, \mapsto\, x} \ar[d]_{\rotatebox{-90}{$\scriptstyle x\, \mapsto\, x$}}^{\tau_{\{x\}}} & X \ar[d]^{\tau_X}\\
+                        \{x\} \ar[r]_{x\, \mapsto\, x} & X
+                    }
+                \]
+                Then there is only one possible $\tau_{\{x\}}$ --- a map $x \mapsto x$ (because there are no other morphisms from $\{x\}$ to $\{x\}$). Then
+                \[\tau_X(x) = \tau_X(f(x)) = f(\tau_{\{x\}}(x)) = f(x) = x.\]
+                Hence $\tau_X = \Id_X$. So there any natural transformation $\Id_{\Sets} \to \Id_{\Sets}$ is identity.
+            \item Let $\tau: \Id_M \to \Id_M$ be a natural transformation, where $M$ is a category of a single object $O$ (hence monoid). It means there is morphism $\varphi: O \to O$ such that for any morphism $f: O \to O$ diagram below is commutative.
+                \[
+                    \xymatrix{
+                        X \ar[r]^{f} \ar[d]_{\varphi} & Y \ar[d]^{\varphi}\\
+                        X \ar[r]_{f} & Y
+                    }
+                \]
+                That means $\varphi$ is commutative with every element in $M$. Obviously any commutative element $\varphi \in M$ also forms a natural transformation. Hence a natural transformations $\Id_M \to \Id_M$ are the same as commutative elements of $M$.
+            \item Let there be functors
+                \begin{align*}
+                    F: {}
+                    &\Sets \to \Sets,\\
+                    &X \mapsto X \times X,\\
+                    &(f: X \to Y) \mapsto (f: X^2 \mapsto Y^2, (x_1; x_2) \mapsto (f(x_1); f(x_2)))
+                \end{align*}
+                and
+                \begin{align*}
+                    G: {}
+                    &\Sets \to \Sets,\\
+                    &X \mapsto 2^X,\\
+                    &(f: X \to Y) \mapsto (f: 2^X \mapsto 2^Y, U \mapsto f[U]),
+                \end{align*}
+                and natural transformation $\tau: F \to G$. It means for any $X \in \Sets$ there is a morphism $\tau_X: X^2 \to 2^X$ that is a map $X^2 \to 2^X$, such that for any morphism (map) $f: X \to Y$ diagram below is commutative.
+                \[
+                    \xymatrix{
+                        X^2 \ar[r]^{(f; f)} \ar[d]_{\tau_X} & Y^2 \ar[d]^{\tau_Y}\\
+                        2^X \ar[r]_{f[\,\cdot\,]} & 2^Y
+                    }
+                \]
+
+                \begin{lemma}
+                    $\tau_X((x_1; x_2)) \subseteq \{x_1; x_2\}$. (Also $\tau((x; x)) \subseteq \{x\}$.)
+                \end{lemma}
+
+                \begin{proof}
+                    Let $Y = \{x_1; x_2\}$, $f: Y \to X, x_1 \mapsto x_1, x_2 \mapsto x_2$. Then
+                    \[
+                        \xymatrix{
+                            \{x_1; x_2\}^2 \ar[r]^(0.6){(f; f)} \ar[d]_{\tau_{\{x_1; x_2\}}} & X^2 \ar[d]^{\tau_X}\\
+                            2^{\{x_1; x_2\}} \ar[r]_(0.6){f[\,\cdot\,]} & 2^X
+                        }
+                    \]
+                    So
+                    \[\tau_X((x_1; x_2)) = [\tau_X((f(x_1); f(x_2))) = f[\tau_Y((x_1; x_2))] \subseteq \{x_1; x_2\},\]
+                    because $f[Y] = \{x_1; x_2\}$.
+
+                    P.S. The reasoning also works in case $x_1 = x_2$.
+                \end{proof}
+
+                \begin{lemma}
+                    If for some $(x_1; x_2)$ in some $X^2$ where $x_1 \neq x_2$
+                    \begin{enumerate}
+                        \item $\tau_X((x_1; x_2)) = \{x_1; x_2\}$,
+                        \item $\tau_X((x_1; x_2)) = \{x_1\}$,
+                        \item $\tau_X((x_1; x_2)) = \{x_2\}$,
+                        \item $\tau_X((x_1; x_2)) = \varnothing$,
+                    \end{enumerate}
+                    then it's true for any pair $(y_1; y_2)$ in any $Y^2$ (and $y_1$ and $y_2$ may be equal).
+                \end{lemma}
+
+                \begin{proof}
+                    For any pair $(y_1; y_2) \in Y^2$ we may consider any map $f: X \to Y$ such that $f(x_1) = y_1$ and $f(x_2) = y_2$. Then there is commutative diagram
+                    \[
+                        \xymatrix{
+                            (x_1; x_2) \ar@{|->}[r]^{(f; f)} \ar@{|->}[d]_{\tau_X} & (y_1; y_2) \ar@{|->}[d]^{\tau_Y}\\
+                            U \ar@{|->}[r]_{f[\,\cdot\,]} & f(U)
+                        }
+                    \]
+                    Obviously
+                    \begin{enumerate}
+                        \item $f(\{x_1; x_2\}) = \{y_1; y_2\}$,
+                        \item $f(\{x_1\}) = \{y_1\}$,
+                        \item $f(\{x_2\}) = \{y_2\}$,
+                        \item $f(\varnothing) = \varnothing$.
+                    \end{enumerate}
+                    Then
+                    \begin{enumerate}
+                        \item $\tau_Y((y_1; y_2)) = \{y_1; y_2\}$,
+                        \item $\tau_Y((y_1; y_2)) = \{y_1\}$,
+                        \item $\tau_Y((y_1; y_2)) = \{y_2\}$,
+                        \item $\tau_Y((y_1; y_2)) = \varnothing$.
+                    \end{enumerate}
+                \end{proof}
+
+                But there is at least one pair $(x_1; x_2)$ in some $X^2$ where $x_1 \neq x_2$. Hence independently on $X$ $\tau_X$ maps any pair $(x_1; x_2)$ to set of either both, left, right or none of $x_1$ and $x_2$ (and kind of choice is always the same). And obviously any of the kinds of choises forms a natural transformation (and only one).
+        \end{enumerate}
+    \end{problem}
+
+    \begin{problem}{18}
+        For any morphism $\varphi: X \to Y$ the diagram of $\tau$ is
+        \[
+            \xymatrix{
+                \Hom(A, X) \ar[r]^{f \mapsto \varphi \circ f} \ar@{->}@<-.5ex>[d]_{\tau_X} & \Hom(A, Y) \ar@{->}@<.5ex>[d]^{\tau_Y} \\
+                \Hom(B, X) \ar[r]_{g \mapsto \varphi \circ g} \ar@{->}@<-.5ex>[u]_{\tau_X^{-1}} & \Hom(B, Y) \ar@{->}@<.5ex>[u]^{\tau_Y^{-1}}
+            }
+        \]
+        Let $p := \tau_B^{-1}(\id_B) \in \Hom(A, B)$ and $q := \tau_A(\id_A) \in \Hom(B, A)$. Then let's consider cases $\varphi = p$ and $\varphi = q$:
+        \begin{align*}
+            &\xymatrix{
+                \Hom(A, A) \ar[r]^{f \mapsto p \circ f} \ar@{->}@<-.5ex>[d]_{\tau_A} & \Hom(A, B) \ar@{->}@<.5ex>[d]^{\tau_B} \\
+                \Hom(B, A) \ar[r]_{g \mapsto p \circ g} \ar@{->}@<-.5ex>[u]_{\tau_A^{-1}} & \Hom(B, B) \ar@{->}@<.5ex>[u]^{\tau_B^{-1}}
+            }&
+            &\xymatrix{
+                \id_A \ar@{|->}[r]^{f \mapsto p \circ f} \ar@{|->}@<-.5ex>[d]_{\tau_A} & p \ar@{|->}@<.5ex>[d]^{\tau_B} \\
+                q \ar@{|-->}[r]_{g \mapsto p \circ g} \ar@{|->}@<-.5ex>[u]_{\tau_A^{-1}} & \id_B \ar@{|->}@<.5ex>[u]^{\tau_B^{-1}}
+            }\\
+            &\xymatrix{
+                \Hom(A, B) \ar[r]^{f \mapsto q \circ f} \ar@{->}@<-.5ex>[d]_{\tau_B} & \Hom(A, A) \ar@{->}@<.5ex>[d]^{\tau_A} \\
+                \Hom(B, B) \ar[r]_{g \mapsto q \circ g} \ar@{->}@<-.5ex>[u]_{\tau_B^{-1}} & \Hom(B, A) \ar@{->}@<.5ex>[u]^{\tau_A^{-1}}
+            }&
+            &\xymatrix{
+                p \ar@{|-->}[r]^{f \mapsto q \circ f} \ar@{|->}@<-.5ex>[d]_{\tau_B} & \id_A \ar@{|->}@<.5ex>[d]^{\tau_A} \\
+                \id_B \ar@{|->}[r]_{g \mapsto q \circ g} \ar@{|->}@<-.5ex>[u]_{\tau_B^{-1}} & q \ar@{|->}@<.5ex>[u]^{\tau_A^{-1}}
+            }
+        \end{align*}
+        So $\id_B = p \circ q$ and $\id_A = q \circ p$. Hence $p$ and $q$ are isomorphisms.
+    \end{problem}
+\end{document}

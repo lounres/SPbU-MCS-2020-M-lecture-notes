@@ -1,0 +1,253 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions-en}
+\usepackage{multicol}
+% \usepackage{float}
+% \usepackage{inkscape}
+
+\title{Homework for 12.16\\Algebra}
+\author{Gleb Minaev @ 204 (20.Б04-мкн)}
+\date{}
+
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\ord}{\mathrm{ord}}
+
+\begin{document}
+    \maketitle
+
+    \begin{multicols}{2}
+        \tableofcontents
+    \end{multicols}
+
+    \begin{lemma}
+        If $A^p = I$ for some linear automorphism $A$ and positive integer $p$, then $A$ is diagonalizable.
+    \end{lemma}
+
+    \begin{proof}
+        Let $S J S^{-1}$ be a diagonalization, i.e. $J$ is a Jordan matrix, and $S$ is a change of basis. Then
+        \[I = S^{-1} I S = S^{-1} A^p S = S^{-1} (S J S^{-1})^p S = S^{-1} (S J^p S^{-1}) S = J^p.\]
+        Let $J$ contain Jordan blocks of size $> 1$. Any Jordan block can be represented as $\lambda I + T$ where $\lambda$ is any scalar and
+        \[
+            T = 
+            \begin{pmatrix}
+                0& 1\\
+                &0 & 1\\
+                &&\ddots & \ddots\\
+                &&&0 & 1\\
+                &&&&0
+            \end{pmatrix}.
+        \]
+        Hence
+        \[
+            (\lambda I + T)^p
+            = \sum_{t=0}^p \binom{p}{t} \lambda^{p-t} T^t
+            =
+            \begin{pmatrix}
+                \lambda^p &\lambda^{p-1} &\cdots &1\\
+                &\ddots &\ddots &\vdots\\
+                &&\ddots &\lambda^{p-1}\\
+                &&&\lambda^p
+            \end{pmatrix}
+        \]
+        that means $J^p$ contains this matrix (which size is $> 1$) on its diagonal, thus $J^p \neq I$. Hence $J$ consist only of Jordan blocks $1 \times 1$, that means $A$ is diagonalizable.
+    \end{proof}
+
+    \begin{corollary}
+        If $\rho$ is representation of finite group $G$, then for any $g \in G$ operator $\rho(g)$ is representable.
+    \end{corollary}
+
+    \begin{proof}
+        $\rho(g)^{|G|} = \rho(g^{|G|}) = \rho(e) = I$.
+    \end{proof}
+
+    \breaker
+
+    \begin{definition}
+        Let's denote for any variables $t_1, \dots, t_n$
+        \begin{itemize}
+            \item \[p_k(\overline{t}) := p_k(t_1, \dots, t_n) := \sum_{i=1}^n t_i^k,\]
+            \item \[h_k(\overline{t}) := h_k(t_1, \dots, t_n) := \sum_{1 \leqslant i_1 \leqslant \dots \leqslant i_k \leqslant n} t_{i_1} \cdots t_{i_k},\]
+            \item \[e_k(\overline{t}) := h_k(t_1, \dots, t_n) := \sum_{1 \leqslant i_1 < \dots < i_k \leqslant n} t_{i_1} \cdots t_{i_k}.\]
+        \end{itemize}
+    \end{definition}
+
+    \begin{lemma}[Newton's identity]
+        \begin{enumerate}
+            \item \[kh_k = \sum_{i=1}^k h_{k-i} p_i\]
+            \item \[ke_k = \sum_{i=1}^k (-1)^{i-1}e_{k-i} p_i\]
+        \end{enumerate}
+    \end{lemma}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Obviously
+                \[h_m = \sum_{d_1 + \dots + d_n = m} \lambda_1^{d_1} \cdots \lambda_n^{d_n}.\]
+                Thus let's consider any monomial $\lambda_1^{d_1} \cdots \lambda_n^{d_n}$, where $d_1 + \dots + d_n = k$. It's counted on left side of the equation with coefficient $k$. Then on the right side it can be contained by some addendum $h_{k-t} p_t$ iff is represented as
+                \[\lambda_1^{d_1} \cdots \lambda_{m-1}^{d_{m-1}}\, \lambda_m^{d_m - t}\, \lambda_{m+1}^{d_{m+1}} \lambda_n^{d_n} \; \cdot \; \lambda_m^t.\]
+                Obviously there are exactly $d_1 + \dots + d_n = k$ such representations of the monomial. Hence it's counted on both sides with coefficient $k$.
+                
+            \item Let's consider polynomial $\sum_{i=1}^k (-1)^{i-1}e_{k-i} p_i$ (of $\lambda_1$, \dots, $\lambda_n$). Every addendum $e_{k-t} p_t$ consists only of monomials of kind $\lambda_{j_1} \dots \lambda_{j_{k-t}} \lambda_i^{t}$. So let's consider some monomial $\lambda_{j_1} \dots \lambda_{j_{k-t}} \lambda_i^{t}$, and WLOG let's assume that $i \notin \{j_1; \dots; j_{k-t}\}$. Then it may be contained (with nonzero coefficient) in only two addendums: as $(-1)^{t-1} \cdot \lambda_{j_1} \dots \lambda_{j_{k-t}} \cdot \lambda_i^{t}$ in $(-1)^{t-1} e_{k-t} p_t$ and as $(-1)^{t-2} \cdot \lambda_{j_1} \dots \lambda_{j_{k-t}} \lambda_i \cdot \lambda_i^{t-1}$ in $(-1)^{t-2} e_{k-t+1} p_{t-1}$. But the second expression is one of the addendums iff $t \geqslant 2$, and in that case total coefficient before it is $0 = (-1)^{t-1} + (-1)^{t-2}$. Otherwise $t = 1$, and it's counted with coefficient $(-1)^{t-1} = 1$. Hence
+                \[
+                    \sum_{i=1}^k (-1)^{i-1}e_{k-i} p_i
+                    = \sum_{1 \leqslant j_1 < \dots < j_{k-1} \leqslant n} \; \sum_{i \notin \{j_1; \dots; j_{k-1}\}} \lambda_i \lambda_{j_1} \cdots \lambda_{j_{k-1}}
+                    = k e_k.
+                \]
+        \end{enumerate}
+    \end{proof}
+
+    \begin{lemma}
+        In terms of generation functions
+        \begin{align*}
+            &\sum_{k=0}^{\infty} h_k t^k = \exp\left(\sum_{k=1}^{\infty} \frac{p_k}{k} t^k\right),&
+            &\sum_{k=0}^{\infty} e_k t^k = \exp\left(\sum_{k=1}^{\infty} \frac{(-1)^{k+1} p_k}{k} t^k\right).
+        \end{align*}
+    \end{lemma}
+
+    \begin{proof}
+        Let
+        \[
+            H(t) := \sum_{k=0}^{\infty} h_k t^k,
+            \qquad
+            E(t) := \sum_{k=0}^{\infty} e_k t^k,
+            \qquad
+            P(t) := \sum_{k=0}^{\infty} p_k t^k,
+            \qquad
+            Q(t) := \sum_{k=1}^{\infty} \frac{p_k}{k} t^k,
+            \qquad
+        \]
+        We need to show that
+        \[
+            H = \exp(Q)
+            \qquad \text{ and } \qquad
+            E = \exp(-Q(-t)).
+        \]
+        By previous lemma we have that
+        \begin{gather*}
+            H't
+            = \sum_{k=0}^{\infty} k h_k t^k
+            = \sum_{k=0}^{\infty} t_k \sum_{l=1}^k e_{k-l} p_l
+            = H (P - p_0),\\
+            E't
+            = \sum_{k=0}^{\infty} k e_k t^k
+            = \sum_{k=0}^{\infty} t_k \sum_{l=1}^k (-1)^{l+1} e_{k-l} p_l
+            = E (p_0 - P(-t)).\\
+        \end{gather*}
+        Hence
+        \begin{align*}
+            &(\ln(H))' = \frac{H'}{H} = \frac{P - p_0}{t},&
+            &(\ln(E))' = \frac{E'}{E} = \frac{p_0 - P(-t)}{t} = \frac{P(-t) - p_0}{-t}.
+        \end{align*}
+        But
+        \[
+            Q'
+            = \sum_{k=1}^{\infty} p_k t^{k-1}
+            = \frac{\sum_{k=1}^{\infty} p_k t^k}{t}
+            = \frac{P - p_0}{t}.
+        \]
+        Hence
+        \begin{align*}
+            &\ln(H) = Q + C_2,&
+            &\ln(E) = -Q(-t) + C_1.
+        \end{align*}
+        Checking the equations for $t = 0$, get $C_1 = C_2 = 0$. Then the needed equations are obvious.
+    \end{proof}
+
+    \begin{corollary} \label{e&h}
+        \begin{align*}
+            &h_k = \sum_{m_1 + 2 m_2 + \cdots + k m_k = k} \; \prod_{i=1}^k \frac{(p_i)^{m_i}}{m_i! i^{m_i}},&
+            &e_k = (-1)^k \sum_{m_1 + 2 m_2 + \cdots + k m_k = k} \; \prod_{i=1}^k \frac{(-p_i)^{m_i}}{m_i! i^{m_i}}.
+        \end{align*}
+    \end{corollary}
+
+    \breaker
+
+    \begin{problem}{1}
+        Let $n$ be dimension of representing vector space, $\{v_i\}$ be eigenbasis of $V(g)$, and $\{\lambda_i\}$ be its set of associated eigenvalues. Then $\{v_i v_j\}_{i \leqslant j}$ is a basis of algebra $\Sym^2(V)$ and eigenbasis of operator $\Sym^2(V)(g)$ (and $\{\lambda_i \lambda_j\}_{i \leqslant j}$ is its associated set of eigenvalues). Hence
+        \begin{align*}
+            \chi_{\Sym^2(V)}(g)
+            &= \tr(\Sym^2(V)(g))&
+            &= \sum_{i \leqslant j} \lambda_i \lambda_j\\
+            &= \frac{1}{2}\left(\left(2\sum_{i < j} \lambda_i \lambda_j + \sum_{i} \lambda_i^2\right) + \sum_{i} \lambda_i^2\right)&
+            &= \frac{1}{2}\left(\sum_{i, j} \lambda_i \lambda_j + \sum_{i} \lambda_i^2\right)\\
+            &= \frac{1}{2}\left(\left(\sum_{i} \lambda_i\right)^2 + \sum_{i} \lambda_i^2\right)&
+            &= \frac{1}{2}(\tr(V(g))^2 + \tr(V(g)^2))\\
+            &= \frac{1}{2}(\chi_V(g)^2 + \chi_V(g^2)).
+        \end{align*}
+    \end{problem}
+
+    \begin{problem}{2}
+        Let $\{v_i\}$ be eigenbasis of $V(g)$, and $\{\lambda_i\}$ be its set of associated eigenvalues. Then set of pairs
+        \[(\lambda_{i_1} \cdots \lambda_{i_k}; v_{i_1} \cdots v_{i_k})\]
+        for any nondecreasing sequence $(i_1; \dots; i_k)$ of indices (i.e. integers from $\{1; \dots; n\}$) is set of eigenpairs of $\Sym^k(V)$, and set of pairs
+        \[(\lambda_{i_1} \cdots \lambda_{i_k}; v_{i_1} \wedge \cdots \wedge v_{i_k})\]
+        for any increasing sequence $(i_1; \dots; i_k)$ of indices is set of eigenpairs of $\wedge^k(V)$. Thus
+        \begin{align*}
+            &\chi_{\Sym^k}(g) = \sum_{1 \leqslant i_1 \leqslant \dots \leqslant i_k \leqslant n} \lambda_{i_1} \cdots \lambda_{i_k} = h_k(\overline{\lambda}),&
+            &\chi_{\wedge^k}(g) = \sum_{1 \leqslant i_1 < \dots < i_k \leqslant n} \lambda_{i_1} \cdots \lambda_{i_k} = e_k(\overline{\lambda}).
+        \end{align*}
+        But we know that $\{(\lambda_i^t; v_i)\}$ is set of eigenpairs of $V(g)^t = V(g^t)$, thus
+        \[\chi_{V}(g^t) = \sum_{i=1}^n \lambda_i^t = p_t(\overline{\lambda}).\]
+        So the problem now is to express $h_k$ and $e_k$ with $p_t$'s. Then by corollary \ref{e&h} we have that
+        \begin{align*}
+            &\chi_{\Sym^k}(g) = \sum_{m_1 + 2 m_2 + \cdots + k m_k = k} \; \prod_{i=1}^k \frac{(\chi_V(g^i))^{m_i}}{m_i! i^{m_i}},&
+            &\chi_{\wedge^k}(g) = (-1)^k \sum_{m_1 + 2 m_2 + \cdots + k m_k = k} \; \prod_{i=1}^k \frac{(-\chi_V(g^i))^{m_i}}{m_i! i^{m_i}}.
+        \end{align*}
+    \end{problem}
+
+    \begin{problem}{3}
+        Let $\{v_i\}$ be eigenbasis of $V(g)$, and $\{\lambda_i\}$ be its set of associated eigenvalues. Then characteristic polynomial of $V(g)$ is
+        \[
+            \prod_{i=1}^n (\lambda_i - x)
+            = (-1)^n \sum_{k=0}^n x^{n-k} (-1)^k e_k(\overline{\lambda})
+            = (-1)^n \sum_{k=0}^n x^{n-k} \sum_{m_1 + 2 m_2 + \cdots + k m_k = k} \; \prod_{i=1}^k \frac{(-\chi_V(g^i))^{m_i}}{m_i! i^{m_i}}.
+        \]
+
+        So
+        \begin{align*}
+            e_0 &= 1\\
+            e_1 &= \sum_i \lambda_i = p_1 = \chi_V(g)\\
+            e_2 &= \sum_{i < j} \lambda_i \lambda_j = \frac{1}{2} \left(\sum_{i, j} \lambda_i \lambda_j - \sum_{i} \lambda_i^2\right) = \frac{1}{2} (p_1^2 - p_2) = \frac{1}{2} (\chi_V(g)^2 - \chi_V(g^2))\\
+            e_3 &= \sum_{i < j < k} \lambda_i \lambda_j \lambda_k\\
+                &= \frac{1}{6} p_1^3 - \frac{1}{2} \sum_{i, j} x_i^2 x_j - \frac{1}{6} \sum_i \lambda_i^3 = \frac{1}{6} p_1^3 - \frac{1}{2} p_1 p_2 + \frac{1}{3} \sum_i \lambda_i^3\\
+                &= \frac{1}{6} p_1^3 - \frac{1}{2} p_1 p_2 + \frac{1}{3} p_3\\
+            e_4 &= \sum_{i < j < k < l} \lambda_i \lambda_j \lambda_k \lambda_l\\
+                &= \frac{1}{24} p_1^4 - \frac{1}{2} \sum_{i, j < k} \lambda_i^2 \lambda_j \lambda_k - \frac{1}{4} \sum_{i < j} \lambda_i^2 \lambda_j^2 - \frac{1}{6} \sum_{i, j} \lambda_i^3 \lambda_j - \frac{1}{24} \sum_{i} \lambda_i^4\\
+                &= \frac{1}{24} p_1^4 - \frac{1}{4} p_1^2 p_2 + \frac{1}{4} \sum_{i < j} \lambda_i^2 \lambda_j^2 + \frac{1}{3} \sum_{i, j} \lambda_i^3 \lambda_j + \frac{5}{24} \sum_{i} \lambda_i^4\\
+        \end{align*}
+        \begin{align*}
+            &= \frac{1}{24} p_1^4 - \frac{1}{4} p_1^2 p_2 + \frac{1}{8} p_2^2 + \frac{1}{3} \sum_{i, j} \lambda_i^3 \lambda_j + \frac{1}{12} \sum_{i} \lambda_i^4\\
+            &= \frac{1}{24} p_1^4 - \frac{1}{4} p_1^2 p_2 + \frac{1}{8} p_2^2 + \frac{1}{3} p_1 p_3 - \frac{1}{4} \sum_{i} \lambda_i^4\\
+            &= \frac{1}{24} p_1^4 - \frac{1}{4} p_1^2 p_2 + \frac{1}{8} p_2^2 + \frac{1}{3} p_1 p_3 - \frac{1}{4} p_4
+        \end{align*}
+        Thus the characteristic polynomial is
+        \begin{center}
+            \begin{tabular}{c|c}
+                $\ord(g) \backslash n$& 2\\
+                \hline
+                $2\backslash2$& \raisebox{-14pt}{\rule{0pt}{36pt}}$\dfrac{1}{2} \chi_V(g) - 1 - \chi_V(g)x + x^2$\\
+                \hline
+                $2\backslash3$& \raisebox{-14pt}{\rule{0pt}{36pt}}$\dfrac{1}{6} \chi_V(g)^3 - \dfrac{7}{6} \chi_V(g) - \left(\dfrac{1}{2} \chi_V(g) - \dfrac{3}{2}\right)x + \chi_V(g)x^2 - x^3$\\
+                \hline
+                $2\backslash4$& \raisebox{-14pt}{\rule{0pt}{36pt}}$\dfrac{1}{24} p_1^4 - \dfrac{2}{3} p_1^2 - \dfrac{1}{2} - \left(\dfrac{1}{6} \chi_V(g)^3 - \dfrac{5}{3} \chi_V(g)\right)x - \left(\dfrac{1}{2} \chi_V(g) - 2\right)x^2 - \chi_V(g)x^3 + x^4$\\
+                \hline
+                $3\backslash2$& \raisebox{-14pt}{\rule{0pt}{36pt}}$\dfrac{1}{2} \chi_V(g) - \dfrac{1}{2} \chi_V(g^2) - \chi_V(g)x + x^2$\\
+                \hline
+                $3\backslash3$& \raisebox{-14pt}{\rule{0pt}{36pt}}$\dfrac{1}{6} \chi_V(g)^3 - \dfrac{1}{2} \chi_V(g) \chi_V(g^2) + 1 - \left(\dfrac{1}{2} \chi_V(g) - \dfrac{1}{2} \chi_V(g^2)\right)x + \chi_V(g)x^2 - x^3$\\
+                \hline
+                $3\backslash4$& \raisebox{-30pt}{\rule{0pt}{66pt}} $\begin{gathered}
+                    \dfrac{1}{24} \chi_V(g)^4 - \dfrac{1}{4} \chi_V(g)^2 \chi_V(g^2) + \dfrac{1}{8} \chi_V(g^2)^2 + \dfrac{4}{3} \chi_V(g) - \frac{1}{4} \chi_V(g)\\
+                    - \left(\dfrac{1}{6} \chi_V(g)^3 - \dfrac{1}{2} \chi_V(g) \chi_V(g^2) + \dfrac{4}{3}\right)x + \left(\dfrac{1}{2} \chi_V(g) - \dfrac{1}{2} \chi_V(g^2)\right)x^2 - \chi_V(g)x^3 + x^4
+                \end{gathered}$\\
+                \hline
+                $4\backslash2$& \raisebox{-14pt}{\rule{0pt}{36pt}}$\dfrac{1}{2} \chi_V(g) - \dfrac{1}{2} \chi_V(g^2) - \chi_V(g)x + x^2$\\
+                \hline
+                $3\backslash3$& \raisebox{-14pt}{\rule{0pt}{36pt}}$\dfrac{1}{6} \chi_V(g)^3 - \dfrac{1}{2} \chi_V(g) \chi_V(g^2) + \dfrac{1}{3} \chi_V(g^3) - \left(\dfrac{1}{2} \chi_V(g) - \dfrac{1}{2} \chi_V(g^2)\right)x + \chi_V(g)x^2 - x^3$\\
+                \hline
+                $3\backslash4$& \raisebox{-30pt}{\rule{0pt}{66pt}} $\begin{gathered}
+                    \dfrac{1}{24} \chi_V(g)^4 - \dfrac{1}{4} \chi_V(g)^2 \chi_V(g^2) + \dfrac{1}{8} \chi_V(g^2)^2 + \dfrac{1}{3} \chi_V(g) \chi_V(g^3) - 1\\
+                    - \left(\dfrac{1}{6} \chi_V(g)^3 - \dfrac{1}{2} \chi_V(g) \chi_V(g^2) + \dfrac{1}{3} \chi_V(g^3)\right)x + \left(\dfrac{1}{2} \chi_V(g) - \dfrac{1}{2} \chi_V(g^2)\right)x^2 - \chi_V(g)x^3 + x^4
+                \end{gathered}$\\
+            \end{tabular}
+        \end{center}
+    \end{problem}
+\end{document}

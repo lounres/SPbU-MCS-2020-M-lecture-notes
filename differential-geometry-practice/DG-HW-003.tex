@@ -1,0 +1,209 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions-en}
+\usepackage{float}
+\usepackage{inkscape}
+
+\title{Homework of 09.13\\Differential geometry}
+\author{Gleb Minaev @ 204 (20.Б04-мкн)}
+\date{}
+
+\newcommand{\Id}{\mathrm{Id}}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{21}
+        \begin{lemma}
+            Let $\{(X_i, A_i)\}_{i \in J}$ (for some set of indices $J$) be a family of Borsuk pairs. Then
+            \[
+                (\widehat{X}, \widehat{A}),
+                \qquad \text{ where } \qquad
+                \widehat{X} := \bigsqcup_{i \in J} X_i,
+                \qquad
+                \widehat{A} := \bigsqcup_{i \in J} A_i,
+            \]
+            is a Borsuk pair too.
+        \end{lemma}
+
+        \begin{proof}
+            Let there be two continuous maps $f: \widehat{X} \to Y$ and $H: \widehat{A} \times I \to Y$ such that
+            \[f|_{\widehat{A}} = H_{\widehat{A} \times \{0\}}.\]
+            Then there is a family of continuous maps
+            \[\{\widehat{H}_i: X_i \times I \to Y\}_{i \in J},\]
+            such that for every $i \in J$
+            \[
+                \widehat{H}_i|_{X_i \times \{0\}} = f|_{X_i}
+                \qquad \text{ and } \qquad
+                \widehat{H}_i|_{A_i \times I} = H|_{A_i \times I}.
+            \]
+
+            Then define a map
+            \[
+                \widehat{H}: \widehat{X} \times I \to Y, (x, t) \mapsto
+                \begin{cases}
+                    H_i(x, t)& \text{ if } x \in X_i,\\
+                    \dots
+                \end{cases}
+            \]
+            Every component $X_i$ is open in $\widehat{X}$. So $\{X_i\}_{i \in J}$ is an open covering of the space. Hence the map $\widehat{H}$ that is continuous on every $X_i$ is continuous on whole set.
+        \end{proof}
+
+        \begin{lemma}\label{Borsuk-pair-with-other-set-lemma}
+            Let $X$ ba a topological space and $A_1$ and $A_2$ be its disjoint subsets such that
+            \begin{itemize}
+                \item $A_1 \cup A_2$ is closed,
+                \item $X \setminus A_2$ is closed,
+                \item $(X \setminus A_2, A_1)$ is a Borsuk pair.
+            \end{itemize}
+            Then $(X, A_1 \cup A_2)$ is a Borsuk pair.
+        \end{lemma}
+
+        \begin{proof}
+            Let there be two continuous maps $f: X \to Y$ and $H: (A_1 \cup A_2) \times I \to Y$ such that
+            \[f|_{A_1 \cup A_2} = H_{(A_1 \cup A_2) \times \{0\}}.\]
+            Then $f|_{X \setminus A_2}$ and $H|_{A_1 \times I}$ are continuous. So there exists a continuous map $\widehat{H}': (X \setminus A_2) \times I \to Y$ such that
+            \[
+                \widehat{H}'|_{(X \setminus A_2) \times \{0\}} = f|_{X \setminus A_2}
+                \qquad \text{ and } \qquad
+                \widehat{H}'|_{A_1 \times I} = H|_{A_1 \times I}.
+            \]
+            
+            Define a map
+            \[
+                \widehat{H}: X \times I \to Y, (x, t) \mapsto
+                \begin{cases}
+                    \widehat{H}'(x, t)& \text{ if } x \in X \setminus A_2,\\
+                    H(x, t)& \text{ if } x \in A_1 \cup A_2.
+                \end{cases}
+            \]
+            Obviously, it's defined correctly. But $X \setminus A_2$ and $A_1 \cup A_2$ are closed in $X$, then $(X \setminus A_2) \times I$ and $(X \setminus A_2) \times I$ are closed in $X \times I$. Hence $\{(X \setminus A_2) \times I; (A_1 \cup A_2) \times I\}$ is finite closed covering of $X \times I$. So because $\widehat{H}$ is continuous on $(X \setminus A_2) \times I$ and $(A_1 \cup A_2) \times I$, it's continuous on whole $X \times I$ too.
+        \end{proof}
+
+        \begin{lemma}
+            Let $X$ and $Y$ be topological spaces, $A$ be subset of $X$ and $f$ be a continuous map $A \to Y$ such that $(X \sqcup Y, A \cup Y)$ is a Borsuk pair. Then there is topological space $X \sqcup_f Y$ glued over continuous map $X$. Let $X' := X \setminus A$, $A' := A \cup f(A)$ and $Y' := Y \setminus f(A)$ be its subsets. Then $(X \sqcup_f Y, Y' \cup A')$ is a Borsuk pair.
+        \end{lemma}
+
+        \begin{proof}
+            Notice that a map
+            \[
+                p: X \sqcup Y \to X \sqcup_f Y, x \mapsto
+                \begin{cases}
+                    x& \text{ if } x \in X \setminus A,\\
+                    [x]& \text{ if } x \in A,\\
+                    x& \text{ if } x \in Y \setminus f(A),
+                \end{cases}
+            \]
+            is continuous, because $f$ is continuous.
+
+            Let there be two continuous maps $f: X \sqcup_f Y \to Z$ and $H: (A' \cup Y') \times I \to Z$ such that
+            \[f|_{A' \cup Y'} = H_{(A' \cup Y') \times \{0\}}.\]
+            Then there are continuous maps
+            \[
+                \widetilde{f}: X \sqcup Y \to Z, x \mapsto (f \circ p)(x),
+                \qquad \text{ and } \qquad
+                \widetilde{H}: (A \sqcup Y) \times I \to Z, (x, t) \mapsto H(p(x), t).
+            \]
+            So there is continuous map
+            \[
+                \widetilde{G}: (X \sqcup Y) \times I \to Z,
+            \]
+            such that
+            \[
+                \widetilde{G}|_{(X \sqcup Y) \times \{0\}} = \widetilde{f},
+                \qquad
+                \widetilde{G}|_{(A \sqcup Y) \times I} = \widetilde{H}.
+            \]
+
+            We know that for every $a \in A$
+            \[\widetilde{G}(a, t) = \widetilde{H}(a, t) = H([a], t),\]
+            so there is continuous function
+            \[
+                G: (X \sqcup_f Y) \times I \to Z,
+                \qquad \text{ such that }
+                \widetilde{G} = G \circ p.
+            \]
+            It means that
+            \[
+                G|_{(X \sqcup_f Y) \times \{0\}} = f,
+                \qquad
+                G|_{(A' \cup Y') \times I} = H.
+            \]
+            Hence $(X \sqcup_f Y, Y' \cup A')$ is a Borsuk pair.
+        \end{proof}
+
+        \begin{corollary}
+            By lemma \ref{Borsuk-pair-with-other-set-lemma} condition $(X \sqcup Y, A \cup Y)$ being a Borsuk pair can be replaced with conditions
+            \begin{itemize}
+                \item $A$ is closed in $X$,
+                \item $(X, A)$ is a Borsuk pair.
+            \end{itemize}
+        \end{corollary}
+
+        \begin{proof}
+            Consider space $X \sqcup Y$. Then
+            \begin{itemize}
+                \item $A \cup Y$ is closed, because $A$ is closed and $Y$ is clopen,
+                \item $X$ is closed,
+                \item $(X, A)$ is a Borsuk pair.
+            \end{itemize}
+            So $(X \sqcup Y, A \cup Y)$ is a Borsuk pair.
+        \end{proof}
+
+        \begin{lemma}
+            Let $X$ be a topological space with subsets $B \subseteq A \subseteq X$ such that $(X, A)$ and $(A, B)$ are Borsuk pairs. Then $(X, B)$ is a Borsuk pairs too.
+        \end{lemma}
+
+        \begin{proof}
+            Let there be two continuous maps $f: X \to Y$ and $H: B \times I \to Y$ such that
+            \[f|_{B} = H_{B \times \{0\}}.\]
+
+            At first there exists a continuous map $\widehat{H}': A \times I \to Y$ such that
+            \[
+                \widehat{H}'|_{A \times \{0\}} = f|_{A}
+                \qquad \text{ and } \qquad
+                \widehat{H}'|_{B \times I} = H.
+            \]
+
+            At second there exists a continuous map $\widehat{H}: X \times I \to Y$ such that
+            \[
+                \widehat{H}|_{X \times \{0\}} = f
+                \qquad \text{ and } \qquad
+                \widehat{H}|_{A \times I} = \widehat{H}'.
+            \]
+
+            Hence $(X, B)$ is a Borsuk pair.
+        \end{proof}
+
+        Let $X$ and $A$ be a CW complex and its subcomplex respectively. Then $X$ can be got by glueing disks to $A$. Formally, let $n$ be a dimension of $X$ (then dimension of $A$ is no more than $n$). Then $X$ can be got by glueing $0$-dimensional disks to $A$, then by glueing $1$-dimensional disks to the result, then by glueing $2$-dimensional, and so on up to $n$-dimensional disks. Let's prove that after each glueing of a bunch of $k$-dimensional disks $(X, A)$ still will be a Borsuk pair.
+
+        Formally it's being proved by induction on $k$. Case where $k = -1$, i.e. $X = A$, is obvious. Then let's prove step of the induction. Let it be that we have glued $k-1$-dimensional disks (and got space $X_{k-1}$) and are going to glue a bunch of $k$-dimensional disks $\{D^k_i\}_{i \in J}$ (to get space $X_k$). Let $S^{k-1}_i$ be a boundary of $D^k_i$. Then we know that $(D^k_i, S^{k-1}_i)$ is a Borsuk pair for each $i \in J$. Then $(\bigsqcup_{i \in J} D^k_j, \bigsqcup_{i \in J} S^{k-1}_j)$ is a Borsuk pair too. Also $\bigsqcup_{i \in J} S^{k-1}_j$ is a closed set in $\bigsqcup_{i \in J} D^k_j$. Hence after glueing $X_{k-1}$ to $\bigsqcup_{i \in J} D^k_j$ we get a Borsuk pair $(X_k; X_{k-1})$. But $(X_{k-1}; A)$ is a Borsuk pair by the induction hypothesis. Hence $(X_k; A)$ is a Borsuk pair.
+    \end{problem}
+
+    \begin{problem}{24}
+        Consider the simplest graph on Moebius strip that is inherited from square's (as net of the surfaces) border (as a graph that is a cycle of length $4$).
+        \begin{figure}[H]
+            \centering
+            % \Large
+            \inkscapepicture[10cm]{DG-HW-003-1}
+        \end{figure}
+        The graph have two edges on boundary of the strip and one in inside of the strip. So preimage of the graph is graph, preimage of border is border. So if we have $n$-sheeted covering space of Moebius strip, then all of the vertices-preimages ($2n$ vertices on the total space) are lying on boundary of the total strip (which is a strip or a Moebius strip), but preimages of the only edge in the inside are $n$ edges in the inside. So it's obvious (because preimage of inside of square is inside of square) that inside edges are placed like on the next picture.
+        \begin{figure}[H]
+            \centering
+            % \Large
+            \inkscapepicture[10cm]{DG-HW-003-2}
+        \end{figure}
+        Then we may look on each preimage of the square inside. Let's orient the inside edge in any way and orient each preimage of it in such way that the covering space will save the orintation. So if we consider each preimage of square inside then the two oriented edges which bound the preimage of square inside are oriented differently.
+        \begin{figure}[H]
+            \centering
+            % \Large
+            \inkscapepicture[10cm]{DG-HW-003-3}
+        \end{figure}
+        Hence if we make a round along the total space then orientation will be changed $n$ times. But if total space is strip, the orientation must not change, and if it's Moebius strip, the orientation must change. Hence in case of strip $n$ is even, and in case of Moedius strip $n$ is odd.
+
+        For every right (i.e. even in case of strip or odd in case of Moebius strip) $n > 0$ we already know the examples. So the answer is even positive integer and odd positive integer respectively. 
+    \end{problem}
+
+    \begin{problem}{28}
+        No result :(
+    \end{problem}
+\end{document}

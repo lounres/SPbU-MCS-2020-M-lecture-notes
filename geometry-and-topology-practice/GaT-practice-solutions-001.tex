@@ -1,0 +1,61 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+
+\title{Занятие от 5.11.\\Геометрия и топология. 1 курс.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{9}
+        \begin{lemma}
+            $f$ монотонно не убывает на $\RR_+$.
+        \end{lemma}
+
+        \begin{proof}
+            Предположим противное. Тогда есть $s$ и $t$, что $s > t$, а $f(s) < f(t)$. В таком случае для всех $x > s$ верно, что
+            \[
+                \alpha := \frac{s-t}{x-t} \in [0; 1]\qquad
+                \text{и}\qquad
+                \alpha x + (1-\alpha) t = \frac{(s-t)x}{x-t} + \frac{(x-s)t}{(x-t)} = \frac{s(x-t)}{(x-t)} = s
+            \]
+            а тогда по выпуклости $f$
+            \begin{align*}
+                f(x)
+                &= \frac{\alpha f(x) + (1-\alpha) f(t) - (1-\alpha) f(t)}{\alpha}&
+                &\leqslant \frac{f(\alpha x + (1-\alpha) t) - (1-\alpha) f(t)}{\alpha}\\
+                &= \frac{f(s) - f(t)}{\alpha} + f(t)&
+                &= \frac{f(s) - f(t)}{s - t} (x - t) + f(t)
+            \end{align*}
+            При этом последнее --- линейный многочлен с отрицательным старшим членом, поэтому при достаточно больших $x$ значение $f$ станет отрицательным, что не может быть, так как область значений $f$ --- $\RR_+$. Поэтому $f$ не убывает.
+        \end{proof}
+
+        \begin{lemma}
+            Для любых $a, b \in \RR_+$ верно, что $f(a) + f(b) \geqslant f(a + b)$.
+        \end{lemma}
+
+        \begin{proof}
+            \[
+                \left.
+                \begin{aligned}
+                    f(a) &\geqslant \frac{a}{a+b} f(a+b) + \frac{b}{a+b} f(0)\\
+                    f(b) &\geqslant \frac{b}{a+b} f(a+b) + \frac{a}{a+b} f(0)\\
+                \end{aligned}
+                \right\} \Longrightarrow
+                f(a) + f(b) \geqslant f(a + b) + f(0) = f(a + b)
+            \]
+        \end{proof}
+
+        Докажем, что $f \circ d$ --- метрика.
+        \begin{enumerate}
+            \item $\forall x, y \in X\quad d(x, y) \geqslant 0 \Rightarrow f(d(x, y)) \geqslant 0$.
+            \item $\forall x, y \in X\quad f(d(x, y)) = 0 \leftrightarrow d(x, y) = 0 \leftrightarrow x = y$.
+            \item $\forall x, y \in X\quad d(x, y) = d(y, x) \Rightarrow f(d(x, y)) = f(d(y, x))$.
+            \item $\forall x, y, z \in X$
+                \[d(x, y) + d(y, z) \geqslant d(x, z)\quad \Longrightarrow\quad f(d(x, y)) + f(d(y, z)) \geqslant f(d(x, y) + d(y, z)) \geqslant f(d(x, z)).\]
+        \end{enumerate}
+        Поэтому $f \circ d$ --- метрика.
+    \end{problem}
+\end{document}

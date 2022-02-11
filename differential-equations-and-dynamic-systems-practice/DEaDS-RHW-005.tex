@@ -1,0 +1,41 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+
+\title{Рейтинговое домашнее задание от 08.10\\Дифференциальные уравнения и динамические системы}
+\author{Глеб Минаев @ 204 (20.Б04-мкн)}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{5}
+        Покажем, что производная данного двойного отношения равна нулю.
+        \begin{gather*}
+            \left(\frac{y_4 - y_2}{y_4 - y_1} : \frac{y_3 - y_2}{y_3 - y_1}\right)'
+            = \left(\frac{(y_4 - y_2)(y_3 - y_1)}{(y_4 - y_1)(y_3 - y_2)}\right)'\\
+            = \frac{((y_4 - y_2)(y_3 - y_1))' (y_4 - y_1)(y_3 - y_2) - (y_4 - y_2)(y_3 - y_1) ((y_4 - y_1)(y_3 - y_2))'}{(y_4 - y_1)^2(y_3 - y_2)^2}.
+        \end{gather*}
+        Заметим, что
+        \[
+            (y_i - y_j)'
+            = p (y_i^2 - y_j^2) + q (y_i - y_j)
+            = (y_i - y_j) (p(y_i + y_j) + q).
+        \]
+        Тогда
+        \begin{gather*}
+            E_{i, j, k, l} := ((y_i - y_k)(y_j - y_l))' (y_i - y_l)(y_j - y_k)\\
+            = (y_i - y_k)' (y_j - y_l)(y_i - y_l)(y_j - y_k) + (y_i - y_k)(y_j - y_l)' (y_i - y_l)(y_j - y_k)\\
+            = (y_i - y_k)(y_j - y_l)(y_i - y_l)(y_j - y_k)(p(y_i + y_k) + q + p(y_j + y_l) + q)\\
+            = (y_i - y_k)(y_j - y_l)(y_i - y_l)(y_j - y_k)(p(y_i + y_j + y_k + y_l) + 2q),
+        \end{gather*}
+        и значит $E_{i, j, k, l} = E_{j, i, k, l}$. Тем самым
+        \begin{gather*}
+            \left(\frac{y_4 - y_2}{y_4 - y_1} : \frac{y_3 - y_2}{y_3 - y_1}\right)'\\
+            = \frac{E_{4, 3, 2, 1} - E_{3, 4, 2, 1}}{(y_4 - y_1)^2(y_3 - y_2)^2}\\
+            = 0.
+        \end{gather*}
+
+        Равенство производной данного двойного отношения нулю означает константность данного двойного отношения.
+    \end{problem}
+\end{document}

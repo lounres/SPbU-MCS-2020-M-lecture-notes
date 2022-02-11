@@ -1,0 +1,101 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+% \usepackage{float}
+\usepackage{inkscape}
+
+\title{Занятие от 04.03.\\Геометрия и топология. 1 курс.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Fr}{Fr}
+\DeclareMathOperator{\Id}{Id}
+\newcommand{\FAC}{\ensuremath{\mathrm{FAC}}\xspace}
+\newcommand{\SAC}{\ensuremath{\mathrm{SAC}}\xspace}
+\newcommand{\T}{\ensuremath{\mathrm{T}}\xspace}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{97}
+        \begin{lemma}
+            Пусть даны аффинные подпространства $A$, $B$, $A'$ и $B'$ пространства $\RR^n$ ($V_A$, $V_B$, $V_{A'}$ и $V_{B'}$ --- их векторные пространства). Следующие утверждения равносильны.
+            \begin{enumerate}
+                \item Существует аффинная биекция $\RR^n$ на себя, переводящая $A$ в $A'$ и $B$ в $B'$.
+                \item $\dim(A) = \dim(A')$, $\dim(B) = \dim(B')$, $\dim(V_A \cap V_{A'}) = \dim(V_B \cap V_{B'})$ и $A \cap B = \varnothing \leftrightarrow A' \cap B' = \varnothing$.
+            \end{enumerate}
+        \end{lemma}
+
+        \begin{proof}
+            \begin{itemize}
+                \item[$1 \Rightarrow 2$)] Пусть такая биекция существует. Тогда все утверждения из пункта (2) очевидны для $V_A$ и $V_B$, а значит и для самих аффинных пространств.
+                \item[$2 \Rightarrow 1$)] Возьмём любой базис $\{e_i\}_{i=1}^{\deg(V_A \cap V_B)}$ в $V_A \cap V_B$ и дополним его в $V_A$ и в $V_B$ до базисов множествами $\{g_i\}_{i=1}^{\deg(V_A) - \deg(V_A \cap V_B)}$ и $\{h_i\}_{i=1}^{\deg(V_B) - \deg(V_A \cap V_B)}$ соответственно. Заметим, что объединение трёх множеств есть базис $V_A + V_B$. Действительно, пусть это не так и есть такие нетривиальные коэффициенты, что
+                \[\sum e_i a_i + \sum g_i b_i + \sum h_i c_i = \overline{0}\]
+                Тогда имеем, что
+                \[\sum e_i a_i + \sum g_i b_i = \sum h_i (-c_i)\]
+                При этом левая часть выражения лежит в $V_A$, а правая в $V_B$, следовательно в $V_A \cap V_B$. Но так как $\{e_i\} \cup \{h_i\}$ и $\{e_i\}$ --- базисы $V_B$ и $V_A \cap V_B$ соответственно, то $c_i = 0$ для всех $i$; аналогично $b_i = 0$. Следовательно
+                \[\sum e_i a_i = 0\]
+                т.е. $a_i = 0$ --- противоречие.
+                Следовательно в $V_A + V_B$ можно построить ``правильный'' базис состоящий из базисов $V_A \cap V_B$, $V_A$ и $V_B$, и по аналогии его можно получить для $V_{A'}$ и $V_{B'}$.
+                
+                    Рассмотрим два случая:
+                    \begin{itemize}
+                        \item Пусть $A \cap B$ и $A' \cap B'$ непусты. Тогда в них можно выбрать по точке $p$ и $p'$ соответственно. Тогда $A = p + V_A$, $B = p + V_B$, $A' = p' + V_{A'}$, $B' = p' + V_{B'}$. Тогда можно рассмотреть аффинное преобразование, которое переводит $p$ в $p'$, а в пространстве векторов переводит $e_i$ в $e'_i$, $g_i$ в $g'_i$ и $h_i$ в $h'_i$. Оно то и переведёт $A$ в $A'$ и $B$ в $B'$.
+
+                        \item Пусть $A \cap B = \varnothing = A' \cap B'$. Выберем во всех четырёх пространствах по точке $a$, $b$, $a'$ и $b'$ соответственно. Несложно видеть, что $\overrightarrow{ab} \notin V_A + V_B$, так как иначе $V_A$ и $V_B$ пересекаются. Тогда можно рассмотреть аффинное преобразование, которое переводит $a$ в $a'$, а в пространстве векторов переводит $\overrightarrow{ab}$ в $\overrightarrow{a'b'}$, $e_i$ в $e'_i$, $g_i$ в $g'_i$ и $h_i$ в $h'_i$. Оно то и переведёт $b$ в $b'$, а следовательно $A$ в $A'$ и $B$ в $B'$.
+                    \end{itemize}
+            \end{itemize}
+        \end{proof}
+
+        Заметим, что искомые классы эквивалентности эквивалентны парам $(\deg(V_A \cap V_B), [A \cap B = \varnothing])$, т.е. паре из числа равному размерности $V_A \cap V_B$ и булевому значению, определяющему пусто ли $A \cap B$.
+        
+        Заметим, что $A \cap B$ может быть пусто тогда и только тогда, когда $\dim(V_A + V_B) < n$. Следовательно искомое количество компонент связности равно количеству достижимых выше описанных пар. Несложно видеть, что $\deg(V_A \cap V_B)$ может принимать все значения от $\max(0, k + m - n)$ до $\min(k, m)$ и только их. И во всех случаях кроме $\deg(V_A \cap V_B)$ второе значение в паре может принимать два значение; в исключённом случае только одно. Таким образом искомый ответ равен
+        \begin{align*}
+            &2(\min(k, m) - \max(0, k + m - n) + 1) - [\max(0, k + m - n) \leqslant n \leqslant \min(k, m)]\\
+            =&2(\min(k, m) - \max(0, k + m - n) + 1) - [\max(0, k + m - n) \leqslant n \wedge n \leqslant \min(k, m)]\\
+            =&2(\min(k, m) - \max(0, k + m - n) + 1) - [0 \leqslant n \wedge k + m - n \leqslant n \wedge n \leqslant k \wedge n \leqslant m]\\
+            =&2(\min(k, m) - \max(0, k + m - n) + 1) - [k + m \leqslant 2n \wedge n \leqslant k \wedge n \leqslant m]\\
+            =&2(\min(k, m) - \max(0, k + m - n) + 1) - [k = n \wedge m = n]\\
+        \end{align*}
+        (где $[*]$ --- \href{https://ru.wikipedia.org/wiki/\%D0\%A1\%D0\%BA\%D0\%BE\%D0\%B1\%D0\%BA\%D0\%B0_\%D0\%90\%D0\%B9\%D0\%B2\%D0\%B5\%D1\%80\%D1\%81\%D0\%BE\%D0\%BD\%D0\%B0}{``скобка Айверсона''}).
+
+        Отсюда рассматривая конкретные $k$ и $m$ несложно получить ответ.
+    \end{problem}
+
+    \begin{problem}{100}
+        Заметим, что $f$ имеет вид $Ax + b$ для некоторых линейного оператора $A$ и вектора $b$. Тогда несложно видеть, что
+        \[\underbrace{f \circ \dots \circ f}_\text{$n$ раз} = A^n x + (A^{n-1} + A^{n-2} + \dots + A^0) b\]
+
+        Заметим также, что для всяких операторов $A$ и $B$ и вектора $b$ верно следующее.
+        \begin{align*}
+            &\text{Уравнение $BAx + Bb = 0$ имеет корень.}\\
+            \Longleftrightarrow&\text{Уравнение $Ax + b \in \Ker B$ имеет корень.}\\
+            \Longleftrightarrow&b \in \{s - t \mid s \in \Ker B \wedge t \in \Img A\}\\
+            \Longleftrightarrow&b \in \Ker B + \Img A\\
+        \end{align*}
+
+        Теперь поймём, что существование неподвижной точки $f$ равносильно разрешимости уравнения $(A-1)x + b = 0$, а $f^n$ --- $(A^n - \Id)x + (A^{n-1} + \dots + A^0) = 0$, что равносильно $(A^{n-1} + \dots + A^0)((A-1)x + b) = 0$. Таким образом нужно показать, что если $b \in \Ker(A^{n-1} + \dots + A^0) + \Img(A-1)$, то $b \in \Img(A-1)$. Т.е. нужно показать, что $\Ker(A^{n-1} + \dots + A^0) \subseteq \Img(A-1)$.
+        
+        Перейдём в поле комплексных чисел и докажем данное утверждение там; после сужения поля факт несомненно останется верным. Обозначим за $\zeta$ первообразный корень из $1$ степени $n$. Тогда несложно видеть, что
+        \[A^{n-1} + \dots + A^0 = \prod_{i=1}^{n-1} A - \zeta^i\]
+
+        Покажем по индукции по $k$, что для любых различных констант $\lambda_1$, \dots, $\lambda_k$ и для всякого оператора $A$ верно, что
+        \[\Ker \prod_{i=1}^k A - \lambda_i = \sum_{i=1}^k \Ker(A - \lambda_i)\]
+
+        {\bfseries База.} При $k = 0, 1$ очевидно.
+
+        {\bfseries Шаг.} Заметим, что по предположению индукции всякий элемент $\Ker\prod_{i=1}^{k-1} A - \lambda_i$ имеет вид $v_1 + \dots + v_{k-1}$, где $v_i \in \Ker(A - \lambda_i)$. Соответственно если $(\prod_{i=1}^k A - \lambda_i) x = 0$, то $(A - \lambda_k)x$ имеет вид $v_1 + \dots + v_{k-1}$. Следовательно
+        \[\left(\prod_{i=1}^k A - \lambda_i \right)\left(x - \frac{v_1}{\lambda_1 - \lambda_k} - \dots - \frac{v_1}{\lambda_{k-1} - \lambda_k}\right) = 0\]
+        Таким образом $x$ имеет вид
+        \[\frac{v_1}{\lambda_1 - \lambda_k} + \dots + \frac{v_1}{\lambda_{k-1} - \lambda_k} + v_k\]
+        где $v_i \in \Ker(A - \lambda_i)$, т.е.
+        По той же причине несложно видеть, что всякий элемент $\sum_{i=1}^k \Ker(A - \lambda_i)$ лежит в ядре $\prod_{i=1}^k A - \lambda_i$.
+
+        Теперь покажем (ещё раз), что $\Ker(A - \zeta^i) \subseteq \Img(A - 1)$ при $i \in \{1; \dots; n-1\}$. Отсюда будет следовать требуемое утверждение. Действительно, если $v \in \Ker(A - \zeta^i)$, то
+        \[(A-1)\frac{v}{\zeta^i - 1} = \frac{1}{\zeta^i - 1}(A-1)v = \frac{1}{\zeta^i - 1}(\zeta^i v - v) = v\]
+        т.е. $v \in \Img(A - 1)$.
+    \end{problem}
+\end{document}

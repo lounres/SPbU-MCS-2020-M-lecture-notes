@@ -1,0 +1,117 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+\usepackage{inkscape}
+
+\title{Homework of 09.07\\Differential geometry}
+\author{Gleb Minaev @ 204 (20.Б04-мкн)}
+% \date{}
+
+\newcommand{\Id}{\mathrm{Id}}
+
+\begin{document}
+    \maketitle
+
+    \setcounter{enumprb}{6}
+
+    \begin{enumproblem}
+        At first let's show that blue set on the picture (that is embedding of graph with 2 vertices and 3 multiple edges between them) is a retract of a handle.
+        \begin{figure}[H]
+            \centering
+            % \Large
+            \inkscapepicture[5cm]{DG-HW-001-1}
+        \end{figure}
+        Let's take function $f$ from the handle to the blue set such that it's identical on the blue set, it projects points outside the blue set horizontally to the nearest point in the direction and it projects points inside the blue set to the nearest point of the circle. All ways of projections are drawn by green arrows. Obviously $f$ is continuous. (Also, using linear projection by the arrows we can get homotopy from the handle to the blue set. So the set is deformation retract.)
+
+        Then it's obvious that we can contract on the handle any of two edges of the embedded graph that is a part of circle's boundary to a point. So composition of the contraction and the retraction $f$ is continuous map from the handle to graph with single vertex and two loops, i.e. wedge sum of two circles. (Also, the contraction is homotopy from the first graph to the second. So concatenation of the homotopies shows that the wedge sum is deformation retract).
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Let $X$ and $Y$ be homotopy equivalent topological spaces such that their homotopy equivalence is raised by functions $f: X \to Y$ and $g: Y \to X$. Let also $\Sigma_X$ and $\Sigma_Y$ be the sets of connected components of $X$ and $Y$ respectively and $\Theta_X$ and $\Theta_Y$ be the sets of path-connected ones respectively.
+
+        \begin{lemma}\label{connection-of-connected-component-lemma}
+            Image under $f$ of connected component is connected.
+        \end{lemma}
+
+        \begin{proof}
+            If image of connected component $A$ is not connected, then there non-empty open (in $f(A)$) disjoint $S$ and $T$ such that $f(A) = S \cup T$. Thus $f^{-1}(S)$ and $f^{-1}(T)$ are also open (in $A$) and disjoint. So $A$ is not connected --- contradiction.
+        \end{proof}
+
+        \begin{corollary}
+            $f$ induces map $\Sigma_X \to \Sigma_Y$.
+        \end{corollary}
+
+        \begin{lemma}\label{path-connection-of-path-connected-component-lemma}
+            Image under $f$ of path-connected component is path-connected.
+        \end{lemma}
+
+        \begin{proof}
+            For any two points $x_1$ and $x_2$ in path-connected component $A$ there is a path $\alpha$ from $x_1$ to $x_2$. $\alpha$ is a continuous map $[0; 1] \to X$. Thus $f \circ \alpha: [0; 1] \to Y$ is a path from $f(x_1)$ to $f(x_2)$. So $f(x_1)$ and $f(x_2)$ are path-connected. So image of $A$ is path-connected.
+        \end{proof}
+
+        \begin{corollary}
+            $f$ induces map $\Theta_X \to \Theta_Y$.
+        \end{corollary}
+
+        \begin{lemma}
+            If images of $x_1, x_2 \in X$ are connected (path-connected), then $x_1$ and $x_2$ are also connected (path-connected).
+        \end{lemma}
+
+        \begin{proof}
+            Let $y_1 := f(x_1)$, $y_2 := f(x_2)$, $z_1 := g(y_1)$, $z_2 := g(y_2)$, . As we know $g \circ f \sim \Id_X$. It means that there is homotopy $H$ between $g \circ f$ and $\Id_X$ ($H(x, 0) = g(f(x))$, $H(x, 1) = x$). Thus a map
+            \[\alpha_x: [0; 1] \to X, t \mapsto H(x, t)\]
+            is a path from $(g \circ f)(x)$ to $\Id_X(x) = x$. By substituting $x$ with $x_1$ and $x_2$ we've got that $x_1$ and $z_1$ are path-connected and $x_2$ and $z_2$ are path-connected. Also $y_1$ and $y_2$ are connected (path-connected), so (by lemmas \ref{connection-of-connected-component-lemma} and \ref{path-connection-of-path-connected-component-lemma}) $z_1$ and $z_2$ are too. Thus $x_1$ and $x_2$ are connected (path-connected).
+        \end{proof}
+
+        \begin{corollary}
+            Images under $f$ of connected (path-connected) components do not share connected (path-connected) components.
+        \end{corollary}
+
+        \begin{corollary}
+            $f$ induces injection $\Sigma_X \to \Sigma_Y$ ($\Theta_X \to \Theta_Y$).
+        \end{corollary}
+
+        So $f$ and $g$ induce injections from set of connected (path-connected) components of $X$ to set of connected (path-connected) components of $Y$ and vice versa. Thus we have got by Schröder–Bernstein theorem that the sets of connected (path-connected) components of $X$ and $Y$ are equinumerous. But there is another way of proofing the equinumerousity.
+
+        \begin{lemma}
+            $g \circ f$ induces identical map $\Sigma_X \to \Sigma_Y$ ($\Theta_X \to \Theta_Y$).
+        \end{lemma}
+
+        \begin{proof}
+            Let $A$ be some set from $\Sigma_X$ ($\Theta_X$) and $A' := g(f(A))$. Let $x$ be some point of $A$ and $x' := g(f(x)) \in A'$. So there is a path from $x'$ to $x$, thus they are path-connected. It means $A = A'$.
+        \end{proof}
+
+        \begin{corollary}
+            $f$ induces bijection $\Sigma_X \to \Sigma_Y$ ($\Theta_X \to \Theta_Y$).
+        \end{corollary}
+
+        \begin{corollary}
+            $|\Sigma_X| = |\Sigma_Y|$ ($|\Theta_X| = |\Theta_Y|$).
+        \end{corollary}
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Let $X$ be a topological space with antidescrete topology and $x_1$, $x_2$ --- some points of $X$. Define function
+        \[
+            \alpha: [0; 1] \to X, t \mapsto
+            \begin{cases}
+                x_1& \text{ if } t \in [0; 1),\\
+                x_2& \text{ if } t = 1.
+            \end{cases}
+        \]
+        Thus $\alpha$ is continuous, because preimages of the only open sets $\varnothing$ and $X$ are $\varnothing$ and $[0; 1]$ respectively, that are open sets. So $\alpha$ is a path from $x_1$ to $x_2$. So $X$ is path-connected and $\pi_1(X, x)$ does not depends on $x$.
+
+        Thus let $\alpha_1$ and $\alpha_2$ be paths from $x_1$ to $x_2$. Then define function
+        \[
+            H: [0; 1] \times [0; 1] \to X, (s, t) \mapsto
+            \begin{cases}
+                \alpha_1(s)& \text{ if } t = 0,\\
+                \alpha_2(s)& \text{ if } t = 1,\\
+                x_1& \text{ if } s = 0,\\
+                x_2& \text{ if } s = 1,\\
+                \text{any point from } X& \text{ otherwise}.
+            \end{cases}
+        \]
+        Because of the same reason, $H$ is continuous, thus homotopy between $\alpha_1$ and $\alpha_2$. Thus $\pi_1(X)$ is trivial. 
+    \end{enumproblem}
+\end{document}

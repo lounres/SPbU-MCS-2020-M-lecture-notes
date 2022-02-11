@@ -1,0 +1,86 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions-en}
+\usepackage{float}
+\usepackage{inkscape}
+
+\title{Homework of 09.13\\Differential geometry}
+\author{Gleb Minaev @ 204 (20.Б04-мкн)}
+\date{}
+
+\newcommand{\Id}{\mathrm{Id}}
+
+\begin{document}
+    \maketitle
+
+    \setcounter{enumprb}{15}
+
+    \begin{enumproblem}
+        The problem is a particular case of the next problem.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Let $f: D^n \to Y$ be a continuous map and $F: S^{n-1} \times [0; 1] \to Y$ be a homotopy such that $F_0 = f|_{S^{n-1}}$. Than let's construct function
+        \[
+            G: D^n \times [0; 1] \to Y, (x, t) \mapsto
+            \begin{cases}
+                f((1+t)x)& \text{ if } |x| \leqslant \frac{1}{1+t},\\
+                F(x/|x|, \frac{(1+t)|x| - 1}{t})& \text{ if } |x| \geqslant \frac{1}{1+t}.
+            \end{cases}
+        \]
+        It's defined correctly, i.e. for every point $x$ that $|x| = \frac{1}{1+t}$
+        \[f((1+t)x) = F(x/|x|, \frac{(1+t)|x| - 1}{t}),\]
+        because $\frac{(1+t)|x| - 1}{t} = 0$ and $(1+t)x = x/|x| \in S^{n-1}$, so
+        \[F(x/|x|, \frac{(1+t)|x| - 1}{t}) = F_0(x/|x|) = F_0((1+t)|x|) = f|_{S^{n-1}}((1+t)|x|).\]
+        Also it's obvious that $G$ is continuous (it's linear expansion of embedding of $D^n$ under $f$ on embedding of $S^{n-1} \times [0; 1]$ under $F$).
+
+        Hence $G$ is homotopy such that $G_t|_{S^{n-1}} = F_t$ and $G_0 = f$. It means that $(D^n, S^{n-1})$ is a Borsuk pair.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Let's consider pair $(X, A) := ([0; 2], [0; 1) \cup (1; 2])$. Let's also consider a continuous map $f := \Id_{[0; 2]}$ and a map
+        \[
+            H: A \times [0; 1] \to X, (x, t) \mapsto
+            \begin{cases}
+                (1-t)x + t(1-x)& \text{ if } x \in [0; 1),\\
+                (1-t)x + t(3-x)& \text{ if } x \in (1; 2].\\
+            \end{cases}
+        \]
+        Saying simply, $H$ (linearly) turns round intervals $[0; 1)$ and $(1; 2]$. So obviously $H$ is continuous (hence homotopy) and $H_0 = f|_A$.
+
+        Let's show that $H$ cannot be raised to $X$. Assume that $G$ is a raising of $H$ to $X$. Then the only difference between $G$ and $F$ is determination of path of point $1$. Also it means that $G_1$ is continuous map $[0; 2] \to [0; 2]$. Let $p$ be $G_1(1)$.
+        
+        If $p=0$ then let's take $1/2$-neighbourhood $U_p$ of $p$. It is clear that $U_p = [0; 1/2)$. Preimage of $U_p$ under $G_1$ is interval $(1/2; 1]$ which is not open. Hence $G_1$ is not continuous. The same goes for the case $p = 2$. Then $p \in (0; 2)$. So there is neighbourhood $U_p$ of $p$ that does not intersect with some neighbourhoods of $0$ and $2$. Hence preimage of $U_p$ contains $1$ and does not intersect some deleted neighbourhood of $1$. That means $G_1^{-1}(U_p)$ is not open. Hence $G_1$ is not continuous after all.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Consider maps (inclusions)
+        \[
+            f: X \to X \cup A \times I, x \mapsto x,
+            \qquad
+            F: A \times I \to X \cup A \times I, (a, t) \mapsto (a, t).
+        \]
+        Obviously $f|_A = F|_A$. So there exists a homotopy $G: X \times I \to X \cup A \times I$ that is a raising of $F$ and $f$. That means that $G$ is continuous map from $X \times I$ to its subset $X \cup A \times I$ that is identity map on the subset. Hence the subset $X \cup A \times I$ is a retract.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Let $f: X \to Y$ and $H: A \times I \to Y$ be continuous maps that $f|_A = H|_{A \times \{0\}}$. Then consider
+        \[
+            \widetilde{H}: X \cup A \times I \to Y, x \mapsto
+            \begin{cases}
+                f(x)& \text{ if } x \in X,\\
+                H(x)& \text{ if } x \in A \times I.\\
+            \end{cases}
+        \]
+        Because of the condition $f|_A = H|_{A \times \{0\}}$, $\widetilde{H}$ is defined correctly.
+
+        Let's prove that $X$ and $A \times I$ are closed sets in $X \cup A \times I$.
+        \[(X \cup A \times I) \setminus X = A \times (I \setminus \{0\})\]
+        which is open in $A \times I$ (and does not intersect $X$), hence in $X \cup A \times I$ too. So $X$ is closed.
+        \[A \times \{1\} = (X \cup A \times I) \cap (X \times \{1\})\]
+        is closed in $X \times \{1\}$, because $X \cup A \times I$ is closed in $X \times I$, because $X \cup A \times I$ is a retract of $X \times I$ (and $X \times I$ is Hausdorff). Hence $A$ is closed in $X$. Then
+        \[(X \cup A \times I) \setminus A \times I = X \setminus A\]
+        which is open in $X$, because $A$ is closed in $X$. Hence $(X \cup A \times I) \setminus A \times I$ is open, so $A \times I$ is closed.
+
+        So $\{X; A \times I\}$ is finite closed cover of $X \cup A \times I$ and $\widetilde{H}$ is continuous on every set of the cover. Hence $\widetilde{H}$ is continuous on whole space. Let $F: X \times I \to X \cup A \times I$ be a retraction. So $\widetilde{H} \circ F$ is a homotopy from $X$ to $Y$ that is a raising of $\widetilde{H}$ (hence of $f$ and $H$ too). It means $(X, A)$ is a Borsuk pair.
+    \end{enumproblem}
+\end{document}

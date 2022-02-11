@@ -1,0 +1,119 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions-en}
+\usepackage{float}
+
+\title{Homework of 11.02\\Differential equations and dynamic systems.\\Solutions.}
+\author{Глеб Минаев @ 204 (20.Б04-мкн)}
+\date{}
+
+\newcommand{\const}{\mathrm{const}}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem*}
+        \begin{gather*}
+            (1 + e^y) dx - e^{2y} \sin(x)^3 dy = 0\\
+            \intertext{(lose case $\sin(x) = 0$, that is $x \equiv \pi n$ for some $n \in \ZZ$)}
+            y' = \frac{dy}{dx} = \frac{1 + e^y}{e^{2y}} \frac{1}{\sin(x)^3}.
+        \end{gather*}
+        So there is integral
+        \begin{align*}
+            G
+            &:= \int \frac{e^{2y}}{1 + e^y}dy - \int \frac{dx}{\sin(x)^3}\\
+            &= e^y - \ln(1+e^y) - \frac{\cos(x)}{2(\cos(x)^2-1)} - \frac{1}{4} \ln\left(\frac{1-\cos(x)}{1+\cos(x)}\right) + C = 0
+        \end{align*}
+        So because function $f(t) = e^t - t$ is hard to inverse, $y$ cannot be expressed elementary of $x$.
+    \end{problem*}
+
+    \begin{problem*}
+        \begin{gather*}
+            y' = \left(\frac{y+1}{x+y-2}\right)^2
+        \end{gather*}
+        Let $x = u + 3$, $y = v - 1$. Then
+        \begin{gather*}
+            v' = \left(\frac{v}{u+v}\right)^2
+        \end{gather*}
+        Let $v = pu$. Then
+        \begin{gather*}
+            up' + p = v' = \left(\frac{1}{1+v/u}\right)^2 = \frac{1}{(1+p)^2}\\
+            p' = \frac{1 - p(1+p)^2}{(1+p)^2} \frac{1}{u}.
+        \end{gather*}
+        So there is integral
+        \begin{align*}
+            G
+            &:= \int \frac{(1+p)^2 dp}{1 - p(1+p)^2} - \int \frac{du}{u}\\
+            &= \sum_{\alpha^3 - \alpha^2 - 1 = 0} \frac{\alpha}{3\alpha - 2} \ln(p - \alpha + 1) - \ln(u) - C = 0.
+        \end{align*}
+    \end{problem*}
+
+    \begin{problem}{426}
+        \begin{gather*}
+            y y'' + 1 = y'^2
+        \end{gather*}
+        Let $p(y) = y'$. Then $y'' = pp'$, so
+        \begin{gather*}
+            ypp' + 1 = p^2\\
+            p' = \frac{p^2 - 1}{p} \frac{1}{y}
+        \end{gather*}
+        If $\frac{p^2 - 1}{p} = 0$, then $p^2 = 1$, so $p = \pm 1$, $y = C \pm x$. Otherwise there is integral
+        \begin{align*}
+            G
+            &:= \int \frac{pdp}{p^2 - 1} - \int \frac{dy}{y}\\
+            &= \frac{1}{2}\ln(p^2 - 1) - \ln(y) + C = 0
+        \end{align*}
+        Hence
+        \begin{gather*}
+            \ln(p^2 - 1) = C + 2\ln(y)\\
+            p^2 - 1 = C y^2\\
+            y' = p = \pm \sqrt{1 + Cy^2}.
+        \end{gather*}
+        If $\pm \sqrt{1 + Cy^2} = 0$, then $y = \pm 1/\sqrt{-C}$. Otherwise there is integral
+        \begin{align*}
+            H
+            &:= \int \frac{dy}{\pm \sqrt{1 + Cy^2}} - \int dx\\
+            &= \pm \frac{\sinh^{-1}(\sqrt{C}y)}{\sqrt{C}} - x + D = 0.
+        \end{align*}
+        Hence
+        \begin{gather*}
+            y = \pm \frac{\sinh(\sqrt{C}x + \sqrt{C} D)}{\sqrt{C}} = \pm \frac{\sinh(ax + b)}{a}.
+        \end{gather*}
+    \end{problem}
+
+    \begin{problem}{446}
+        \begin{gather*}
+            (y' + 2y)y'' = y'^2
+        \end{gather*}
+        Let $p(y) = y'$. Then $y'' = pp'$, so
+        \begin{gather*}
+            (p + 2y)pp' = p^2
+            \intertext{(lose case $p \equiv 0$, where $y \equiv \const$)}
+            p' = \frac{p}{p + 2y}
+        \end{gather*}
+        Let $p = qy$. Then
+        \begin{gather*}
+            yq' + q = \frac{q}{q + 2}\\
+            q' = \frac{-q(q+1)}{q+2} \frac{1}{y}
+        \end{gather*}
+        If $\frac{-q(q+1)}{q+2}=0$, then $q \in \{0; -1\}$, $p = 0$ or $p = -y$, $y \equiv \const$ or $y = Ce^{-x}$. Otherwise there is integral
+        \begin{align*}
+            G
+            &:= \int -\frac{q+2}{q(q+1)} dq - \int \frac{dy}{y}\\
+            &= \int \left(\frac{1}{q+1} - \frac{2}{q}\right) dq - \ln(y)\\
+            &= \ln(q+1) - 2\ln(q) - \ln(y) + C = 0
+        \end{align*}
+        Hence
+        \begin{gather*}
+            \ln\left(\frac{q+1}{q^2}\right) = \ln(Cy)\\
+            \frac{q+1}{q^2} = Cy\\
+            q = \frac{1 \pm \sqrt{1 + 4Cy}}{2Cy}\\
+            y' = p = qy = \frac{1 \pm \sqrt{1 + 4Cy}}{2C}
+        \end{gather*}
+        So there is integral
+        \begin{align*}
+            H
+            &:= \int \frac{2Cy}{1 \pm \sqrt{1 + 4Cy}} dy - \int dx\\
+            &= \pm \sqrt{1 + 4Cy} - \ln(1 \pm \sqrt{1 + 4Cy}) - x + D = 0
+        \end{align*}
+    \end{problem}
+\end{document}

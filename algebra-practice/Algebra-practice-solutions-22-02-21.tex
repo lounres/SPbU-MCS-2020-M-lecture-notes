@@ -1,0 +1,247 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{multicol}
+
+\title{Основы математической логики.\\ Практика. 1 курс.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\begin{document}
+    \maketitle
+
+    \begin{multicols}{2}
+        \tableofcontents
+    \end{multicols}
+
+    \begin{enumproblem}
+        \begin{align*}
+            &\begin{pmatrix}
+                3& x\\
+                2& y
+            \end{pmatrix}
+            \begin{pmatrix}
+                1\\
+                2
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                3 + 2x\\
+                2 + 2y
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                \lambda\\
+                2\lambda
+            \end{pmatrix}&
+            &\begin{pmatrix}
+                3& x\\
+                2& y
+            \end{pmatrix}
+            \begin{pmatrix}
+                2\\
+                1
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                6 + x\\
+                4 + y
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                2\mu\\
+                \mu
+            \end{pmatrix}&
+        \end{align*}
+        Следовательно
+        \begin{align*}
+            &\left\{
+                \begin{aligned}
+                    2(3 + 2x) &= 2 + 2y\\
+                    6 + x &= 2(4 + y)\\
+                \end{aligned}
+            \right.&
+            &\left\{
+                \begin{aligned}
+                    4 + 4x - 2y &= 0\\
+                    -2 + x - 2y &= 0\\
+                \end{aligned}
+            \right.&
+            &\left\{
+                \begin{aligned}
+                    6 + 3x &= 0\\
+                    -2 + x - 2y &= 0\\
+                \end{aligned}
+            \right.&
+            &\left\{
+                \begin{aligned}
+                    x &= -2\\
+                    y &= -1 + \frac{1}{2}x\\
+                \end{aligned}
+            \right.&
+            &\left\{
+                \begin{aligned}
+                    x &= -2\\
+                    y &= -2\\
+                \end{aligned}
+            \right.
+        \end{align*}
+        B следовательно $\lambda = 3 + 2x = -1$, $\mu = 4 + y = 2$.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        Заметим, что
+        \begin{align*}
+            &\begin{pmatrix}
+                1& 2& 0& 0\\
+                -1& -1& 0& 0\\
+                1& 1& 1& -2\\
+                2& 1& 2& -3\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                a\\
+                b\\
+                c\\
+                d
+            \end{pmatrix}
+            =
+            \lambda
+            \begin{pmatrix}
+                a\\
+                b\\
+                c\\
+                d
+            \end{pmatrix}&
+            &\Longrightarrow&
+            &\begin{pmatrix}
+                1& 2\\
+                -1& -1\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                a\\
+                b
+            \end{pmatrix}
+            =
+            \lambda
+            \begin{pmatrix}
+                a\\
+                b
+            \end{pmatrix}
+        \end{align*}
+        Несложно видеть, что собственные числа последней матрицы --- $\pm i$, а собственные вектора --- $(\begin{smallmatrix}
+            2\\
+            \pm i - 1
+        \end{smallmatrix})$ соответственно.
+
+        Если первые две координаты не равны обе нулю, то можно считать, что рассматриваемое собственное число $\lambda = \pm i$, а $a = 2$, $b = \lambda - 1$. WLOG $\lambda = i$; второй вариант получается сопряжением. Тогда получим, что
+        \begin{align*}
+            &\left\{
+                \begin{aligned}
+                    2 + i - 1 + c - 2d &= i c\\
+                    4 + i - 1 + 2c - 3d &= i d\\
+                \end{aligned}
+            \right.\\
+            &\left\{
+                \begin{aligned}
+                    (1 - i) c - 2d &= -1 - i\\
+                    2c - (3 + i)d &= -3 - i\\
+                \end{aligned}
+            \right.\\
+            &\left\{
+                \begin{aligned}
+                    \left(\frac{(3 + i)(1 - i)}{2} - 2\right)d &= \frac{(3 + i)(1 - i)}{2} -1 - i\\
+                    2c - (3 + i)d &= -3 - i\\
+                \end{aligned}
+            \right.\\
+            &\left\{
+                \begin{aligned}
+                    -i d &= 1 - 2i\\
+                    2c - (3 + i)d &= -3 - i\\
+                \end{aligned}
+            \right.\\
+            &\left\{
+                \begin{aligned}
+                    d &= 2 + i\\
+                    2c &= -3 - i + (3 + i)d\\
+                \end{aligned}
+            \right.\\
+            &\left\{
+                \begin{aligned}
+                    d &= 2 + i\\
+                    c &= 1 + 2i\\
+                \end{aligned}
+            \right.\\
+        \end{align*}
+        Т.е. два собственных значения --- $\pm i$, а вектора --- $(4; -2 \pm 2i; 1 \pm 2i; 2 \pm i)$.
+
+        Если же первые две координаты нулевые, то мы имеем, что
+        \[
+            \begin{pmatrix}
+                1& -2\\
+                2& -3\\
+            \end{pmatrix}
+            \begin{pmatrix}
+                c\\
+                d
+            \end{pmatrix}
+            =
+            \lambda
+            \begin{pmatrix}
+                c\\
+                d
+            \end{pmatrix}
+        \]
+        Несложно видеть, что собственное значение --- $-1$, а собственный вектор --- $(0; 0; 1; 1)$.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TODO
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TODO
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TODO
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TODO
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TODO
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TODO
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TODO
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TODO
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TODO
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TODO
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TODO
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TODO
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TODO
+    \end{enumproblem}
+\end{document}

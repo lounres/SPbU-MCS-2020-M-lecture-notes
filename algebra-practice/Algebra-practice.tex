@@ -1,0 +1,131 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{math-text}
+
+\title{Алгебра. Практика.}
+\author{А. В. Щеголёв}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    \begin{definition}
+        Кольцо $R$ называется \emph{Евклидовым}, если существует $\phi: R\setminus \{0\} \to \NN \setminus \{0\}$ --- \emph{норма Евклида}, что $\forall a, b \in R\; \exists q, r \in R: a = bq + r, \phi(r) < \phi(b)$.
+    \end{definition}
+
+    \begin{exercise}\ 
+        \begin{enumerate}
+            \item Пусть дана какая-то норма Евклида $\phi$ на кольце $R$. Тогда эту норму можно докрутить так, что для новой нормы $\phi'$ верно, что $\phi'(ab) \geqslant \phi'(a)$.
+            \item Для $\phi'$ верно, что для всех обратимых элементов $\phi'$-значения равны.
+        \end{enumerate}
+    \end{exercise}
+
+    \begin{definition}
+        \emph{Общим делителем} $a$ и $b$ называется $c$, что $c \mid a$ и $c \mid b$. \emph{Наибольшим общим делителем (НОД)} $a$ и $b$ называется общий делитель $a$ и $b$, делящийся на все другие общие делители $a$ и $b$.
+    \end{definition}
+
+    \begin{theorem}[алгоритм Евклида]
+        В Евклидовом кольце у любых двух чисел есть НОД.
+    \end{theorem}
+
+    \begin{proof}
+        Заметим, что $(a, b) = (a + bk, b)$.
+        
+        Пусть даны $a$ и $b$. Предположим, что $\phi(a) \geqslant \phi(b)$, иначе поменяем их местами. Тем самым по аксиоме Евклида найдутся $q$ и $r$, что $a = bq + r$, а $\phi(r) < \phi(b) \leqslant \phi(a)$, значит $\phi(a) + \phi(b) > \phi(r) + \phi(b)$. При этом $(a, b) = (r, b)$. Значит бесконечно $\phi(a) + \phi(b)$ не может бесконечнго уменьшаться, так как натурально, значит за конечное кол-во переходов мы получим, что одно из чисел делит другое, а значит НОД стал определён.
+    \end{proof}
+
+    \begin{exercise}
+        $\sigma \left(\begin{smallmatrix}
+            a & 1 & 0\\ b & 0 & 1
+        \end{smallmatrix}\right) = \left(\begin{smallmatrix}
+            d \\ 0
+        \end{smallmatrix}\,\sigma\,\right)$. Чему может быть равно $\sigma_{2*}$?
+    \end{exercise}
+
+    \begin{exercise}
+        Докажите, что Гауссова норма --- норма Евклида.
+    \end{exercise}
+
+    \begin{exercise}
+        Найти $(17 + 23i, 13 - 21i)$.
+    \end{exercise}
+
+    \begin{exercise}
+        Ждите позже...
+    \end{exercise}
+
+    \begin{exercise}
+        Найти все решения $17 x + 24 y = 3$ над $\ZZ$.
+    \end{exercise}
+
+    \newpage
+    \section{Занятие 30.11.2020}
+
+    \begin{lemma}
+        Пусть $\{\alpha_i\}_{i=1}^n$ --- различные (комплексные) значения, а $f$ --- некоторый полином степени $< n$. Тогда
+        \[\frac{f(x)}{\prod_{i=1}^n (x - \alpha_i)} = \sum_{i=1}^n \frac{a_i}{x-\alpha_i}\]
+        где
+        \[a_i := \frac{f(\alpha_i)}{\prod_{t \neq i} (\alpha_i - \alpha_t)}\] 
+    \end{lemma}
+
+    \begin{proof}
+        Заметим, что по интерполяционной теореме Лагранжа
+        \[
+            f(x)
+            = \sum_{i=1}^n f(\alpha_i) \prod_{j \neq i} \frac{x - \alpha_j}{\alpha_i - \alpha_j}
+            = \sum_{i=1}^n a_i \prod_{j \neq i} (x - \alpha_j)
+        \]
+        Следовательно
+        \[\frac{f(x)}{\prod_{i=1}^n (x - \alpha_i)} = \sum_{i=1}^n \frac{a_i}{x-\alpha_i}\]
+    \end{proof}
+
+    \begin{lemma}
+        Пусть $\{\alpha_i\}_{i=1}^n$ --- различные (комплексные) значения. Определим
+        \[P(x) := \prod_{i=1}^n (x - \alpha_i)\]
+        Тогда
+        \[\prod_{i \neq t} (\alpha_t - \alpha_i) = P'(\alpha_i)\]
+    \end{lemma}
+
+    \begin{proof}
+        Заметим, что
+        \[P'(x) = \sum_{i=1}^n \prod_{j \neq i} (x - \alpha_j)\]
+        Следовательно
+        \[P'(\alpha_t) = \sum_{i=1}^n \prod_{j \neq i} (\alpha_t - \alpha_j) = \prod_{j \neq t} (\alpha_t - \alpha_j)\]
+    \end{proof}
+
+    \begin{corollary}
+        \[\prod_{\substack{i \in [0; n-1]\\ i \neq t}} (\zeta_n^t - \zeta_n^i) = n\zeta_n^{-t}\]
+    \end{corollary}
+
+    \begin{theorem}
+        \[\frac{2n+1}{x^{2n+1}-1} - \frac{1}{x-1} + n = \frac{x^2-1}{2x} \sum_{i=1}^n \frac{1}{\frac{x^2+1}{2x} - \cos(\frac{2\pi i}{2n+1})}\]
+    \end{theorem}
+
+    \begin{proof}
+        \[
+            \frac{2n+1}{x^{2n+1}-1}
+            = \sum_{i=1}^{2n+1} \frac{1}{x - \zeta_{2n+1}^i} \cdot \frac{2n+1}{(2n+1) \zeta_{2n+1}^{-i}}
+            = \sum_{i=1}^{2n+1} \frac{1}{\zeta_{2n+1}^{-i} x - 1}
+        \]
+        Заметим, что
+        \[
+            \frac{1}{\zeta_{2n+1}^i x - 1} + \frac{1}{\zeta_{2n+1}^{-i} x - 1}
+            = \frac{2x \cos(\frac{2 \pi i}{2n+1}) - 2}{x^2 + 1 - 2x \cos(\frac{2 \pi i}{2n+1})}
+            = \frac{x^2 - 1}{x^2 + 1 - 2x \cos(\frac{2 \pi i}{2n+1})} - 1
+            = \frac{\frac{x^2-1}{2x}}{\frac{x^2+1}{2x} - \cos(\frac{2\pi i}{2n+1})} - 1
+        \]
+        Следовательно
+        \[
+            \frac{2n+1}{x^{2n+1}-1} - \frac{1}{x-1} + n
+            = \sum_{i=1}^n \frac{1}{\zeta_{2n+1}^i x - 1} + \frac{1}{\zeta_{2n+1}^{-i} x - 1}
+            = \frac{x^2-1}{2x} \sum_{i=1}^n \frac{1}{\frac{x^2+1}{2x} - \cos(\frac{2\pi i}{2n+1})}
+        \]
+    \end{proof}
+
+    \begin{corollary}
+        \[\sum_{i=1}^n \frac{1}{1 - \cos(\frac{2\pi i}{2n+1})} = \frac{n(n+1)}{3}\]
+    \end{corollary}
+
+    \begin{corollary}
+        \[\sum_{i=1}^n \frac{1}{1 - \cos(\frac{2\pi i}{2n+1})} = \frac{n(n+1)}{3}\]
+    \end{corollary}
+\end{document}

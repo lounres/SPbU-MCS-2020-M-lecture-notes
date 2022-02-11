@@ -1,0 +1,37 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+% \usepackage{float}
+\usepackage{inkscape}
+
+\title{Занятие от 11.02.\\Геометрия и топология. 1 курс.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Fr}{Fr}
+\DeclareMathOperator{\Id}{Id}
+\newcommand{\FAC}{\ensuremath{\mathrm{FAC}}\xspace}
+\newcommand{\SAC}{\ensuremath{\mathrm{SAC}}\xspace}
+\newcommand{\T}{\ensuremath{\mathrm{T}}\xspace}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{73} 
+        Пусть поверхность $S$ собрана из граней $\Gamma_1$, \dots, $\Gamma_n$ (которые в свою очередь являются замкнутыми поверхностями). Для каждой грани $\Gamma_i$ найдём развёртку. Хотим соединить изначальное развёртку $S$ с развёртками каждой её грани, а потом посмотреть, как изменялось значение выражения $V - E + F$.
+
+        Будем по очереди заменять каждую $\Gamma_i$ на её развёртку. Но есть единственная проблема: на границе $\Gamma_i$, по которой она склеивается с остальными гранями $S$, вершины и рёбра у развёрток $S$ и $\Gamma_i$ могут не соответствовать.
+        \begin{figure}[h]
+            \centering
+            \inkscapepicture{GaT-practice-solutions-008-1}
+        \end{figure}
+        Для этого возьмём в качестве вершин объединение вершин обеих развёрток, а рёбра раздробим на множества рёбер строго по этим вершинам. Тогда мы можем объединить эти развёртку в одну развёртку. При этом во время разбиения рёбер выражение $V - E + F$ не изменило своего значения, а после замены $\Gamma_i$ на её развертку изменилось на $- \chi(D_1) + \chi(\Gamma_i) = \chi(\Gamma_i) - 1$.
+
+        Таким образом мы получаем, что
+        \[\chi(S) = V - E + F + \sum_{i=1}^n (\chi(\Gamma_i) - 1) = V - E + \sum_{k=1}^n \chi(\Gamma_i)\]
+
+        Поскольку у каждой грани $\Gamma_i$ есть грань, то $\chi(\Gamma_i) - 1 \leqslant 0$. Следовательно
+        \[\chi(S) \leqslant V - E + F\]
+    \end{problem}
+\end{document}

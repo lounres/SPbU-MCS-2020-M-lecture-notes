@@ -1,0 +1,817 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{mathrsfs}
+\usepackage{multicol}
+\usepackage{bussproofs}
+
+\title{Основы математической логики.\\ Практика. 1 курс.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+% \newcommand{\subsets}{\ensuremath{\mathcal{P}}\xspace}
+% \newcommand{\finsubsets}{\ensuremath{\mathcal{P_{\mathrm{fin}}}}\xspace}
+% \DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\dom}{dom}
+% \DeclareMathOperator{\range}{range}
+% \DeclareMathOperator{\Min}{Min}
+% \DeclareMathOperator{\Seq}{Seq}
+% \DeclareMathOperator{\Left}{left}
+% \DeclareMathOperator{\Right}{right}
+% \DeclareMathOperator{\IS}{IS}
+% \DeclareMathOperator{\ord}{ord}
+% \DeclareMathOperator{\Ord}{Ord}
+% \DeclareMathOperator{\card}{card}
+% \DeclareMathOperator{\Card}{Card}
+% \newcommand{\ZF}{\ensuremath{\mathrm{ZF}}\xspace}
+% \newcommand{\ZFC}{\ensuremath{\mathrm{ZFC}}\xspace}
+% \newcommand{\CH}{\ensuremath{\mathrm{CH}}\xspace}
+\newcommand{\Prop}{\ensuremath{\mathrm{Prop}}\xspace}
+\newcommand{\Formul}{\ensuremath{\mathrm{Form}}\xspace}
+\newcommand{\Sub}{\ensuremath{\mathrm{Sub}}\xspace}
+\newcommand{\NP}{\ensuremath{\mathrm{NP}}\xspace}
+
+\newcommand{\reset}{\setcounter{enumprb}{0}}
+
+\begin{document}
+    \maketitle
+
+    % \begin{multicols}{2}
+    %     \tableofcontents
+    % \end{multicols}
+
+    \section{Формальные слова}
+
+    \begin{enumproblem}
+        Очевидное следствие следующего упражнения.
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        \begin{lemma}
+            Пусть даны $\{\varphi; \psi\} \subseteq \Formul$ и $\chi \in \mathscr{L}^*$, что $\varphi$ и $\psi$ входят в $\chi$, и некоторые их вхождения в $\chi$ пересекаются и в объединении дают всё $\chi$. Тогда $\varphi \preccurlyeq \psi$ или $\psi \preccurlyeq \varphi$.
+        \end{lemma}
+
+        \begin{proof}
+            WLOG вхождение $\varphi$ в $\chi$, рассмотренное в условии, имеет начало $0$.
+
+            Если рассмотренное в условии вхождение $\psi$ в $\chi$ тоже имеет начало $0$, то тогда понятно, что они совпадают (теорема из лекции). Тогда предположим противное.
+
+            Если же вхождение $\psi$ заканчивается не позже чем вхождение $\varphi$, то лемма сиюминутно доказана. Поэтому покажем, что оставшегося произойти не могло.
+            
+            Докажем лемму по индукции по $|\varphi|$.
+
+            \textbf{База.} $|\varphi| = 1$. Очевидно, что тогда из-за пересекаемости $\psi$ придётся включить в себя $\varphi$.
+
+            \textbf{Шаг.} Рассмотрим тип $\varphi$.
+            \begin{enumerate}
+                \item Если $\varphi \in \Prop$, то см. базу.
+                \item Если $\varphi = \neg \varphi'$, то понятно, что условие леммы применимо к $\varphi'$ и $\psi$.
+                    \begin{itemize}
+                        \item Если $\psi \preccurlyeq \varphi'$, то $\psi \preccurlyeq \varphi$.
+                        \item Если $\varphi' \preccurlyeq \psi$, то $\varphi' = \psi$, следовательно $\psi \preccurlyeq \varphi$.
+                    \end{itemize}
+                \item Если $\varphi = (\tau \circ \sigma)$, где $\{\tau; \sigma\} \subseteq \Formul$, а $\circ \in \{\wedge; \vee; \rightarrow\}$. Понятно, что $\psi$ будет содержать последний символ $\varphi$ --- ``)''. Тогда несложно видеть из баланса скобок, что $\psi$ придётся включить в себя всё $\varphi$.
+            \end{enumerate}
+        \end{proof}
+    \end{enumproblem}
+
+    \section{PCL: естественная дедукция I}\reset
+
+    \begin{enumproblem}\ 
+        \begin{description}
+            \item[$\mathrm{I1}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$[\varphi]^1$}
+                        \RightLabel{(2)}
+                        \UnaryInfC{$\psi \rightarrow \varphi$}
+                            \RightLabel{(1)}
+                            \UnaryInfC{$\varphi \rightarrow (\psi \rightarrow \varphi)$}
+                \end{prooftree}
+
+            \item[$\mathrm{I2}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$[\varphi]^3$}
+                    \AxiomC{$[\varphi \rightarrow \psi]^2$}
+                        \BinaryInfC{$\psi$}
+                    \AxiomC{$[\varphi]^3$}
+                    \AxiomC{$[\varphi \rightarrow (\psi \rightarrow \chi)]^1$}
+                        \BinaryInfC{$\psi \rightarrow \chi$}
+                            \BinaryInfC{$\chi$}
+                                \RightLabel{(3)}
+                                \UnaryInfC{$\varphi \rightarrow \chi$}
+                                    \RightLabel{(2)}
+                                    \UnaryInfC{$(\varphi \rightarrow \psi) \rightarrow (\varphi \rightarrow \chi)$}
+                                        \RightLabel{(1)}
+                                        \UnaryInfC{$(\varphi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\varphi \rightarrow \psi) \rightarrow (\varphi \rightarrow \chi))$}
+                \end{prooftree}
+
+            \item[$\mathrm{C1}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$\varphi \wedge \psi$}
+                        \UnaryInfC{$\varphi$}
+                \end{prooftree}
+                
+            \item[$\mathrm{C2}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$\varphi \wedge \psi$}
+                        \UnaryInfC{$\psi$}
+                \end{prooftree}
+                
+            \item[$\mathrm{C3}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$[\varphi]^1$}
+                    \AxiomC{$[\psi]^2$}
+                        \BinaryInfC{$\varphi \wedge \psi$}
+                            \RightLabel{(2)}
+                            \UnaryInfC{$\psi \rightarrow \varphi \wedge \psi$}
+                                \RightLabel{(1)}
+                                \UnaryInfC{$\varphi \rightarrow (\psi \rightarrow \varphi \wedge \psi)$}
+                \end{prooftree}
+
+            \item[$\mathrm{D1}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$\varphi$}
+                        \UnaryInfC{$\varphi \vee \psi$}
+                \end{prooftree}
+                
+            \item[$\mathrm{D2}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$\psi$}
+                        \UnaryInfC{$\varphi \vee \psi$}
+                \end{prooftree}
+                
+            \item[$\mathrm{D3}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$[\varphi \vee \psi]^3$}
+                    \AxiomC{$[\varphi]^4$}
+                    \AxiomC{$[\varphi \rightarrow \chi]^1$}
+                        \BinaryInfC{$\chi$}
+                    \AxiomC{$[\psi]^4$}
+                    \AxiomC{$[\psi \rightarrow \chi]^2$}
+                        \BinaryInfC{$\chi$}
+                            \RightLabel{(4)}
+                            \TrinaryInfC{$\chi$}
+                                \RightLabel{(3)}
+                                \UnaryInfC{$\varphi \vee \psi \rightarrow \chi$}
+                                    \RightLabel{(2)}
+                                    \UnaryInfC{$(\psi \rightarrow \chi) \rightarrow (\varphi \vee \psi \rightarrow \chi)$}
+                                        \RightLabel{(1)}
+                                        \UnaryInfC{$(\varphi \rightarrow \chi) \rightarrow ((\psi \rightarrow \chi) \rightarrow (\varphi \vee \psi \rightarrow \chi))$}
+                \end{prooftree}
+                
+            \item[$\mathrm{N1}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$[\varphi]^3$}
+                    \AxiomC{$[\varphi \rightarrow \psi]^1$}
+                        \BinaryInfC{$\psi$}
+                    \AxiomC{$[\varphi]^3$}
+                    \AxiomC{$[\varphi \rightarrow \neg \psi]^2$}
+                        \BinaryInfC{$\neg \psi$}
+                            \RightLabel{(3)}
+                            \BinaryInfC{$\neg \varphi$}
+                                \RightLabel{(2)}
+                                \UnaryInfC{$(\varphi \rightarrow \neg \psi) \rightarrow \neg \varphi$}
+                                    \RightLabel{(1)}
+                                    \UnaryInfC{$(\varphi \rightarrow \psi) \rightarrow ((\varphi \rightarrow \neg \psi) \rightarrow \neg \varphi)$}
+                \end{prooftree}
+                
+            \item[$\mathrm{N2}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$[\varphi]^2$}
+                    \AxiomC{$[\neg \varphi]^1$}
+                        \RightLabel{(3)}
+                        \BinaryInfC{$\psi$}
+                            \RightLabel{(2)}
+                            \UnaryInfC{$\varphi \rightarrow \psi$}
+                                \RightLabel{(1)}
+                                \UnaryInfC{$\neg \varphi \rightarrow (\varphi \rightarrow \psi)$}
+                \end{prooftree}
+                
+            \item[$\mathrm{N3}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$[\neg (\varphi \vee \neg \varphi)]^1$}
+                    \AxiomC{$[\neg \varphi]^3$}
+                        \UnaryInfC{$\varphi \vee \neg \varphi$}
+                            \RightLabel{(3)}
+                            \BinaryInfC{$\varphi$}
+                    \AxiomC{$[\neg (\varphi \vee \neg \varphi)]^1$}
+                    \AxiomC{$[\varphi]^2$}
+                        \UnaryInfC{$\varphi \vee \neg \varphi$}
+                            \RightLabel{(2)}
+                            \BinaryInfC{$\neg \varphi$}
+                                \RightLabel{(1)}
+                                \BinaryInfC{$\varphi \vee \neg \varphi$}
+                \end{prooftree}
+        \end{description}
+    \end{enumproblem}
+
+    \begin{enumproblem}\ 
+        \begin{description}
+            \item[$\mathrm{IT}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$[\varphi]^3$}
+                    \AxiomC{$[\varphi \rightarrow \psi]^1$}
+                        \BinaryInfC{$\psi$}
+                    \AxiomC{$[\psi \rightarrow \chi]^2$}
+                            \BinaryInfC{$\chi$}
+                                \RightLabel{(3)}
+                                \UnaryInfC{$\varphi \rightarrow \chi$}
+                                    \RightLabel{(2)}
+                                    \UnaryInfC{$(\psi \rightarrow \chi) \rightarrow (\varphi \rightarrow \chi)$}
+                                        \RightLabel{(1)}
+                                        \UnaryInfC{$(\varphi \rightarrow \psi) \rightarrow ((\psi \rightarrow \chi) \rightarrow (\varphi \rightarrow \chi))$}
+                \end{prooftree}
+                
+            \item[$\mathrm{PE}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$[\psi]^2$}
+                    \AxiomC{$[\varphi]^3$}
+                    \AxiomC{$[\varphi \rightarrow (\psi \rightarrow \chi)]^1$}
+                        \BinaryInfC{$\psi \rightarrow \chi$}
+                            \BinaryInfC{$\chi$}
+                                \RightLabel{(3)}
+                                \UnaryInfC{$\varphi \rightarrow \chi$}
+                                    \RightLabel{(2)}
+                                    \UnaryInfC{$\psi \rightarrow (\varphi \rightarrow \chi)$}
+                                        \RightLabel{(1)}
+                                        \UnaryInfC{$(\varphi \rightarrow (\psi \rightarrow \chi)) \rightarrow (\psi \rightarrow (\varphi \rightarrow \chi))$}
+                \end{prooftree}
+        \end{description}
+    \end{enumproblem}
+
+    \begin{enumproblem}\ 
+        \begin{description}
+            \item[$\mathrm{2N}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$[\varphi]^1$}
+                    \AxiomC{$[\neg \varphi]^2$}
+                        \RightLabel{(2)}
+                        \BinaryInfC{$\neg \neg \varphi$}
+                            \RightLabel{(1)}
+                            \UnaryInfC{$\varphi \rightarrow \neg \neg \varphi$}
+                \end{prooftree}
+
+            \item[$\mathrm{Co}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$[\varphi]^3$}
+                    \AxiomC{$[\varphi \rightarrow \psi]^1$}
+                        \BinaryInfC{$\psi$}
+                    \AxiomC{$[\neg \psi]^2$}
+                            \RightLabel{(3)}
+                            \BinaryInfC{$\neg \varphi$}
+                                \RightLabel{(2)}
+                                \UnaryInfC{$\neg \psi \rightarrow \neg \varphi$}
+                                    \RightLabel{(1)}
+                                    \UnaryInfC{$(\varphi \rightarrow \psi) \rightarrow (\neg \psi \rightarrow \neg \varphi)$}
+                \end{prooftree}
+        \end{description}
+    \end{enumproblem}
+
+    \begin{enumproblem}\ 
+        \begin{description}
+            \item[\underline{$\mathrm{2N}$}.]\ 
+                \begin{prooftree}
+                    \AxiomC{$[\neg \varphi]^2$}
+                    \AxiomC{$[\neg \neg \varphi]^1$}
+                        \RightLabel{(2)}
+                        \BinaryInfC{$\varphi$}
+                            \RightLabel{(1)}
+                            \UnaryInfC{$\neg \neg \varphi \rightarrow \varphi$}
+                \end{prooftree}
+
+            \item[\underline{$\mathrm{Co}$}.]\ 
+                \begin{prooftree}
+                    \AxiomC{$[\neg \psi]^3$}
+                    \AxiomC{$[\neg \psi \rightarrow \neg \varphi]^1$}
+                        \BinaryInfC{$\neg \varphi$}
+                    \AxiomC{$[\varphi]^2$}
+                            \RightLabel{(3)}
+                            \BinaryInfC{$\psi$}
+                                \RightLabel{(2)}
+                                \UnaryInfC{$\varphi \rightarrow \psi$}
+                                    \RightLabel{(1)}
+                                    \UnaryInfC{$(\neg \psi \rightarrow \neg \varphi) \rightarrow (\varphi \rightarrow \psi)$}
+                \end{prooftree}
+
+            \item[$\mathrm{NE}$.]\ 
+                \begin{prooftree}
+                    \AxiomC{$[\neg \varphi]^3$}
+                    \AxiomC{$[\neg \varphi \rightarrow \psi]^1$}
+                        \BinaryInfC{$\psi$}
+                    \AxiomC{$[\neg \varphi]^3$}
+                    \AxiomC{$[\neg \varphi \rightarrow \neg \psi]^2$}
+                        \BinaryInfC{$\neg \psi$}
+                            \RightLabel{(3)}
+                            \BinaryInfC{$\varphi$}
+                                \RightLabel{(2)}
+                                \UnaryInfC{$(\neg \varphi \rightarrow \neg \psi) \rightarrow \varphi$}
+                                    \RightLabel{(1)}
+                                    \UnaryInfC{$(\neg \varphi \rightarrow \psi) \rightarrow ((\neg \varphi \rightarrow \neg \psi) \rightarrow \varphi)$}
+                \end{prooftree}
+        \end{description}
+    \end{enumproblem}
+
+    \section{PCL: естественная дедукция II}\reset
+
+    \begin{enumproblem}\ItemedProblem\ 
+        \begin{enumerate}
+            \item Итог: $4/4$. Без $\neg\mathrm{Elim}$.
+                \begin{prooftree}
+                    \AxiomC{$[p \vee q]^1$}
+                    \AxiomC{$[p]^2$}
+                        \UnaryInfC{$q \vee p$}
+                    \AxiomC{$[q]^2$}
+                        \UnaryInfC{$q \vee p$}
+                            \RightLabel{(2)}
+                            \TrinaryInfC{$q \vee p$}
+                                \RightLabel{(1)}
+                                \UnaryInfC{$(p \vee q) \rightarrow (q \vee p)$}
+                \end{prooftree}
+            
+            \item Итог: $8/8$. Без $\neg\mathrm{Elim}$.
+                \begin{prooftree}
+                    \AxiomC{$[(p \vee q) \vee r]^1$}
+                    \AxiomC{$[p \vee q]^2$}
+                    \AxiomC{$[p]^3$}
+                        \UnaryInfC{$p \vee (q \vee r)$}
+                    \AxiomC{$[q]^3$}
+                        \UnaryInfC{$q \vee r$}
+                            \UnaryInfC{$p \vee (q \vee r)$}
+                                \RightLabel{(3)}
+                                \TrinaryInfC{$p \vee (q \vee r)$}
+                    \AxiomC{$[r]^2$}
+                        \UnaryInfC{$q \vee r$}
+                            \UnaryInfC{$p \vee (q \vee r)$}
+                                    \RightLabel{(2)}
+                                    \TrinaryInfC{$p \vee (q \vee r)$}
+                                        \RightLabel{(1)}
+                                        \UnaryInfC{$((p \vee q) \vee r) \rightarrow (p \vee (q \vee r))$}
+                \end{prooftree}
+        \end{enumerate}
+    \end{enumproblem}
+
+    \begin{enumproblem}\ItemedProblem\ 
+        \begin{enumerate}
+            \item Итог: $9/9$. Без $\neg\mathrm{Elim}$.
+                \begin{prooftree}
+                    \AxiomC{$[p \wedge (q \vee r)]^1$}
+                        \UnaryInfC{$q \vee r$}
+                    \AxiomC{$[p \wedge (q \vee r)]^1$}
+                        \UnaryInfC{$p$}
+                    \AxiomC{$[q]^2$}
+                            \BinaryInfC{$p \wedge q$}
+                                \UnaryInfC{$(p \wedge q) \vee (p \wedge r)$}
+                    \AxiomC{$[p \wedge (q \vee r)]^1$}
+                        \UnaryInfC{$p$}
+                    \AxiomC{$[r]^2$}
+                            \BinaryInfC{$p \wedge r$}
+                                \UnaryInfC{$(p \wedge q) \vee (p \wedge r)$}
+                                    \RightLabel{(2)}
+                                    \TrinaryInfC{$(p \wedge q) \vee (p \wedge r)$}
+                                        \RightLabel{(1)}
+                                        \UnaryInfC{$(p \wedge (q \vee r)) \rightarrow ((p \wedge q) \vee (p \wedge r))$}
+                \end{prooftree}
+            
+            \item Итог: $10/10$. Без $\neg\mathrm{Elim}$.
+                \begin{prooftree}
+                    \AxiomC{$[(p \wedge q) \vee (p \wedge r)]^1$}
+                    \AxiomC{$[p \wedge q]^2$}
+                        \UnaryInfC{$p$}
+                    \AxiomC{$[p \wedge r]^2$}
+                        \UnaryInfC{$p$}
+                            \RightLabel{(2)}
+                            \TrinaryInfC{$p$}
+                    \AxiomC{$[(p \wedge q) \vee (p \wedge r)]^1$}
+                    \AxiomC{$[p \wedge q]^3$}
+                        \UnaryInfC{$q$}
+                            \UnaryInfC{$q \vee r$}
+                    \AxiomC{$[p \wedge r]^3$}
+                        \UnaryInfC{$r$}
+                            \UnaryInfC{$q \vee r$}
+                                \RightLabel{(3)}
+                                \TrinaryInfC{$p$}
+                                    \BinaryInfC{$p \wedge (q \vee r)$}
+                                        \RightLabel{(1)}
+                                        \UnaryInfC{$((p \wedge q) \vee (p \wedge r)) \rightarrow (p \wedge (q \vee r))$}
+                \end{prooftree}
+            
+            \item Итог: $10/10$. Без $\neg\mathrm{Elim}$.
+                \begin{prooftree}
+                    \AxiomC{$[p \vee (q \wedge r)]^1$}
+                    \AxiomC{$[p]^2$}
+                        \UnaryInfC{$p \vee q$}
+                    \AxiomC{$[q \wedge r]^2$}
+                        \UnaryInfC{$q$}
+                            \UnaryInfC{$p \vee q$}
+                                \RightLabel{(2)}
+                                \TrinaryInfC{$p \vee q$}
+                    \AxiomC{$[p \vee (q \wedge r)]^1$}
+                    \AxiomC{$[p]^3$}
+                        \UnaryInfC{$p \vee r$}
+                    \AxiomC{$[q \wedge r]^3$}
+                        \UnaryInfC{$r$}
+                            \UnaryInfC{$p \vee r$}
+                                \RightLabel{(3)}
+                                \TrinaryInfC{$p \vee r$}
+                                    \BinaryInfC{$(p \vee q) \wedge (p \vee r)$}
+                                        \RightLabel{(1)}
+                                        \UnaryInfC{$(p \vee (q \wedge r)) \rightarrow ((p \vee q) \wedge (p \vee r))$}
+                \end{prooftree}
+            
+            \item Итог: $9/9$. Без $\neg\mathrm{Elim}$.
+                \begin{prooftree}
+                    \AxiomC{$[(p \vee q) \wedge (p \vee r)]^1$}
+                        \UnaryInfC{$p \vee q$}
+                    \AxiomC{$[p]^2$}
+                        \UnaryInfC{$p \vee (q \wedge r)$}
+                    \AxiomC{$[(p \vee q) \wedge (p \vee r)]^1$}
+                        \UnaryInfC{$p \vee r$}
+                    \AxiomC{$[p]^3$}
+                        \UnaryInfC{$p \vee (q \wedge r)$}
+                    \AxiomC{$[q]^2$}
+                    \AxiomC{$[r]^3$}
+                        \BinaryInfC{$q \wedge r$}
+                            \UnaryInfC{$p \vee (q \wedge r)$}
+                                \RightLabel{(3)}
+                                \TrinaryInfC{$p \vee (q \wedge r)$}
+                                    \RightLabel{(2)}
+                                    \TrinaryInfC{$p \vee (q \wedge r)$}
+                                        \RightLabel{(1)}
+                                        \UnaryInfC{$((p \vee q) \wedge (p \vee r)) \rightarrow (p \vee (q \wedge r))$}
+                \end{prooftree}
+        \end{enumerate}
+    \end{enumproblem}
+
+    \begin{enumproblem}\ItemedProblem\ 
+        \begin{enumerate}
+            \item Итог: $6/6$. Без $\neg\mathrm{Elim}$.
+                \begin{prooftree}
+                    \AxiomC{$[p]^2$}
+                        \UnaryInfC{$p \vee q$}
+                    \AxiomC{$[\neg (p \vee q)]^1$}
+                            \RightLabel{(2)}
+                            \BinaryInfC{$\neg p$}
+                    \AxiomC{$[q]^3$}
+                        \UnaryInfC{$p \vee q$}
+                    \AxiomC{$[\neg (p \vee q)]^1$}
+                            \RightLabel{(3)}
+                            \BinaryInfC{$\neg q$}
+                                \BinaryInfC{$\neg p \wedge \neg q$}
+                                    \RightLabel{(1)}
+                                    \UnaryInfC{$\neg (p \vee q) \rightarrow (\neg p \wedge \neg q)$}
+                \end{prooftree}
+            
+            \item Итог: $7/7$. Без $\neg\mathrm{Elim}$.
+                \begin{prooftree}
+                    \AxiomC{$[\neg p \wedge \neg q]^1$}
+                    \AxiomC{$[p \vee q]^2$}
+                    \AxiomC{$[p]^3$}
+                    \AxiomC{$[\neg p \wedge \neg q]^4$}
+                        \UnaryInfC{$\neg p$}
+                            \RightLabel{(4)}
+                            \BinaryInfC{$\neg (\neg p \wedge \neg q)$}
+                    \AxiomC{$[q]^3$}
+                    \AxiomC{$[\neg p \wedge \neg q]^5$}
+                        \UnaryInfC{$\neg q$}
+                            \RightLabel{(5)}
+                            \BinaryInfC{$\neg (\neg p \wedge \neg q)$}
+                                \RightLabel{(3)}
+                                \TrinaryInfC{$\neg (\neg p \wedge \neg q)$}
+                                    \RightLabel{(2)}
+                                    \BinaryInfC{$\neg (p \vee q)$}
+                                        \RightLabel{(1)}
+                                        \UnaryInfC{$(\neg p \wedge \neg q) \rightarrow \neg (p \vee q)$}
+                \end{prooftree}
+            
+            \item Итог: $7/7$. С $\neg\mathrm{Elim}$.
+                \begin{prooftree}
+                    \AxiomC{$[\neg (p \wedge q)]^1$}
+                    \AxiomC{$[\neg p]^3$}
+                        \UnaryInfC{$\neg p \vee \neg q$}
+                    \AxiomC{$[\neg (\neg p \vee \neg q)]^2$}
+                            \RightLabel{(3)}
+                            \BinaryInfC{$p$}
+                    \AxiomC{$[\neg q]^4$}
+                        \UnaryInfC{$\neg p \vee \neg q$}
+                    \AxiomC{$[\neg (\neg p \vee \neg q)]^2$}
+                            \RightLabel{(4)}
+                            \BinaryInfC{$q$}
+                                \BinaryInfC{$p \wedge q$}
+                                    \RightLabel{(2)}
+                                    \BinaryInfC{$\neg p \vee \neg q$}
+                                        \RightLabel{(1)}
+                                        \UnaryInfC{$\neg (p \wedge q) \rightarrow (\neg p \vee \neg q)$}
+                \end{prooftree}
+            
+            \item Итог: $6/6$. Без $\neg\mathrm{Elim}$.
+                \begin{prooftree}
+                    \AxiomC{$[\neg p \vee \neg q]^1$}
+                    \AxiomC{$[p \wedge q]^3$}
+                        \UnaryInfC{$p$}
+                    \AxiomC{$[\neg p]^2$}
+                            \RightLabel{(3)}
+                            \BinaryInfC{$\neg (p \wedge q)$}
+                    \AxiomC{$[p \wedge q]^4$}
+                        \UnaryInfC{$q$}
+                    \AxiomC{$[\neg q]^2$}
+                            \RightLabel{(4)}
+                            \BinaryInfC{$\neg (p \wedge q)$}
+                                \RightLabel{(2)}
+                                \TrinaryInfC{$\neg (p \wedge q)$}
+                                    \RightLabel{(1)}
+                                    \UnaryInfC{$(\neg p \vee \neg q) \rightarrow \neg (p \wedge q)$}
+                \end{prooftree}
+        \end{enumerate}
+    \end{enumproblem}
+
+    \begin{enumproblem}\ItemedProblem\ 
+        \begin{enumerate}
+            \item Итог: $4/4$. С $\neg\mathrm{Elim}$.
+                \begin{prooftree}
+                    \AxiomC{$[\neg p \vee q]^1$}
+                    \AxiomC{$[p]^2$}
+                    \AxiomC{$[\neg p]^3$}
+                        \RightLabel{(4)}
+                        \BinaryInfC{$q$}
+                    \AxiomC{$[q]^3$}
+                            \RightLabel{(3)}
+                            \TrinaryInfC{$q$}
+                                \RightLabel{(2)}
+                                \UnaryInfC{$p \rightarrow q$}
+                                    \RightLabel{(1)}
+                                    \UnaryInfC{$(\neg p \vee q) \rightarrow (p \rightarrow q)$}
+                \end{prooftree}
+            
+            \item Итог: $6/6$. С $\neg\mathrm{Elim}$.
+                \begin{prooftree}
+                    \AxiomC{$[\neg (\neg p \vee q)]^2$}
+                    \AxiomC{$[\neg (\neg p \vee q)]^2$}
+                    \AxiomC{$[\neg p]^3$}
+                        \UnaryInfC{$\neg p \vee q$}
+                            \RightLabel{(3)}
+                            \BinaryInfC{$p$}
+                    \AxiomC{$[p \rightarrow q]^1$}
+                                \BinaryInfC{$q$}
+                                    \UnaryInfC{$\neg p \vee q$}
+                                        \RightLabel{(2)}
+                                        \BinaryInfC{$\neg p \vee q$}
+                                            \RightLabel{(1)}
+                                            \UnaryInfC{$(p \rightarrow q) \rightarrow (\neg p \vee q)$}
+                \end{prooftree}
+            
+            \item Итог: $5/5$. С $\neg\mathrm{Elim}$.
+                \begin{prooftree}
+                    \AxiomC{$[\neg p]^2$}
+                    \AxiomC{$[p]^3$}
+                        \RightLabel{(4)}
+                        \BinaryInfC{$q$}
+                            \RightLabel{(3)}
+                            \UnaryInfC{$p \rightarrow q$}
+                    \AxiomC{$[(p \rightarrow q) \rightarrow p]^1$}
+                                \BinaryInfC{$p$}
+                    \AxiomC{$[\neg p]$}
+                                    \RightLabel{(2)}
+                                    \BinaryInfC{$p$}
+                                        \RightLabel{(1)}
+                                        \UnaryInfC{$((p \rightarrow q) \rightarrow p) \rightarrow p$}
+                \end{prooftree}
+        \end{enumerate}
+    \end{enumproblem}
+
+    \section{PCL: гильбертовское исчисление}\reset
+
+    \begin{enumproblem}\ 
+        \begin{description}
+            \item[$\mathrm{IT}$.] Покажем, что $\{(\varphi \rightarrow \psi); (\psi \rightarrow \chi)\} \vdash (\varphi \rightarrow \chi)$.
+                \begin{center}
+                    \begin{tabular}{rll}
+                        1.& $(\psi \rightarrow \chi) \rightarrow (\varphi \rightarrow (\psi \rightarrow \chi))$& $\mathrm{I1}$\\
+                        2.& $(\psi \rightarrow \chi)$& гипотеза\\
+                        3.& $\varphi \rightarrow (\psi \rightarrow \chi)$& из 1 и 2\\
+                        4.& $(\varphi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\varphi \rightarrow \psi) \rightarrow (\varphi \rightarrow \chi))$& $\mathrm{I2}$\\
+                        5.& $(\varphi \rightarrow \psi) \rightarrow (\varphi \rightarrow \chi)$& из 3 и 4\\
+                        6.& $(\varphi \rightarrow \psi)$& гипотеза\\
+                        7.& $(\varphi \rightarrow \chi)$& из 5 и 6\\
+                    \end{tabular}
+                \end{center}
+                Убирая по одной гипотезы, получаем из теоремы дедукции (а она выводится благодаря аксиомам $\mathrm{I1}$ и $\mathrm{I2}$) утверждение $(\varphi \rightarrow \psi) \rightarrow ((\psi \rightarrow \chi) \rightarrow (\varphi \rightarrow \chi))$.
+
+            \item[$\mathrm{PE}$.] Покажем, что $\{\varphi \rightarrow (\psi \rightarrow \chi); \phi; \psi\} \vdash \psi \rightarrow (\varphi \rightarrow \chi)$.
+                \begin{center}
+                    \begin{tabular}{rll}
+                        1.& $\varphi \rightarrow (\psi \rightarrow \chi)$& гипотеза\\
+                        2.& $\varphi$& гипотеза\\
+                        3.& $\psi \rightarrow \chi$& из 1 и 2\\
+                        4.& $\psi$& гипотеза\\
+                        5.& $\chi$& из 3 и 4\\
+                    \end{tabular}
+                \end{center}
+                Убирая по одной в правильном порядке гипотезы, получаем из теоремы дедукции (а она выводится благодаря аксиомам $\mathrm{I1}$ и $\mathrm{I2}$) утверждение $(\varphi \rightarrow (\psi \rightarrow \chi)) \rightarrow (\psi \rightarrow (\varphi \rightarrow \chi))$.
+        \end{description}
+    \end{enumproblem}
+
+    \begin{enumproblem}\ 
+        \begin{description}
+            \item[$\mathrm{2N}$.] Покажем, что $\{\varphi\} \vdash \neg \neg \varphi$.
+                \begin{center}
+                    \begin{tabular}{rll}
+                        1.& $\varphi \rightarrow (\neg \varphi \rightarrow \varphi)$& $\mathrm{I1}$\\
+                        2.& $\varphi$& гипотеза\\
+                        3.& $\neg \varphi \rightarrow \varphi$& из 1 и 2\\
+                        4.& $(\neg \varphi \rightarrow \varphi) \rightarrow ((\neg \varphi \rightarrow \neg \varphi) \rightarrow \neg \neg \varphi)$& $\mathrm{N1}$\\
+                        5.& $(\neg \varphi \rightarrow \neg \varphi) \rightarrow \neg \neg \varphi$& из 3 и 4\\
+                        6.& $\neg \varphi \rightarrow \neg \varphi$& лемма ($\mathrm{I1}$ и $\mathrm{I2}$)\\
+                        7.& $\neg \neg \varphi$& из 5 и 6\\
+                    \end{tabular}
+                \end{center}
+                Убирая по одной гипотезы, получаем из теоремы дедукции (а она выводится благодаря аксиомам $\mathrm{I1}$ и $\mathrm{I2}$) утверждение $\varphi \rightarrow \neg \neg \varphi$.
+
+            \item[$\mathrm{Co}$.] Покажем, что $\{\varphi \rightarrow \psi; \neg \psi\} \vdash \neg \varphi$.
+                \begin{center}
+                    \begin{tabular}{rll}
+                        1.& $\neg \psi \rightarrow (\varphi \rightarrow \neg \psi)$& $\mathrm{I1}$\\
+                        2.& $\neg \psi$& гипотеза\\
+                        3.& $\varphi \rightarrow \neg \psi$& из 1 и 2\\
+                        4.& $(\varphi \rightarrow \psi) \rightarrow ((\varphi \rightarrow \neg \psi) \rightarrow \neg \varphi)$& $\mathrm{N1}$\\
+                        5.& $\varphi \rightarrow \psi$& гипотеза\\
+                        6.& $(\varphi \rightarrow \neg \psi) \rightarrow \neg \varphi$& из 4 и 5\\
+                        7.& $\neg \varphi$& из 3 и 6\\
+                    \end{tabular}
+                \end{center}
+                Убирая по одной в правильном порядке гипотезы, получаем из теоремы дедукции (а она выводится благодаря аксиомам $\mathrm{I1}$ и $\mathrm{I2}$) утверждение $(\varphi \rightarrow \psi) \rightarrow (\neg \psi \rightarrow \neg \varphi)$.
+        \end{description}
+    \end{enumproblem}
+
+    \begin{enumproblem}\ 
+        \begin{description}
+            \item[\underline{$\mathrm{2N}$}.] Покажем, что $\{\neg \neg \varphi\} \vdash \varphi$.
+                \begin{center}
+                    \begin{tabular}{rll}
+                        1.& $\neg \neg \varphi \rightarrow (\neg \varphi \rightarrow \varphi)$& $\mathrm{N2}$\\
+                        2.& $\neg \neg \varphi$& гипотеза\\
+                        3.& $\neg \varphi \rightarrow \varphi$& из 1 и 2\\
+                        4.& $\varphi \rightarrow \varphi$& лемма ($\mathrm{I1}$ и $\mathrm{I2}$)\\
+                        5.& $(\varphi \rightarrow \varphi) \rightarrow ((\neg \varphi \rightarrow \varphi) \rightarrow (\varphi \vee \neg \varphi \rightarrow \varphi))$& $\mathrm{D3}$\\
+                        6.& $(\neg \varphi \rightarrow \varphi) \rightarrow (\varphi \vee \neg \varphi \rightarrow \varphi)$& из 4 и 5\\
+                        7.& $\varphi \vee \neg \varphi \rightarrow \varphi$& из 3 и 6\\
+                        8.& $\varphi \vee \neg$& $\mathrm{N3}$\\
+                        9.& $\varphi$& из 7 и 8\\
+                    \end{tabular}
+                \end{center}
+                Убирая по одной гипотезы, получаем из теоремы дедукции (а она выводится благодаря аксиомам $\mathrm{I1}$ и $\mathrm{I2}$) утверждение $\neg \neg \varphi \rightarrow \varphi$.
+
+            \item[\underline{$\mathrm{Co}$}.] Покажем, что $\{\neg \psi \rightarrow \neg \varphi\} \vdash \varphi \rightarrow \psi$.
+                \begin{center}
+                    \begin{tabular}{rll}
+                        1.& $\psi \rightarrow (\varphi \rightarrow \psi)$& $\mathrm{I1}$\\
+                        2.& $\neg \varphi \rightarrow (\varphi \rightarrow \psi)$& $\mathrm{N2}$\\
+                        3.& $\neg \psi \rightarrow \neg \varphi$& гипотеза\\
+                        4.& $(\neg \psi \rightarrow \neg \varphi) \rightarrow ((\neg \varphi \rightarrow (\varphi \rightarrow \psi)) \rightarrow (\neg \psi \rightarrow (\varphi \rightarrow \psi)))$& $\mathrm{IT}$ ($\mathrm{I1}$ и $\mathrm{I2}$)\\
+                        5.& $(\neg \varphi \rightarrow (\varphi \rightarrow \psi)) \rightarrow (\neg \psi \rightarrow (\varphi \rightarrow \psi))$& из 3 и 4\\
+                        6.& $\neg \psi \rightarrow (\varphi \rightarrow \psi)$& из 2 и 5\\
+                        7.& $(\psi \rightarrow (\varphi \rightarrow \psi)) \rightarrow ((\neg \psi \rightarrow (\varphi \rightarrow \psi)) \rightarrow (\psi \vee \neg \psi \rightarrow (\varphi \rightarrow \psi)))$& $\mathrm{D3}$\\
+                        8.& $(\neg \psi \rightarrow (\varphi \rightarrow \psi)) \rightarrow (\psi \vee \neg \psi \rightarrow (\varphi \rightarrow \psi))$& из 1 и 7\\
+                        9.& $\psi \vee \neg \psi \rightarrow (\varphi \rightarrow \psi)$& из 6 и 8\\
+                        10.& $\psi \vee \neg \psi$& $\mathrm{N3}$\\
+                        11.& $\varphi \rightarrow \psi$& из 9 и 10\\
+                    \end{tabular}
+                \end{center}
+               Убирая по одной в правильном порядке гипотезы, получаем из теоремы дедукции (а она выводится благодаря аксиомам $\mathrm{I1}$ и $\mathrm{I2}$) утверждение $(\neg \psi \rightarrow \neg \varphi) \vdash (\varphi \rightarrow \psi)$.
+        \end{description}
+    \end{enumproblem}
+
+    \begin{enumproblem}\ 
+        \begin{enumerate}
+            \item Покажем, что $\{\neg \varphi \rightarrow \psi; \neg \varphi \rightarrow \neg \psi\} \vdash \varphi$.
+                \begin{center}
+                    \begin{tabular}{rll}
+                        1.& $(\neg \varphi \rightarrow \psi) \rightarrow ((\neg \varphi \rightarrow \neg \psi) \rightarrow \neg \neg \varphi)$& $\mathrm{N1}$\\
+                        2.& $\neg \varphi \rightarrow \psi$& гипотеза\\
+                        3.& $(\neg \varphi \rightarrow \neg \psi) \rightarrow \neg \neg \varphi$& из 1 и 2\\
+                        4.& $\neg \varphi \rightarrow \neg \psi$& гипотеза\\
+                        5.& $\neg \neg \varphi$& из 3 и 4\\
+                        6.& $\neg \neg \varphi \rightarrow \varphi$& $\overline{\mathrm{2N}}$\\
+                        7.& $\varphi$& из 5 и 6\\
+                    \end{tabular}
+                \end{center}
+                Убирая по одной гипотезы, получаем из теоремы дедукции (а она выводится благодаря аксиомам $\mathrm{I1}$ и $\mathrm{I2}$) утверждение $(\neg \varphi \rightarrow \psi) \rightarrow ((\neg \varphi \rightarrow \neg \psi) \rightarrow \varphi)$.
+
+            \item\ 
+                \begin{description}
+                    \item[\underline{$\mathrm{2N}$}.] Покажем, что $\{\neg \neg \varphi\} \vdash \varphi$.
+                        \begin{center}
+                            \begin{tabular}{rll}
+                                1.& $(\neg \varphi \rightarrow \neg \varphi) \rightarrow ((\neg \varphi \rightarrow \neg \neg \varphi) \rightarrow \varphi)$& $\mathrm{NE}$\\
+                                2.& $\neg \varphi \rightarrow \neg \varphi$& лемма ($\mathrm{I1}$ и $\mathrm{I2}$)\\
+                                3.& $(\neg \varphi \rightarrow \neg \neg \varphi) \rightarrow \varphi$& из 1 и 2\\
+                                4.& $\neg \neg \varphi \rightarrow (\neg \varphi \rightarrow \neg \neg \varphi)$& $\mathrm{I1}$\\
+                                5.& $\neg \neg \varphi$& гипотеза\\
+                                6.& $\neg \varphi \rightarrow \neg \neg \varphi$& из 4 и 5\\
+                                7.& $\varphi$& из 3 и 6\\
+                            \end{tabular}
+                        \end{center}
+                        Убирая по одной в правильном порядке гипотезы, получаем из теоремы дедукции (а она выводится благодаря аксиомам $\mathrm{I1}$ и $\mathrm{I2}$) утверждение $\neg \neg \varphi \rightarrow \varphi$.
+                    
+                    \item[$\mathrm{N1}$.] Покажем, что $\{\varphi \rightarrow \psi; \varphi \rightarrow \neg \psi\} \vdash \neg \varphi$.
+                        \begin{center}
+                            \begin{tabular}{rll}
+                                1.& $\neg \neg \varphi \rightarrow \varphi$& $\underline{\mathrm{2N}}$ ($\mathrm{I1}$, $\mathrm{I2}$ и $\mathrm{NE}$)\\
+                                2.& $(\neg \neg \varphi \rightarrow \varphi) \rightarrow ((\varphi \rightarrow \psi) \rightarrow (\neg \neg \varphi \rightarrow \psi))$& $\mathrm{IT}$ ($\mathrm{I1}$ и $\mathrm{I2}$)\\
+                                3.& $(\neg \neg \varphi \rightarrow \varphi) \rightarrow ((\varphi \rightarrow \neg \psi) \rightarrow (\neg \neg \varphi \rightarrow \neg \psi))$& $\mathrm{IT}$ ($\mathrm{I1}$ и $\mathrm{I2}$)\\
+                                4.& $(\varphi \rightarrow \psi) \rightarrow (\neg \neg \varphi \rightarrow \psi)$& из 1 и 2\\
+                                5.& $(\varphi \rightarrow \neg \psi) \rightarrow (\neg \neg \varphi \rightarrow \neg \psi)$& из 1 и 3\\
+                                6.& $\varphi \rightarrow \psi$& гипотеза\\
+                                7.& $\varphi \rightarrow \neg \psi$& гипотеза\\
+                                8.& $\neg \neg \varphi \rightarrow \psi$& из 4 и 6\\
+                                9.& $\neg \neg \varphi \rightarrow \neg \psi$& из 5 и 7\\
+                                10.& $(\neg \neg \varphi \rightarrow \psi) \rightarrow ((\neg \neg \varphi \rightarrow \neg \psi) \rightarrow \neg \varphi)$& $\mathrm{NE}$\\
+                                11.& $(\neg \neg \varphi \rightarrow \neg \psi) \rightarrow \neg \varphi$& из 8 и 10\\
+                                12.& $\neg \varphi$& из 9 и 11\\
+                            \end{tabular}
+                        \end{center}
+                        Убирая по одной в правильном порядке гипотезы, получаем из теоремы дедукции (а она выводится благодаря аксиомам $\mathrm{I1}$ и $\mathrm{I2}$) утверждение $(\varphi \rightarrow \psi) \rightarrow ((\varphi \rightarrow \neg \psi) \rightarrow \neg \varphi)$.
+                \end{description}
+        \end{enumerate}
+    \end{enumproblem}
+
+    \begin{enumproblem}\ 
+        \begin{description}
+            \item[$\mathrm{N2}$.] Покажем, что $\{\varphi; \neg \varphi\} \vdash \psi$.
+                \begin{center}
+                    \begin{tabular}{rll}
+                        1.& $\varphi \rightarrow (\neg \psi \rightarrow \varphi)$& $\mathrm{I1}$\\
+                        2.& $\varphi$& гипотеза\\
+                        3.& $\neg \psi \rightarrow \varphi$& из 1 и 2\\
+                        4.& $\neg \varphi \rightarrow (\neg \psi \rightarrow \neg \varphi)$& $\mathrm{I1}$\\
+                        5.& $\neg \varphi$& гипотеза\\
+                        6.& $\neg \psi \rightarrow \neg \varphi$& из 4 и 5\\
+                        7.& $(\neg \psi \rightarrow \varphi) \rightarrow ((\neg \psi \rightarrow \neg \varphi) \rightarrow \psi)$& $\mathrm{NE}$\\
+                        8.& $(\neg \psi \rightarrow \neg \varphi) \rightarrow \psi$& из 3 и 7\\
+                        9.& $\psi$& из 6 и 8\\
+                    \end{tabular}
+                \end{center}
+                Убирая по одной в правильном порядке гипотезы, получаем из теоремы дедукции (а она выводится благодаря аксиомам $\mathrm{I1}$ и $\mathrm{I2}$) утверждение $\neg \varphi \rightarrow (\varphi \rightarrow \psi)$.
+            
+            \item[$\mathrm{N3}$.]\ 
+                \begin{center}
+                    \begin{tabular}{rll}
+                        1.& $\varphi \rightarrow (\varphi \vee \neg \varphi)$& $\mathrm{D1}$\\
+                        2.& $(\varphi \rightarrow (\varphi \vee \neg \varphi)) \rightarrow ((\varphi \rightarrow \neg (\varphi \vee \neg \varphi)) \rightarrow \neg \varphi)$& $\mathrm{N1}$ ($\mathrm{I1}$, $\mathrm{I2}$ и $\mathrm{NE}$)\\
+                        3.& $(\varphi \rightarrow \neg (\varphi \vee \neg \varphi)) \rightarrow \neg \varphi$& из 1 и 2\\
+                        4.& $\neg (\varphi \vee \neg \varphi) \rightarrow (\varphi \rightarrow \neg (\varphi \vee \neg \varphi))$& $\mathrm{I1}$\\
+                        5.& $(\neg (\varphi \vee \neg \varphi) \rightarrow (\varphi \rightarrow \neg (\varphi \vee \neg \varphi))) \rightarrow$& $\mathrm{IT}$ ($\mathrm{I1}$ и $\mathrm{I2}$)\\
+                        &$(((\varphi \rightarrow \neg (\varphi \vee \neg \varphi)) \rightarrow \neg \varphi) \rightarrow (\neg (\varphi \vee \neg \varphi) \rightarrow \neg \varphi))$&\\
+                        6.& $((\varphi \rightarrow \neg (\varphi \vee \neg \varphi)) \rightarrow \neg \varphi) \rightarrow (\neg (\varphi \vee \neg \varphi) \rightarrow \neg \varphi)$& из 4 и 5\\
+                        7.& $\neg (\varphi \vee \neg \varphi) \rightarrow \neg \varphi$& из 3 и 6\\
+                        8.& $\neg \varphi \rightarrow (\varphi \vee \neg \varphi)$& $\mathrm{D2}$\\
+                        9.& $(\neg \varphi \rightarrow (\varphi \vee \neg \varphi)) \rightarrow ((\neg \varphi \rightarrow \neg (\varphi \vee \neg \varphi)) \rightarrow \varphi)$& $\mathrm{NE}$\\
+                        10.& $(\neg \varphi \rightarrow \neg (\varphi \vee \neg \varphi)) \rightarrow \varphi$& из 8 и 9\\
+                        11.& $\neg (\varphi \vee \neg \varphi) \rightarrow (\neg \varphi \rightarrow \neg (\varphi \vee \neg \varphi))$& $\mathrm{I1}$\\
+                        12.& $(\neg (\varphi \vee \neg \varphi) \rightarrow (\neg \varphi \rightarrow \neg (\varphi \vee \neg \varphi))) \rightarrow$& $\mathrm{IT}$ ($\mathrm{I1}$ и $\mathrm{I2}$)\\
+                        &$(((\neg \varphi \rightarrow \neg (\varphi \vee \neg \varphi)) \rightarrow \varphi) \rightarrow (\neg (\varphi \vee \neg \varphi) \rightarrow \varphi))$&\\
+                        13.& $((\neg \varphi \rightarrow \neg (\varphi \vee \neg \varphi)) \rightarrow \varphi) \rightarrow (\neg (\varphi \vee \neg \varphi) \rightarrow \varphi)$& из 11 и 12\\
+                        14.& $\neg (\varphi \vee \neg \varphi) \rightarrow \varphi$& из 10 и 13\\
+                        15.& $(\neg (\varphi \vee \neg \varphi) \rightarrow \varphi) \rightarrow ((\neg (\varphi \vee \neg \varphi) \rightarrow \neg \varphi) \rightarrow (\varphi \vee \neg \varphi))$& $\mathrm{NE}$\\
+                        16.& $(\neg (\varphi \vee \neg \varphi) \rightarrow \neg \varphi) \rightarrow (\varphi \vee \neg \varphi)$& из 14 и 15\\
+                        17.& $\varphi \vee \neg \varphi$& из 7 и 16\\
+                    \end{tabular}
+                \end{center}
+        \end{description}
+    \end{enumproblem}
+
+    \begin{enumproblem}
+        TODO
+    \end{enumproblem}
+
+    \begin{enumproblem}\ 
+        \begin{enumerate}
+            \item Покажем, что $\{(\varphi \rightarrow \psi); (\psi \rightarrow \chi)\} \vdash (\varphi \rightarrow \chi)$.
+                \begin{center}
+                    \begin{tabular}{rll}
+                        1.& $(\psi \rightarrow \chi) \rightarrow (\varphi \rightarrow (\psi \rightarrow \chi))$& $\mathrm{I1}$\\
+                        2.& $(\psi \rightarrow \chi)$& гипотеза\\
+                        3.& $\varphi \rightarrow (\psi \rightarrow \chi)$& из 1 и 2\\
+                        4.& $(\varphi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\varphi \rightarrow \psi) \rightarrow (\varphi \rightarrow \chi))$& $\mathrm{I2}$\\
+                        5.& $(\varphi \rightarrow \psi) \rightarrow (\varphi \rightarrow \chi)$& из 3 и 4\\
+                        6.& $(\varphi \rightarrow \psi)$& гипотеза\\
+                        7.& $(\varphi \rightarrow \chi)$& из 5 и 6\\
+                    \end{tabular}
+                \end{center}
+                Убирая по одной гипотезы, получаем из теоремы дедукции (а она выводится благодаря аксиомам $\mathrm{I1}$ и $\mathrm{I2}$) утверждение $(\varphi \rightarrow \psi) \rightarrow ((\psi \rightarrow \chi) \rightarrow (\varphi \rightarrow \chi))$.
+
+            \item Покажем, что $\{\varphi\} \vdash \neg \neg \varphi$.
+                \begin{center}
+                    \begin{tabular}{rll}
+                        1.& $\varphi \rightarrow (\neg \varphi \rightarrow \varphi)$& $\mathrm{I1}$\\
+                        2.& $\varphi$& гипотеза\\
+                        3.& $\neg \varphi \rightarrow \varphi$& из 1 и 2\\
+                        4.& $(\neg \varphi \rightarrow \varphi) \rightarrow ((\neg \varphi \rightarrow \neg \varphi) \rightarrow \neg \neg \varphi)$& $\mathrm{N1}$\\
+                        5.& $(\neg \varphi \rightarrow \neg \varphi) \rightarrow \neg \neg \varphi$& из 3 и 4\\
+                        6.& $\neg \varphi \rightarrow \neg \varphi$& лемма ($\mathrm{I1}$ и $\mathrm{I2}$)\\
+                        7.& $\neg \neg \varphi$& из 5 и 6\\
+                    \end{tabular}
+                \end{center}
+                Убирая по одной гипотезы, получаем из теоремы дедукции (а она выводится благодаря аксиомам $\mathrm{I1}$ и $\mathrm{I2}$) утверждение $\varphi \rightarrow \neg \neg \varphi$.
+        \end{enumerate}
+    \end{enumproblem}
+
+\end{document}

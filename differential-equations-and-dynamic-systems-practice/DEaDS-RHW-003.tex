@@ -1,0 +1,40 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+
+\title{Рейтинговое домашнее задание от 24.09\\Дифференциальные уравнения и динамические системы}
+\author{Глеб Минаев @ 204 (20.Б04-мкн)}
+\date{}
+
+\newcommand{\const}{\mathrm{const}}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{3}
+        Сначала давайте просто решим решим уравнение.
+        \[y' - y = - \frac{1}{x}\]
+        Введём функцию
+        \[\varphi(x) := e^{\int_0^x -1 dt} = e^{-x}.\]
+        Следовательно,
+        \begin{gather*}
+            \varphi y' - \varphi y = - \frac{\varphi}{x}\\
+            \varphi y' + \varphi' y = - \frac{\varphi}{x}\\
+            (\varphi y)' = - \frac{\varphi}{x}\\
+            \varphi y = \int -\frac{\varphi(t)}{t} dt = \int_1^{\infty} \frac{\varphi(t)}{t} dt - \int_1^x \frac{\varphi(t)}{t} dt + C = \int_x^{\infty} \frac{\varphi(t)}{t} dt + C\\
+            y = e^x \left(\int_x^{\infty} \frac{\varphi(t)}{t} dt + C\right) = \int_x^{\infty} \frac{e^{x - t}}{t} dt + C e^x
+        \end{gather*}
+        Тогда
+        \[\lim_{x \to \infty} \int_x^{\infty} \frac{e^{x - t}}{t} dt = 0,\]
+        а
+        \[
+            \lim_{x \to \infty} C e^x =
+            \begin{cases}
+                \pm \infty& \text{ если } C \neq 0,\\
+                0& \text{ если } C = 0.
+            \end{cases}
+        \]
+        Таким образом понятно, что $\lim_{x \to \infty} y(x) = 0$ тогда и только тогда, когда $C = 0$. Т.е. единственное решение, обладающее оговоренным в условии свойством, есть функция
+        \[y(x) = \int_x^{\infty} \frac{e^{x - t}}{t} dt.\]
+    \end{problem}
+\end{document}

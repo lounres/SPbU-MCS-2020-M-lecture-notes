@@ -1,0 +1,448 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{../.tex/mcs-notes}
+\usepackage{todonotes}
+\usepackage{multicol}
+\usepackage{float}
+
+\settitle
+{Дифференциальные уравнения и динамические системы.}
+{С.Ю.Пилюгин}
+{differential-equations-and-dynamic-systems/main.pdf}
+\date{}
+
+% \DeclareMathOperator{\Quot}{Quot}
+% \DeclareMathOperator*{\osc}{osc}
+% \DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\const}{const}
+% \DeclareMathOperator{\grad}{grad}
+% \newcommand{\eqdef}{\mathbin{\stackrel{\mathrm{def}}{=}}}
+% \newcommand{\True}{\mathrm{True}}
+% \newcommand{\False}{\mathrm{False}}
+% \newcommand{\Id}{\mathrm{Id}}
+% \renewcommand{\Re}{\mathrm{Re}}
+% \renewcommand{\Im}{\mathrm{Im}}
+
+\begin{document}
+    \maketitle
+
+    \listoftodos[TODOs]
+
+    \tableofcontents
+
+    \vspace{2em}
+    Литература:
+    \begin{itemize}
+        \item В.И. Арнольд, ``Обыкновенные дифференциальные уравнения''.
+        \item Ю.Н. Бибиков, ``Общий курс обыкновенных дифференциальных уравнений''.
+        \item С.Ю. Пилюгин, ``Пространства динамических систем'', 2008.
+    \end{itemize}
+
+    \begin{definition}
+        \emph{Дифференциальное уравнение} --- уравнение вида
+        \[f(x, y, y', \dots, y^{(m)}) = 0,\]
+        где $x$ --- независимая переменная, $f$ --- данная функция, а $y(x)$ --- искомая функция.
+
+        \emph{Обыкновенное дифференциальное уравнение} --- дифференциальное уравнение над $\RR$
+    \end{definition}
+
+    \begin{remark*}
+        Бывают ещё дифференциальные уравнения над комплексными числами и дифференциальные уравнения в частных производных. Но это уже совершенно другие области; а мы будем рассматривать только обыкновенные дифференциальные уравнения.
+    \end{remark*}
+
+    \subsection{Дифференциальные уравнения 1-го порядка, разрешённые относительно производных}
+
+    Пусть $x$ --- независимая переменная, $y(x)$ --- искомая функция. Тогда будем рассматривать уравнения вида
+    \[y' = f(x, y).\]
+    $f$ будет всегда рассматриваться непрерывной.
+
+    Зафиксируем область (открытое связное множество) $G$ в $\RR^2_{x, y}$. Будем также писать $f \in C(G)$.
+
+    \begin{definition}
+        $y: (a; b) \to \RR$ называется решением данного уравнения на $(a; b)$, если
+        \begin{itemize}
+            \item если $y$ дифференцируема на $(a; b)$,
+            \item для всякого $x \in (a; b)$ $(x, y(x)) \in G$,
+            \item $y'(x) = f(x, y(x))$ на $(a; b)$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{example}
+        При $k > 0$, $f(x, y) := ky$, $G = \RR^2$ имеем уравнение
+        \[y = ky'.\]
+        Тогда всем известно, что $y(x) = c e^{kx}$ для некоторого $c \in \RR$.
+    \end{example}
+
+    \begin{definition}
+        \emph{Интегральная кривая} --- график решения.
+    \end{definition}
+
+    \begin{definition}[задача Коши]
+        Пусть фиксирована $(x_0, y_0) \in G$. $y(x)$ --- \emph{решение задачи Коши с начальными данными $(x_0, y_0)$}, если
+        \begin{itemize}
+            \item $y(x)$ --- решение дифференциального уравнения на некотором интервале $(a; b) \ni x_0$,
+            \item $y(x_0) = y_0$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{example}
+        В случае того же уравнения
+        \[y' = ky\]
+        решением будет $y(x) = y_0 e^{k(x - x_0)}$.
+    \end{example}
+
+    \begin{definition}
+        $(x_0; y_0)$ называется \emph{точкой единственности}, если для всяких решений $y_1$ и $y_2$ задачи Коши с входными данными $(x_0; y_0)$ есть некоторая окрестность $x_0$, где $y_1$ и $y_2$ совпадают.
+    \end{definition}
+
+    \begin{example}
+        Возьмём уравнение
+        \[y' = 3 y^{2/3}\]
+        с входными данными $(0; 0)$. Понятно, что сюда подойдёт всякое решение вида $y(x) = cx^3$ ($c \in \RR$), что уже говорит о неединственности данной точки. Но есть случаи ещё хуже: можно склеить кусок слева одного решения и кусок справа другого и получить новое решение!
+    \end{example}
+
+    \begin{definition}[поле направлений]
+        Зададим в области $G$ поле направлений: в каждой точке $(x_0; y_0)$ поставим направление соответствующее производной $f(x_0, y_0)$. Это равносильно векторному полю, где вектор в точке $(x_0; y_0)$ --- $(1; f(x_0; y_0))$. Следовательно график всякого решения $y(x)$ будет касаться поля направлений в области определения, а векторное поле будет градиентом графиком решения с нативной параметризацией по $x$.
+    \end{definition}
+
+    \begin{theorem}[существования для дифференциального уравнения 1-го порядка]
+        Пусть имеется дифференциальное уравнение
+        \[y' = f(x, y)\]
+        и $f \in C(G)$. Тогда для всякой точки $(x_0; y_0) \in G$ существует решение задачи Коши с начальными данными $(x_0; y_0)$.
+    \end{theorem}
+
+    \begin{theorem}[единственности для дифференциального уравнения 1-го порядка]
+        Пусть имеется дифференциальное уравнение
+        \[y' = f(x, y)\]
+        и $f, \frac{\partial f}{\partial y} \in C(G)$. Тогда всякая точка $(x_0; y_0) \in G$ является точкой единственности.
+    \end{theorem}
+
+    \subsection{Интегрируемые дифференциальные уравнения 1-го порядка}
+
+    Первый случай. Наше уравнение имеет вид
+    \[y' = f(x).\]
+    В таком случае
+    \[y(x) = y_0 + \int_{x_0}^x f(t) dt.\]
+
+    \begin{definition}
+        Пусть имеется уравнение
+        \[y' = f(x, y),\]
+        где $f \in C(G)$, а $H$ --- подобласть $G$. Функция $U \in C^1(H, \RR)$ (т.е. $U: H \to \RR$ и $U$ дифференцируема на $H$) называется \emph{интегралом} этого уравнения в $H$, если
+        \begin{itemize}
+            \item $\frac{\partial U}{\partial y} \neq 0$ в $H$,
+            \item если $y: (a; b) \to \RR$ --- решение в $H$, то $U(x, y(x)) = \const$ на $(a; b)$.
+        \end{itemize}
+    \end{definition}
+
+    \begin{theorem}[о неявной функции]
+        Пусть дана $F \in C^1(H, \RR)$ и есть некоторая точка $(x_0; y_0) \in H$, что $F(x_0, y_0) = 0$, а $\frac{\partial F}{\partial y}(x_0, y_0) \neq 0$. Тогда есть некоторые окрестности $I$ и $J$ точек $x_0$ и $y_0$ и функция $z \in C^1(I)$, что $z(x_0) = y_0$ и для всякой точки $(x; y) \in I \times J$, что $F(x, y) = 0$, будет верно $y = z(x)$.
+    \end{theorem}
+
+    \begin{theorem}[об интеграле для дифференциального уравнения 1-го порядка]
+        Пусть имеется интеграл $U$ уравнения $y' = f(x, y)$ в $H \subseteq G$. Тогда для всякой точки $(x_0; y_0) \in H$ будут открытые $I$ и $J$, что $I \times J \subseteq H$, $x_0 \in I$, $y_0 \in J$, и некоторое $y(x) \in C^1(I)$, что
+        \begin{itemize}
+            \item $y(x)$ --- решение задачи Коши с начальными данными $(x_0; y_0)$,
+            \item для всякой точки $(x_1; y_1) \in H$, что $U(x_1; y_1) = U(x_0; y_0)$, верно $y_1 = y(x_1)$.
+        \end{itemize}
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим
+        \[F(x, y) := U(x, y) - U(x_0, y_0).\]
+        Заметим, что $F(x_0, y_0) = 0$, а $\frac{\partial F}{\partial y}(x_0, y_0) = \frac{\partial U}{\partial y}(x_0, y_0) \neq 0$, т.е. $F$ удовлетворяет условию теоремы о неявной функции. Тогда по данной теореме существуют некоторые окрестности $I_0$ и $J_0$ точек $x_0$ и $y_0$ и функция $y(x) \in C^1(I)$.
+        
+        По теореме о существовании существует решение $z(x)$ задачи Коши с начальными данными $(x_0, y_0)$ на $I \ni x_0$, что $(x, z(x)) \in I \times J$. По определению интеграла $U$ имеем, что $U(x, z(x)) = U(x_0, y_0)$, а значит $F(x, z(x)) = 0$. Тогда по теореме о неявной функции $z(x) = y(x)$ на всей области определения $y$ и $z$. 
+    \end{proof}
+
+    \begin{remark}
+        Равенство $U(x, y) = c$ называют общим интегралом.
+    \end{remark}
+
+    \subsubsection{Дифференицальные уравнения с разделяющимися переменными}
+
+    Будем рассматривать уравнение вида
+    \[y' = m(x) n(y),\]
+    $m \in C((a; b))$, $n \in C((\alpha; \beta))$, $G = (a; b) \times (\alpha; \beta)$.
+
+    Первый случай. Пусть $n(y_0) = 0$. Тогда есть решение $y(x) \equiv y_0$.
+
+    Второй случай. Рассмотрим некоторый интервал $I \subseteq (\alpha; \beta)$, что для всякого $y \in I$ верно $n(y) \neq 0$. Рассмотрим $y(x)$, что $(x, y(x)) \in (a; b) \times I$. Несложным преобразованием получаем, что
+    \[\frac{y'(x)}{n(y(x))} = m(x).\]
+    значит
+    \[
+        \int_{x_0}^x m(s) ds
+        = \int_{x_0}^x \frac{y'(t) dt}{n(y(t))}
+        = \int_{x_0}^x \frac{dy(t)}{n(y(t))}
+        = \int_{y(x_0)}^{y(x)} \frac{dz}{n(z)}.
+    \]
+    Обозначим первообразные
+    \[N(y) := \int \frac{dy}{n(y)} \qquad \text{ и } \qquad M(x) := \int m(x) dx.\]
+    Тогда мы имеем, что
+    \[N(y(x)) - N(y(x_0)) = M(x) - M(x_0).\]
+    Определим
+    \[U(x, y) := N(y) - M(x).\]
+    Тогда
+    \[U(x, y(x)) = N(y(x)) - M(x) = N(y(x_0)) - M(x_0) = \const.\]
+    Также
+    \[\frac{\partial U}{\partial y} = N' = \frac{1}{n(y)} \neq 0.\]
+    Таким образом $U$ --- интеграл данного уравнения в $(a; b) \times I$.
+
+    \begin{theorem}[``критерий'' интеграла]
+        Пусть $U$ --- интеграл уравнения
+        \[y' = f(x, y).\]
+        Тогда
+        \[\frac{\partial U}{\partial x} + \frac{\partial U}{\partial y} \cdot f \equiv 0.\]
+    \end{theorem}
+
+    \begin{proof}
+        Пусть $y(x)$ --- решение уравнения. Тогда
+        \[
+            0
+            = \frac{d}{dx} U(x, y(x))
+            = \frac{\partial U}{\partial x}(x, y(x)) + \frac{\partial U}{\partial y}(x, y(x)) \cdot y'(x)
+            = \frac{\partial U}{\partial x}(x, y(x)) + \frac{\partial U}{\partial y}(x, y(x)) \cdot f(x, y(x)).
+        \]
+    \end{proof}
+
+    \subsubsection{Замена переменных}
+
+    Идея проста и заключается в смене независимой переменной и искомой функции на новые по некоторым зависимостям от старых.
+
+    \begin{example}
+        Пусть имеется уравнение $y' = f(ax + by)$, где $a$, $b$ --- ненулевые константы. Тогда можно рассмотреть функцию $v := ax + by$. Тогда
+        \[\frac{dv}{dx} = a + b \frac{dy}{dx} = a + b f(v).\]
+        Так мы получили разделение переменных.
+    \end{example}
+
+    \begin{example}
+        Пусть имеется уравнение $y' = m(x) n(y)$. Пусть $n(y) \neq 0$ в области определения. Тогда рассмотрим замену
+        \[v := N(y) = \int \frac{1}{n(y)}dy.\]
+        Тогда
+        \[\frac{dv}{dx} = \frac{1}{n(y(x))} y'(x) = m(x).\]
+        Откуда мы получаем решение
+        \[v(x) = \int m(x) dx, \qquad \Longrightarrow \qquad N(y) = M(x) + C.\]
+    \end{example}
+
+    \subsubsection{Линейные дифференциальные уравнения 1 порядка}
+
+    Линейные дифференциальные уравнения 1 порядка --- уравнения вида
+    \[y' = p(x)y + q(x),\]
+    $p, q \in C(a, b)$.
+
+    Если $q(x) \equiv 0$, то такое уравнение мы решать умеем:
+    \begin{gather*}
+        U = \int \frac{dy}{y} - \int p(x) dx = \ln(y) - \int p(x) dx\\
+        y = C e^{\int p(x) dx}.
+    \end{gather*}
+
+    Теперь в общем случае сделаем следующее; это называется методом Лагранжа (метод вариации произвольной переменной). Сделаем замену
+    \[y(x) = v(x) e^{\int p(x) dx}.\]
+    В таком случае уравнение приводится в вид
+    \[v' = \frac{q(x)}{e^{\int p(x) dx}}.\]
+
+    Уравнение Бернулли. $y' = p(x) y + q(x) y^m$ ($m = \const$, $m \notin \{0; 1\}$). Если $m > 0$, то есть решение $y \equiv 0$. В общем случае сделаем замену $v = y^{1-m}$. Тогда
+    \[y = v^{\frac{1}{1-m}}, \qquad v' = \frac{y'}{y^m}.\]
+    Тогда уравнение получит вид
+    \[v' = p(x)v + q(x).\]
+
+    Уравнение Риккати. $y' = a y^2 + b x^\alpha$.
+
+    \subsubsection{Дифференциальные уравнения 1 порядка в симметричной форме (дифференциальные уравнения Пфаффа)}
+
+    Это уравнения вида $m(x, y) dx + n(x, y) dy = 0$.
+
+    Назовём дифференциальной 1-формой выражение вида
+    \[F = m(x, y) dx + n(x, y) dy,\]
+    где $m$ и $n$ не равны $0$ одновременно. А интегральной кривой формы $F$ назовём кривую $\gamma: \RR \to \RR^2$, что
+    \[m(\gamma(t)) \dot{\gamma_1}(t) + n(\gamma(t)) \dot{\gamma_2}(t) = 0.\]
+
+    Можно сделать замену $y = \gamma_2(\gamma_1^{-1}(x))$. Тогда уравнение приведётся к обычному
+    \[m(x, y) + n(x, y) y' = 0.\]
+    Аналогично можно превратить всякое решение последнего уравнения обратно в решение уравнения Пфаффа.
+
+    Форма $F$ называется \emph{точной}, если есть $U(x, y) \in C^2(G)$, что
+    \[F = \frac{\partial U}{\partial x} dx + \frac{\partial U}{\partial y} dy.\]
+
+    Если $F$ точная, то $F = 0$ называется уравнением в полных дифференциалах.
+
+    \begin{theorem}
+        Если $F$ --- точная форма, то в окрестности всякой точки $(x_0; y_0) \in G$ будет интеграл $U$, что
+        \[y' = - \frac{m}{n} \qquad \text{ или } \qquad \frac{dx}{dy} = - \frac{n}{m}.\]
+    \end{theorem}
+
+    \begin{proof}
+        Рассмотрим точку $(x_0; y_0) \in G$. WLOG $n(x_0, y_0) \neq 0$. Следовательно, $n(x_0, y_0) \neq 0$ в окрестности $(x_0; y_0)$. Там рассмотрим уравнение $y' = - \frac{m}{n}$. Пусть $y(x)$ --- его решение. Заметим, что
+        \[
+            0
+            \equiv \frac{d}{dx} U(x, y(x))
+            = \frac{\partial U}{\partial x}(x, y(x)) + \frac{\partial U}{\partial y}(x, y(x)) \cdot \frac{dy}{dx}
+            = m + n \cdot \left(- \frac{m}{n}\right)
+            = 0.
+        \]
+    \end{proof}
+
+    \subsubsection{Условие точности 1-формы}
+
+    Заметим, что если $U \in C^2$, то
+    \[\frac{\partial m}{\partial y} = \frac{\partial^2 U}{\partial x \partial y} = \frac{\partial n}{\partial x}.\]
+    Т.е. для всякой точной формы $F = m dx + n dy$ верно, что
+    \[\frac{\partial m}{\partial y} = \frac{\partial n}{\partial x}.\]
+
+    \begin{theorem}
+        Если для $1$-формы $F = m dx + n dy$ выполнено
+        \[\frac{\partial m}{\partial y} = \frac{\partial n}{\partial x}\]
+        на некоторой области $G = I \times J$, то она там же точна.
+    \end{theorem}
+
+    \begin{proof}
+        Фиксируем $(x_0, y_0) \in I \times J$ и рассмотрим функцию
+        \[U(x, y) := \int_{x_0}^x m(t, y_0) dt + \int_{y_0}^y n(x, s) ds.\]
+        Тогда
+        \[
+            \frac{\partial U}{\partial x}
+            = m(x, y_0) + \int_{y_0}^y \frac{\partial n}{\partial x}(x, s) ds
+            = m(x, y_0) + \int_{y_0}^y \frac{\partial m}{\partial y}(x, s) ds
+            = m(x, y_0) + m(x, y) - m(x, y_0)
+            = m,
+        \]
+        и
+        \[
+            \frac{\partial U}{\partial y}
+            = 0 + n(x, y)
+            = n.
+        \]
+    \end{proof}
+
+    \subsubsection{Интегрирующий множитель}
+
+    \begin{definition}
+        \emph{Интегрирующий множитель} формы $F$ --- такая функция $\mu \in C^1$, что $\mu \neq 0$ и $\mu F$ --- точная.
+    \end{definition}
+
+    \begin{example}
+        Для уравнения с разделяющимися переменными
+        \[dy + m(x) n(y) dx = 0\]
+        интегрирующим множителем будет $1/n$ (если $n \neq 0$).
+    \end{example}
+
+    \subsection{Системы дифференциальных уравнений}
+
+    \begin{definition}
+        Пусть фиксировано $n \in \NN$. Ищем $n$ функций $x_1(t)$, \dots, $x_n(t)$ ($t$ называется ``переменной''). Фиксируем $m_1, \dots, m_n \in \NN$. Система дифференциальных уравнений общего вида (система разрешённая относительно старших производных) есть система уравнений вида
+        \[
+            \left\{
+                \begin{aligned}
+                    \frac{d^{m_1}x_1}{(dt)^{m_1}} &= f_1\left(t, x_1, \frac{d x_1}{dt}, \dots, \frac{d^{m_1-1}x_1}{(dt)^{m_1-1}}, \dots, x_n, \frac{d x_n}{dt}, \dots, \frac{d^{m_n-1}x_n}{(dt)^{m_n-1}}\right)\\
+                    &\vdots\\
+                    \frac{d^{m_n}x_n}{(dt)^{m_n}} &= f_n\left(t, x_1, \frac{d x_1}{dt}, \dots, \frac{d^{m_1-1}x_1}{(dt)^{m_1-1}}, \dots, x_n, \frac{d x_n}{dt}, \dots, \frac{d^{m_n-1}x_n}{(dt)^{m_n-1}}\right)
+                \end{aligned}
+            \right.
+        \]
+        Число $m = m_1 + \dots + m_n$ называется порядком системы.
+
+        \emph{Нормальная система дифференциальных уравнений} порядка $n$ --- система д. у., в которой $m_1 = m_2 = \dots = m_n = 1$.
+
+        \emph{Дифференциальное уравнение} порядка $m$ --- система д. у., в которой $n = 1$.
+    \end{definition}
+
+    \begin{lemma}
+        Всякая система д. у. порядка $n$ равносильна некоторой нормальной системе д. у. порядка $n$.
+    \end{lemma}
+
+    \begin{proof}
+        Пусть дана система
+        \[
+            \left\{
+                \begin{aligned}
+                    \frac{d^{m_1}x_1}{(dt)^{m_1}} &= f_1\left(t, x_1, \frac{d x_1}{dt}, \dots, \frac{d^{m_1-1}x_1}{(dt)^{m_1-1}}, \dots, x_k, \frac{d x_k}{dt}, \dots, \frac{d^{m_k-1}x_k}{(dt)^{m_k-1}}\right)\\
+                    &\vdots\\
+                    \frac{d^{m_k}x_k}{(dt)^{m_k}} &= f_n\left(t, x_1, \frac{d x_1}{dt}, \dots, \frac{d^{m_1-1}x_1}{(dt)^{m_1-1}}, \dots, x_k, \frac{d x_k}{dt}, \dots, \frac{d^{m_k-1}x_k}{(dt)^{m_k-1}}\right)
+                \end{aligned}
+            \right.
+        \]
+        Рассмотрим биекцию
+        \[\varphi: \{(i, p) \mid i \in \{1; \dots; k\} \wedge p \in \{0; \dots; m_i - 1\}\} \to \{1; \dots; n\}, (i, p) \mapsto \sum_{j=1}^{i-1} m_j + p + 1.\]
+        Тогда рассмотрим систему д.у.
+        \[
+            \left\{
+                \begin{aligned}
+                    &\forall i \in \{1; \dots; k\}, p \in \{0; \dots; m_i-2\}& \quad \frac{d y_{\varphi(i, p)}}{dt} &= y_{\varphi(i, p+1)}\\
+                    &\forall i \in \{1; \dots; k\}, p = m_i - 1& \quad \frac{d y_{\varphi(i, p)}}{dt} &= f_i(t, y_1, \dots, y_n)
+                \end{aligned}
+            \right.
+        \]
+        Несложно заметить, что системы равносильны, если сделать ``соответствие'' $y_{\varphi(i, p)} = \frac{d^p x_i}{(dt)^p}$. Т.е. переход к новой системе --- объявление производных $x_i$ как переменных и установка на них соответствующих ограничений, а обратно к старой --- забывание промежуточных производных и восстановление сложных уравнений.
+    \end{proof}
+
+    \begin{remark*}
+        Далее мы будем писать (особенно для нормальных систем) производные в точечной нотации: как $\dot{x_i}$.
+    \end{remark*}
+
+    \begin{remark}
+        Для всякой нормальной системы порядка $n$ можно определить вектор $x := (x_1, \dots, x_n): \RR \to \RR^n$ и оператор $f(t, x) := (f_1(t, x), \dots, f_n(t, x)) : \RR^{1+n} \to \RR^n$. Тогда система имеет вид
+        \[\dot{x} = f(t, x).\]
+        Это называется векторной записью нормальной системы д.у.
+    \end{remark}
+
+    Поэтому также будем пользоваться в $\RR^n$ нормой
+    \[|x| = \max_i |x_i|.\]
+
+    Таким образом рассматриваем нормальные системы
+    \[\dot{x} = f(t, x), x \in \RR^n.\]
+    Будем всегда предполагать, что $f \in C(G)$, где $G$ --- открытая связная область в $\RR^{1+n}_{t, x}$.
+
+    \begin{definition}
+        $x: (a; b) \to \RR^n$ называется \emph{решением} этой системы, если
+        \begin{enumerate}
+            \item $\dot{x}$ определено на $(a; b)$,
+            \item $(t, x(t)) \in G$ для всякого $t \in (a; b)$,
+            \item $\dot{x}(t) = f(t, x(t))$ для всякого $t \in (a; b)$.
+        \end{enumerate}
+    \end{definition}
+
+    \begin{definition}
+        $x: (a; b) \to \RR^n$ --- \emph{решение задачи Коши} с начальными данными $(t_0, x_0) \in G$, если
+        \begin{enumerate}
+            \item $t_0 \in (a; b)$,
+            \item $x(t)$ --- решение на $(a; b)$,
+            \item $x(t_0) = x_0$.
+        \end{enumerate}
+    \end{definition}
+
+    \begin{definition}
+        \emph{Интегральное уравнение}:
+        \[x(t) = x_0 + \int_{t_0}^t f(s, x(s)) ds.\]
+
+        \emph{Решение интегрального уравнения} --- функция $x: (a; b) \to \RR^n$:
+        \begin{enumerate}
+            \item $x \in C(a; b)$,
+            \item $(t, x(t)) \in G$ для всякого $t \in (a; b)$,
+            \item $x(t) = x_0 + \int_{t_0}^t f(s, x(s)) ds$ для всякого $t \in (a; b)$.
+        \end{enumerate}
+    \end{definition}
+
+    \begin{lemma}
+        Для всякого $f \in C(G)$ и $(t_0, x_0) \in G$ задача Коши для
+        \[\dot{x} = f(t, x)\]
+        и интегральное уравнение
+        \[x = x_0 + \int_{t_0}^t f(s, x(s)) ds\]
+        равносильны.
+    \end{lemma}
+
+    \begin{definition}
+        Пусть есть какое-то разбиение отрезка $[a; b]$ $t_0 = a, t_1, \dots, t_N = b$. Пусть также рассматривается интегральное уравнение для $(a, x_0) \in G$ и $f \in C(G)$. Ломанной Эйлера называется функция $g: [a; b] \to \RR^n$, что $g(t_0) = x_0$, а на каждом отрезке $[t_{k-1}; t_k]$ $g(t) = g(t_{k-1}) + f(t_{k-1}, g(t_{k-1})) (t - t_k)$.
+    \end{definition}
+
+    
+
+    \begin{theorem}[Пеано]
+        Для всякой $f \in C(G)$ и $(t_0, x_0) \in G$ есть решение задачи Коши.
+    \end{theorem}
+
+    \begin{proof}
+        Существуют $\alpha, \beta > 0$, что
+        \[R := \{(t, x) \mid |t - t_0| \leqslant \alpha \wedge |x - x_0| \leqslant \beta\}\]
+        будет подмножеством $G$. $R$ компактно, а значит есть $M > 0$, что $\Bigl|f|_R\Bigr| \leqslant M$. Пусть $h := \min(\alpha, \beta/M)$. Покажем, что есть решение задачи Коши на промежутке $(t_0 - h; t_0 + h)$ (так называемый \emph{промежуток Пеано}).
+    \end{proof}
+
+
+\end{document}

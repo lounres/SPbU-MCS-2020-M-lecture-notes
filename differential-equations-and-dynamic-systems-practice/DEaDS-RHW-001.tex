@@ -1,0 +1,49 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+\usepackage{float}
+
+\title{Рейтинговое домашнее задание от 07.09\\Дифференциальные уравнения и динамические системы}
+\author{Глеб Минаев @ 204 (20.Б04-мкн)}
+\date{}
+
+\newcommand{\const}{\mathrm{const}}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem*}[№ 1]
+        Вспомним, что если функция $U$ (на области определения) удовлетворяет условию
+        \[\frac{\partial U}{\partial x} + \frac{\partial U}{\partial y} f = 0,\]
+        то тогда она является интегралом (при условии $\frac{\partial U}{\partial y} \neq 0$), так как для всякого решения $y$ верно, что
+        \[
+            \frac{d}{dx} U(x, y(x))
+            = \frac{\partial U}{\partial x} + \frac{\partial U}{\partial y} y'
+            = \frac{\partial U}{\partial x} + \frac{\partial U}{\partial y} f
+            = 0,
+        \]
+        т.е. $U(x, y(x)) = \const$.
+
+        Тогда рассмотрим функцию
+        \[U(x, y) := x \sqrt{1 - y^2} + y \sqrt{1 - x^2}.\]
+        Быстро поймём, что правильная форма нашего уравнения ---
+        \[\frac{dy}{dx} = - \frac{\sqrt{1 - y^2}}{\sqrt{1 - x^2}} = f(x, y).\]
+        Следовательно
+        \begin{align*}
+            \frac{\partial U}{\partial x} + \frac{\partial U}{\partial y} f
+            &= \sqrt{1 - y^2} - \frac{xy}{\sqrt{1 - x^2}} + \left(\sqrt{1 - x^2} - \frac{xy}{\sqrt{1 - y^2}}\right) \left(- \frac{\sqrt{1 - y^2}}{\sqrt{1 - x^2}}\right)\\
+            &= \sqrt{1 - y^2} - \frac{xy}{\sqrt{1 - x^2}} - \sqrt{1 - y^2} + \frac{xy}{\sqrt{1 - x^2}}\\
+            &= 0.
+        \end{align*}
+        Ну и на конец
+        \[\frac{\partial U}{\partial y} = \sqrt{1 - x^2} - \frac{xy}{\sqrt{1 - y^2}}.\]
+        Таким образом если $\frac{\partial U}{\partial y} = 0$, то
+        \begin{gather*}
+            \sqrt{1 - x^2} = \frac{xy}{\sqrt{1 - y^2}}\\
+            \sqrt{1 - x^2} \sqrt{1 - y^2} = xy\\
+            (1 - x^2) (1 - y^2) = x^2 y^2\\
+            1 - x^2 - y^2 + x^2 y^2 = x^2 y^2\\
+            1 = x^2 + y^2
+        \end{gather*}
+        Таким образом в качестве области определения можно взять (всю) область строго внутри окружности $x^2 + y^2 = 1$. В таком случае все рассуждения будут верны (единственное, что нам нужно --- чтобы $\frac{\partial U}{\partial y}$, $\sqrt{1 - x^2}$ и $\sqrt{1 - y^2}$ не занулялись).
+    \end{problem*}
+\end{document}

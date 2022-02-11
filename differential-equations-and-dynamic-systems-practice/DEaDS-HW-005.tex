@@ -1,0 +1,54 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions-en}
+\usepackage{float}
+
+\title{Homework of 10.05\\Differential equations and dynamic systems.\\Solutions.}
+\author{Глеб Минаев @ 204 (20.Б04-мкн)}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{115}
+        \begin{gather*}
+            x - y - 1 + (y-x+2)y' = 0\\
+            y' = \frac{y-x+1}{y-x+2}\\
+            y' = 1 + \frac{-1}{y-x+2}
+        \end{gather*}
+        Substitute $z = y-x+2$. Hence
+        \[z' = y' - 1 = \frac{-1}{y-x+2} = \frac{-1}{z}.\]
+        Obtained equation with separated variables for $m(x) = 1$, $n(z) = -1/z$. So a map
+        \[U(x, y) := \int -zdz - \int 1dx = -\frac{1}{2}z^2 - x + C.\]
+        Hence
+        \begin{gather*}
+            z^2 = C - 2x\\
+            z = \pm\sqrt{C - 2x}\\
+            y = z + x - 2 = \pm\sqrt{C - 2x} + x - 2
+        \end{gather*}
+    \end{problem}
+
+    \begin{problem}{205}
+        \begin{gather*}
+            (x^2 + 2x + y)dx = (x-3x^2y)dy\\
+            (x^2 + 2x)dx + ydx - xdy + 3x^2ydy = 0\\
+            \intertext{(divide by $x^2$; will lose solution $x \equiv 0$)}
+            \left(1 + 2\frac{1}{x}\right)dx - d\left(\frac{y}{x}\right) + 3ydy = 0\\
+            dx + 2d\ln(x) - d\left(\frac{y}{x}\right) + \frac{3}{2}d(y^2) = 0\\
+            d\left(x + 2\ln(x) - \frac{y}{x} + \frac{3}{2}y^2\right) = 0\\
+            x + 2\ln(x) - \frac{y}{x} + \frac{3}{2}y^2 = C\\
+            3xy^2 - 2y + 2x^2 + 4x\ln(x) - 2xC = 0\\
+            y = \frac{1 \pm \sqrt{1 - 3x(2x^2 + 4x\ln(x) - C)}}{3x} = \frac{1 \pm \sqrt{1 + 6Cx^2 - 6x^3 - 12x^2\ln(x)}}{3x}
+        \end{gather*}
+    \end{problem}
+
+    \begin{problem}{191}
+        \begin{gather*}
+            2x\left(1 + \sqrt{x^2 - y}\right)dx  - \sqrt{x^2 - y}dy = 0\\
+            d(x^2) + \frac{2}{3}d\left((x^2 - y)^{3/2}\right) = 0\\
+            d\left(x^2 + \frac{2}{3}(x^2 - y)^{3/2}\right) = 0\\
+            \frac{3}{2}x^2 + (x^2 - y)^{3/2} = C\\
+            x^2 - y = \left(C - \frac{3}{2}x^2\right)^{2/3}\\
+            y = x^2 - \left(C - \frac{3}{2}x^2\right)^{2/3}\\
+        \end{gather*}
+    \end{problem}
+\end{document}

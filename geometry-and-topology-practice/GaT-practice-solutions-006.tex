@@ -1,0 +1,46 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+% \usepackage{float}
+
+\title{Занятие от 10.12.\\Геометрия и топология. 1 курс.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Fr}{Fr}
+\DeclareMathOperator{\Id}{Id}
+\newcommand{\FAC}{\ensuremath{\mathrm{FAC}}\xspace}
+\newcommand{\SAC}{\ensuremath{\mathrm{SAC}}\xspace}
+\newcommand{\T}{\ensuremath{\mathrm{T}}\xspace}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{56}
+        \begin{lemma}
+            Найдётся линейно независимый набор векторов $\{v_n\}_{n=0}^\infty$, что:
+            \begin{itemize}
+                \item $\forall n \in \NN \cup \{0\}\qquad \|v_n\| = 1$.
+                \item $\forall n \in \NN \cup \{0\}\; \exists \varepsilon > 0:\qquad U_{\varepsilon}(v_n) \cap \{v_k\}_{k=0}^\infty = \{v_n\}$. 
+            \end{itemize}
+        \end{lemma}
+
+        \begin{proof}
+            Поскольку пространство бесконечномерное, то у него есть бесконечный базис $\Sigma$. Также сразу будем подразумевать под $\Sigma$ множество $\{v/\|v\| \mid v \in \Sigma\}$.
+            
+            Если в $\Sigma$ есть такой вектор $v$, что для всякого $\varepsilon > 0$ верно, что
+            \[|\Sigma \setminus U_{\varepsilon}(v_n)| \in \NN,\]
+            то построим искомую последовательность следующим образом. На место $v_0$ возьмём любой элемент $\Sigma \setminus \{v\}$. Далее каждый следующий элемент $v_{n+1}$ определим как случайный элемент
+            \[\Sigma \cap U_{d(v_n, v)/2}(v) \setminus \{v\};\]
+            это множество непусто, так как иначе $\Sigma$ конечно. Следовательно для всяких $m > n$ верно, что $d(v_m, v) > 2d(v_n, v)$, а значит
+            \begin{align*}
+                &d(v_m, v_n) \geqslant d(v_m, v) - d(v_n, v) > d(v_n, v)&
+                &d(v_m, v_n) \geqslant d(v_m, v) - d(v_n, v) > d(v_m, v)/2&
+            \end{align*}
+            Таким образом $U_{d(v_n, v)/2}(v_n) \cap \{v_k\}_{k=0}^\infty = \{v_n\}$ для всякого $n \in \NN \cup \{0\}$.
+
+            
+        \end{proof}
+    \end{problem}
+\end{document}

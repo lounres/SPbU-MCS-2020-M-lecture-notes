@@ -1,0 +1,61 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{solutions}
+% \usepackage{float}
+\usepackage{inkscape}
+
+\title{Самостоятельная работа 01.03.2021.\\Алгебра. 1 курс.\\Решения.}
+\author{Глеб Минаев @ 102 (20.Б02-мкн)}
+% \date{}
+
+\DeclareMathOperator{\sign}{sign}
+
+\begin{document}
+    \maketitle
+
+    \begin{problem}{2}
+        Заметим, что
+        \[
+            \begin{vmatrix}
+                (x_1 + y_1)^{n-1}& (x_1 + y_2)^{n-1}& \cdots& (x_1 + y_n)^{n-1}\\
+                (x_2 + y_1)^{n-1}& (x_2 + y_2)^{n-1}& \cdots& (x_2 + y_n)^{n-1}\\
+                \vdots& \vdots& \ddots& \vdots\\
+                (x_n + y_1)^{n-1}& (x_n + y_2)^{n-1}& \cdots& (x_n + y_n)^{n-1}\\
+            \end{vmatrix}
+            = P(x_1, \dots, x_n, y_1, \dots, y_n)
+        \]
+        --- многочлен степени $\leqslant (n-1)n$.
+
+        Но если $x_i = x_j$ ($i \neq j$), то $P(x_1, \dots, x_n, y_1, \dots, y_n) = 0$, следовательно $P \divided (x_i - x_j)$. Значит
+        \[P \divided \prod_{i < j} (x_j - x_i)\]
+        Аналогично
+        \[P \divided \prod_{i < j} (y_j - y_i)\]
+        Следовательно
+        \[P \divided \prod_{i < j} (x_j - x_i)(y_j - y_i)\]
+        При этом
+        \[\deg\left(\prod_{i < j} (x_j - x_i)(y_j - y_i)\right) = 2 \cdot \frac{n(n-1)}{2} = n(n-1) \geqslant \deg(P)\]
+        Значит
+        \[P = C\prod_{i < j} (x_j - x_i)(y_j - y_i)\]
+        для некоторой константы $C$.
+
+        Заметим, что в определении определителя матрицы выше всякое слагаемое имеет вид
+        \[\sign(\sigma)\prod_{i=1}^n (x_i + y_{\sigma(i)})^{n-1}\]
+        а всякое слагаемое в нём после раскрытия скобок и приведения подобных имеет вид
+        \[\sign(\sigma)\prod_{i=1}^n \binom{n-1}{d_i} x_i^{d_i} y_{\sigma(i)}^{n-1-d_i}\]
+
+        Тогда рассмотрим коэффициент вхождения монома $x_1^0 y_1^0 x_2^1 y_2^1 \cdots x_n^{n-1} y_n^{n-1}$. С одной стороны в
+        \[P = C\prod_{i < j} (x_j - x_i)(y_j - y_i)\]
+        оно входит с коэффициентом $C$, так как из всякой скобки $(x_j - x_i)$ ($j > i$) мы должны выбрать $x_j$, чтобы достичь искомых степеней $x_i$; аналогично для $y_i$. С другой же стороны, чтобы войти в то или иное слагаемое определителя выше, нужно поставить в пары к $x_i$ переменные $y_i$, чтобы их степени в суммах в парах давали $n-1$; это можно сделать единственным способом: $\sigma(i) = n+1 - i$. Следовательно этот моном встречается единожды и (так как $d_i = i-1$) коэффициент при нём равен
+        \[\sign(\sigma) \prod_{i=1}^n \binom{n-1}{i-1} = (-1)^{\lfloor \frac{n}{2} \rfloor} \frac{(n-1)!^{n-1}}{\prod_{i=0}^{n-1} i!^2} = C\]
+
+        В конкретной задачи нас спрашивают данный определитель при $x_i = i$, $y_i = i-1$. Следовательно
+        \begin{align*}
+            C\prod_{i < j} (x_j - x_i)(y_j - y_i)
+            &= C \prod_{j=2}^n \prod_{i=1}^{j-1} (x_j - x_i)(y_j - y_i)&
+            &= C \prod_{j=2}^n \prod_{i=1}^{j-1} (j - i)^2\\
+            &= C \prod_{j=2}^n \prod_{i=1}^{j-1} i^2&
+            &= C \prod_{j=2}^n (j-1)!^2\\
+            &= C \prod_{j=1}^{n-1} j!^2&
+            &= \boxed{(-1)^{\lfloor \frac{n}{2} \rfloor} (n-1)!^{n-1}}
+        \end{align*}
+    \end{problem}
+\end{document}
