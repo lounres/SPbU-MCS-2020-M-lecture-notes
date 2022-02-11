@@ -45,7 +45,7 @@ P.S. Сокращения:
 
 ### Спецкурсы
 
-- (WIP) **Алгебраическая геометрия.** И.А. Панин. ([tex](algebraic-geometry/main.tex), [pdf](algebraic-geometry/main.pdf))
+- (WIP) **Введение в алгебраическая геометрия.** И.А. Панин. ([tex](algebraic-geometry/main.tex), [pdf](algebraic-geometry/main.pdf))
 - (LIP) **Введение в научное программирование на Kotlin** А.А. Нозик. ([tex](scientific-kotlin/main.tex), [pdf](scientific-kotlin/main.pdf))
 
 ## Лицензия
